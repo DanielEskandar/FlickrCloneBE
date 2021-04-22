@@ -1,4 +1,4 @@
-// INLCUDE DEPENDENCIES
+// INCLUDE DEPENDENCIES
 const mongoose = require('mongoose');
 
 // CREATE SCHEMA
