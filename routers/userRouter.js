@@ -8,8 +8,8 @@ const userController = require('../controllers/userController.js');
 const userRouter = express.Router();
 
 // ROUTE URLs
-userRouter.get("/login", userController.simple);
-userRouter.post("/createUser", userController.createUser);
+userRouter.get('/login', userController.simple);
+userRouter.post('/createUser', userController.createUser);
 
 // EXPORT ROUTER
 module.exports = userRouter;

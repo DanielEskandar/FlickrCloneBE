@@ -1,18 +1,18 @@
 // INCLUDE DEPENDENCIES
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 // INCLUDE APP
-const app = require("./app");
+const app = require('./app');
 
 // LISTEN
-const server = app.listen(7000, () => {
-  console.log("server is running on port 7000");
+app.listen(7000, () => {
+  console.log('server is running on port 7000');
 });
 
 // CONNECT TO DB
 mongoose
   .connect(
-    "mongodb+srv://Admin:ZA8GqJkq2do6DHQh@cluster0.lolxd.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
+    'mongodb+srv://Admin:ZA8GqJkq2do6DHQh@cluster0.lolxd.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
     {
       useNewUrlParser: true,
       useCreateIndex: true,
@@ -20,5 +20,5 @@ mongoose
       useUnifiedTopology: true,
     }
   )
-  .then(() => console.log("DB connection successful!"))
-  .catch(() => console.log("Error connecting to the database!"));
+  .then(() => console.log('DB connection successful!'))
+  .catch(() => console.log('Error connecting to the database!'));

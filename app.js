@@ -10,10 +10,10 @@ const app = express();
 
 // ATTACH PARSERS
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({ extended: false }));
 
 // ATTACH ROUTES
-app.use("/user", userRouter);
+app.use('/user', userRouter);
 
 // EXPORT APP
 module.exports = app;
