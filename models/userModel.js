@@ -11,13 +11,22 @@ const userSchema = new mongoose.Schema({
   lastName: String,
   age: Number,
   aboutMe: String,
-  joinDate: { type: Date, default: Date.now },
+  joinDate: {
+    type: Date,
+    default: Date.now,
+  },
   showcase: [{ photoId: mongoose.Schema.ObjectId }],
   favourites: [{ photoId: mongoose.Schema.ObjectId }],
   photos: [{ photoId: mongoose.Schema.ObjectId }],
   testimonials: [{ testimonialId: mongoose.Schema.ObjectId }],
   albums: [{ albumId: mongoose.Schema.ObjectId }],
-  following: [{ userId: mongoose.Schema.ObjectId, relation: String }],
+  gallery: [{ galleryId: mongoose.Schema.ObjectId }],
+  following: [
+    {
+      userId: mongoose.Schema.ObjectId,
+      relation: String,
+    },
+  ],
   blocked: [{ userId: mongoose.Schema.ObjectId }],
   privacySettings: {
     public: Boolean,
