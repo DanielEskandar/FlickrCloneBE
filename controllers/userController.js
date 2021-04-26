@@ -1,8 +1,12 @@
 // INCLUDE MODELS
 const userModel = require('../models/userModel.js');
 
-exports.simple = (req, res, next) => {
-  res.send('simple function');
+exports.simple = (req, res) => {
+  console.log('simple function called');
+  res.status(200).json({
+    status: 'success',
+    data: 'OK',
+  });
 };
 
 exports.createUser = async (req, res, next) => {

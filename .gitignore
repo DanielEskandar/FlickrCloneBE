@@ -1,2 +1,6 @@
-
+# node modules folder
 node_modules/
+
+# environment variables file
+config.env
+

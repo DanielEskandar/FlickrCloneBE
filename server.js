@@ -1,24 +1,30 @@
 // INCLUDE DEPENDENCIES
 const mongoose = require('mongoose');
+const dotenv = require('dotenv');
 
 // INCLUDE APP
 const app = require('./app');
 
+// CONFIGURE SERVER
+dotenv.config({ path: './config.env' });
+const PORT = process.env.PORT || 3000;
+const DB = process.env.DATABASE.replace(
+  '<PASSWORD>',
+  process.env.DATABASE_PASSWORD
+);
+
 // LISTEN
-app.listen(7000, () => {
-  console.log('server is running on port 7000');
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
 
 // CONNECT TO DB
 mongoose
-  .connect(
-    'mongodb+srv://Admin:ZA8GqJkq2do6DHQh@cluster0.lolxd.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
-    {
-      useNewUrlParser: true,
-      useCreateIndex: true,
-      useFindAndModify: false,
-      useUnifiedTopology: true,
-    }
-  )
+  .connect(DB, {
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useFindAndModify: false,
+    useUnifiedTopology: true,
+  })
   .then(() => console.log('DB connection successful!'))
   .catch(() => console.log('Error connecting to the database!'));
