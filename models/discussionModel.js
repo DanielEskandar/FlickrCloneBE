@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 
 // CREATE SCHEMA
 const discussionSchema = new mongoose.Schema({
-  users: [{ userId: mongoose.Schema.ObjectId }],
+  user: mongoose.Schema.ObjectId,
   date: {
     type: Date,
     default: Date.now,
