@@ -2,7 +2,7 @@
 const express = require('express');
 
 // INCLUDE CONTROLLERS
-//const albumController = require('../controllers/albumController.js');
+//const albumController = require('./controllers/albumController.js');
 
 // CREATE ROUTER
 const albumRouter = express.Router();
@@ -25,12 +25,10 @@ albumRouter.patch('/:id/primary/:photoid');
 albumRouter.patch('/setorder');
 albumRouter.patch('/:id/reorder');
 
-
 albumRouter.post('/:id/comments');
 albumRouter.get('/:id/comments');
 albumRouter.patch('/comments/:id');
 albumRouter.delete('/comments/:id');
-
 
 // EXPORT ROUTER
 module.exports = albumRouter;

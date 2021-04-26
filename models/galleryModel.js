@@ -3,11 +3,18 @@ const mongoose = require('mongoose');
 
 // CREATE SCHEMA
 const gallerySchema = new mongoose.Schema({
-    galleryName:{ type:String, required: true},
-    photos: [{ photoId: mongoose.Schema.ObjectId,remark:String}],
-    description:String,
-    comments:[{commentId: mongoose.Schema.ObjectId}]
-
+  galleryName: {
+    type: String,
+    required: true,
+  },
+  photos: [
+    {
+      photoId: mongoose.Schema.ObjectId,
+      remark: String,
+    },
+  ],
+  description: String,
+  comments: [{ commentId: mongoose.Schema.ObjectId }],
 });
 
 // CREATE MODEL
