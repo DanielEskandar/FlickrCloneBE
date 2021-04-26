@@ -11,8 +11,16 @@ const groupSchema = new mongoose.Schema({
   },
   invitation: Boolean,
   description: String,
-  users: [{ userId: mongoose.Schema.ObjectId }], // group members
-  admin: mongoose.Schema.ObjectId,
+  users: [
+    {
+      userId: mongoose.Schema.ObjectId,
+      joinData: {
+        type: Date,
+        default: Date.now,
+      },
+      admin: Boolean,
+    },
+  ], // group members
   startDate: {
     type: Date,
     default: Date.now,

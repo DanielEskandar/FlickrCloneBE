@@ -8,6 +8,7 @@ const replySchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  body: String,
 });
 
 // CREATE MODEL
