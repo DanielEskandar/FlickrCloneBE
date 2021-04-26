@@ -217,7 +217,7 @@ userRouter.get('/:id/recent');
  * @apiName GetUserRecentModified
  * @apiGroup User
  *
- * @apiParam {String} id The User's ID
+ * @apiHeader {string} Token Authenticaton Token
  *
  * @apiSuccess {Object[]} photos Array of the user's most recently modified photos
  *
@@ -236,7 +236,7 @@ userRouter.get('/:id/recent');
  * @apiUse UserNotFoundError
  */
 
-userRouter.get('/:id/:locationId');
+userRouter.get('/recent-update');
 
 /**
  * @api {get} /user/:id/:locationId Get the User's Photos taken in a certain location
@@ -319,29 +319,302 @@ userRouter.get('/:id/not-set');
  */
 
 userRouter.get('/:id/untagged');
+
+/**
+ * @api {get} /user/:id/geo Return a List of photos with location info
+ * @apiVersion 1.0.0
+ * @apiName GetGeo
+ * @apiGroup User
+ *
+ * @apiParam {String} id The User's ID
+ *
+ * @apiSuccess {Object[]} photos Array of the user's photos with location info
+ *
+ * @apiSuccessExample Success-Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *          "status": "success",
+ *          "data":
+ *          {
+ *              "photos": [
+ *
+ *              ]
+ *          }
+ *      }
+ *
+ * @apiUse UserNotFoundError
+ */
+
 userRouter.get('/:id/geo');
+
+/**
+ * @api {get} /user/:id/no-geo Return a List of photos without location info
+ * @apiVersion 1.0.0
+ * @apiName GetNoGeo
+ * @apiGroup User
+ *
+ * @apiParam {String} id The User's ID
+ *
+ * @apiSuccess {Object[]} photos Array of the user's photos without location info
+ *
+ * @apiSuccessExample Success-Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *          "status": "success",
+ *          "data":
+ *          {
+ *              "photos": [
+ *
+ *              ]
+ *          }
+ *      }
+ *
+ * @apiUse UserNotFoundError
+ */
+
 userRouter.get('/:id/no-geo');
+
+/**
+ * @api {get} /user/:id/testimonials Return a List of User testimonials
+ * @apiVersion 1.0.0
+ * @apiName GetTestimonials
+ * @apiGroup User
+ *
+ * @apiParam {String} id The User's ID
+ *
+ * @apiSuccess {Object[]} testimonials Array of the user's account
+ *
+ * @apiSuccessExample Success-Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *          "status": "success",
+ *          "data":
+ *          {
+ *              "testimonials": [
+ *
+ *              ]
+ *          }
+ *      }
+ *
+ * @apiUse UserNotFoundError
+ */
+
 userRouter.get('/:id/testimonials');
+
+/**
+ * @api {post} /user/:id/testimonials Add a User testimonial
+ * @apiVersion 1.0.0
+ * @apiName AddTestimonial
+ * @apiGroup User
+ *
+ * @apiParam {String} id The User's ID
+ *
+ * @apiSuccess {Object[]} testimonials Array of the user's account
+ *
+ * @apiHeader {string} Token Authenticaton Token
+ *
+ * @apiUse SuccessRes
+ *
+ * @apiUse UnauthError
+ */
+
 userRouter.post('/:id/testimonials');
-userRouter.get('/:id/stats');
-userRouter.get('/:id/popular');
-userRouter.get('/:id/recent');
-userRouter.get('/:id/recent-update');
-userRouter.get('/:id/:locationId');
-userRouter.get('/:id/not-set');
-userRouter.get('/:id/untagged');
-userRouter.get('/:id/geo');
-userRouter.get('/:id/no-geo');
-userRouter.get('/:id/testimonials');
-userRouter.post('/:id/testimonials');
-userRouter.get('/:id/faves');
-userRouter.get('/:id/gallery');
+
+/**
+ * @api {get} /user/:id/recent-update Return a List of User testimonials
+ * @apiVersion 1.0.0
+ * @apiName GetRecentUpdate
+ * @apiGroup User
+ *
+ * @apiHeader {string} Token Authenticaton Token
+ *
+ * @apiSuccess {Object[]} testimonials Array of the user's account
+ *
+ * @apiUse SuccessRes
+ *
+ * @apiUse UnauthError
+ */
+
+userRouter.get('/recent-update');
+
+/**
+ * @api {get} /user/:id/galleries Return a List of User galleries
+ * @apiVersion 1.0.0
+ * @apiName GetGallery
+ * @apiGroup User
+ *
+ * @apiParam {String} id The User's ID
+ *
+ * @apiSuccess {Object[]} galleries Array of the user's account
+ *
+ * @apiSuccessExample Success-Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *          "status": "success",
+ *          "data":
+ *          {
+ *              "galleries": [
+ *
+ *              ]
+ *          }
+ *      }
+ *
+ * @apiUse UserNotFoundError
+ */
+
+userRouter.get('/:id/galleries');
+
+/**
+ * @api {get} /user/:id/group Return a List of User groups
+ * @apiVersion 1.0.0
+ * @apiName GetGroup
+ * @apiGroup User
+ *
+ * @apiParam {String} id The User's ID
+ *
+ * @apiSuccess {Object[]} groups Array of the user's account
+ *
+ * @apiSuccessExample Success-Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *          "status": "success",
+ *          "data":
+ *          {
+ *              "groups": [
+ *
+ *              ]
+ *          }
+ *      }
+ *
+ * @apiUse UserNotFoundError
+ */
+
 userRouter.get('/:id/groups');
+
+/**
+ * @api {get} /user/:id/gallery Return a user's photo stream of non-private photos from the camera roll
+ * @apiVersion 1.0.0
+ * @apiName GetStream
+ * @apiGroup User
+ *
+ * @apiParam {String} id The User's ID
+ *
+ * @apiSuccess {Object[]} photo stream Array of non-private photos from the user's camera roll
+ *
+ * @apiSuccessExample Success-Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *          "status": "success",
+ *          "data":
+ *          {
+ *              "photos": [
+ *
+ *              ]
+ *          }
+ *      }
+ *
+ * @apiUse UserNotFoundError
+ */
+
 userRouter.get('/:id/stream');
+
+/**
+ * @api {get} /user/:id/albums Return a List of User albums
+ * @apiVersion 1.0.0
+ * @apiName GetAlbum
+ * @apiGroup User
+ *
+ * @apiParam {String} id The User's ID
+ *
+ * @apiSuccess {Object[]} albums Array of the user's account
+ *
+ * @apiSuccessExample Success-Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *          "status": "success",
+ *          "data":
+ *          {
+ *              "albums": [
+ *
+ *              ]
+ *          }
+ *      }
+ *
+ * @apiUse UserNotFoundError
+ */
+
 userRouter.get('/:id/albums');
+
+/**
+ * @api {get} /user/:id/showcase Return User defined image showcase
+ * @apiVersion 1.0.0
+ * @apiName GetShowcase
+ * @apiGroup User
+ *
+ * @apiParam {String} id The User's ID
+ *
+ * @apiSuccess {Object[]} Showcase array of the user
+ *
+ * @apiSuccessExample Success-Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *          "status": "success",
+ *          "data":
+ *          {
+ *              "showcase": [
+ *
+ *              ]
+ *          }
+ *      }
+ *
+ * @apiUse UserNotFoundError
+ */
+
 userRouter.get('/:id/showcase');
 
+/**
+ * @api {get} /user/:id/faves Return a List of all user faves
+ * @apiVersion 1.0.0
+ * @apiName GetFaves
+ * @apiGroup User
+ *
+ * @apiParam {String} id The User's ID
+ *
+ * @apiHeader {string} Token Authenticaton Token
+ *
+ * @apiSuccess {Object[]} List of all user faves
+ *
+ * @apiSuccessExample Success-Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *          "status": "success",
+ *          "data":
+ *          {
+ *              "faves": [
+ *
+ *              ]
+ *          }
+ *      }
+ *
+ * @apiUse UserNotFoundError
+ */
+
+userRouter.get('/:id/faves');
 userRouter.get('/limits');
+
+/**
+ * @api {delete} /user/testimonials/:id Delete a testimonial
+ * @apiVersion 1.0.0
+ * @apiName DeleteTestimonial
+ * @apiGroup User
+ *
+ * @apiHeader {string} Token Authenticaton Token
+ *
+ * @apiUse SuccessRes
+ *
+ * @apiUse UnauthError
+ */
+
 userRouter.delete('/testimonials/:id');
 
 userRouter.get('/disp-name');
