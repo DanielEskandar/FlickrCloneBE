@@ -4,9 +4,9 @@
   "description": "Clone to Flickr's backend",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon server.js",
-    "start:prod": "NODE_ENV=production nodemon server.js"
+    "start:prod": "NODE_ENV=production nodemon server.js",
+    "apidoc": "apidoc -i routers/ -o apidoc/"
   },
   "repository": {
     "type": "git",
@@ -19,7 +19,6 @@
   },
   "homepage": "https://github.com/DanielEskandar/FlickrCloneBE#readme",
   "dependencies": {
-    "apidoc": "^0.27.1",
     "body-parser": "^1.19.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
