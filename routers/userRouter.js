@@ -48,11 +48,80 @@ const userRouter = express.Router();
 
 // ROUTE URLs
 
+/**
+ * Test Func
+ */
 userRouter.get('/createUser', userController.simple);
 
+/**
+ * @api {post} /user/sign-up Send a Sign-Up Request
+ * @apiVersion 1.0.0
+ * @apiName SignUp
+ * @apiGroup User
+ *
+ * @apiBody {string} username The Username of the User
+ * @apiBody {string} email The Email of the User
+ * @apiBody {string} firstname The First Name of the User
+ * @apiBody {string} lastname The Last Name of the User
+ * @apiBody {string} age The Age of the User
+ *
+ * @apiSuccess {string} Status Status of API
+ *
+ * @apiUse SuccessRes
+ *
+ * @apiUse UnauthError
+ */
+
 userRouter.post('/sign-up');
-userRouter.post('confirm');
+
+/**
+ * @api {post} /user/confirm Confirm a Signed Up user account
+ * @apiVersion 1.0.0
+ * @apiName SignUpConfirm
+ * @apiGroup User
+ *
+ * @apiHeader {string} Token Authenticaton Token
+ *
+ * @apiSuccess {string} Status Status of API
+ *
+ * @apiUse SuccessRes
+ *
+ * @apiUse UnauthError
+ */
+
+userRouter.post('/confirm');
+
+/**
+ * @api {post} /user/sign-in Sign In a Confirmed User
+ * @apiVersion 1.0.0
+ * @apiName SignUpConfirm
+ * @apiGroup User
+ *
+ * @apiBody {string} username Username entered by user
+ * @apiBody (string) password Password entered by user
+ *
+ * @apiSuccess {string} Token Authenticaton Token
+ *
+ * @apiUse SuccessRes
+ *
+ * @apiUse UnauthError
+ */
+
 userRouter.post('/sign-in');
+
+/**
+ * @api {post} /user/sign-out Sign In a Confirmed User
+ * @apiVersion 1.0.0
+ * @apiName SignUpConfirm
+ * @apiGroup User
+ *
+ * @apiHeader {string} Token Authenticaton Token
+ *
+ * @apiUse SuccessRes
+ *
+ * @apiUse UnauthError
+ */
+
 userRouter.post('/sign-out');
 
 /**
@@ -600,6 +669,42 @@ userRouter.get('/:id/showcase');
  */
 
 userRouter.get('/:id/faves');
+
+/**
+ * @api {get} /user/limits Return a List of User Upload and Size Limits
+ * @apiVersion 1.0.0
+ * @apiName GetLimits
+ * @apiGroup User
+ *
+ * @apiHeader {string} Token Authenticaton Token
+ *
+ * @apiSuccess {string} photos/maxdisplaypx Maximum size in pixels for photos displayed on the site (0 means that no limit is in place).
+ * @apiSuccess {string} photos/maxupload Maximum file size in bytes for photo uploads.
+ * @apiSuccess {string} videos/maxduration Maximum duration in seconds of a video.
+ * @apiSuccess {string} videos/maxupload Maximum file size in bytes for video uploads.
+ *
+ * @apiSuccessExample Success-Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *          "status": "success",
+ *          "data":
+ *          {
+ *              "photos":
+ *              {
+ *                  "maxdisplaypx": 1024
+ *                  "maxupload": 15728640
+ *              },
+ *              "videos" :
+ *              {
+ *                  "maxduration": 90
+ *                  "maxupload": 157286400
+ *              ]
+ *          }
+ *      }
+ *
+ * @apiUse UnauthError
+ */
+
 userRouter.get('/limits');
 
 /**
@@ -617,47 +722,768 @@ userRouter.get('/limits');
 
 userRouter.delete('/testimonials/:id');
 
+/**
+ * @api {get} /user/name Return the real name of User
+ * @apiVersion 1.0.0
+ * @apiName GetName
+ * @apiGroup User
+ *
+ * @apiHeader {string} Token Authenticaton Token
+ *
+ * @apiSuccess {string} firstname The First Name of the calling User
+ * @apiSuccess {string} lastname The Last Name of the calling User
+ *
+ * @apiSuccessExample Success-Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *          "status": "success",
+ *          "data":
+ *          {
+ *              "firstname": "Ahmed",
+ *              "lastname": "Abdulkader"
+ *          }
+ *      }
+ *
+ * @apiUse UnauthError
+ */
+
+userRouter.get('/name');
+
+/**
+ * @api {get} /user/disp-name Return the display name of User
+ * @apiVersion 1.0.0
+ * @apiName GetDispName
+ * @apiGroup User
+ *
+ * @apiHeader {string} Token Authenticaton Token
+ *
+ * @apiSuccess {string} displayname The Display name of the calling User
+ *
+ * @apiSuccessExample Success-Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *          "status": "success",
+ *          "data":
+ *          {
+ *              "displayname": "ahmedabdulkader99"
+ *          }
+ *      }
+ *
+ * @apiUse UnauthError
+ */
+
 userRouter.get('/disp-name');
+
+/**
+ * @api {patch} /user/disp-name Update the display name of User
+ * @apiVersion 1.0.0
+ * @apiName UpdateDispName
+ * @apiGroup User
+ *
+ * @apiHeader {string} Token Authenticaton Token
+ *
+ * @apiBody {string} displayname The New Display name of the calling User
+ *
+ * @apiSuccess {string} Status Status of API
+ *
+ * @apiUse SuccessRes
+ *
+ * @apiUse UnauthError
+ */
+
 userRouter.patch('/disp-name');
 
+/**
+ * @api {patch} /user/password Update the Password of User
+ * @apiVersion 1.0.0
+ * @apiName ChamgePassword
+ * @apiGroup User
+ *
+ * @apiHeader {string} Token Authenticaton Token
+ *
+ * @apiBody {string} oldpassword The Pervious Password of the calling User
+ * @apiBody {string} newpassword The New Password of the calling User
+ * @apiBody {string} confirmpassword Confirming the New Password of the calling User
+ *
+ * @apiSuccess {string} Status Status of API
+ *
+ * @apiUse SuccessRes
+ *
+ * @apiUse UnauthError
+ */
+
 userRouter.patch('/password');
+
+/**
+ * @api {post} /user/forget-password Send a Forget Password Request
+ * @apiVersion 1.0.0
+ * @apiName ForgetPassword
+ * @apiGroup User
+ *
+ * @apiBody {string} username The Username of the User
+ * @apiBody {string} email The Email of the User
+ *
+ * @apiSuccess {string} Status Status of API
+ *
+ * @apiUse SuccessRes
+ *
+ * @apiUse UnauthError
+ */
+
 userRouter.post('/forget-password');
+
+/**
+ * @api {post} /user/confirm-password Send a Confirm Forgotten Password Request
+ * @apiVersion 1.0.0
+ * @apiName ConfirmForgetPassword
+ * @apiGroup User
+ *
+ * @apiHeader {string} Token Authenticaton Token
+ *
+ * @apiBody {string} newpassword The New Password of the calling User
+ * @apiBody {string} confirmpassword Confirming the New Password of the calling User
+ *
+ * @apiSuccess {string} Status Status of API
+ *
+ * @apiUse SuccessRes
+ *
+ * @apiUse UnauthError
+ */
+
 userRouter.post('/confirm-password');
 
+/**
+ * @api {get} /user/perm Get User Permission Settings
+ * @apiVersion 1.0.0
+ * @apiName GetPermissions
+ * @apiGroup User
+ *
+ * @apiHeader {string} Token Authenticaton Token
+ *
+ * @apiSuccess {string} Status Status of API
+ *
+ * @apiSuccessExample Success-Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *          "status": "success",
+ *          "data": {
+ *              "global": {
+ *                  "whocandownload": "Anyone",
+ *                  "largestimgsize": "Best",
+ *                  "allowshare": 1,
+ *                  "allowtag": "any",
+ *                  "allowgallery": 1,
+ *                  "hideexif": 0,
+ *                  "hidephotopublicsearch": 0,
+ *                  "hideprofilepublicsearch": 0,
+ *                  "whocansee": {
+ *                      "email": "followed",
+ *                      "name": "anyone",
+ *                      "currentcity": "anyone"
+ *                  }
+ *              },
+ *              "defaults": {
+ *                  "perms": {
+ *                      "see": "anyone",
+ *                      "comment": "anyone",
+ *                      "addnotes": "followed"
+ *                  },
+ *                  "license": "All Rights Reserved (c)",
+ *                  "mapvisible": "Anyone",
+ *                  "importexif": 1,
+ *                  "safetylevel": "safe",
+ *                  "contenttype": "photos"
+ *              },
+ *              "filters": {
+ *                  "search": {
+ *                      "safesearch": 1,
+ *                      "content": "photovideo"
+ *                  }
+ *              }
+ *          }
+ *      }
+ *
+ *
+ * @apiUse UnauthError
+ */
+
 userRouter.get('/perm');
+
+/**
+ * @api {patch} /user/perm Update the User Permission Settings
+ * @apiVersion 1.0.0
+ * @apiName ChamgePerms
+ * @apiGroup User
+ *
+ * @apiHeader {string} Token Authenticaton Token
+ *
+ * @apiSuccess {string} Status Status of API
+ *
+ * @apiUse SuccessRes
+ *
+ * @apiUse UnauthError
+ */
+
 userRouter.patch('/perm');
+
+/**
+ * @api {get} /user/notif Get User Notification Settings
+ * @apiVersion 1.0.0
+ * @apiName GetNotifications
+ * @apiGroup User
+ *
+ * @apiHeader {string} Token Authenticaton Token
+ *
+ * @apiSuccess {string} Status Status of API
+ *
+ * @apiSuccessExample Success-Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *          "status": "success",
+ *          "data":
+ *          {
+ *              "notifmail":
+ *              {
+ *                  "invites": 1,
+ *                  "contact": 1,
+ *                 "messages": 1,
+ *                 "reminders": 1
+ *              },
+ *              "activitymail":
+ *              {
+ *                  "you": 1,
+ *                 "contacts": 1
+ *              }
+ *          }
+ *      }
+ *
+ *
+ * @apiUse UnauthError
+ */
+
 userRouter.get('/notif');
+
+/**
+ * @api {patch} /user/notif Update the User Notification Settings
+ * @apiVersion 1.0.0
+ * @apiName ChamgeNotif
+ * @apiGroup User
+ *
+ * @apiHeader {string} Token Authenticaton Token
+ *
+ * @apiSuccess {string} Status Status of API
+ *
+ * @apiUse SuccessRes
+ *
+ * @apiUse UnauthError
+ */
+
 userRouter.patch('/notif');
 
-userRouter.post('/faves');
-userRouter.delete('/faves');
+/**
+ * @api {post} /user/faves/:id Add a Photo to User Faves
+ * @apiVersion 1.0.0
+ * @apiName AddToFaves
+ * @apiGroup User
+ *
+ * @apiParam {String} id The Photo's ID
+ *
+ * @apiHeader {string} Token Authenticaton Token
+ *
+ * @apiUse SuccessRes
+ *
+ * @apiUse UnauthError
+ */
+
+userRouter.post('/faves/:id');
+
+/**
+ * @api {delete} /user/faves/:id Remove a Photo from User Faves
+ * @apiVersion 1.0.0
+ * @apiName RemoveFromFaves
+ * @apiGroup User
+ *
+ * @apiParam {String} id The Photo's ID
+ *
+ * @apiHeader {String} Token Authenticaton Token
+ *
+ * @apiUse SuccessRes
+ *
+ * @apiUse UnauthError
+ */
+
+userRouter.delete('/faves/:id');
+
+/**
+ * @api {get} /user/faves-context Get the context for a photo in Faves
+ * @apiVersion 1.0.0
+ * @apiName GetFavesContext
+ * @apiGroup User
+ *
+ * @apiHeader {String} Token Authenticaton Token
+ *
+ * @apiSuccess {String} nextphoto Photo ID of the next photo
+ * @apiSuccess {String} prevphoto Photo ID of the previous photo
+ *
+ *
+ * @apiSuccessExample Success-Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *          "status": "success",
+ *          "data":
+ *          {
+ *              "nextphoto": "483490175892497",
+ *              "prevphoto": "483490175892451"
+ *          }
+ *      }
+ *
+ * @apiUse UnauthError
+ */
+
 userRouter.get('/fave-context');
 
+/**
+ * @api {get} /user/addable-pool Gets a list of groups the user can add photos to
+ * @apiVersion 1.0.0
+ * @apiName GetAddablePool
+ * @apiGroup User
+ *
+ * @apiHeader {String} Token Authenticaton Token
+ *
+ * @apiSuccess {Object[]} addablegroups ID's of all Groups the Photo can be added to
+ *
+ * @apiSuccessExample Success-Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *          "status": "success",
+ *          "data":
+ *          {
+ *              "addablegroups": [
+ *
+ *              ]
+ *
+ *          }
+ *      }
+ *
+ * @apiUse UnauthError
+ */
+
 userRouter.get('/addable-pool');
+
+/**
+ * @api {get} /user/camera-roll Return a user's camera roll
+ * @apiVersion 1.0.0
+ * @apiName GetCameraRoll
+ * @apiGroup User
+ *
+ * @apiHeader {String} Token Authenticaton Token
+ *
+ * @apiSuccess {Object[]} photos Array of photos from the user's camera roll
+ *
+ * @apiSuccessExample Success-Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *          "status": "success",
+ *          "data":
+ *          {
+ *              "photos": [
+ *
+ *              ]
+ *          }
+ *      }
+ *
+ * @apiUse UnauthError
+ */
+
 userRouter.get('/camera-roll');
 
+/**
+ * @api {get} /user/followed Gets a list of followed users
+ * @apiVersion 1.0.0
+ * @apiName GetFollowed
+ * @apiGroup User
+ *
+ * @apiHeader {String} Token Authenticaton Token
+ *
+ * @apiSuccess {Number} count Followed Users Count
+ * @apiSuccess {Object[]} follwedlist Array of User ID's of the Followed Users
+ *
+ * @apiSuccessExample Success-Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *          "status": "success",
+ *          "data":
+ *          {
+ *              "count": 30
+ *              "follwedlist": [
+ *
+ *              ]
+ *          }
+ *      }
+ *
+ * @apiUse UnauthError
+ */
+
 userRouter.get('/followed');
+
+/**
+ * @api {get} /user/follower Gets a list of User's followers
+ * @apiVersion 1.0.0
+ * @apiName GetFollowers
+ * @apiGroup User
+ *
+ * @apiHeader {String} Token Authenticaton Token
+ *
+ * @apiSuccess {Number} count User's Follower Count
+ * @apiSuccess {Object[]} follwerlist Array of User ID's of the User's Follower
+ *
+ * @apiSuccessExample Success-Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *          "status": "success",
+ *          "data":
+ *          {
+ *              "count": 30
+ *              "follwerlist": [
+ *
+ *              ]
+ *          }
+ *      }
+ *
+ * @apiUse UnauthError
+ */
+
 userRouter.get('/follower');
+
+/**
+ * @api {get} /user/follower-not-followed Gets a list of User's followers not followed by the User
+ * @apiVersion 1.0.0
+ * @apiName GetFollowersNotFollowed
+ * @apiGroup User
+ *
+ * @apiHeader {String} Token Authenticaton Token
+ *
+ * @apiSuccess {Number} count User's Followers Not Followed Count
+ * @apiSuccess {Object[]} list Array of User ID's of the User's Followers Not Followed
+ *
+ * @apiSuccessExample Success-Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *          "status": "success",
+ *          "data":
+ *          {
+ *              "count": 30
+ *              "list": [
+ *
+ *              ]
+ *          }
+ *      }
+ *
+ * @apiUse UnauthError
+ */
+
 userRouter.get('/follower-not-followed');
+
+/**
+ * @api {get} /user/block Gets a list of User's Blocked users
+ * @apiVersion 1.0.0
+ * @apiName GetBlocked
+ * @apiGroup User
+ *
+ * @apiHeader {String} Token Authenticaton Token
+ *
+ * @apiSuccess {Number} count User's Blocked Count
+ * @apiSuccess {Object[]} blocklist Array of User ID's of the User's Blocked users
+ *
+ * @apiSuccessExample Success-Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *          "status": "success",
+ *          "data":
+ *          {
+ *              "count": 30
+ *              "blocklist": [
+ *
+ *              ]
+ *          }
+ *      }
+ *
+ * @apiUse UnauthError
+ */
+
 userRouter.get('/block');
 
+/**
+ * @api {post} /user/follow/:id Follow a User
+ * @apiVersion 1.0.0
+ * @apiName Follow
+ * @apiGroup User
+ *
+ * @apiParam {String} id The Followed User's ID
+ *
+ * @apiHeader {string} Token Authenticaton Token
+ *
+ * @apiUse SuccessRes
+ *
+ * @apiUse UnauthError
+ */
+
 userRouter.post('/follow/:id');
+
+/**
+ * @api {post} /user/follow/:id Change the Relation to a Followed User
+ * @apiVersion 1.0.0
+ * @apiName UpdateFollowState
+ * @apiGroup User
+ *
+ * @apiParam {String} id The Followed User's ID
+ *
+ * @apiBody {String} relation New Relation Setting (Friend, Family, none)
+ *
+ * @apiHeader {string} Token Authenticaton Token
+ *
+ * @apiUse SuccessRes
+ *
+ * @apiUse UnauthError
+ */
+
 userRouter.patch('/follow/:id');
+
+/**
+ * @api {delete} /user/follow/:id Unfollow a User
+ * @apiVersion 1.0.0
+ * @apiName Unfollow
+ * @apiGroup User
+ *
+ * @apiParam {String} id The Unfollowed User's ID
+ *
+ * @apiHeader {string} Token Authenticaton Token
+ *
+ * @apiUse SuccessRes
+ *
+ * @apiUse UnauthError
+ */
+
 userRouter.delete('/follow/:id');
 
+/**
+ * @api {post} /user/block/:id Block a User
+ * @apiVersion 1.0.0
+ * @apiName Block
+ * @apiGroup User
+ *
+ * @apiParam {String} id The Blocked User's ID
+ *
+ * @apiHeader {string} Token Authenticaton Token
+ *
+ * @apiUse SuccessRes
+ *
+ * @apiUse UnauthError
+ */
+
 userRouter.post('/block/:id');
+
+/**
+ * @api {delete} /user/block/:id Unblock a User
+ * @apiVersion 1.0.0
+ * @apiName Unblock
+ * @apiGroup User
+ *
+ * @apiParam {String} id The Unblocked User's ID
+ *
+ * @apiHeader {string} Token Authenticaton Token
+ *
+ * @apiUse SuccessRes
+ *
+ * @apiUse UnauthError
+ */
+
 userRouter.delete('/block/:id');
 
+/**
+ * @api {get} /user/messages/sent Gets a list of User's Sent Messages
+ * @apiVersion 1.0.0
+ * @apiName GetSentMsg
+ * @apiGroup User
+ *
+ * @apiHeader {String} Token Authenticaton Token
+ *
+ * @apiSuccess {Number} count User's Sent Messages
+ * @apiSuccess {Object[]} msglist Array of Message ID's of the User's sent messages
+ *
+ * @apiSuccessExample Success-Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *          "status": "success",
+ *          "data":
+ *          {
+ *              "count": 30
+ *              "msglist": [
+ *
+ *              ]
+ *          }
+ *      }
+ *
+ * @apiUse UnauthError
+ */
+
 userRouter.get('/messages/sent');
+
+/**
+ * @api {get} /user/messages/inbox Gets a list of User's Recieved Messages
+ * @apiVersion 1.0.0
+ * @apiName GetInbox
+ * @apiGroup User
+ *
+ * @apiHeader {String} Token Authenticaton Token
+ *
+ * @apiSuccess {Number} count User's Recieved Messages
+ * @apiSuccess {Object[]} msglist Array of Message ID's of the User's Recieved Messages
+ *
+ * @apiSuccessExample Success-Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *          "status": "success",
+ *          "data":
+ *          {
+ *              "count": 30
+ *              "msglist": [
+ *
+ *              ]
+ *          }
+ *      }
+ *
+ * @apiUse UnauthError
+ */
+
 userRouter.get('/messages/inbox');
+
+/**
+ * @api {post} /user/messages/ Sends a New Message
+ * @apiVersion 1.0.0
+ * @apiName SendMessage
+ * @apiGroup User
+ *
+ * @apiHeader {String} Token Authenticaton Token
+ *
+ * @apiBody {ObjectID} recieverid User ID of the User recieving the Message
+ * @apiBody {String} subject Subject Line of the Message
+ * @apiBody {String} body Main Content of the Message
+ * @apiBody {ObjectID} replymsg Message being replied to (null if none)
+ *
+ * @apiUse SuccessRes
+ *
+ * @apiUse UnauthError
+ */
+
 userRouter.post('/messages');
-userRouter.delete('/messages');
+
+/**
+ * @api {delete} /user/messages/:id Delete a Message
+ * @apiVersion 1.0.0
+ * @apiName DeleteMsg
+ * @apiGroup User
+ *
+ * @apiParam {String} id The Deleted Message's ID
+ *
+ * @apiHeader {string} Token Authenticaton Token
+ *
+ * @apiUse SuccessRes
+ *
+ * @apiUse UnauthError
+ */
+
+userRouter.delete('/messages/:id');
+
+/**
+ * @api {get} /user/notif/contact Gets a list of User's Contact Notifications
+ * @apiVersion 1.0.0
+ * @apiName ContactNotification
+ * @apiGroup User
+ *
+ * @apiHeader {String} Token Authenticaton Token
+ *
+ * @apiSuccess {Number} count User's Recieved Messages
+ * @apiSuccess {Object[]} notiflist Array of Notifications
+ *
+ * @apiSuccessExample Success-Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *          "status": "success",
+ *          "data":
+ *          {
+ *              "count": 30
+ *              "notiflist": [
+ *
+ *              ]
+ *          }
+ *      }
+ *
+ * @apiUse UnauthError
+ */
 
 userRouter.get('/notif/contact');
+
+/**
+ * @api {get} /user/notif/follow Gets a list of User's Follow Notifications
+ * @apiVersion 1.0.0
+ * @apiName FollowtNotification
+ * @apiGroup User
+ *
+ * @apiHeader {String} Token Authenticaton Token
+ *
+ * @apiSuccess {Number} count User's Recieved Messages
+ * @apiSuccess {Object[]} notiflist Array of Notifications
+ *
+ * @apiSuccessExample Success-Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *          "status": "success",
+ *          "data":
+ *          {
+ *              "count": 30
+ *              "notiflist": [
+ *
+ *              ]
+ *          }
+ *      }
+ *
+ * @apiUse UnauthError
+ */
+
 userRouter.get('/notif/follow');
+
+/**
+ * @api {get} /user/notif/interact Gets a list of User's Interact Notifications
+ * @apiVersion 1.0.0
+ * @apiName InteractNotification
+ * @apiGroup User
+ *
+ * @apiHeader {String} Token Authenticaton Token
+ *
+ * @apiSuccess {Number} count User's Recieved Messages
+ * @apiSuccess {Object[]} notiflist Array of Notifications
+ *
+ * @apiSuccessExample Success-Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *          "status": "success",
+ *          "data":
+ *          {
+ *              "count": 30
+ *              "notiflist": [
+ *
+ *              ]
+ *          }
+ *      }
+ *
+ * @apiUse UnauthError
+ */
+
 userRouter.get('/notif/interact');
 
 userRouter.get('/recent-activity/comments');
+
 userRouter.get('/recent-activity/photo');
 
 // EXPORT ROUTER
