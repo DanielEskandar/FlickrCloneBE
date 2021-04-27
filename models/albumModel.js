@@ -7,9 +7,9 @@ const albumSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  photos: [{ photoId: mongoose.Schema.ObjectId }],
+  photos: [mongoose.Schema.ObjectId],
   description: String,
-  comments: [{ commentId: mongoose.Schema.ObjectId }],
+  comments: [mongoose.Schema.ObjectId],
 });
 
 // CREATE MODEL
