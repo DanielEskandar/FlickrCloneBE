@@ -16,9 +16,9 @@ const photoSchema = new mongoose.Schema({
   views: Number,
   photoUrls: [{ URL: String }],
   permissions: {
-    isPublic: Boolean,
-    isFriend: Boolean,
-    isFamily: Boolean,
+    public: Boolean,
+    friend: Boolean,
+    family: Boolean,
   },
   tags: [{ tag: String }],
   taggedUsers: [{ userId: mongoose.Schema.ObjectId }],
