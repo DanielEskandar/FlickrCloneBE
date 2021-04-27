@@ -5,8 +5,11 @@ const mongoose = require('mongoose');
 const photoSchema = new mongoose.Schema({
   userId: mongoose.Schema.ObjectId,
   cameraId: mongoose.Schema.ObjectId,
-  dataUploaded: { Date, default: Date.now },
-  dataTaken: { Date },
+  dataUploaded: {
+    Date,
+    default: Date.now,
+  },
+  dataTaken: Date,
   location: mongoose.Schema.ObjectId,
   comments: [{ comment: mongoose.Schema.ObjectId }],
   favourites: Number,
@@ -19,7 +22,14 @@ const photoSchema = new mongoose.Schema({
   },
   tags: [{ tag: String }],
   taggedUsers: [{ userId: mongoose.Schema.ObjectId }],
-  sizes: [{ size: { height: Number, width: Number } }],
+  sizes: [
+    {
+      size: {
+        height: Number,
+        width: Number,
+      },
+    },
+  ],
   title: String,
   description: String,
   EXIF: String,
