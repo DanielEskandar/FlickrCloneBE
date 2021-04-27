@@ -1,0 +1,8 @@
+{
+  "name": "FlickrAPI",
+  "version": "1.0.0",
+  "description": "An API Documentation for a Website CLoning FLickr's functions",
+  "title": "Flickr Clone Backend API",
+  "url": "http://localhost:7000",
+  "sampleUrl": "http://localhost:7000"
+}
