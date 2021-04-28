@@ -7,10 +7,15 @@ const gallerySchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  primaryPhotoId : String,
+  photosCount : {
+    type: Number,
+     max: 500},
+  videoCount : Number,
   photos: [
     {
       photoId: mongoose.Schema.ObjectId,
-      remark: String,
+      remark: mongoose.Schema.ObjectId,
     },
   ],
   description: String,
