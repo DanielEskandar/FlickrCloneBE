@@ -3,47 +3,43 @@ const mongoose = require('mongoose');
 
 // CREATE SCHEMA
 const photoSchema = new mongoose.Schema({
-  photoId:{type: String, required: true},
-  userId: [{ userId: mongoose.Schema.ObjectId }],  //Check?
-  cameraId: String,
-  dataTaken: {Date, default: Date.now},
-  dataUploaded: {Date, default: Date.now},
-  location: String,
-  comments: [{ userId: mongoose.Schema.ObjectId }],
-  favourites: [{ userId: mongoose.Schema.ObjectId }],
-  like:[{ userId: mongoose.Schema.ObjectId }],
-  views:[{ userId: mongoose.Schema.ObjectId }],
-  photoUrls: String,
-  //Permissions are separated in API of Flickr
-  isPublic: Boolean,
-  isFriend: Boolean,
-  isFamily: Boolean,
-  tags: [{ userId: mongoose.Schema.ObjectId }],
-  sizes: String
-
- /*
-  height: {Number, required: true},
-  width: {Number, required: true},
+  userId: mongoose.Schema.ObjectId,
+  cameraId: mongoose.Schema.ObjectId,
+  dataUploaded: {
+    Date,
+    default: Date.now,
+  },
+  dataTaken: Date,
+  location: mongoose.Schema.ObjectId,
+  comments: [{ comment: mongoose.Schema.ObjectId }],
+  favourites: Number,
   views: Number,
-  comments: Number,
+  photoUrls: [{ URL: String }],
+  permissions: {
+    public: Boolean,
+    friend: Boolean,
+    family: Boolean,
+  },
+  tags: [{ tag: String }],
+  taggedUsers: [{ userId: mongoose.Schema.ObjectId }],
+  sizes: [
+    {
+      size: {
+        height: Number,
+        width: Number,
+      },
+    },
+  ],
   title: String,
   description: String,
+  EXIF: String,
   safetyLevel: Number,
   contentType: Number,
-  hidden: Number,
-  likes: [{ userId: mongoose.Schema.ObjectId, relation: String }],
-  albums: [{ albumId: mongoose.Schema.ObjectId }]
-*/
-  },
-);
+  hidden: Boolean,
+});
 
 // CREATE MODEL
-const userModel = mongoose.model('photoModel', userSchema);
+const photoModel = mongoose.model('photoModel', photoSchema);
 
 // EXPORT MODEL
 module.exports = photoModel;
-
-//--------------DO API DOCUMENTATION 
-/** 
-* @api
-**/

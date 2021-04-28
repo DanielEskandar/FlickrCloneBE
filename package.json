@@ -4,9 +4,9 @@
   "description": "Clone to Flickr's backend",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon server.js",
-    "start:prod": "NODE_ENV=production nodemon server.js"
+    "start:prod": "NODE_ENV=production nodemon server.js",
+    "apidoc": "apidoc -i routers/ -o apidoc/"
   },
   "repository": {
     "type": "git",

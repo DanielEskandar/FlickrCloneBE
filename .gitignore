@@ -1,6 +1,9 @@
 # node modules folder
 node_modules/
 
+# api documentation folder
+apidoc/
+
 # environment variables file
 config.env
 
