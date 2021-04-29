@@ -11,11 +11,7 @@ exports.simple = (req, res) => {
 
 exports.createUser = async (req, res, next) => {
   await userModel
-    .create({
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
-      email: req.body.email,
-    })
+    .create(req.body)
     .then(() => console.log('Added a new user successfully'))
     .catch(() => console.log('Failed to add a new user'));
   console.log(req.body);

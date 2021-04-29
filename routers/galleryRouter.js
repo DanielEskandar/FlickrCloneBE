@@ -2,7 +2,7 @@
 const express = require('express');
 
 // INCLUDE CONTROLLERS
-//const galleryController = require('./controllers/galleryController.js');
+//const galleryController = require('../controllers/galleryController.js');
 
 // CREATE ROUTER
 const galleryRouter = express.Router();
