@@ -59,7 +59,8 @@ const albumRouter = express.Router();
  * @apiSuccess {String} title Album's Name
  * @apiSuccess {String} description Album's Description
  * @apiSuccess {Object[]} photos Array of Album's photos
- * @apiSuccess {Number} count The count of Album's photos
+ * @apiSuccess {Number} photoscount The count of Album's photos
+ * @apiSuccess {Number} videoscount The count of Album's videos
  * @apiSuccess {ObjectID} primaryphoto The primary photo's id
  * @apiSuccess {Object[]} comments  Array of Album's comments
  *
@@ -71,7 +72,8 @@ const albumRouter = express.Router();
  *          {
  *              "title": sunsets,
  *              "description": best sunset photos,
- *              "count": 17,
+ *              "photos count": 17,
+ *              "videos count": 3,
  *              "primaryphoto": 292882708,
  *              "photos": [
  * 
@@ -268,7 +270,10 @@ albumRouter.post('/');
  *
  * @apiUse SuccessRes
  *
+ * @apiUse AlbumNotFoundError
+ * 
  * @apiUse UnauthError
+ * 
  */
 
 albumRouter.post('/:id/photos');
@@ -286,6 +291,8 @@ albumRouter.post('/:id/photos');
  * @apiUse SuccessRes
  *
  * @apiUse UnauthError
+ * 
+ * @apiUse AlbumNotFoundError
  */
 
 albumRouter.post('/:id/comments');
@@ -304,6 +311,8 @@ albumRouter.post('/:id/comments');
  * @apiUse SuccessRes
  *
  * @apiUse UnauthError
+ * 
+ * @apiUse AlbumNotFoundError
  */
 
 albumRouter.put('/:id/photos');
@@ -322,6 +331,8 @@ albumRouter.put('/:id/photos');
  * @apiUse SuccessRes
  *
  * @apiUse UnauthError
+ * 
+ * @apiUse AlbumNotFoundError
  */
 
 albumRouter.patch('/:id/meta');
@@ -355,6 +366,8 @@ albumRouter.patch('/comments/:id');
  * @apiUse SuccessRes
  *
  * @apiUse UnauthError
+ * 
+ * @apiUse AlbumNotFoundError
  */
 
 
@@ -389,6 +402,8 @@ albumRouter.patch('/setorder');
  * @apiUse SuccessRes
  *
  * @apiUse UnauthError
+ * 
+ * @apiUse AlbumNotFoundError
  */
 
 albumRouter.patch('/:id/reorder');

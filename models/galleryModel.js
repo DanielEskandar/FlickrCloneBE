@@ -12,10 +12,11 @@ const gallerySchema = new mongoose.Schema({
     type: Number,
      max: 500},
   videoCount : Number,
+  viewCount: Number,
   photos: [
     {
       photoId: mongoose.Schema.ObjectId,
-      remark: mongoose.Schema.ObjectId,
+      remark: String,
     },
   ],
   description: String,

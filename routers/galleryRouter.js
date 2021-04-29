@@ -59,7 +59,9 @@ const galleryRouter = express.Router();
  * @apiSuccess {String} title Gallery's Name
  * @apiSuccess {String} description Gallery's Description
  * @apiSuccess {Object[]} photos Array of gallery's photos
- * @apiSuccess {Number} count The count of gallery's photos
+ * @apiSuccess {Number} photoscount The count of gallery's photos
+ * @apiSuccess {Number} videoscount The count of gallery's videos
+ * @apiSuccess {Number} viewscount The count of views
  * @apiSuccess {ObjectID} primaryphoto The primary photo's id
  * @apiSuccess {Object[]} comments  Array of gallery's comments
  *
@@ -71,7 +73,9 @@ const galleryRouter = express.Router();
  *          {
  *              "title": sunsets,
  *              "description": best sunset photos,
- *              "count": 17,
+ *              "photos count": 17,
+ *              "videos count": 3,
+ *              "views count": 20,
  *              "primary photo id": 292882708,
  *              "photos": [
  * 
@@ -222,6 +226,8 @@ galleryRouter.delete('/comments/:id');
  * @apiUse SuccessRes
  *
  * @apiUse UnauthError
+ * 
+ * @apiUse GalleryNotFoundError
  */
 
  galleryRouter.post('/:id/photos');
@@ -239,6 +245,9 @@ galleryRouter.delete('/comments/:id');
  * @apiUse SuccessRes
  *
  * @apiUse UnauthError
+ * 
+ * @apiUse GalleryNotFoundError
+ * 
  */
 
  galleryRouter.post('/:id/comments');
@@ -257,6 +266,9 @@ galleryRouter.delete('/comments/:id');
  * @apiUse SuccessRes
  *
  * @apiUse UnauthError
+ * 
+ * @apiUse GalleryNotFoundError
+ * 
  */
 
 galleryRouter.put('/:id/photos');
@@ -275,6 +287,8 @@ galleryRouter.put('/:id/photos');
  * @apiUse SuccessRes
  *
  * @apiUse UnauthError
+ * 
+ * @apiUse GalleryNotFoundError
  */
 
 galleryRouter.patch('/:id/meta');
@@ -291,7 +305,7 @@ galleryRouter.patch('/:id/meta');
  *
  * @apiUse SuccessRes
  *
- * @apiUse UnauthError
+ * @apiUse UnauthError 
  */
 
 galleryRouter.patch('/comments/:id');
@@ -308,6 +322,8 @@ galleryRouter.patch('/comments/:id');
  * @apiUse SuccessRes
  *
  * @apiUse UnauthError
+ * 
+ * @apiUse GalleryNotFoundError
  */
 
 
@@ -326,6 +342,8 @@ galleryRouter.patch('/:id/primary/:photoid');
  * @apiUse SuccessRes
  *
  * @apiUse UnauthError
+ * 
+ * @apiUse GalleryNotFoundError
  */
 
 galleryRouter.patch('/:id/:photoid');
