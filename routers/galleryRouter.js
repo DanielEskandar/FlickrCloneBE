@@ -288,7 +288,7 @@ galleryRouter.put('/:id/photos');
  *
  * @apiUse UnauthError
  * 
- * @apiUse GalleryNotFoundError
+ * @apiUse GalleryNotFoundErro
  */
 
 galleryRouter.patch('/:id/meta');

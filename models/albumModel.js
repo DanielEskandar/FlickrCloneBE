@@ -7,8 +7,6 @@ const albumSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  photosCount : Number,
-  videoCount : Number,
   primaryPhotoId : String,
   photos: [{ photoId: mongoose.Schema.ObjectId }],
   description: String,
