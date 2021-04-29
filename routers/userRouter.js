@@ -51,7 +51,7 @@ const userRouter = express.Router();
 /**
  * Test Func
  */
-userRouter.get('/createUser', userController.simple);
+userRouter.post('/createUser', userController.createUser);
 
 /**
  * @api {post} /user/sign-up Send a Sign-Up Request
