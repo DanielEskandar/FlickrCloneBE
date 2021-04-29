@@ -14,7 +14,7 @@ const gallerySchema = new mongoose.Schema({
     },
   ],
   description: String,
-  comments: [{ commentId: mongoose.Schema.ObjectId }],
+  comments: [mongoose.Schema.ObjectId],
 });
 
 // CREATE MODEL

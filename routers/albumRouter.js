@@ -2,7 +2,7 @@
 const express = require('express');
 
 // INCLUDE CONTROLLERS
-//const albumController = require('./controllers/albumController.js');
+//const albumController = require('../controllers/albumController.js');
 
 // CREATE ROUTER
 const albumRouter = express.Router();
