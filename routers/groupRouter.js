@@ -59,7 +59,7 @@ const groupRouter = express.Router();
  * @apiBody {string} description About the group
  * @apiBody {date} startDate Creation date
  *
- * @apiSuccess {string} Token Authenticaton Token //??
+ * @apiSuccess {Object} user Authenticaton Token
  *
  * @apiUse SuccessRes
  *
@@ -76,7 +76,7 @@ groupRouter
  *
  * @apiParam {String} id The Group's ID
  *
- * @apiHeader {String} Token Authenticaton Token //?? lazm yb2a admin
+ * @apiHeader {String} user Authenticaton Token
  *
  * @apiUse SuccessRes
  *
@@ -118,7 +118,7 @@ groupRouter
  *          }
  *      }
  *
- * @apiUse UnauthError //???
+ * @apiUse UnauthError
  */
 groupRouter
 .GET('/:id');
@@ -128,7 +128,10 @@ groupRouter
  * @apiVersion 1.0.0
  * @apiName Join
  * @apiGroup Groups
- *
+ * 
+ * @apiParam {String} id The Group's ID
+ * @apiParam {String} id The User's ID
+ * 
  * @apiUse SuccessRes
  *
  * @apiUse UnauthError
@@ -141,7 +144,10 @@ groupRouter
  * @apiVersion 1.0.0
  * @apiName JoinRequest
  * @apiGroup Groups
- *
+ * 
+ * @apiParam {String} id The Group's ID
+ * @apiParam {String} id The User's ID
+ * 
  * @apiUse SuccessRes
  *
  * @apiUse UnauthError
@@ -154,7 +160,10 @@ groupRouter
  * @apiVersion 1.0.0
  * @apiName Invite
  * @apiGroup Groups
- *
+ 
+ * @apiParam {String} id The Group's ID
+ * @apiParam {String} id The User's ID
+ * 
  * @apiUse SuccessRes
  *
  * @apiUse UnauthError
@@ -171,7 +180,7 @@ groupRouter
  * @apiParam {String} id The Group's ID
  * @apiParam {String} userid The user's ID (leaving the group)
  *
- * @apiHeader {String} Token Authenticaton Token //??
+ * @apiHeader {String} user Authenticaton Token 
  *
  * @apiUse SuccessRes
  *
@@ -202,7 +211,7 @@ groupRouter
  *          }
  *      }
  *
- * @apiUse UnauthError //???
+ * @apiUse UnauthError
  */
 groupRouter
 .GET('/search');
