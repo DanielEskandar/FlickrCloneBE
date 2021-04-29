@@ -14,7 +14,7 @@ const groupSchema = new mongoose.Schema({
   users: [
     {
       userId: mongoose.Schema.ObjectId,
-      joinData: {
+      joinDate: {
         type: Date,
         default: Date.now,
       },
@@ -25,8 +25,8 @@ const groupSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-  photos: [{ photoId: mongoose.Schema.ObjectId }],
-  discussionTopics: [{ discussionID: mongoose.Schema.ObjectId }],
+  photos: [mongoose.Schema.ObjectId],
+  discussionTopics: [mongoose.Schema.ObjectId],
   pinnedThread: mongoose.Schema.ObjectId,
 });
 

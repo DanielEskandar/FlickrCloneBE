@@ -1,4 +1,3 @@
-console.log("Trial")
 // INCLUDE DEPENDENCIES
 const mongoose = require('mongoose');
 
@@ -6,23 +5,23 @@ const mongoose = require('mongoose');
 const photoSchema = new mongoose.Schema({
   userId: mongoose.Schema.ObjectId,
   cameraId: mongoose.Schema.ObjectId,
-  dataUploaded: {
-    Date,
+  dateUploaded: {
+    type: Date,
     default: Date.now,
   },
-  dataTaken: Date,
+  dateTaken: Date,
   location: mongoose.Schema.ObjectId,               //-----HOW IS THE LOCATION AN OBJECT? AND SHOULD WE DO IT LATITUDE AND LONGITUDE LIKE FLICKR
-  comments: [{ comment: mongoose.Schema.ObjectId }],
+  comments: [mongoose.Schema.ObjectId],
   favourites: Number,
   views: Number,
-  photoUrls: [{ URL: String }],
+  urls: [String],
   permissions: {
     public: Boolean,
     friend: Boolean,
     family: Boolean,
   },
-  tags: [{ tag: String }],
-  taggedUsers: [{ userId: mongoose.Schema.ObjectId }],
+  tags: [String],
+  taggedUsers: [mongoose.Schema.ObjectId],
   sizes: [
     {
       size: {
