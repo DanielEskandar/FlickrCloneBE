@@ -117,8 +117,12 @@ groupRouter
  *              
  *          }
  *      }
- *
- * @apiUse UnauthError
+ * @apiErrorExample Error-Response:
+ *      HTTP/1.1 401 FAILED
+ *      {
+ *          "status": "failed",
+ *          "messege": " Error in fetching group info "
+ *      }
  */
 groupRouter
 .GET('/:id');
