@@ -8,6 +8,7 @@ const discussionSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  content: String, //added new
   replies: [{ replyId: mongoose.Schema.ObjectId }],
 });
 

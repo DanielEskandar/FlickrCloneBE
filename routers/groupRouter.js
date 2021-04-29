@@ -123,12 +123,42 @@ groupRouter
 groupRouter
 .GET('/:id');
 
+/**
+ * @api {post} /group/:id/user/:userid Join a public non-invitation group as a member
+ * @apiVersion 1.0.0
+ * @apiName Join
+ * @apiGroup Groups
+ *
+ * @apiUse SuccessRes
+ *
+ * @apiUse UnauthError
+ */
 groupRouter
 .POST('/:id/user/:userid');
 
+/**
+ * @api {post} /group/:id/request/:userid Request to join an invitation only group
+ * @apiVersion 1.0.0
+ * @apiName JoinRequest
+ * @apiGroup Groups
+ *
+ * @apiUse SuccessRes
+ *
+ * @apiUse UnauthError
+ */
 groupRouter
 .POST('/:id/request/:userid');
 
+/**
+ * @api {post} /group/:id/invite/:userid Admin sends an invitation to join the group
+ * @apiVersion 1.0.0
+ * @apiName Invite
+ * @apiGroup Groups
+ *
+ * @apiUse SuccessRes
+ *
+ * @apiUse UnauthError
+ */
 groupRouter
 .POST('/:id/invite/:userid');
 
@@ -150,9 +180,49 @@ groupRouter
 groupRouter
 .DELETE('/:id/user/:userid');
 
+/**
+ * @api {get} /group/search/ Search for groups
+ * @apiVersion 1.0.0
+ * @apiName Search
+ * @apiGroup Groups
+ *
+ * 
+ * @apiSuccess {Object} group Search result
+ *
+ * @apiSuccessExample Success-Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *          "status": "success",
+ *          "data":
+ *          {
+ *             "groups": [
+ *
+ *              ]
+ *              
+ *          }
+ *      }
+ *
+ * @apiUse UnauthError //???
+ */
 groupRouter
 .GET('/search');
 
+/**
+ * @api {post} /group/:id/discussions Post a new discussion topic to the group
+ * @apiVersion 1.0.0
+ * @apiName CreateDiscussionTopic
+ * @apiGroup Groups
+ *
+ * @apiBody {Object} user Author
+ * @apiBody {Date} date Date of publish
+ * @apiBody {String} content Discussion content
+ *
+ * @apiSuccess {Object} user Authenticaton Token //??
+ *
+ * @apiUse SuccessRes
+ *
+ * @apiUse UnauthError
+ */
 groupRouter
 .POST('/:id/discussion');
 
@@ -248,6 +318,22 @@ groupRouter
 groupRouter
 .PATCH('/:id/pinned/:topicId');
 
+/**
+ * @api {post} /group/discussion/:id/replies Add a reply to a discussion topic
+ * @apiVersion 1.0.0
+ * @apiName AddReply
+ * @apiGroup Groups
+ *
+ * @apiBody {Object} user Author
+ * @apiBody {Date} date Date of comment
+ * @apiBody {String} content Reply content
+ *
+ * @apiSuccess {Object} user Authenticaton Token
+ *
+ * @apiUse SuccessRes
+ *
+ * @apiUse UnauthError
+ */
 groupRouter
 .POST('/discussions/:id/replies');
 
@@ -288,6 +374,20 @@ groupRouter
 groupRouter
 .PATCH('/discussions/replies/:id');
 
+/*
+* @api {get} /group/discussion/replies/:id Get info about a discussion topic reply
+* @apiVersion 1.0.0
+* @apiName GetReply
+* @apiGroup Groups
+*
+* @apiParam {String} id The reply's ID
+*
+* @apiSuccess {Object} reply Requested reply
+*
+* @apiUse SuccessRes
+*
+* @apiUse UnauthError
+*/
 groupRouter
 .GET('/discussions/replies/:id');
 
@@ -326,9 +426,51 @@ groupRouter
 groupRouter
 .GET('/:id/members');
 
+/**
+ * @api {post} /group/:id/pool/:id Add a Photo to a Group Photo Pool
+ * @apiVersion 1.0.0
+ * @apiName AddPhototoPool
+ * @apiGroup Groups
+ *
+ * @apiBody {Object} photo Author
+ *
+ * @apiSuccess {Object} user Authenticaton Token
+ *
+ * @apiUse SuccessRes
+ *
+ * @apiUse UnauthError
+ */
 groupRouter
 .POST('/:id/pool/:id');
 
+/**
+ * @api {get} /group/:id/photo/:id/context Get Next and Previous Photos in Group Pool
+ * @apiVersion 1.0.0
+ * @apiName GetContext
+ * @apiGroup Groups
+ *
+ * @apiParam {String} id The Group's ID
+ * @apiParam {String} id The photo's ID
+ * 
+ * @apiSuccess {Object} photo Next photo for a photo in a group pool
+ * @apiSuccess {object} photo Previous photo for a photo in a group pool
+
+ *
+ * @apiSuccessExample Success-Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *          "status": "success",
+ *          "data":
+ *          {
+ *             "photos": [
+ *
+ *              ]
+ *              
+ *          }
+ *      }
+ *
+ * @apiUse UnauthError //???
+ */
 groupRouter
 .GET('/:id/photo/:id/context');
 
@@ -349,5 +491,21 @@ groupRouter
 groupRouter
 .GET('/:id/pool');
 
+
+/**
+ * @api {delete} /group/:id/pool/:photoId Remove a Photo from a Group Photo Pool
+ * @apiVersion 1.0.0
+ * @apiName RemovePhotofromPool
+ * @apiGroup Groups
+ *
+ * @apiParam {String} id The Group's ID
+ * @apiParam {String} id The photo's ID
+ *
+ * @apiHeader {String} user Authenticaton Token
+ *
+ * @apiUse SuccessRes
+ *
+ * @apiUse UnauthError
+ */
 groupRouter
 .DELETE('/:id/pool');
