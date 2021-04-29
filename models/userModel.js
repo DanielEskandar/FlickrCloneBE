@@ -106,13 +106,13 @@ const userSchema = new mongoose.Schema({
     },
   },
   notificationSettings: {
-    notifmail: {
+    notifMail: {
       invites: { type: Boolean, default: 1 },
       contact: { type: Boolean, default: 1 },
       messages: { type: Boolean, default: 1 },
       reminders: { type: Boolean, default: 1 },
     },
-    activitymail: {
+    activityMail: {
       you: { type: Boolean, default: 1 },
       contacts: { type: Boolean, default: 1 },
     },
