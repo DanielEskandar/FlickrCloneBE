@@ -26,9 +26,10 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [true, 'A user must have a user type'],
     enum: {
-      values: ['normal', 'pro'],
-      message: 'User type is either normal or pro',
+      values: ['free', 'pro'],
+      message: 'User type is either free or pro',
     },
+    default: 'free',
   },
   firstName: {
     type: String,
@@ -42,6 +43,7 @@ const userSchema = new mongoose.Schema({
   },
   age: {
     type: Number,
+    required: [true, 'A user must have an age'],
     min: 13,
   },
   aboutMe: String,
@@ -69,11 +71,51 @@ const userSchema = new mongoose.Schema({
   ],
   blocked: [mongoose.Schema.ObjectId],
   privacySettings: {
-    public: Boolean,
-    emailVisiblity: Boolean,
+    global: {
+      downloadPerm: { type: Number, default: 1 }, //0 : No default set, 1 : Public, 2 : Contacts only, 3 : Friends and Family only, 4 : Friends only, 5 : Family only, 6 : Private
+      largestImgSize: { type: Number, default: 0 }, //0: Best display size, Any Other number: Actual Siza Val (1024, 1600, 2048 for free | 3K 4K 5K 6K for pro)
+      allowShare: { type: Number, default: 1 },
+      allowTag: { type: Number, default: 1 },
+      allowGalleryAdd: { type: Boolean, default: 1 },
+      hideEXIF: { type: Boolean, default: 0 },
+      hidePhotoSearch: { type: Boolean, default: 0 },
+      hideProfileSearch: { type: Boolean, default: 0 },
+      infoVisiblity: {
+        email: { type: Number, default: 2 },
+        name: { type: Number, default: 1 },
+        currentCity: { type: Number, default: 1 },
+      },
+    },
+    defaults: {
+      perms: {
+        see: { type: Number, default: 1 },
+        comment: { type: Number, default: 1 },
+        addNotes: { type: Number, default: 2 },
+      },
+      license: { type: Number, default: 0 }, //0: None (All rights reserved)
+      mapVisible: { type: Number, default: 1 },
+      importEXIF: { type: Boolean, default: 1 },
+      safetyLevel: { type: Number, default: 1 }, //( 1 for Safe, 2 for Moderate, and 3 for Restricted.)
+      contentType: { type: Number, default: 1 }, //(1 for Photo, 2 for Screenshot, and 3 for Other)
+    },
+    filters: {
+      search: {
+        safeSearch: { type: Boolean, default: 1 },
+        content: { type: Number, default: 1 }, //(1 for Photo, 2 for Screenshot, and 3 for Other),
+      },
+    },
   },
   notificationSettings: {
-    push: Boolean,
+    notifmail: {
+      invites: { type: Boolean, default: 1 },
+      contact: { type: Boolean, default: 1 },
+      messages: { type: Boolean, default: 1 },
+      reminders: { type: Boolean, default: 1 },
+    },
+    activitymail: {
+      you: { type: Boolean, default: 1 },
+      contacts: { type: Boolean, default: 1 },
+    },
   },
 });
 
