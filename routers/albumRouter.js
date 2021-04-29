@@ -76,14 +76,14 @@ const albumRouter = express.Router();
  *              "videos count": 3,
  *              "primaryphoto": 292882708,
  *              "photos": [
- * 
+ *
  *               ]
  *              "comments" : [
- * 
+ *
  *               ]
  *          }
  *      }
- * 
+ *
  * @apiUse AlbumNotFoundError
  */
 
@@ -97,7 +97,7 @@ albumRouter.get('/:id');
  *
  * @apiParam {String} id The Album's ID
  * @apiParam {String} photoid The Photo's ID
- * 
+ *
  * @apiSuccess {ObjectID} prevphoto Previous Photo
  * @apiSuccess {ObjectID} nextphoto Next Photo
  *
@@ -112,7 +112,7 @@ albumRouter.get('/:id');
  *              "next photo": 2985
  *          }
  *      }
- * 
+ *
  * @apiUse AlbumNotFoundError
  */
 
@@ -135,11 +135,11 @@ albumRouter.get('/:id/context/:photoid');
  *          "data":
  *          {
  *              "photos": [
- * 
+ *
  *               ]
  *          }
  *      }
- * 
+ *
  * @apiUse AlbumNotFoundError
  */
 
@@ -162,11 +162,11 @@ albumRouter.get('/:id/photos');
  *          "data":
  *          {
  *              "comments": [
- * 
+ *
  *               ]
  *          }
  *      }
- * 
+ *
  * @apiUse AlbumNotFoundError
  */
 
@@ -181,7 +181,7 @@ albumRouter.get('/:id/comments');
  * @apiParam {String} id The Album's ID
  *
  * @apiUse SuccessRes
- * 
+ *
  * @apiUse AlbumNotFoundError
  *
  * @apiUse UnauthError
@@ -196,11 +196,11 @@ albumRouter.delete('/:id');
  * @apiGroup Album
  *
  * @apiParam {String} id The Album's ID
- * 
+ *
  * @apiBody {Object[]} photos List of photos to remove from the album
- * 
+ *
  * @apiUse SuccessRes
- * 
+ *
  * @apiUse AlbumNotFoundError
  *
  * @apiUse UnauthError
@@ -218,7 +218,7 @@ albumRouter.delete('/:id/photos');
  * @apiParam {String} photoid The Photo's ID
  *
  * @apiUse SuccessRes
- * 
+ *
  * @apiUse AlbumNotFoundError
  *
  * @apiUse UnauthError
@@ -235,7 +235,7 @@ albumRouter.delete('/:id/:photoid');
  * @apiParam {String} id The Comment's ID
  *
  * @apiUse SuccessRes
- * 
+ *
  * @apiUse UnauthError
  */
 
@@ -258,22 +258,22 @@ albumRouter.delete('/comments/:id');
 
 albumRouter.post('/');
 
- /**
+/**
  * @api {post} /photoset/:id/photos Add a photo
  * @apiVersion 1.0.0
  * @apiName AddPhoto
  * @apiGroup Album
  *
  * @apiParam {String} id The album's ID
- * 
+ *
  * @apiBody {String} photo The Photo to add to the album
  *
  * @apiUse SuccessRes
  *
  * @apiUse AlbumNotFoundError
- * 
+ *
  * @apiUse UnauthError
- * 
+ *
  */
 
 albumRouter.post('/:id/photos');
@@ -287,17 +287,17 @@ albumRouter.post('/:id/photos');
  * @apiParam {String} id The album's ID
  *
  * @apiBody {String} body The body of the comment
- * 
+ *
  * @apiUse SuccessRes
  *
  * @apiUse UnauthError
- * 
+ *
  * @apiUse AlbumNotFoundError
  */
 
 albumRouter.post('/:id/comments');
 
- /**
+/**
  * @api {put} /photoset/:id/photos Add ,Remove and Reorder photos
  * @apiVersion 1.0.0
  * @apiName EditPhotos
@@ -311,7 +311,7 @@ albumRouter.post('/:id/comments');
  * @apiUse SuccessRes
  *
  * @apiUse UnauthError
- * 
+ *
  * @apiUse AlbumNotFoundError
  */
 
@@ -331,13 +331,13 @@ albumRouter.put('/:id/photos');
  * @apiUse SuccessRes
  *
  * @apiUse UnauthError
- * 
+ *
  * @apiUse AlbumNotFoundError
  */
 
 albumRouter.patch('/:id/meta');
 
- /**
+/**
  * @api {patch} /photoset/comments/:id Edit the body of a comment
  * @apiVersion 1.0.0
  * @apiName EditComment
@@ -366,10 +366,9 @@ albumRouter.patch('/comments/:id');
  * @apiUse SuccessRes
  *
  * @apiUse UnauthError
- * 
+ *
  * @apiUse AlbumNotFoundError
  */
-
 
 albumRouter.patch('/:id/primary/:photoid');
 
@@ -378,14 +377,13 @@ albumRouter.patch('/:id/primary/:photoid');
  * @apiVersion 1.0.0
  * @apiName SetAlbumsOrder
  * @apiGroup Album
- * 
- * @apiBody {Object[]} albums Ordered list of albums 
+ *
+ * @apiBody {Object[]} albums Ordered list of albums
  *
  * @apiUse SuccessRes
  *
  * @apiUse UnauthError
  */
-
 
 albumRouter.patch('/setorder');
 
@@ -394,15 +392,15 @@ albumRouter.patch('/setorder');
  * @apiVersion 1.0.0
  * @apiName SetPhotosOrder
  * @apiGroup Album
- * 
+ *
  * @apiParam {String} id The album's ID
- * 
- * @apiBody {Object[]} photos Ordered list of photos 
+ *
+ * @apiBody {Object[]} photos Ordered list of photos
  *
  * @apiUse SuccessRes
  *
  * @apiUse UnauthError
- * 
+ *
  * @apiUse AlbumNotFoundError
  */
 

@@ -2,9 +2,6 @@
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 
-// INCLUDE APP
-const app = require('./app');
-
 // CONFIGURE SERVER
 dotenv.config({ path: './config.env' });
 const PORT = process.env.PORT || 3000;
@@ -12,6 +9,9 @@ const DB = process.env.DATABASE.replace(
   '<PASSWORD>',
   process.env.DATABASE_PASSWORD
 );
+
+// INCLUDE APP
+const app = require('./app');
 
 // LISTEN
 app.listen(PORT, () => {

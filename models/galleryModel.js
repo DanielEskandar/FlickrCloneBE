@@ -8,7 +8,6 @@ const gallerySchema = new mongoose.Schema({
     required: true,
   },
   primaryPhotoId : String,
-
   viewCount: Number,
   photos: [
     {
@@ -17,7 +16,7 @@ const gallerySchema = new mongoose.Schema({
     },
   ],
   description: String,
-  comments: [{ commentId: mongoose.Schema.ObjectId }],
+  comments: [mongoose.Schema.ObjectId],
 });
 
 // CREATE MODEL

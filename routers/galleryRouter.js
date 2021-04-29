@@ -78,14 +78,14 @@ const galleryRouter = express.Router();
  *              "views count": 20,
  *              "primary photo id": 292882708,
  *              "photos": [
- * 
+ *
  *               ]
  *              "comments" : [
- * 
+ *
  *               ]
  *          }
  *      }
- * 
+ *
  * @apiUse GalleryNotFoundError
  */
 
@@ -108,11 +108,11 @@ galleryRouter.get('/:id');
  *          "data":
  *          {
  *              "photos": [
- * 
+ *
  *               ]
  *          }
  *      }
- * 
+ *
  * @apiUse GalleryNotFoundError
  */
 
@@ -135,11 +135,11 @@ galleryRouter.get('/:id/photos');
  *          "data":
  *          {
  *              "comments": [
- * 
+ *
  *               ]
  *          }
  *      }
- * 
+ *
  * @apiUse GalleryNotFoundError
  */
 
@@ -154,7 +154,7 @@ galleryRouter.get('/:id/comments');
  * @apiParam {String} id The Gallery's ID
  *
  * @apiUse SuccessRes
- * 
+ *
  * @apiUse GalleryNotFoundError
  *
  * @apiUse UnauthError
@@ -172,7 +172,7 @@ galleryRouter.delete('/:id');
  * @apiParam {String} photoid The Photo's ID
  *
  * @apiUse SuccessRes
- * 
+ *
  * @apiUse GalleryNotFoundError
  *
  * @apiUse UnauthError
@@ -189,12 +189,11 @@ galleryRouter.delete('/:id/:photoid');
  * @apiParam {String} id The Comment's ID
  *
  * @apiUse SuccessRes
- * 
+ *
  * @apiUse UnauthError
  */
 
 galleryRouter.delete('/comments/:id');
-
 
 /**
  * @api {post} /gallery/ Create a new gallery
@@ -211,28 +210,28 @@ galleryRouter.delete('/comments/:id');
  * @apiUse UnauthError
  */
 
- galleryRouter.post('/');
+galleryRouter.post('/');
 
- /**
+/**
  * @api {post} /gallery/:id/photos Add a photo
  * @apiVersion 1.0.0
  * @apiName AddPhoto
  * @apiGroup Gallery
  *
  * @apiParam {String} id The gallery's ID
- * 
+ *
  * @apiBody {String} photo The Photo to add to the gallery
  *
  * @apiUse SuccessRes
  *
  * @apiUse UnauthError
- * 
+ *
  * @apiUse GalleryNotFoundError
  */
 
- galleryRouter.post('/:id/photos');
+galleryRouter.post('/:id/photos');
 
- /**
+/**
  * @api {post} /gallery/:id/comments Add a comment
  * @apiVersion 1.0.0
  * @apiName AddComment
@@ -241,18 +240,18 @@ galleryRouter.delete('/comments/:id');
  * @apiParam {String} id The gallery's ID
  *
  * @apiBody {String} body The body of the comment
- * 
+ *
  * @apiUse SuccessRes
  *
  * @apiUse UnauthError
- * 
+ *
  * @apiUse GalleryNotFoundError
- * 
+ *
  */
 
- galleryRouter.post('/:id/comments');
+galleryRouter.post('/:id/comments');
 
-  /**
+/**
  * @api {put} /gallery/:id/photos Add ,Remove and Reorder photos
  * @apiVersion 1.0.0
  * @apiName EditPhotos
@@ -266,14 +265,14 @@ galleryRouter.delete('/comments/:id');
  * @apiUse SuccessRes
  *
  * @apiUse UnauthError
- * 
+ *
  * @apiUse GalleryNotFoundError
- * 
+ *
  */
 
 galleryRouter.put('/:id/photos');
 
- /**
+/**
  * @api {patch} /gallery/:id/meta Modify the meta-data
  * @apiVersion 1.0.0
  * @apiName EditMeta
@@ -287,13 +286,13 @@ galleryRouter.put('/:id/photos');
  * @apiUse SuccessRes
  *
  * @apiUse UnauthError
- * 
- * @apiUse GalleryNotFoundErro
+ *
+ * @apiUse GalleryNotFoundError
  */
 
 galleryRouter.patch('/:id/meta');
 
- /**
+/**
  * @api {patch} /gallery/comments/:id Edit the body of a comment
  * @apiVersion 1.0.0
  * @apiName EditComment
@@ -305,7 +304,7 @@ galleryRouter.patch('/:id/meta');
  *
  * @apiUse SuccessRes
  *
- * @apiUse UnauthError 
+ * @apiUse UnauthError
  */
 
 galleryRouter.patch('/comments/:id');
@@ -322,10 +321,9 @@ galleryRouter.patch('/comments/:id');
  * @apiUse SuccessRes
  *
  * @apiUse UnauthError
- * 
+ *
  * @apiUse GalleryNotFoundError
  */
-
 
 galleryRouter.patch('/:id/primary/:photoid');
 
@@ -338,16 +336,15 @@ galleryRouter.patch('/:id/primary/:photoid');
  * @apiParam {String} photoid The ID of the photo to set as primary
  *
  * @apiBody {String} comment The updated comment
- * 
+ *
  * @apiUse SuccessRes
  *
  * @apiUse UnauthError
- * 
+ *
  * @apiUse GalleryNotFoundError
  */
 
 galleryRouter.patch('/:id/:photoid');
-
 
 // EXPORT ROUTER
 module.exports = galleryRouter;
