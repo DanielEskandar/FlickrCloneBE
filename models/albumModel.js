@@ -10,9 +10,9 @@ const albumSchema = new mongoose.Schema({
   photosCount : Number,
   videoCount : Number,
   primaryPhotoId : String,
-  photos: [{ photoId: mongoose.Schema.ObjectId }],
+  photos: [mongoose.Schema.ObjectId],
   description: String,
-  comments: [{ commentId: mongoose.Schema.ObjectId }],
+  comments: [mongoose.Schema.ObjectId],
 });
 
 // CREATE MODEL

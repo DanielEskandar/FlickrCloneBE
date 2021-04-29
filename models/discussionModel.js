@@ -8,7 +8,7 @@ const discussionSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-  replies: [{ replyId: mongoose.Schema.ObjectId }],
+  replies: [mongoose.Schema.ObjectId],
 });
 
 // CREATE MODEL
