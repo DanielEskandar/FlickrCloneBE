@@ -10,7 +10,7 @@ const photoSchema = new mongoose.Schema({
     default: Date.now,
   },
   dateTaken: Date,
-  location: mongoose.Schema.ObjectId,
+  location: mongoose.Schema.ObjectId,               //-----HOW IS THE LOCATION AN OBJECT? AND SHOULD WE DO IT LATITUDE AND LONGITUDE LIKE FLICKR
   comments: [mongoose.Schema.ObjectId],
   favourites: Number,
   views: Number,
@@ -28,6 +28,15 @@ const photoSchema = new mongoose.Schema({
         height: Number,
         width: Number,
       },
+      //
+      label:
+      {
+        small: Boolean,
+        medium: Boolean,
+        large: Boolean,
+        thumbnail: Boolean
+      }
+      //
     },
   ],
   title: String,
@@ -36,6 +45,9 @@ const photoSchema = new mongoose.Schema({
   safetyLevel: Number,
   contentType: Number,
   hidden: Boolean,
+
+  //TO ADD BUT APPROVE FIRST
+  rotation: Number,
 });
 
 // CREATE MODEL
