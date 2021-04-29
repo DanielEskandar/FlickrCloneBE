@@ -24,6 +24,7 @@ const userSchema = new mongoose.Schema({
   },
   userType: {
     type: String,
+    trim: true,
     required: [true, 'A user must have a user type'],
     enum: {
       values: ['free', 'pro'],
@@ -33,11 +34,13 @@ const userSchema = new mongoose.Schema({
   },
   firstName: {
     type: String,
+    trim: true,
     required: [true, 'A user must have a first name'],
     validate: [validator.isAlphanumeric, 'Invalid first name'],
   },
   lastName: {
     type: String,
+    trim: true,
     required: [true, 'A user must have a last name'],
     validate: [validator.isAlpha, 'Invalid last name'],
   },
@@ -46,7 +49,7 @@ const userSchema = new mongoose.Schema({
     required: [true, 'A user must have an age'],
     min: 13,
   },
-  aboutMe: String,
+  aboutMe: { type: String, trim: true },
   joinDate: {
     type: Date,
     default: Date.now,
