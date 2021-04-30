@@ -10,20 +10,57 @@ const photoRouter = express.Router();
 // ROUTE URLs
 
 /**
+ * @apiDefine PhotoNotFoundError
+ * @apiError PhotoNotFoundError No photo is found by that photo ID
+ *
+ * @apiErrorExample Error-Response:
+ *      HTTP/1.1 404 Not Found
+ *      {
+ *          "status": "Error",
+ *          "message": "No photo is found by that photo ID"
+ *      }
+ */
+
+/**
+ * @apiDefine UnauthError
+ * @apiError Unauthorized User does not have access to this API
+ *
+ * @apiErrorExample Error-Response:
+ *      HTTP/1.1 401 Unauthorized
+ *      {
+ *          "status": "error",
+ *          "message": "The user is not authenticated"
+ *      }
+ */
+
+/**
+ * @apiDefine SuccessRes
+ * @apiSuccess {String} status Status of the Operation
+ * @apiSuccess {String} data Success Message
+ *
+ * @apiSuccessExample Success-Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *          "status": "success",
+ *          "data": "ok"
+ *      }
+ */
+
+/**
  * @api {post} /photo/ Upload a New Photo to camera Roll
  * @apiVersion 1.0.0
  * @apiName UploadPhoto
  * @apiGroup Photo
  *
+ * @apiBody {Number} ticket The Ticket of the Upload
+ *
  * @apiHeader {string} Token Authenticaton Token
  *
  * @apiUse SuccessRes
  *
- * @apiUse UnauthError
  */
 photoRouter.post('/');
 
-//------------------ADD 2 OPTIONAL
 /**
  * @api {patch} /photo/:id/perm Change a Photo's Privacy and Visibility
  * @apiVersion 1.0.0
@@ -37,6 +74,8 @@ photoRouter.post('/');
  * @apiBody {boolean} isfriend The Photo is Visible to Friends when Private or not
  * @apiBody {boolean} ispublic The Photo is Visible to the Public when Private or not
  * @apiBody {boolean} isfamily The Photo is Visible to Family when Private or not
+ * @apiBody {Number} permcomment Who is Allowed to Comment on the Photo
+ * @apiBody {Number} permaddmeta Who can Add Notes and Tags to the Photo
  *
  * @apiSuccess {string} Status Status of API
  *
@@ -80,7 +119,6 @@ photoRouter.patch('/:id/');
  */
 photoRouter.delete('/:id/');
 
-// ---------------- CHECK FORMAT FOR PERMISSIONS --------------
 /**
  * @api {get} /photo/:id Get Display Details for a Photo
  * @apiVersion 1.0.0
@@ -162,9 +200,9 @@ photoRouter.get('/:id/url');
 photoRouter.patch('/:id/tags');
 
 /**
- * @api {post} /photo/ Upload a New Photo to camera Roll
+ * @api {post} /photo/ Add a Set of Tags to a Photo
  * @apiVersion 1.0.0
- * @apiName UploadPhoto
+ * @apiName AddTags
  * @apiGroup Photo
  *
  * @apiHeader {string} Token Authenticaton Token
@@ -185,11 +223,11 @@ photoRouter.post('/:id/tags');
  * @apiName RemoveTag
  * @apiGroup Photo
  *
- * @apiParam {String} id The tagged User's ID
+ * @apiParam {String} id The tagged ID to Remove
  *
  * @apiHeader {String} Token Authenticaton Token
  *
- * @apiBody {String} tags All Tags for the Photo to Delete
+ * @apiBody {String} tags All Tags to Delete
  *
  * @apiUse SuccessRes
  *
@@ -415,7 +453,7 @@ photoRouter.get('/:id/faves');
 photoRouter.get('/:id/perm');
 
 /**
- * @api {get} /photo/:id/sizes Get All Avalable Sizes for Photo
+ * @api {get} /photo/:id/sizes Get All Available Sizes for Photo
  * @apiVersion 1.0.0
  * @apiName GetSizes
  * @apiGroup Photo
@@ -479,18 +517,17 @@ photoRouter.get('/:id/sizes');
 photoRouter.patch('/:id/content');
 
 /**
- * @api {patch} /photo/:id/date Set a Photo's Dates
+ * @api {patch} /photo/:id/date Set Photo's Dates
  * @apiVersion 1.0.0
  * @apiName SetDates
  * @apiGroup Photo
  *
  * @apiParam {String} id The Photo's ID
- * 
+ *
  * @apiHeader {string} Token Authenticaton Token
  *
- * @apiBody {Date} dateposted The Date the Photo was Posted to Flickr
  * @apiBody {Date} datetaken The Date the Photo was Taken
-
+ *
  * @apiSuccess {string} Status Status of API
  *
  * @apiUse SuccessRes
@@ -732,16 +769,16 @@ photoRouter.patch('/:id/location');
 photoRouter.delete('/:id/location');
 
 /**
- * @api {get} /photo/:id/licenses Get Location of a Photo
+ * @api {get} /photo/:id/licenses Get Licenses of a Photo
  * @apiVersion 1.0.0
- * @apiName GetLocation
+ * @apiName GetLicenses
  * @apiGroup Photo
- *
- * @apiHeader {String} Token Authenticaton Token
  *
  * @apiParam {String} id The Photo's ID 
  * 
-  @apiSuccess {string} location Location of Photo
+ * @apiHeader {String} Token Authenticaton Token
+ *
+ * @apiSuccess {Number} license License of Photo
  * 
  * @apiSuccessExample Success-Response:
  *      HTTP/1.1 200 OK
@@ -749,13 +786,33 @@ photoRouter.delete('/:id/location');
  *          "status": "success",
  *          "data":
  *          {
-               "location: "
+               "license: "
  *          }
  *      }
  *
  * @apiUse UnauthError
  */
 photoRouter.get('/:id/licenses');
+
+/**
+ * @api {patch} /photo/:id/licenses Set License of a Photo
+ * @apiVersion 1.0.0
+ * @apiName SetLicense
+ * @apiGroup Photo
+ *
+ * @apiParam {String} id The Photo's ID
+ *
+ * @apiHeader {string} Token Authenticaton Token
+ *
+ * @apiBody {Number} licenses The License to be Set
+ *
+ * @apiSuccess {string} Status Status of API
+ *
+ * @apiUse SuccessRes
+ *
+ * @apiUse PhotoNotFoundError
+ *
+ */
 photoRouter.patch('/:id/licenses');
 
 /**
@@ -781,9 +838,9 @@ photoRouter.patch('/:id/licenses');
 photoRouter.post('/:id/tags/:userId');
 
 /**
- * @api {delete} /photo/:id/tags/:userId Delete a User's Photo
+ * @api {delete} /photo/:id/tags/:userId Remove a User from a Photo
  * @apiVersion 1.0.0
- * @apiName DeletePhoto
+ * @apiName RemovePerson
  * @apiGroup Photo
  *
  * @apiParam {String} photoid The Photo's ID to Remove from
