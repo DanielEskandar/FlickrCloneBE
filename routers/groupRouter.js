@@ -10,6 +10,18 @@ const groupRouter = express.Router();
 // APIDOC DEFINITIONS
 
 /**
+ * @apiDefine ForbiddenAccss
+ * @apiError UserForbidden User is not authaurized 
+ *
+ * @apiErrorExample Error-Response:
+ *      HTTP/1.1 403 Not Found
+ *      {
+ *          "status": "Error",
+ *          "message": "User doesnt have permission to access"
+ *      }
+ */
+
+/**
  * @apiDefine UserNotFoundError
  * @apiError UserNotFound No user is found by that user ID
  *
@@ -18,6 +30,18 @@ const groupRouter = express.Router();
  *      {
  *          "status": "Error",
  *          "message": "No user is found by that user ID"
+ *      }
+ */
+
+/**
+ * @apiDefine GroupNotFoundError
+ * @apiError GroupNotFound No group is found by that group ID
+ *
+ * @apiErrorExample Error-Response:
+ *      HTTP/1.1 404 Not Found
+ *      {
+ *          "status": "Error",
+ *          "message": "No group is found by that group ID"
  *      }
  */
 
@@ -53,7 +77,7 @@ const groupRouter = express.Router();
  * @api {post} /group Create a new group
  * @apiVersion 1.0.0
  * @apiName CreateGroup
- * @apiGroup Groups
+ * @apiGroup Group
  *
  * @apiBody {string} name Group Name
  * @apiBody {string} description About the group
@@ -64,6 +88,7 @@ const groupRouter = express.Router();
  * @apiUse SuccessRes
  *
  * @apiUse UnauthError
+ * @apiUse ForbiddenAccss
  */
 groupRouter
 .POST('/'); 
@@ -72,7 +97,7 @@ groupRouter
  * @api {delete} /group/:id Admin deletes a group
  * @apiVersion 1.0.0
  * @apiName DeleteGroup
- * @apiGroup Groups
+ * @apiGroup Group
  *
  * @apiParam {String} id The Group's ID
  *
@@ -81,6 +106,8 @@ groupRouter
  * @apiUse SuccessRes
  *
  * @apiUse UnauthError
+ * @apiUse ForbiddenAccss
+ * @apiUse GroupNotFoundError
  */
 groupRouter
 .DELETE('/:id');
@@ -89,7 +116,7 @@ groupRouter
  * @api {get} /group/:id Get group's info
  * @apiVersion 1.0.0
  * @apiName GetInfo
- * @apiGroup Groups
+ * @apiGroup Group
  *
  * @apiParam {String} id The Group's ID
  *
@@ -98,8 +125,8 @@ groupRouter
  * @apiSuccess {Boolean} invitation If a member needs an invitation to join 
  * @apiSuccess {Boolean} public Public or Private
  * @apiSuccess {Date} startDate Date of creation
- * @apiSuccess {Object} pinnedThread /////???
- * @apiSuccess {Number} members Number of members ////???
+ * @apiSuccess {Object} pinnedThread
+ * @apiSuccess {Number} members Number of members
  *
  * @apiSuccessExample Success-Response:
  *      HTTP/1.1 200 OK
@@ -112,7 +139,7 @@ groupRouter
  *              "invitation": "true",
  *              "public": true,
  *              "Date": "1/1/2020",
- *              "pinnedThread": "Group Rules:......", ///???
+ *              "pinnedThread": "Group Rules:......", 
  *              "members": 15000,
  *              
  *          }
@@ -123,6 +150,9 @@ groupRouter
  *          "status": "failed",
  *          "messege": " Error in fetching group info "
  *      }
+ * 
+ * @apiUse GroupNotFoundError
+ * @apiUse ForbiddenAccss
  */
 groupRouter
 .GET('/:id');
@@ -131,7 +161,7 @@ groupRouter
  * @api {post} /group/:id/user/:userid Join a public non-invitation group as a member
  * @apiVersion 1.0.0
  * @apiName Join
- * @apiGroup Groups
+ * @apiGroup Group
  * 
  * @apiParam {String} id The Group's ID
  * @apiParam {String} id The User's ID
@@ -139,6 +169,7 @@ groupRouter
  * @apiUse SuccessRes
  *
  * @apiUse UnauthError
+ * @apiUse GroupNotFoundError
  */
 groupRouter
 .POST('/:id/user/:userid');
@@ -147,7 +178,7 @@ groupRouter
  * @api {post} /group/:id/request/:userid Request to join an invitation only group
  * @apiVersion 1.0.0
  * @apiName JoinRequest
- * @apiGroup Groups
+ * @apiGroup Group
  * 
  * @apiParam {String} id The Group's ID
  * @apiParam {String} id The User's ID
@@ -155,15 +186,17 @@ groupRouter
  * @apiUse SuccessRes
  *
  * @apiUse UnauthError
+ * @apiUse ForbiddenAccss
+ * @apiUse GroupNotFoundError
  */
 groupRouter
 .POST('/:id/request/:userid');
 
 /**
- * @api {post} /group/:id/invite/:userid Admin sends an invitation to join the group
+ * @api {post} /group/:id/invite/:userId A group member sends an invitation to join the group
  * @apiVersion 1.0.0
  * @apiName Invite
- * @apiGroup Groups
+ * @apiGroup Group
  
  * @apiParam {String} id The Group's ID
  * @apiParam {String} id The User's ID
@@ -171,15 +204,16 @@ groupRouter
  * @apiUse SuccessRes
  *
  * @apiUse UnauthError
+ * @apiUse GroupNotFoundError
  */
 groupRouter
 .POST('/:id/invite/:userid');
 
 /**
- * @api {delete} /group/:id/user/:userid Leaving group If the user is the last person in the group, the group will be deleted.
+ * @api {delete} /group/:id/user/:userId Leaving group If the user is the last person in the group, the group will be deleted.
  * @apiVersion 1.0.0
  * @apiName LeaveGroup
- * @apiGroup Groups
+ * @apiGroup Group
  *
  * @apiParam {String} id The Group's ID
  * @apiParam {String} userid The user's ID (leaving the group)
@@ -189,15 +223,16 @@ groupRouter
  * @apiUse SuccessRes
  *
  * @apiUse UnauthError
+ * @apiUse GroupNotFoundError
  */
 groupRouter
 .DELETE('/:id/user/:userid');
 
 /**
- * @api {get} /group/search/ Search for groups
+ * @api {get} /group/search Search for groups
  * @apiVersion 1.0.0
  * @apiName Search
- * @apiGroup Groups
+ * @apiGroup Group
  *
  * 
  * @apiSuccess {Object} group Search result
@@ -216,6 +251,7 @@ groupRouter
  *      }
  *
  * @apiUse UnauthError
+ * @apiUse GroupNotFoundError
  */
 groupRouter
 .GET('/search');
@@ -224,37 +260,51 @@ groupRouter
  * @api {post} /group/:id/discussions Post a new discussion topic to the group
  * @apiVersion 1.0.0
  * @apiName CreateDiscussionTopic
- * @apiGroup Groups
+ * @apiGroup Group
  *
+ * @apiParam {String} id The Group's ID
+ * 
  * @apiBody {Object} user Author
  * @apiBody {Date} date Date of publish
  * @apiBody {String} content Discussion content
  *
- * @apiSuccess {Object} user Authenticaton Token //??
+ * @apiSuccess {Object} user Authenticaton Token
  *
  * @apiUse SuccessRes
  *
  * @apiUse UnauthError
+ * @apiUse ForbiddenAccss
+ * @apiUse GroupNotFoundError
  */
 groupRouter
 .POST('/:id/discussion');
 
 /**
- * @api {patch} /group/discussion/:id Update editting a discussion topic
+ * @api {patch} /group/discussion/:id Update Editting a discussion topic
  * @apiVersion 1.0.0
  * @apiName EditDiscussion
  * @apiGroup Group
  *
- * @apiHeader {string} Token Authenticaton Token //??
+ * @apiHeader {string} Token Authenticaton Token
  *
- * @apiBody {Object} discussion The old discussion //// da array 
+ * @apiParam {String} id The discussion's ID
+ * 
+ * @apiBody {Object} discussion The old discussion 
  * @apiBody {Object} discussion The updated discussion
  *
  * @apiSuccess {string} Status Status of API
  *
  * @apiUse SuccessRes
  *
+ *  @apiErrorExample Error-Response:
+ *      HTTP/1.1 401 FAILED
+ *      {
+ *          "status": "failed",
+ *          "messege": " Error in fetching discussion "
+ *      }
+ * 
  * @apiUse UnauthError
+ * @apiUse ForbiddenAccss
  */
 groupRouter
 .PATCH('/discussion/:id');
@@ -264,24 +314,30 @@ groupRouter
  * @api {get} /group/discussion/:id Get information about a group discussion topic.
  * @apiVersion 1.0.0
  * @apiName GetDiscussionTopic
- * @apiGroup Groups
+ * @apiGroup Group
  *
  * @apiParam {String} id The discussion's ID
  *
  * @apiSuccess {Object} discussionTopics The required discussion topic //?? returns 1 object
  *
  * @apiUse SuccessRes
- *
+ * 
+ * @apiErrorExample Error-Response:
+ *      HTTP/1.1 401 FAILED
+ *      {
+ *          "status": "failed",
+ *          "messege": " Error in fetching discussion "
+ *      }
  * @apiUse UnauthError
  */
 groupRouter
 .GET('/discussion/:id');
 
-/*
+/** 
 * @api {get} /group/:id/discussion Get a list of discussion topics in a group.
 * @apiVersion 1.0.0
 * @apiName GetAllDiscussionTopics
-* @apiGroup Groups
+* @apiGroup Group
 *
 * @apiParam {String} id The group's ID
 *
@@ -289,7 +345,15 @@ groupRouter
 *
 * @apiUse SuccessRes
 *
+ @apiErrorExample Error-Response:
+ *      HTTP/1.1 401 FAILED
+ *      {
+ *          "status": "failed",
+ *          "messege": " Error in fetching discussion "
+ *      }
+ * 
 * @apiUse UnauthError
+* @apiUse GroupNotFoundError
 */
 groupRouter
 .GET('/:id/discussion');
@@ -298,15 +362,23 @@ groupRouter
  * @api {delete} /group/discussion/:id Deleting a discussion post from the group
  * @apiVersion 1.0.0
  * @apiName DeleteDiscussionTopic
- * @apiGroup Groups
+ * @apiGroup Group
  *
  * @apiParam {String} id The discussion's ID
  *
- * @apiHeader {String} Token Authenticaton Token //??
+ * @apiHeader {String} Token Authenticaton Token
  *
  * @apiUse SuccessRes
  *
+ *  @apiErrorExample Error-Response:
+ *      HTTP/1.1 401 FAILED
+ *      {
+ *          "status": "failed",
+ *          "messege": " Error in fetching discussion "
+ *      }
+ * 
  * @apiUse UnauthError
+ * @apiUse ForbiddenAccss
  */
 groupRouter
 .DELETE('/discussion/:id');
@@ -317,7 +389,10 @@ groupRouter
  * @apiName Set Pinned Thread
  * @apiGroup Group
  *
- * @apiHeader {string} Token Authenticaton Token //??
+ * @apiParam {String} id The Group's ID
+ * @apiParam {String} id The discussion's ID
+ * 
+ * @apiHeader {string} Token Authenticaton Token
  *
  * @apiBody {Object} pinnedThread Old pinned thread or null
  * @apiBody {Object} pinnedThread new pinned thread 
@@ -326,7 +401,16 @@ groupRouter
  *
  * @apiUse SuccessRes
  *
+ *  @apiErrorExample Error-Response:
+ *      HTTP/1.1 401 FAILED
+ *      {
+ *          "status": "failed",
+ *          "messege": " Error in fetching discussion "
+ *      }
+ * 
  * @apiUse UnauthError
+ * @apiUse ForbiddenAccss
+ * @apiUse GroupNotFoundError
  */
 groupRouter
 .PATCH('/:id/pinned/:topicId');
@@ -335,8 +419,10 @@ groupRouter
  * @api {post} /group/discussion/:id/replies Add a reply to a discussion topic
  * @apiVersion 1.0.0
  * @apiName AddReply
- * @apiGroup Groups
+ * @apiGroup Group
  *
+ * @apiParam {String} id The discussion's ID
+ * 
  * @apiBody {Object} user Author
  * @apiBody {Date} date Date of comment
  * @apiBody {String} content Reply content
@@ -345,7 +431,15 @@ groupRouter
  *
  * @apiUse SuccessRes
  *
+ *  @apiErrorExample Error-Response:
+ *      HTTP/1.1 401 FAILED
+ *      {
+ *          "status": "failed",
+ *          "messege": " Error in fetching discussion "
+ *      }
+ * 
  * @apiUse UnauthError
+ * @apiUse ForbiddenAccss
  */
 groupRouter
 .POST('/discussions/:id/replies');
@@ -354,15 +448,23 @@ groupRouter
  * @api {delete} /group/discussion/replies/:id Deleting a reply on a discussion topic
  * @apiVersion 1.0.0
  * @apiName DeleteReply
- * @apiGroup Groups
+ * @apiGroup Group
  *
  * @apiParam {String} id The reply's ID
  *
- * @apiHeader {String} Token Authenticaton Token //??
+ * @apiHeader {String} Token Authenticaton Token
  *
  * @apiUse SuccessRes
  *
+ *  @apiErrorExample Error-Response:
+ *      HTTP/1.1 401 FAILED
+ *      {
+ *          "status": "failed",
+ *          "messege": " Error in fetching reply "
+ *      }
+ * 
  * @apiUse UnauthError
+ * @apiUse ForbiddenAccss
  */
 groupRouter
 .DELETE('/discussions/replies/:id');
@@ -373,7 +475,9 @@ groupRouter
  * @apiName Edit reply
  * @apiGroup Group
  *
- * @apiHeader {string} Token Authenticaton Token //??
+ * @apiParam {String} id The new reply's ID
+ * 
+ * @apiHeader {string} Token Authenticaton Token
  *
  * @apiBody {Object} reply old reply
  * @apiBody {Object} reply new reply
@@ -382,12 +486,20 @@ groupRouter
  *
  * @apiUse SuccessRes
  *
+ *  @apiErrorExample Error-Response:
+ *      HTTP/1.1 401 FAILED
+ *      {
+ *          "status": "failed",
+ *          "messege": " Error in fetching reply "
+ *      }
+ * 
  * @apiUse UnauthError
+ * @apiUse ForbiddenAccss
  */
 groupRouter
 .PATCH('/discussions/replies/:id');
 
-/*
+/** 
 * @api {get} /group/discussion/replies/:id Get info about a discussion topic reply
 * @apiVersion 1.0.0
 * @apiName GetReply
@@ -399,12 +511,18 @@ groupRouter
 *
 * @apiUse SuccessRes
 *
+* @apiErrorExample Error-Response:
+*      HTTP/1.1 401 FAILED
+*      {
+*          "status": "failed",
+*          "messege": " Error in fetching reply "
+*      }
 * @apiUse UnauthError
 */
 groupRouter
 .GET('/discussions/replies/:id');
 
-/*
+/** 
 * @api {get} /group/discussion/:id/replies Get a list of replies from a group discussion topic.
 * @apiVersion 1.0.0
 * @apiName GetAllReplies
@@ -416,18 +534,24 @@ groupRouter
 *
 * @apiUse SuccessRes
 *
+* @apiErrorExample Error-Response:
+*      HTTP/1.1 401 FAILED
+*      {
+*          "status": "failed",
+*          "messege": " Error in fetching discussion's replies "
+*      }
 * @apiUse UnauthError
 */
 groupRouter
 .GET('/discussions/:id/replies');
 
-/*
+/** 
 * @api {get} /group/:id/members Get a list of the members of a group. 
 * @apiVersion 1.0.0
 * @apiName GetAllReplies
 * @apiGroup Groups
 *
-* @apiParam {String} id The discussion's ID
+* @apiParam {String} id The group's ID
 *
 * @apiSuccess {string} Token Authenticaton Token // lazem ybaa user AND member
 * @apiSuccess {Object[]} users List of the members in the group. 
@@ -435,39 +559,49 @@ groupRouter
 * @apiUse SuccessRes
 *
 * @apiUse UnauthError
+* @apiUse GroupNotFoundError
 */
 groupRouter
 .GET('/:id/members');
 
 /**
- * @api {post} /group/:id/pool/:id Add a Photo to a Group Photo Pool
+ * @api {post} /group/:id/pool/:photoid Add a Photo to a Group Photo Pool
  * @apiVersion 1.0.0
  * @apiName AddPhototoPool
- * @apiGroup Groups
+ * @apiGroup Group
  *
+ * @apiParam {String} id The Group's ID
+ * 
  * @apiBody {Object} photo Author
  *
  * @apiSuccess {Object} user Authenticaton Token
  *
  * @apiUse SuccessRes
- *
+ * 
+ * @apiErrorExample Error-Response:
+ *      HTTP/1.1 401 FAILED
+ *      {
+ *          "status": "failed",
+ *          "messege": " Error in fetching photo "
+ *      }
+ * 
  * @apiUse UnauthError
+ * @apiUse ForbiddenAccss
  */
 groupRouter
 .POST('/:id/pool/:id');
 
 /**
- * @api {get} /group/:id/photo/:id/context Get Next and Previous Photos in Group Pool
+ * @api {get} /group/:id/photo/:photoid/context Get Next and Previous Photos in Group Pool
  * @apiVersion 1.0.0
  * @apiName GetContext
- * @apiGroup Groups
+ * @apiGroup Group
  *
  * @apiParam {String} id The Group's ID
  * @apiParam {String} id The photo's ID
  * 
  * @apiSuccess {Object} photo Next photo for a photo in a group pool
  * @apiSuccess {object} photo Previous photo for a photo in a group pool
-
  *
  * @apiSuccessExample Success-Response:
  *      HTTP/1.1 200 OK
@@ -482,12 +616,20 @@ groupRouter
  *          }
  *      }
  *
- * @apiUse UnauthError //???
+ * @apiErrorExample Error-Response:
+ *      HTTP/1.1 401 FAILED
+ *      {
+ *          "status": "failed",
+ *          "messege": " Error in fetching photos "
+ *      }
+ * 
+ * @apiUse UnauthError
+ * @apiUse GroupNotFoundError
  */
 groupRouter
-.GET('/:id/photo/:id/context');
+.GET('/:id/photo/:photoid/context');
 
-/*
+/** 
 * @api {get} /group/:id/pool Returns a list of pool photos for a given group
 * @apiVersion 1.0.0
 * @apiName GetPhotoPool
@@ -500,6 +642,7 @@ groupRouter
 * @apiUse SuccessRes
 *
 * @apiUse UnauthError
+* @apiUse GroupNotFoundError
 */
 groupRouter
 .GET('/:id/pool');
@@ -509,7 +652,7 @@ groupRouter
  * @api {delete} /group/:id/pool/:photoId Remove a Photo from a Group Photo Pool
  * @apiVersion 1.0.0
  * @apiName RemovePhotofromPool
- * @apiGroup Groups
+ * @apiGroup Group
  *
  * @apiParam {String} id The Group's ID
  * @apiParam {String} id The photo's ID
@@ -518,7 +661,16 @@ groupRouter
  *
  * @apiUse SuccessRes
  *
+ * @apiErrorExample Error-Response:
+ *      HTTP/1.1 401 FAILED
+ *      {
+ *          "status": "failed",
+ *          "messege": " Error in fetching photo "
+ *      }
+ * 
  * @apiUse UnauthError
+ * @apiUse ForbiddenAccss
+ * @apiUse GroupNotFoundError
  */
 groupRouter
 .DELETE('/:id/pool');
