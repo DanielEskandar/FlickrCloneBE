@@ -49,11 +49,6 @@ const userRouter = express.Router();
 // ROUTE URLs
 
 /**
- * Test Func
- */
-userRouter.post('/createUser', userController.createUser);
-
-/**
  * @api {post} /user/sign-up Send a Sign-Up Request
  * @apiVersion 1.0.0
  * @apiName SignUp
@@ -723,15 +718,15 @@ userRouter.get('/limits');
 userRouter.delete('/testimonials/:id');
 
 /**
- * @api {get} /user/name Return the real name of User
+ * @api {get} /user/real-name Return the real name of User
  * @apiVersion 1.0.0
- * @apiName GetName
+ * @apiName GetRealName
  * @apiGroup User
  *
  * @apiHeader {string} Token Authenticaton Token
  *
- * @apiSuccess {string} firstname The First Name of the calling User
- * @apiSuccess {string} lastname The Last Name of the calling User
+ * @apiSuccess {string} firstName The First Name of the calling User
+ * @apiSuccess {string} lastName The Last Name of the calling User
  *
  * @apiSuccessExample Success-Response:
  *      HTTP/1.1 200 OK
@@ -739,15 +734,15 @@ userRouter.delete('/testimonials/:id');
  *          "status": "success",
  *          "data":
  *          {
- *              "firstname": "Ahmed",
- *              "lastname": "Abdulkader"
+ *              "firstName": "Ahmed",
+ *              "lastName": "Abdulkader"
  *          }
  *      }
  *
  * @apiUse UnauthError
  */
 
-userRouter.get('/name');
+userRouter.get('/real-name', userController.getRealName);
 
 /**
  * @api {get} /user/disp-name Return the display name of User
@@ -757,7 +752,7 @@ userRouter.get('/name');
  *
  * @apiHeader {string} Token Authenticaton Token
  *
- * @apiSuccess {string} displayname The Display name of the calling User
+ * @apiSuccess {string} displayName The Display name of the calling User
  *
  * @apiSuccessExample Success-Response:
  *      HTTP/1.1 200 OK
@@ -765,14 +760,14 @@ userRouter.get('/name');
  *          "status": "success",
  *          "data":
  *          {
- *              "displayname": "ahmedabdulkader99"
+ *              "displayName": "ahmedabdulkader99"
  *          }
  *      }
  *
  * @apiUse UnauthError
  */
 
-userRouter.get('/disp-name');
+userRouter.get('/disp-name', userController.getDispName);
 
 /**
  * @api {patch} /user/disp-name Update the display name of User
