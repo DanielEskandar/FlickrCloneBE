@@ -66,8 +66,6 @@ const photoRouter = express.Router();
  *
  * @apiBody {Number} ticket The Ticket of the Upload
  *
- * @apiHeader {string} Token Authenticaton Token
- *
  * @apiUse SuccessRes
  *
  */
@@ -103,8 +101,6 @@ photoRouter.patch('/:id/perm');
  * @apiName EditPhotoInformation
  * @apiGroup Photo
  *
- * @apiHeader {string} Token Authenticaton Token
- *
  * @apiParam {String} id The Photo's ID
  *
  * @apiSuccess {string} Status Status of API
@@ -136,8 +132,6 @@ photoRouter.delete('/:id/');
  * @apiVersion 1.0.0
  * @apiName GetInformation
  * @apiGroup Photo
- *
- * @apiHeader {String} Token Authenticaton Token
  *
  * @apiParam {String} id The Photo's ID
  *
@@ -255,8 +249,6 @@ photoRouter.delete('/:id/tags');
  *
  * @apiParam {String} id The Photo's ID 
  * 
- * @apiHeader {String} Token Authenticaton Token
- * 
  * @apiBody {Number} galleriesperpage Number of Galleries to return Per Page
  * @apiBody {Number} page The Page of Results to Return
  * @apiBody {Number} perpage Number of Comments Per Page to Return
@@ -285,8 +277,6 @@ photoRouter.get('/:id/galleries');
  * @apiVersion 1.0.0
  * @apiName GetAllContexts
  * @apiGroup Photo
- *
- * @apiHeader {String} Token Authenticaton Token
  *
  * @apiParam {String} id The Photo's ID 
  * 
@@ -318,8 +308,6 @@ photoRouter.get('/:id/contexts/all');
  * @apiVersion 1.0.0
  * @apiName GetContext
  * @apiGroup Photo
- *
- * @apiHeader {String} Token Authenticaton Token
  *
  * @apiParam {String} id The Photo's ID 
  * 
@@ -375,8 +363,6 @@ photoRouter.get('/:id/counts');
  * @apiGroup Photo
  *
  * @apiParam {String} id The Photo's ID 
- * 
- * @apiHeader {String} Token Authenticaton Token
  *
  * @apiSuccess {string} exif The EXIF of the Photo
  *  
@@ -399,8 +385,6 @@ photoRouter.get('/:id/exif');
  * @apiVersion 1.0.0
  * @apiName GetFavourites
  * @apiGroup Photo
- *
- * @apiHeader {String} Token Authenticaton Token
  *
  * @apiParam {String} id The Photo's ID 
  * 
@@ -469,8 +453,6 @@ photoRouter.get('/:id/perm');
  * @apiGroup Photo
  *
  * @apiParam {String} id The Photo's ID
- *
- * @apiHeader {String} Token Authenticaton Token
  *
  * @apiSuccess {String[]} nameofsize Array of The Labels for the Size
  * @apiSuccess {Number[]} widths Array of the Widths of the Photo in Each Size
@@ -654,8 +636,6 @@ photoRouter.patch('/comments/:id');
  * @apiName GetComments
  * @apiGroup Photo
  *
- * @apiHeader {String} Token Authenticaton Token
- *
  * @apiParam {String} id The Photo's ID
  *
  * @apiBody {Date} mindate Starting Date to Get Comments
@@ -688,8 +668,6 @@ photoRouter.patch('/comments/:id');
  */
 photoRouter.get('/:id/comments');
 
-//-----------------------SHOULD ID BE SENT HERE? SINCE IN ENDPOINT LINK
-// ALSO PERMISSIONS RETURNED ARE OF WHO? THE COMMENTER? THE CONTECT? ME?
 /**
  * @api {get} /photo/:id/comments/recent Get List of Recent Comments of Contact's Photos
  * @apiVersion 1.0.0
@@ -729,8 +707,6 @@ photoRouter.get('/comments/recent');
  * @apiGroup Photo
  *
  * @apiParam {String} id The Photo's ID 
- * 
- * @apiHeader {String} Token Authenticaton Token
  * 
  * @apiSuccess {Object[]} location Location of Photo
  * 
@@ -791,8 +767,6 @@ photoRouter.delete('/:id/location');
  * @apiGroup Photo
  *
  * @apiParam {String} id The Photo's ID 
- * 
- * @apiHeader {String} Token Authenticaton Token
  *
  * @apiSuccess {Number} license License of Photo
  * 
@@ -880,9 +854,6 @@ photoRouter.delete('/:id/tags/:userId');
  * @apiGroup Photo
  *
  * @apiParam {String} id The Photo's ID
- *
- * @apiHeader {String} Token Authenticaton Token
- *
  *
  * @apiSuccess {Object[]} taggedlist Array of User IDs Tagged in the Photo
  * @apiSuccess {Object[]} usernamelist Array of User Names of Users Tagged
