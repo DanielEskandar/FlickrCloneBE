@@ -22,6 +22,18 @@ const galleryRouter = express.Router();
  */
 
 /**
+ * @apiDefine PhotoNotFoundError
+ * @apiError PhotoNotFoundError No photo is found by that photo ID
+ *
+ * @apiErrorExample Error-Response:
+ *      HTTP/1.1 404 Not Found
+ *      {
+ *          "status": "Error",
+ *          "message": "No photo is found by that photo ID"
+ *      }
+ */
+
+/**
  * @apiDefine UnauthError
  * @apiError Unauthorized User does not have access to this API
  *
@@ -175,6 +187,8 @@ galleryRouter.delete('/:id');
  *
  * @apiUse GalleryNotFoundError
  *
+ * @apiUse PhotoNotFoundError
+ *
  * @apiUse UnauthError
  */
 
@@ -191,6 +205,15 @@ galleryRouter.delete('/:id/:photoid');
  * @apiUse SuccessRes
  *
  * @apiUse UnauthError
+ *
+ * @apiError CommentNotFoundError No comment is found by that comment ID
+ *
+ * @apiErrorExample Error-Response:
+ *      HTTP/1.1 404 Not Found
+ *      {
+ *          "status": "Error",
+ *          "message": "No comment is found by that comment ID"
+ *      }
  */
 
 galleryRouter.delete('/comments/:id');
@@ -305,6 +328,15 @@ galleryRouter.patch('/:id/meta');
  * @apiUse SuccessRes
  *
  * @apiUse UnauthError
+ *
+ * @apiError CommentNotFoundError No comment is found by that comment ID
+ *
+ * @apiErrorExample Error-Response:
+ *      HTTP/1.1 404 Not Found
+ *      {
+ *          "status": "Error",
+ *          "message": "No comment is found by that comment ID"
+ *      }
  */
 
 galleryRouter.patch('/comments/:id');
@@ -323,6 +355,8 @@ galleryRouter.patch('/comments/:id');
  * @apiUse UnauthError
  *
  * @apiUse GalleryNotFoundError
+ *
+ * @apiUse PhotoNotFoundError
  */
 
 galleryRouter.patch('/:id/primary/:photoid');
@@ -342,6 +376,8 @@ galleryRouter.patch('/:id/primary/:photoid');
  * @apiUse UnauthError
  *
  * @apiUse GalleryNotFoundError
+ *
+ * @apiUse PhotoNotFoundError
  */
 
 galleryRouter.patch('/:id/:photoid');

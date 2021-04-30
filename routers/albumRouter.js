@@ -22,6 +22,18 @@ const albumRouter = express.Router();
  */
 
 /**
+ * @apiDefine PhotoNotFoundError
+ * @apiError PhotoNotFoundError No photo is found by that photo ID
+ *
+ * @apiErrorExample Error-Response:
+ *      HTTP/1.1 404 Not Found
+ *      {
+ *          "status": "Error",
+ *          "message": "No photo is found by that photo ID"
+ *      }
+ */
+
+/**
  * @apiDefine UnauthError
  * @apiError Unauthorized User does not have access to this API
  *
@@ -114,6 +126,8 @@ albumRouter.get('/:id');
  *      }
  *
  * @apiUse AlbumNotFoundError
+ *
+ * @apiUse PhotoNotFoundError
  */
 
 albumRouter.get('/:id/context/:photoid');
@@ -221,6 +235,8 @@ albumRouter.delete('/:id/photos');
  *
  * @apiUse AlbumNotFoundError
  *
+ * @apiUse PhotoNotFoundError
+ *
  * @apiUse UnauthError
  */
 
@@ -237,6 +253,15 @@ albumRouter.delete('/:id/:photoid');
  * @apiUse SuccessRes
  *
  * @apiUse UnauthError
+ *
+ * @apiError CommentNotFoundError No comment is found by that comment ID
+ *
+ * @apiErrorExample Error-Response:
+ *      HTTP/1.1 404 Not Found
+ *      {
+ *          "status": "Error",
+ *          "message": "No comment is found by that comment ID"
+ *      }
  */
 
 albumRouter.delete('/comments/:id');
@@ -350,6 +375,15 @@ albumRouter.patch('/:id/meta');
  * @apiUse SuccessRes
  *
  * @apiUse UnauthError
+ *
+ * @apiError CommentNotFoundError No comment is found by that comment ID
+ *
+ * @apiErrorExample Error-Response:
+ *      HTTP/1.1 404 Not Found
+ *      {
+ *          "status": "Error",
+ *          "message": "No comment is found by that comment ID"
+ *      }
  */
 
 albumRouter.patch('/comments/:id');
@@ -368,6 +402,8 @@ albumRouter.patch('/comments/:id');
  * @apiUse UnauthError
  *
  * @apiUse AlbumNotFoundError
+ *
+ * @apiUse PhotoNotFoundError
  */
 
 albumRouter.patch('/:id/primary/:photoid');
