@@ -34,6 +34,18 @@ const photoRouter = express.Router();
  */
 
 /**
+ * @apiDefine UserNotFoundError
+ * @apiError UserNotFound No user is found by that user ID
+ *
+ * @apiErrorExample Error-Response:
+ *      HTTP/1.1 404 Not Found
+ *      {
+ *          "status": "Error",
+ *          "message": "No user is found by that user ID"
+ *      }
+ */
+
+/**
  * @apiDefine SuccessRes
  * @apiSuccess {String} status Status of the Operation
  * @apiSuccess {String} data Success Message
@@ -247,8 +259,9 @@ photoRouter.delete('/:id/tags');
  * 
  * @apiBody {Number} galleriesperpage Number of Galleries to return Per Page
  * @apiBody {Number} page The Page of Results to Return
+ * @apiBody {Number} perpage Number of Comments Per Page to Return
+ * @apiBody {Number} page The Page Number to Return
  * 
- * @apiSuccess {string} photourl The Photo's URL for the Chosen Size
  * @apiSuccess {Object[]} gallerylist Array of Gallery ID's Photo Belong to
  * 
  * @apiSuccessExample Success-Response:
@@ -300,7 +313,6 @@ photoRouter.get('/:id/galleries');
  */
 photoRouter.get('/:id/contexts/all');
 
-//--------------------CHK
 /**
  * @api {get} /photo/:id/contexts Gets Previous and Next Photos for Current Photo
  * @apiVersion 1.0.0
@@ -329,8 +341,6 @@ photoRouter.get('/:id/contexts/all');
  */
 photoRouter.get('/:id/contexts');
 
-//-----------------WHY RETURN FROM AND TO DATES? AND SEND TWO DATES?
-// ----------------ALSO WE DONT NEED ID OF USER TO SEND RIGHT
 /**
  * @api {get} /photo/:id/counts Gets Count of Photos Uploaded 
  * @apiVersion 1.0.0
@@ -350,7 +360,7 @@ photoRouter.get('/:id/contexts');
  *          "status": "success",
  *          "data":
  *          {
-               "count: " ,
+               "photocount: " ,
  *          }
  *      }
  *
@@ -512,8 +522,10 @@ photoRouter.get('/:id/sizes');
  *
  * @apiUse SuccessRes
  *
+ * @apiUse PhotoNotFoundError
  * @apiUse UnauthError
  */
+
 photoRouter.patch('/:id/content');
 
 /**
@@ -532,6 +544,7 @@ photoRouter.patch('/:id/content');
  *
  * @apiUse SuccessRes
  *
+ * @apiUse PhotoNotFoundError
  * @apiUse UnauthError
  */
 photoRouter.patch('/:id/date');
@@ -553,6 +566,7 @@ photoRouter.patch('/:id/date');
  *
  * @apiUse SuccessRes
  *
+ * @apiUse PhotoNotFoundError
  * @apiUse UnauthError
  */
 photoRouter.patch('/:id/meta-data');
@@ -592,7 +606,9 @@ photoRouter.patch('/:id/safety-level');
  *
  * @apiUse SuccessRes
  *
+ * @apiUse PhotoNotFoundError
  * @apiUse UnauthError
+ *
  */
 photoRouter.post('/:id/comments');
 
@@ -833,6 +849,7 @@ photoRouter.patch('/:id/licenses');
  *
  * @apiUse SuccessRes
  *
+ * @apiUse UserNotFoundError
  * @apiUse UnauthError
  */
 photoRouter.post('/:id/tags/:userId');
@@ -851,6 +868,8 @@ photoRouter.post('/:id/tags/:userId');
  * @apiUse SuccessRes
  *
  * @apiUse UnauthError
+ * @apiUse UserNotFoundError
+ *
  */
 photoRouter.delete('/:id/tags/:userId');
 
