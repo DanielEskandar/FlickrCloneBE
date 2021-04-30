@@ -1,5 +1,3 @@
-
-
 // INCLUDE DEPENDENCIES
 const express = require('express');
 
@@ -25,9 +23,9 @@ const photoRouter = express.Router();
  */
 photoRouter.post('/');
 
-
+//------------------ADD 2 OPTIONAL
 /**
- * @api {patch} /photo/:id/perm Change a Photo's Privacy and Visibility 
+ * @api {patch} /photo/:id/perm Change a Photo's Privacy and Visibility
  * @apiVersion 1.0.0
  * @apiName ChangePermissions
  * @apiGroup Photo
@@ -35,7 +33,7 @@ photoRouter.post('/');
  * @apiHeader {string} Token Authenticaton Token
  *
  * @apiParam {String} id The Photo's ID
- * 
+ *
  * @apiBody {boolean} isfriend The Photo is Visible to Friends when Private or not
  * @apiBody {boolean} ispublic The Photo is Visible to the Public when Private or not
  * @apiBody {boolean} isfamily The Photo is Visible to Family when Private or not
@@ -49,7 +47,7 @@ photoRouter.post('/');
 photoRouter.patch('/:id/perm');
 
 /**
- * @api {patch} /photo/:id/perm Edit a Photo's Properties 
+ * @api {patch} /photo/:id/perm Edit a Photo's Properties
  * @apiVersion 1.0.0
  * @apiName EditPhotoInformation
  * @apiGroup Photo
@@ -57,7 +55,7 @@ photoRouter.patch('/:id/perm');
  * @apiHeader {string} Token Authenticaton Token
  *
  * @apiParam {String} id The Photo's ID
- * 
+ *
  * @apiSuccess {string} Status Status of API
  *
  * @apiUse SuccessRes
@@ -82,20 +80,21 @@ photoRouter.patch('/:id/');
  */
 photoRouter.delete('/:id/');
 
-
 // ---------------- CHECK FORMAT FOR PERMISSIONS --------------
 /**
- * @api {get} /photo/:id Check Visibility and Permissions for Photo
+ * @api {get} /photo/:id Get Display Details for a Photo
  * @apiVersion 1.0.0
- * @apiName GetPermissions
+ * @apiName GetInformation
  * @apiGroup Photo
  *
  * @apiHeader {String} Token Authenticaton Token
  *
+ * @apiParam {String} id The Photo's ID
+ *
  * @apiSuccess {boolean} permissions The Photo's Viewing Permisions (only returned to User)
  * @apiSuccess {boolean} isfavourite Returns if the User Favourited the Photo
  * @apiSuccess {Number} rotationAngle Value by Which the Photo is Rotated
- * 
+ *
  * @apiSuccessExample Success-Response:
  *      HTTP/1.1 200 OK
  *      {
@@ -122,7 +121,12 @@ photoRouter.get('/:id');
  *
  * @apiHeader {String} Token Authenticaton Token
  *
+ * @apiParam {String} id The Photo's ID
+ * 
+ * @apiBody {String} size All The Current Photo Size
+ * 
  * @apiSuccess {string} photourl The Photo's URL for the Chosen Size
+ * 
  * @apiSuccessExample Success-Response:
  *      HTTP/1.1 200 OK
  *      {
@@ -138,16 +142,17 @@ photoRouter.get('/:id');
 photoRouter.get('/:id/url');
 
 /**
- * @api {patch} /photo/:id/perm Edit a Photo's Properties 
+ * @api {patch} /photo/:id/tags Set Tags for a Photo
  * @apiVersion 1.0.0
- * @apiName EditPhotoInformation
+ * @apiName SetTags
  * @apiGroup Photo
  *
  * @apiHeader {string} Token Authenticaton Token
  *
  * @apiParam {String} id The Photo's ID
- * @apiParam {String} tags All Tags for the Photo
- * 
+ *
+ * @apiBody {String} tags All Tags for the Photo
+ *
  * @apiSuccess {string} Status Status of API
  *
  * @apiUse SuccessRes
@@ -163,10 +168,11 @@ photoRouter.patch('/:id/tags');
  * @apiGroup Photo
  *
  * @apiHeader {string} Token Authenticaton Token
- * 
+ *
  * @apiParam {String} id The Photo's ID
- * @apiParam {String} tags All Tags for the Photo
- * 
+ *
+ * @apiBody {String} tags All Tags for the Photo
+ *
  * @apiUse SuccessRes
  *
  * @apiUse UnauthError
@@ -183,6 +189,8 @@ photoRouter.post('/:id/tags');
  *
  * @apiHeader {String} Token Authenticaton Token
  *
+ * @apiBody {String} tags All Tags for the Photo to Delete
+ *
  * @apiUse SuccessRes
  *
  * @apiUse UnauthError
@@ -195,9 +203,12 @@ photoRouter.delete('/:id/tags');
  * @apiName GetGalleriesforPhoto
  * @apiGroup Photo
  *
- * @apiHeader {String} Token Authenticaton Token
- *
  * @apiParam {String} id The Photo's ID 
+ * 
+ * @apiHeader {String} Token Authenticaton Token
+ * 
+ * @apiBody {Number} galleriesperpage Number of Galleries to return Per Page
+ * @apiBody {Number} page The Page of Results to Return
  * 
  * @apiSuccess {string} photourl The Photo's URL for the Chosen Size
  * @apiSuccess {Object[]} gallerylist Array of Gallery ID's Photo Belong to
@@ -221,14 +232,15 @@ photoRouter.get('/:id/galleries');
 /**
  * @api {get} /photo/:id/contexts/all Gets all Visible Sets and Pools Photo Belongs to
  * @apiVersion 1.0.0
- * @apiName GetContextsforPhoto
+ * @apiName GetAllContexts
  * @apiGroup Photo
  *
  * @apiHeader {String} Token Authenticaton Token
  *
  * @apiParam {String} id The Photo's ID 
  * 
- * @apiSuccess {Object[]} contextlist Array of ID's of All Contexts Photo Belongs to
+ * @apiSuccess {Object[]} contextlist Array of ID of All Contexts Photo Belongs to
+ * @apiSuccess {String[]} titlelist Array of Titles of Corresponding Contexts 
  * 
  * @apiSuccessExample Success-Response:
  *      HTTP/1.1 200 OK
@@ -239,6 +251,10 @@ photoRouter.get('/:id/galleries');
                "contextlist": [
  *
  *              ] 
+ *             "titlelist": [
+ *
+ *              ] 
+ *                  
  *          }
  *      }
  *
@@ -246,6 +262,7 @@ photoRouter.get('/:id/galleries');
  */
 photoRouter.get('/:id/contexts/all');
 
+//--------------------CHK
 /**
  * @api {get} /photo/:id/contexts Gets Previous and Next Photos for Current Photo
  * @apiVersion 1.0.0
@@ -266,7 +283,7 @@ photoRouter.get('/:id/contexts/all');
  *          "data":
  *          {
                "previousid: ",
-               "nextid: "
+               "nextid: ",
  *          }
  *      }
  *
@@ -274,8 +291,10 @@ photoRouter.get('/:id/contexts/all');
  */
 photoRouter.get('/:id/contexts');
 
+//-----------------WHY RETURN FROM AND TO DATES? AND SEND TWO DATES?
+// ----------------ALSO WE DONT NEED ID OF USER TO SEND RIGHT
 /**
- * @api {get} /photo/:id/counts Gets Counts for a Photo
+ * @api {get} /photo/:id/counts Gets Count of Photos Uploaded 
  * @apiVersion 1.0.0
  * @apiName GetCount
  * @apiGroup Photo
@@ -285,7 +304,7 @@ photoRouter.get('/:id/contexts');
  * @apiParam {Date} startdate The Date where Adding Counts Starts 
  * @apiParam {String} id The Date where Adding Counts Ends
  * 
- * @apiSuccess {number} photocount The Count of Photos Between the Given Dates
+ * @apiSuccess {Number} photocount The Count of Photos Between the Given Dates
  *  
  * @apiSuccessExample Success-Response:
  *      HTTP/1.1 200 OK
@@ -293,7 +312,7 @@ photoRouter.get('/:id/contexts');
  *          "status": "success",
  *          "data":
  *          {
-               "count: " 12
+               "count: " ,
  *          }
  *      }
  *
@@ -307,12 +326,11 @@ photoRouter.get('/:id/counts');
  * @apiName GetExif
  * @apiGroup Photo
  *
- * @apiHeader {String} Token Authenticaton Token
- *
  * @apiParam {String} id The Photo's ID 
  * 
- * @apiSuccess {string} manufacturer The Manufacturer for the Camera Photo was taken by
- * 
+ * @apiHeader {String} Token Authenticaton Token
+ *
+ * @apiSuccess {string} exif The EXIF of the Photo
  *  
  * @apiSuccessExample Success-Response:
  *      HTTP/1.1 200 OK
@@ -320,7 +338,7 @@ photoRouter.get('/:id/counts');
  *          "status": "success",
  *          "data":
  *          {
-               "Manufacturer: " Canon
+               "Exif" : ,
  *          }
  *      }
  *
@@ -329,16 +347,18 @@ photoRouter.get('/:id/counts');
 photoRouter.get('/:id/exif');
 
 /**
- * @api {get} /photo/:id/faves Gets all Visible Sets and Pools Photo Belongs to
+ * @api {get} /photo/:id/faves Get People who Favourites the Photo
  * @apiVersion 1.0.0
- * @apiName GetContextsforPhoto
+ * @apiName GetFavourites
  * @apiGroup Photo
  *
  * @apiHeader {String} Token Authenticaton Token
  *
  * @apiParam {String} id The Photo's ID 
  * 
- * @apiSuccess {Object[]} contextlist Array of ID's of All Contexts Photo Belongs to
+ * @apiSuccess {Object[]} idlist Array of IDs of Users who Favourited the Photo
+ * @apiSuccess {Object[]} usernamelist Array of Users who Favourited the Photo
+ * @apiSuccess {Date[]} datefavourited Date at Which the User Favourited the Photo
  * 
  * @apiSuccessExample Success-Response:
  *      HTTP/1.1 200 OK
@@ -346,7 +366,13 @@ photoRouter.get('/:id/exif');
  *          "status": "success",
  *          "data":
  *          {
-               "contextlist": [
+               "idlist": [
+ *
+ *              ] 
+ *             "usernamelist": [
+ *
+ *              ] 
+ *             "datefavourited": [
  *
  *              ] 
  *          }
@@ -364,19 +390,23 @@ photoRouter.get('/:id/faves');
  *
  * @apiHeader {String} Token Authenticaton Token
  *
- * @apiParam {String} id The Photo's ID 
- * 
- * @apiSuccess {boolean[]} permissions The Photo's Viewing Permisions 
- * 
+ * @apiParam {String} id The Photo's ID
+ *
+ * @apiSuccess {Object[]} permissions The Photo's Viewing Permisions
+ * @apiSuccess {Boolean} permcomment Whether the User is Allowed to Comment on the Photo or not
+ * @apiSuccess {Boolean} permaddmeta Whether the User is Allowed to Add to Meta Data of the Photo or not
+ *
  * @apiSuccessExample Success-Response:
  *      HTTP/1.1 200 OK
  *      {
  *          "status": "success",
  *          "data":
  *          {
-                "permissions": {
+ *              "permissions": {
  *                0, 1, 1
  *              }
+ *              "permcomment" : ,
+ *              "permaddmeta" : ,
  *          }
  *      }
  *
@@ -384,7 +414,48 @@ photoRouter.get('/:id/faves');
  */
 photoRouter.get('/:id/perm');
 
-//----------------------------------------- SIZES EDITED IN MODEL
+/**
+ * @api {get} /photo/:id/sizes Get All Avalable Sizes for Photo
+ * @apiVersion 1.0.0
+ * @apiName GetSizes
+ * @apiGroup Photo
+ *
+ * @apiParam {String} id The Photo's ID
+ *
+ * @apiHeader {String} Token Authenticaton Token
+ *
+ * @apiSuccess {String[]} nameofsize Array of The Labels for the Size
+ * @apiSuccess {Number[]} widths Array of the Widths of the Photo in Each Size
+ * @apiSuccess {Number[]} heigths Array of the Heights of the Photo in Each Size
+ * @apiSuccess {String[]} sizeurl Array of the URLs of the Photo in each Size
+ * @apiSuccess {String[]} sourceurl Array of the Source URLs
+ *
+ * @apiSuccessExample Success-Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *          "status": "success",
+ *          "data":
+ *          {
+ *             "nameofsize": [
+ *
+ *              ]
+ *             "widths": [
+ *
+ *              ]
+ *             "heights": [
+ *
+ *              ]
+ *             "sizeurl": [
+ *
+ *              ]
+ *             "sourceurl": [
+ *
+ *              ]
+ *          }
+ *      }
+ *
+ * @apiUse UnauthError
+ */
 photoRouter.get('/:id/sizes');
 
 /**
@@ -393,11 +464,12 @@ photoRouter.get('/:id/sizes');
  * @apiName SetContent
  * @apiGroup Photo
  *
+ * @apiParam {String} id The Photo's ID
+ *
  * @apiHeader {string} Token Authenticaton Token
  *
- * @apiParam {String} id The Photo's ID
- * @apiParam {Number} contenttype The Content Type to be Set
- * 
+ * @apiBody {Number} contenttype The Content Type to be Set
+ *
  * @apiSuccess {string} Status Status of API
  *
  * @apiUse SuccessRes
@@ -406,18 +478,19 @@ photoRouter.get('/:id/sizes');
  */
 photoRouter.patch('/:id/content');
 
-//-------
 /**
- * @api {patch} /photo/:id/date Set a Photo's Date
+ * @api {patch} /photo/:id/date Set a Photo's Dates
  * @apiVersion 1.0.0
- * @apiName SetDate
+ * @apiName SetDates
  * @apiGroup Photo
  *
+ * @apiParam {String} id The Photo's ID
+ * 
  * @apiHeader {string} Token Authenticaton Token
  *
- * @apiParam {String} id The Photo's ID
- * @apiParam {String} date The Date to be set to
- * 
+ * @apiBody {Date} dateposted The Date the Photo was Posted to Flickr
+ * @apiBody {Date} datetaken The Date the Photo was Taken
+
  * @apiSuccess {string} Status Status of API
  *
  * @apiUse SuccessRes
@@ -432,12 +505,13 @@ photoRouter.patch('/:id/date');
  * @apiName SetMetaData
  * @apiGroup Photo
  *
+ * @apiParam {String} id The Photo's ID
+ *
  * @apiHeader {string} Token Authenticaton Token
  *
- * @apiParam {String} id The Photo's ID
- * @apiParam {String} title The New Title to be Set
- * @apiParam {String} desc The New Description to be Set
- * 
+ * @apiBody {String} title The New Title to be Set
+ * @apiBody {String} desc The New Description to be Set
+ *
  * @apiSuccess {string} Status Status of API
  *
  * @apiUse SuccessRes
@@ -452,11 +526,13 @@ photoRouter.patch('/:id/meta-data');
  * @apiName SetSafetyLevel
  * @apiGroup Photo
  *
+ * @apiParam {String} id The Photo's ID
+ *
  * @apiHeader {string} Token Authenticaton Token
  *
- * @apiParam {String} id The Photo's ID
- * @apiParam {Number} safetylevel The Safety Level to be set
- * 
+ * @apiBody {Number} safetylevel The Safety Level to be set
+ * @apiBody {Boolean} hidden Whether the Photo is to be Hidden from Public Searches or Not
+ *
  * @apiSuccess {string} Status Status of API
  *
  * @apiUse SuccessRes
@@ -471,11 +547,12 @@ photoRouter.patch('/:id/safety-level');
  * @apiName AddComment
  * @apiGroup Photo
  *
- * @apiHeader {string} Token Authenticaton Token
- * 
  * @apiParam {String} id The Photo's ID
- * @apiParam {String} commenttest The Text in the Comment
- * 
+ *
+ * @apiHeader {string} Token Authenticaton Token
+ *
+ * @apiBody {String} commenttext The Text in the Comment
+ *
  * @apiUse SuccessRes
  *
  * @apiUse UnauthError
@@ -504,11 +581,11 @@ photoRouter.delete('/comments/:id');
  * @apiName EditComment
  * @apiGroup Photo
  *
+ * @apiParam {String} id The Comment's ID
+ *
  * @apiHeader {string} Token Authenticaton Token
  *
- * @apiParam {String} id The Comment's ID
- * @apiParam {String} id The New Comment Text
- * 
+ * @apiBody {String} id The New Comment Text
  *
  * @apiSuccess {string} Status Status of API
  *
@@ -526,19 +603,31 @@ photoRouter.patch('/comments/:id');
  *
  * @apiHeader {String} Token Authenticaton Token
  *
- * @apiParam {String} id The Photo's ID 
- * 
-  @apiSuccess {Object[]} commentlist Array of Comments on a Photo
- * 
+ * @apiParam {String} id The Photo's ID
+ *
+ * @apiBody {Date} mindate Starting Date to Get Comments
+ * @apiBody {Date} maxdate Latest Date to Get Comments
+ *
+ * @apiSuccess {Object[]} commentlist Array of Comments on a Photo
+ * @apiSuccess {Object[]} permalink Array of Permalinks of Comments
+ * @apiSuccess {Date[]} datelist Array of Dates Comment was Added
+ *
+ *
  * @apiSuccessExample Success-Response:
  *      HTTP/1.1 200 OK
  *      {
  *          "status": "success",
  *          "data":
  *          {
-               "commentist": [
+ *              "commentlist": [
  *
- *              ] 
+ *              ]
+ *              "permalinklist": [
+ *
+ *              ]
+ *              "datelist": [
+ *
+ *              ]
  *          }
  *      }
  *
@@ -546,31 +635,39 @@ photoRouter.patch('/comments/:id');
  */
 photoRouter.get('/:id/comments');
 
+//-----------------------SHOULD ID BE SENT HERE? SINCE IN ENDPOINT LINK
+// ALSO PERMISSIONS RETURNED ARE OF WHO? THE COMMENTER? THE CONTECT? ME?
 /**
- * @api {get} /photo/:id/comments/recent Get List of Recent Comments on Contact's Photos
+ * @api {get} /photo/:id/comments/recent Get List of Recent Comments of Contact's Photos
  * @apiVersion 1.0.0
- * @apiName GetRecentCommentsforContacts
+ * @apiName GetRecentforContacts
  * @apiGroup Photo
  *
  * @apiHeader {String} Token Authenticaton Token
  *
- * @apiSuccess {Object[]} commentlist Array of Comments on 
- * 
+ * @apiBody {Date} latestdate Latest Date to Get Comments
+ * @apiBody {Object[]} userids User IDs to Get Comments of
+ * @apiBody {Number} perpage Number of Comments Per Page to Return
+ * @apiBody {Number} page The Page Number to Return
+ *
+ * @apiSuccess {Object[]} commentlist Array of Comments on
+ *
  * @apiSuccessExample Success-Response:
  *      HTTP/1.1 200 OK
  *      {
  *          "status": "success",
  *          "data":
  *          {
-               "commentist": [
+ *              "commentlist": [
  *
- *              ] 
+ *              ]
+ *
  *          }
  *      }
  *
  * @apiUse UnauthError
  */
-photoRouter.get('/:id/comments/recent');
+photoRouter.get('/comments/recent');
 
 /**
  * @api {get} /photo/:id/location Get Location of a Photo
@@ -578,11 +675,11 @@ photoRouter.get('/:id/comments/recent');
  * @apiName GetLocation
  * @apiGroup Photo
  *
- * @apiHeader {String} Token Authenticaton Token
- *
  * @apiParam {String} id The Photo's ID 
  * 
-  @apiSuccess {string} location Location of Photo
+ * @apiHeader {String} Token Authenticaton Token
+ * 
+ * @apiSuccess {Object[]} location Location of Photo
  * 
  * @apiSuccessExample Success-Response:
  *      HTTP/1.1 200 OK
@@ -590,11 +687,10 @@ photoRouter.get('/:id/comments/recent');
  *          "status": "success",
  *          "data":
  *          {
-               "location: "
+               "location: ",
  *          }
  *      }
  *
- * @apiUse UnauthError
  */
 photoRouter.get('/:id/location');
 
@@ -604,11 +700,13 @@ photoRouter.get('/:id/location');
  * @apiName SetLocation
  * @apiGroup Photo
  *
+ * @apiParam {String} id The Photo's ID
+ *
  * @apiHeader {string} Token Authenticaton Token
  *
- * @apiParam {String} id The Photo's ID
- * @apiParam {String} location The Location to be Set
- * 
+ * @apiBody {String} latitude The Latitude to be Set
+ * @apiBody {String} longtitude The Longtitude to be Set
+ *
  * @apiSuccess {string} Status Status of API
  *
  * @apiUse SuccessRes
@@ -624,8 +722,7 @@ photoRouter.patch('/:id/location');
  * @apiGroup Photo
  *
  * @apiParam {String} id The Photo's ID
- * @apiParam {Number} id The Photo's License
- * 
+ *
  * @apiHeader {String} Token Authenticaton Token
  *
  * @apiUse SuccessRes
@@ -664,14 +761,19 @@ photoRouter.patch('/:id/licenses');
 /**
  * @api {post} /photo/:id/tags/:userId Tag a Person to a Photo
  * @apiVersion 1.0.0
- * @apiName TagUser
+ * @apiName AddPeople
  * @apiGroup Photo
- *
- * @apiHeader {string} Token Authenticaton Token
  *
  * @apiParam {String} photoid ID of Photo to Tag in
  * @apiParam {String} userid ID of User to Tag
- * 
+ *
+ * @apiHeader {string} Token Authenticaton Token
+ *
+ * @apiBody {Number} xcoordinate The Left Most Pixel Coordinate Around the Tagged Person
+ * @apiBody {Number} ycoordinate The Top Most Pixel Coordinate Around the Tagged Person
+ * @apiBody {Number} width The Width of the Box Around the Person
+ * @apiBody {Number} heigth The Height of the Box Around the Person
+ *
  * @apiUse SuccessRes
  *
  * @apiUse UnauthError
@@ -686,7 +788,7 @@ photoRouter.post('/:id/tags/:userId');
  *
  * @apiParam {String} photoid The Photo's ID to Remove from
  * @apiParam {String} userid The User's ID to Remove
- * 
+ *
  * @apiHeader {String} Token Authenticaton Token
  *
  * @apiUse SuccessRes
@@ -701,21 +803,50 @@ photoRouter.delete('/:id/tags/:userId');
  * @apiName GetTagged
  * @apiGroup Photo
  *
+ * @apiParam {String} id The Photo's ID
+ *
  * @apiHeader {String} Token Authenticaton Token
  *
- * @apiParam {String} id The Photo's ID 
- * 
+ *
  * @apiSuccess {Object[]} taggedlist Array of User IDs Tagged in the Photo
- * 
+ * @apiSuccess {Object[]} usernamelist Array of User Names of Users Tagged
+ * @apiSuccess {Object[]} realnamelist Array of Real Names of Users Tagged
+ * @apiSuccess {Object[]} addedbylist Array of Users who Added the Tag
+ * @apiSuccess {Object[]} xlist Array of X Coordinate of the Box
+ * @apiSuccess {Object[]} ylist Array of Y Coordinate of the Box
+ * @apiSuccess {Object[]} heightlist Array of Height of the Box
+ * @apiSuccess {Object[]} widthlist Array of Width of the Box
+ *
  * @apiSuccessExample Success-Response:
  *      HTTP/1.1 200 OK
  *      {
  *          "status": "success",
  *          "data":
  *          {
-               "taggedlist": [
+ *              "taggedlist": [
  *
- *              ] 
+ *              ]
+ *              "usernamelist": [
+ *
+ *              ]
+ *              "realnamelist": [
+ *
+ *              ]
+ *              "addedbylist": [
+ *
+ *              ]
+ *              "xlist": [
+ *
+ *              ]
+ *              "ylist": [
+ *
+ *              ]
+ *              "heightlist": [
+ *
+ *              ]
+ *              "widthlist": [
+ *
+ *              ]
  *          }
  *      }
  *
@@ -724,24 +855,24 @@ photoRouter.delete('/:id/tags/:userId');
 photoRouter.get('/:id/tags');
 
 /**
- * @api {patch} /photo/:id/rotate Rotate a Photo  
+ * @api {patch} /photo/:id/rotate Rotate a Photo
  * @apiVersion 1.0.0
  * @apiName RotatePhoto
  * @apiGroup Photo
  *
+ * @apiParam {String} id The Photo's ID
+ *
  * @apiHeader {string} Token Authenticaton Token
  *
- * @apiParam {String} id The Photo's ID
- * @apiParam {Number} degrees Degrees by which you Rotate a Photo Clockwise
- * 
+ * @apiBody {Number} degrees Degrees by which you Rotate a Photo Clockwise
+ *
  * @apiSuccess {string} Status Status of API
  *
  * @apiUse SuccessRes
  *
  * @apiUse UnauthError
  */
-photoRouter.patch('/:id/rotate')
-
+photoRouter.patch('/:id/rotate');
 
 // EXPORT ROUTER
 module.exports = photoRouter;
