@@ -28,6 +28,7 @@ const groupSchema = new mongoose.Schema({
   photos: [{ photoId: mongoose.Schema.ObjectId }],
   discussionTopics: [{ discussionID: mongoose.Schema.ObjectId }],
   pinnedThread: mongoose.Schema.ObjectId,
+  ageRestriction: Boolean,
 });
 
 // CREATE MODEL
