@@ -6,8 +6,14 @@ const groupSchema = new mongoose.Schema({
   public: Boolean,
   name: {
     type: String,
+<<<<<<< Updated upstream
     required: [true,'A group must have a name'],
     unique: [true,'A group with this name already exists'],
+=======
+    required: true,
+    unique: true,
+    maxlength: [20,'Group name should be less than 20 characters']
+>>>>>>> Stashed changes
   },
   invitation: Boolean,
   description: {type: String,
