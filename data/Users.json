@@ -1,0 +1,332 @@
+[
+  {
+    "_id": "608d5450ec00005468607a0c",
+    "displayName": "AhmedAbdulkader99",
+    "email": "ahmedkader99@mailserver.com",
+    "password": "Security@1984",
+    "userType": "pro",
+    "firstName": "Ahmed",
+    "lastName": "Abdulkader",
+    "age": 22,
+    "aboutMe": "Hello! I take nice photos.. follow me \":)",
+    "showcase": [],
+    "favourites": [],
+    "photos": [],
+    "testimonials": [],
+    "albums": [],
+    "gallery": [],
+    "following": [],
+    "blocked": [],
+    "privacySettings": {
+      "global": {
+        "downloadPerm": 1,
+        "largestImgSize": 0,
+        "allowShare": 1,
+        "allowTag": 1,
+        "allowGalleryAdd": 1,
+        "hideEXIF": 0,
+        "hidePhotoSearch": 0,
+        "hideProfileSearch": 0,
+        "infoVisiblity": {
+          "email": 2,
+          "name": 1,
+          "currentCity": 1
+        }
+      },
+      "defaults": {
+        "perms": {
+          "see": 1,
+          "comment": 1,
+          "addNotes": 2
+        },
+        "license": 0,
+        "mapVisible": 1,
+        "importEXIF": 1,
+        "safetyLevel": 1,
+        "contentType": 1
+      },
+      "filters": {
+        "search": {
+          "safeSearch": 1,
+          "content": 1
+        }
+      }
+    },
+    "notificationSettings": {
+      "notifMail": {
+        "invites": 1,
+        "contact": 1,
+        "messages": 1,
+        "reminders": 1
+      },
+      "activityMail": {
+        "you": 1,
+        "contacts": 1
+      }
+    }
+  },
+  {
+    "_id": "608d55c7e512b74ee00791db",
+    "displayName": "DanielEskandar",
+    "email": "daniel_eskandar99@mailserver.com",
+    "password": "ViveLaFrance&45",
+    "userType": "pro",
+    "firstName": "Daniel",
+    "lastName": "Eskandar",
+    "age": 35,
+    "aboutMe": "Get away from my account!!!",
+    "showcase": [],
+    "favourites": [],
+    "photos": [],
+    "testimonials": [],
+    "albums": [],
+    "gallery": [],
+    "following": [],
+    "blocked": [],
+    "privacySettings": {
+      "global": {
+        "downloadPerm": 1,
+        "largestImgSize": 0,
+        "allowShare": 1,
+        "allowTag": 1,
+        "allowGalleryAdd": 1,
+        "hideEXIF": 0,
+        "hidePhotoSearch": 0,
+        "hideProfileSearch": 0,
+        "infoVisiblity": {
+          "email": 2,
+          "name": 1,
+          "currentCity": 1
+        }
+      },
+      "defaults": {
+        "perms": {
+          "see": 1,
+          "comment": 1,
+          "addNotes": 2
+        },
+        "license": 0,
+        "mapVisible": 1,
+        "importEXIF": 1,
+        "safetyLevel": 1,
+        "contentType": 1
+      },
+      "filters": {
+        "search": {
+          "safeSearch": 1,
+          "content": 1
+        }
+      }
+    },
+    "notificationSettings": {
+      "notifMail": {
+        "invites": 1,
+        "contact": 1,
+        "messages": 1,
+        "reminders": 1
+      },
+      "activityMail": {
+        "you": 1,
+        "contacts": 1
+      }
+    }
+  },
+  {
+    "_id": "608d55c7e512b74ee00791dc",
+    "displayName": "AliaaKhalifa",
+    "email": "aliaakhalifa@mailserver.com",
+    "password": "TestingPass#21",
+    "userType": "pro",
+    "firstName": "Aliaa",
+    "lastName": "Khalifa",
+    "age": 20,
+    "aboutMe": "Have a nice day!",
+    "showcase": [],
+    "favourites": [],
+    "photos": [],
+    "testimonials": [],
+    "albums": [],
+    "gallery": [],
+    "following": [],
+    "blocked": [],
+    "privacySettings": {
+      "global": {
+        "downloadPerm": 1,
+        "largestImgSize": 0,
+        "allowShare": 1,
+        "allowTag": 1,
+        "allowGalleryAdd": 1,
+        "hideEXIF": 0,
+        "hidePhotoSearch": 0,
+        "hideProfileSearch": 0,
+        "infoVisiblity": {
+          "email": 2,
+          "name": 1,
+          "currentCity": 1
+        }
+      },
+      "defaults": {
+        "perms": {
+          "see": 1,
+          "comment": 1,
+          "addNotes": 2
+        },
+        "license": 0,
+        "mapVisible": 1,
+        "importEXIF": 1,
+        "safetyLevel": 1,
+        "contentType": 1
+      },
+      "filters": {
+        "search": {
+          "safeSearch": 1,
+          "content": 1
+        }
+      }
+    },
+    "notificationSettings": {
+      "notifMail": {
+        "invites": 1,
+        "contact": 1,
+        "messages": 1,
+        "reminders": 1
+      },
+      "activityMail": {
+        "you": 1,
+        "contacts": 1
+      }
+    }
+  },
+  {
+    "_id": "608d55c7e512b74ee00791dd",
+    "displayName": "MariamKhashab",
+    "email": "mariamkhashab@mailserver.com",
+    "password": "TestingPass#22",
+    "userType": "pro",
+    "firstName": "Mariam",
+    "lastName": "Khashab",
+    "age": 20,
+    "aboutMe": "Have a nice day!",
+    "showcase": [],
+    "favourites": [],
+    "photos": [],
+    "testimonials": [],
+    "albums": [],
+    "gallery": [],
+    "following": [],
+    "blocked": [],
+    "privacySettings": {
+      "global": {
+        "downloadPerm": 1,
+        "largestImgSize": 0,
+        "allowShare": 1,
+        "allowTag": 1,
+        "allowGalleryAdd": 1,
+        "hideEXIF": 0,
+        "hidePhotoSearch": 0,
+        "hideProfileSearch": 0,
+        "infoVisiblity": {
+          "email": 2,
+          "name": 1,
+          "currentCity": 1
+        }
+      },
+      "defaults": {
+        "perms": {
+          "see": 1,
+          "comment": 1,
+          "addNotes": 2
+        },
+        "license": 0,
+        "mapVisible": 1,
+        "importEXIF": 1,
+        "safetyLevel": 1,
+        "contentType": 1
+      },
+      "filters": {
+        "search": {
+          "safeSearch": 1,
+          "content": 1
+        }
+      }
+    },
+    "notificationSettings": {
+      "notifMail": {
+        "invites": 1,
+        "contact": 1,
+        "messages": 1,
+        "reminders": 1
+      },
+      "activityMail": {
+        "you": 1,
+        "contacts": 1
+      }
+    }
+  },
+  {
+    "_id": "608d55c7e512b74ee00791de",
+    "displayName": "NadineMagdy",
+    "email": "nadinemagdy@mailserver.com",
+    "password": "TestingPass#20",
+    "userType": "pro",
+    "firstName": "Nadine",
+    "lastName": "Magdi",
+    "age": 21,
+    "aboutMe": "Have a nice day!",
+    "showcase": [],
+    "favourites": [],
+    "photos": [],
+    "testimonials": [],
+    "albums": [],
+    "gallery": [],
+    "following": [],
+    "blocked": [],
+    "privacySettings": {
+      "global": {
+        "downloadPerm": 1,
+        "largestImgSize": 0,
+        "allowShare": 1,
+        "allowTag": 1,
+        "allowGalleryAdd": 1,
+        "hideEXIF": 0,
+        "hidePhotoSearch": 0,
+        "hideProfileSearch": 0,
+        "infoVisiblity": {
+          "email": 2,
+          "name": 1,
+          "currentCity": 1
+        }
+      },
+      "defaults": {
+        "perms": {
+          "see": 1,
+          "comment": 1,
+          "addNotes": 2
+        },
+        "license": 0,
+        "mapVisible": 1,
+        "importEXIF": 1,
+        "safetyLevel": 1,
+        "contentType": 1
+      },
+      "filters": {
+        "search": {
+          "safeSearch": 1,
+          "content": 1
+        }
+      }
+    },
+    "notificationSettings": {
+      "notifMail": {
+        "invites": 1,
+        "contact": 1,
+        "messages": 1,
+        "reminders": 1
+      },
+      "activityMail": {
+        "you": 1,
+        "contacts": 1
+      }
+    }
+  }
+]
