@@ -10,9 +10,6 @@ const groupSchema = new mongoose.Schema({
     required: [true,'A group must have a name'],
     unique: [true,'A group with this name already exists'],
 =======
-    required: true,
-    unique: true,
-    maxlength: [20,'Group name should be less than 20 characters']
 >>>>>>> Stashed changes
   },
   invitation: Boolean,
@@ -34,10 +31,6 @@ const groupSchema = new mongoose.Schema({
     default: Date.now,
   },
 <<<<<<< Updated upstream
-  photos: [{ photoId: mongoose.Schema.ObjectId }],
-  discussionTopics: [{ discussionID: mongoose.Schema.ObjectId }],
-  pinnedThread: mongoose.Schema.ObjectId,
-  ageRestriction: Boolean,
 =======
   photos: [mongoose.Schema.ObjectId],
   discussionTopics: {
