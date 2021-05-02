@@ -8,14 +8,12 @@ exports.getRealName = async (req, res) => {
       .findById(req.headers.userid)
       .select({ firstName: 1, lastName: 1, _id: 0 });
 
-    console.log(req.headers);
-
-    res.status(200).json({
+    res.status(200).send({
       status: 'success',
-      data: realName,
+      data: realName.toJSON(),
     });
   } catch (err) {
-    res.status(400).json({
+    res.status(400).send({
       status: 'error',
       message: err,
     });
@@ -29,12 +27,12 @@ exports.getDispName = async (req, res) => {
       .findById(req.headers.userid)
       .select({ displayName: 1, _id: 0 });
 
-    res.status(200).json({
+    res.status(200).send({
       status: 'success',
-      data: dispName,
+      data: dispName.toJSON(),
     });
   } catch (err) {
-    res.status(400).json({
+    res.status(400).send({
       status: 'error',
       message: err,
     });
