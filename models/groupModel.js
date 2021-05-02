@@ -15,7 +15,7 @@ const groupSchema = new mongoose.Schema({
   users: [
     {
       userId: mongoose.Schema.ObjectId,
-      joinData: {
+      joinDate: {
         type: Date,
         default: Date.now,
       },

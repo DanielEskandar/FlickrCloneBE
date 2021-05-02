@@ -5,16 +5,34 @@ const mongoose = require('mongoose');
 const gallerySchema = new mongoose.Schema({
   galleryName: {
     type: String,
-    required: true,
+    required: [true, 'A must have a name'],
+    minlength: 1,
+    trim: true,
+  }, // trim
+  primaryPhotoId: mongoose.Schema.ObjectId,
+  viewCount: {
+    type: Number,
+    default: 0,
   },
   photos: [
     {
-      photoId: mongoose.Schema.ObjectId,
-      remark: String,
+      type: {
+        photoId: mongoose.Schema.ObjectId,
+        remark: String,
+      },
+      validate: function () {
+        return (
+          this.photos.length <= 500 && this.photos.includes(this.primaryPhotoId)
+        );
+      },
+      // validate array length : 500 , primary photo
     },
   ],
-  description: String,
-  comments: [{ commentId: mongoose.Schema.ObjectId }],
+  description: {
+    type: String,
+    trim: true,
+  },
+  comments: [mongoose.Schema.ObjectId],
 });
 
 // CREATE MODEL
