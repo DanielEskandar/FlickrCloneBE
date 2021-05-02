@@ -275,7 +275,7 @@ galleryRouter.post('/:id/photos');
 galleryRouter.post('/:id/comments');
 
 /**
- * @api {put} /gallery/:id/photos Add ,Remove and Reorder photos
+ * @api {put} /gallery/:id/photos Add, Remove and Reorder photos
  * @apiVersion 1.0.0
  * @apiName EditPhotos
  * @apiGroup Gallery

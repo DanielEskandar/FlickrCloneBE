@@ -477,7 +477,7 @@ groupRouter.PATCH('/discussions/replies/:id');
  * @api {get} /group/discussion/replies/:id Get info about a discussion topic reply
  * @apiVersion 1.0.0
  * @apiName GetReply
- * @apiGroup Groups
+ * @apiGroup Group
  *
  * @apiParam {String} id The reply's ID
  *
@@ -499,7 +499,7 @@ groupRouter.GET('/discussions/replies/:id');
  * @api {get} /group/discussion/:id/replies Get a list of replies from a group discussion topic.
  * @apiVersion 1.0.0
  * @apiName GetAllReplies
- * @apiGroup Groups
+ * @apiGroup Group
  *
  * @apiParam {String} id The discussion's ID
  *
@@ -521,7 +521,7 @@ groupRouter.GET('/discussions/:id/replies');
  * @api {get} /group/:id/members Get a list of the members of a group.
  * @apiVersion 1.0.0
  * @apiName GetAllReplies
- * @apiGroup Groups
+ * @apiGroup Group
  *
  * @apiParam {String} id The group's ID
  *
@@ -603,7 +603,7 @@ groupRouter.GET('/:id/photo/:photoid/context');
  * @api {get} /group/:id/pool Returns a list of pool photos for a given group
  * @apiVersion 1.0.0
  * @apiName GetPhotoPool
- * @apiGroup Groups
+ * @apiGroup Group
  *
  * @apiParam {String} id The group's ID
  *

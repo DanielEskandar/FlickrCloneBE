@@ -160,14 +160,14 @@ albumRouter.get('/:id/context/:photoid');
 albumRouter.get('/:id/photos');
 
 /**
- * @api {get} /photoset/:id/comments Get ALbum's Comments
+ * @api {get} /photoset/:id/comments Get Album Comments
  * @apiVersion 1.0.0
  * @apiName GetAlbumComments
  * @apiGroup Album
  *
  * @apiParam {String} id The Album's ID
  *
- * @apiSuccess {Object[]} comments Array of Album's comments
+ * @apiSuccess {Object[]} comments Array of Album comments
  *
  * @apiSuccessExample Success-Response:
  *      HTTP/1.1 200 OK
@@ -323,7 +323,7 @@ albumRouter.post('/:id/photos');
 albumRouter.post('/:id/comments');
 
 /**
- * @api {put} /photoset/:id/photos Add ,Remove and Reorder photos
+ * @api {put} /photoset/:id/photos Add, Remove and Reorder photos
  * @apiVersion 1.0.0
  * @apiName EditPhotos
  * @apiGroup Album
