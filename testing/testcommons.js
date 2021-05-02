@@ -2,8 +2,6 @@
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 
-const userController = require('../controllers/userController.js');
-
 // CONFIGURE SERVER
 dotenv.config({ path: './config.env' });
 const DB = process.env.DATABASE.replace(
