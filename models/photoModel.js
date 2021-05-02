@@ -12,30 +12,116 @@ const photoSchema = new mongoose.Schema({
   dateTaken: Date,
   location: mongoose.Schema.ObjectId,
   comments: [mongoose.Schema.ObjectId],
-  favourites: Number,
-  views: Number,
-  urls: [String],
-  permissions: {
-    public: Boolean,
-    friend: Boolean,
-    family: Boolean,
+  favourites: {
+    type: Number,
+    default: 0,
   },
-  tags: [String],
-  taggedUsers: [mongoose.Schema.ObjectId],
-  sizes: [
-    {
-      size: {
+  views: {
+    type: Number,
+    default: 0,
+  },
+  permissions: {
+    public: { type: Boolean, default: 0 },
+    friend: { type: Boolean, default: 0 },
+    family: { type: Boolean, default: 0 },
+    //For comment and addMeta properties
+    //0: nobody 1: friends & family 2: contacts 3: everybody
+    comment: { type: Number, default: 3 },
+    addMeta: { type: Number, default: 0 },
+  },
+  sizes: {
+    canDownload: { type: Boolean, default: 1 },
+    size: {
+      original: {
         height: Number,
         width: Number,
+        source: String,
+        url: String,
+      },
+      large: {
+        height: Number,
+        width: Number,
+        source: String,
+        url: String,
+      },
+      medium800: {
+        height: Number,
+        width: Number,
+        source: String,
+        url: String,
+      },
+      medium640: {
+        height: Number,
+        width: Number,
+        source: String,
+        url: String,
+      },
+      medium: {
+        height: Number,
+        width: Number,
+        source: String,
+        url: String,
+      },
+      small320: {
+        height: Number,
+        width: Number,
+        source: String,
+        url: String,
+      },
+      small: {
+        height: Number,
+        width: Number,
+        source: String,
+        url: String,
+      },
+      thumbnail: {
+        height: Number,
+        width: Number,
+        source: String,
+        url: String,
+      },
+      largeSquare: {
+        height: Number,
+        width: Number,
+        source: String,
+        url: String,
+      },
+      square: {
+        height: Number,
+        width: Number,
+        source: String,
+        url: String,
       },
     },
-  ],
-  title: String,
-  description: String,
+  },
+  title: {
+    type: String,
+  },
+  description: {
+    type: String,
+  },
   EXIF: String,
-  safetyLevel: Number,
-  contentType: Number,
+  safetyLevel: {
+    type: Number,
+    minimum: 1,
+    maximum: 3,
+  },
+  contentType: {
+    type: String,
+    enum: {
+      values: ['Photo', 'Screenshot', 'Other'],
+      message: 'Content type is photo, screenshot or other',
+    },
+  },
+  tags: [String],
+  peopleTagged: [
+    {
+      userId: mongoose.Schema.ObjectId,
+      tagDate: { type: Date, default: Date.now },
+    },
+  ],
   hidden: Boolean,
+  license: Number,
 });
 
 // CREATE MODEL
