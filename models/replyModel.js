@@ -4,11 +4,11 @@ const mongoose = require('mongoose');
 // CREATE SCHEMA
 const replySchema = new mongoose.Schema({
   user: mongoose.Schema.ObjectId, // author
-  Date: {
+  date: {
     type: Date,
     default: Date.now,
   },
-  body: String,
+  content: String,
 });
 
 // CREATE MODEL
