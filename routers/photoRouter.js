@@ -34,6 +34,18 @@ const photoRouter = express.Router();
  */
 
 /**
+ * @apiDefine ForbiddenError
+ * @apiError Forbidden User does not have permission to use this API
+ *
+ * @apiErrorExample Error-Response:
+ *      HTTP/1.1 403 Forbidden
+ *      {
+ *          "status": "error",
+ *          "message": "The user is not authorized"
+ *      }
+ */
+
+/**
  * @apiDefine UserNotFoundError
  * @apiError UserNotFound No user is found by that user ID
  *
@@ -68,6 +80,8 @@ const photoRouter = express.Router();
  *
  * @apiUse SuccessRes
  *
+ * @apiUse UnauthError
+ *
  */
 photoRouter.post('/');
 
@@ -92,6 +106,8 @@ photoRouter.post('/');
  * @apiUse SuccessRes
  *
  * @apiUse UnauthError
+ * @apiUse ForbiddenError
+ *
  */
 photoRouter.patch('/:id/perm');
 
@@ -108,6 +124,9 @@ photoRouter.patch('/:id/perm');
  * @apiUse SuccessRes
  *
  * @apiUse UnauthError
+ * @apiUse ForbiddenError
+ * @apiUse PhotoNotFoundError
+ *
  */
 photoRouter.patch('/:id/');
 
@@ -124,6 +143,9 @@ photoRouter.patch('/:id/');
  * @apiUse SuccessRes
  *
  * @apiUse UnauthError
+ * @apiUse ForbiddenError
+ * @apiUse PhotoNotFoundError
+ *
  */
 photoRouter.delete('/:id/');
 
@@ -154,6 +176,9 @@ photoRouter.delete('/:id/');
  *      }
  *
  * @apiUse UnauthError
+ * @apiUse ForbiddenError
+ * @apiUse PhotoNotFoundError
+ *
  */
 photoRouter.get('/:id');
 
@@ -182,6 +207,9 @@ photoRouter.get('/:id');
  *      }
  *
  * @apiUse UnauthError
+ * @apiUse ForbiddenError
+ * @apiUse PhotoNotFoundError
+ * 
  */
 photoRouter.get('/:id/url');
 
@@ -202,6 +230,9 @@ photoRouter.get('/:id/url');
  * @apiUse SuccessRes
  *
  * @apiUse UnauthError
+ * @apiUse ForbiddenError
+ * @apiUse PhotoNotFoundError
+ *
  */
 photoRouter.patch('/:id/tags');
 
@@ -220,6 +251,9 @@ photoRouter.patch('/:id/tags');
  * @apiUse SuccessRes
  *
  * @apiUse UnauthError
+ * @apiUse ForbiddenError
+ * @apiUse PhotoNotFoundError
+ *
  */
 photoRouter.post('/:id/tags');
 
@@ -238,6 +272,9 @@ photoRouter.post('/:id/tags');
  * @apiUse SuccessRes
  *
  * @apiUse UnauthError
+ * @apiUse ForbiddenError
+ * @apiUse PhotoNotFoundError
+ *
  */
 photoRouter.delete('/:id/tags');
 
@@ -269,6 +306,9 @@ photoRouter.delete('/:id/tags');
  *      }
  *
  * @apiUse UnauthError
+ * @apiUse ForbiddenError
+ * @apiUse PhotoNotFoundError
+ * 
  */
 photoRouter.get('/:id/galleries');
 
@@ -300,6 +340,9 @@ photoRouter.get('/:id/galleries');
  *      }
  *
  * @apiUse UnauthError
+ * @apiUse ForbiddenError
+ * @apiUse PhotoNotFoundError
+ * 
  */
 photoRouter.get('/:id/contexts/all');
 
@@ -309,23 +352,26 @@ photoRouter.get('/:id/contexts/all');
  * @apiName GetContext
  * @apiGroup Photo
  *
- * @apiParam {String} id The Photo's ID 
- * 
+ * @apiParam {String} id The Photo's ID
+ *
  * @apiSuccess {string} previousid ID of the Previous Photo if any
  * @apiSuccess {string} nextid ID of the Next Photo if any
- * 
+ *
  * @apiSuccessExample Success-Response:
  *      HTTP/1.1 200 OK
  *      {
  *          "status": "success",
  *          "data":
  *          {
-               "previousid: ",
-               "nextid: ",
+ *             "previousid: ",
+ *             "nextid: ",
  *          }
  *      }
  *
  * @apiUse UnauthError
+ * @apiUse ForbiddenError
+ * @apiUse PhotoNotFoundError
+ *
  */
 photoRouter.get('/:id/contexts');
 
@@ -353,6 +399,9 @@ photoRouter.get('/:id/contexts');
  *      }
  *
  * @apiUse UnauthError
+ * @apiUse ForbiddenError
+ * @apiUse PhotoNotFoundError
+ * 
  */
 photoRouter.get('/:id/counts');
 
@@ -362,21 +411,24 @@ photoRouter.get('/:id/counts');
  * @apiName GetExif
  * @apiGroup Photo
  *
- * @apiParam {String} id The Photo's ID 
+ * @apiParam {String} id The Photo's ID
  *
  * @apiSuccess {string} exif The EXIF of the Photo
- *  
+ *
  * @apiSuccessExample Success-Response:
  *      HTTP/1.1 200 OK
  *      {
  *          "status": "success",
  *          "data":
  *          {
-               "Exif" : ,
+ *             "Exif" : ,
  *          }
  *      }
  *
  * @apiUse UnauthError
+ * @apiUse ForbiddenError
+ * @apiUse PhotoNotFoundError
+ *
  */
 photoRouter.get('/:id/exif');
 
@@ -386,31 +438,34 @@ photoRouter.get('/:id/exif');
  * @apiName GetFavourites
  * @apiGroup Photo
  *
- * @apiParam {String} id The Photo's ID 
- * 
+ * @apiParam {String} id The Photo's ID
+ *
  * @apiSuccess {Object[]} idlist Array of IDs of Users who Favourited the Photo
  * @apiSuccess {Object[]} usernamelist Array of Users who Favourited the Photo
  * @apiSuccess {Date[]} datefavourited Date at Which the User Favourited the Photo
- * 
+ *
  * @apiSuccessExample Success-Response:
  *      HTTP/1.1 200 OK
  *      {
  *          "status": "success",
  *          "data":
  *          {
-               "idlist": [
+ *             "idlist": [
  *
- *              ] 
+ *              ]
  *             "usernamelist": [
  *
- *              ] 
+ *              ]
  *             "datefavourited": [
  *
- *              ] 
+ *              ]
  *          }
  *      }
  *
  * @apiUse UnauthError
+ * @apiUse ForbiddenError
+ * @apiUse PhotoNotFoundError
+ *
  */
 photoRouter.get('/:id/faves');
 
@@ -443,6 +498,9 @@ photoRouter.get('/:id/faves');
  *      }
  *
  * @apiUse UnauthError
+ * @apiUse ForbiddenError
+ * @apiUse PhotoNotFoundError
+ *
  */
 photoRouter.get('/:id/perm');
 
@@ -485,6 +543,9 @@ photoRouter.get('/:id/perm');
  *      }
  *
  * @apiUse UnauthError
+ * @apiUse ForbiddenError
+ * @apiUse PhotoNotFoundError
+ *
  */
 photoRouter.get('/:id/sizes');
 
@@ -504,8 +565,10 @@ photoRouter.get('/:id/sizes');
  *
  * @apiUse SuccessRes
  *
- * @apiUse PhotoNotFoundError
  * @apiUse UnauthError
+ * @apiUse ForbiddenError
+ * @apiUse PhotoNotFoundError
+ *
  */
 
 photoRouter.patch('/:id/content');
@@ -526,8 +589,10 @@ photoRouter.patch('/:id/content');
  *
  * @apiUse SuccessRes
  *
- * @apiUse PhotoNotFoundError
  * @apiUse UnauthError
+ * @apiUse ForbiddenError
+ * @apiUse PhotoNotFoundError
+ *
  */
 photoRouter.patch('/:id/date');
 
@@ -548,8 +613,10 @@ photoRouter.patch('/:id/date');
  *
  * @apiUse SuccessRes
  *
- * @apiUse PhotoNotFoundError
  * @apiUse UnauthError
+ * @apiUse ForbiddenError
+ * @apiUse PhotoNotFoundError
+ *
  */
 photoRouter.patch('/:id/meta-data');
 
@@ -571,6 +638,9 @@ photoRouter.patch('/:id/meta-data');
  * @apiUse SuccessRes
  *
  * @apiUse UnauthError
+ * @apiUse ForbiddenError
+ * @apiUse PhotoNotFoundError
+ *
  */
 photoRouter.patch('/:id/safety-level');
 
@@ -588,8 +658,9 @@ photoRouter.patch('/:id/safety-level');
  *
  * @apiUse SuccessRes
  *
- * @apiUse PhotoNotFoundError
  * @apiUse UnauthError
+ * @apiUse ForbiddenError
+ * @apiUse PhotoNotFoundError
  *
  */
 photoRouter.post('/:id/comments');
@@ -607,6 +678,9 @@ photoRouter.post('/:id/comments');
  * @apiUse SuccessRes
  *
  * @apiUse UnauthError
+ * @apiUse ForbiddenError
+ * @apiUse PhotoNotFoundError
+ *
  */
 photoRouter.delete('/comments/:id');
 
@@ -627,6 +701,9 @@ photoRouter.delete('/comments/:id');
  * @apiUse SuccessRes
  *
  * @apiUse UnauthError
+ * @apiUse ForbiddenError
+ * @apiUse PhotoNotFoundError
+ *
  */
 photoRouter.patch('/comments/:id');
 
@@ -665,6 +742,9 @@ photoRouter.patch('/comments/:id');
  *      }
  *
  * @apiUse UnauthError
+ * @apiUse ForbiddenError
+ * @apiUse PhotoNotFoundError
+ *
  */
 photoRouter.get('/:id/comments');
 
@@ -697,6 +777,9 @@ photoRouter.get('/:id/comments');
  *      }
  *
  * @apiUse UnauthError
+ * @apiUse ForbiddenError
+ * @apiUse PhotoNotFoundError
+ *
  */
 photoRouter.get('/comments/recent');
 
@@ -706,20 +789,23 @@ photoRouter.get('/comments/recent');
  * @apiName GetLocation
  * @apiGroup Photo
  *
- * @apiParam {String} id The Photo's ID 
- * 
+ * @apiParam {String} id The Photo's ID
+ *
  * @apiSuccess {Object[]} location Location of Photo
- * 
+ *
  * @apiSuccessExample Success-Response:
  *      HTTP/1.1 200 OK
  *      {
  *          "status": "success",
  *          "data":
  *          {
-               "location: ",
+ *             "location: ",
  *          }
  *      }
  *
+ * @apiUse UnauthError
+ * @apiUse ForbiddenError
+ * @apiUse PhotoNotFoundError
  */
 photoRouter.get('/:id/location');
 
@@ -741,6 +827,9 @@ photoRouter.get('/:id/location');
  * @apiUse SuccessRes
  *
  * @apiUse UnauthError
+ * @apiUse ForbiddenError
+ * @apiUse PhotoNotFoundError
+ *
  */
 photoRouter.patch('/:id/location');
 
@@ -757,6 +846,9 @@ photoRouter.patch('/:id/location');
  * @apiUse SuccessRes
  *
  * @apiUse UnauthError
+ * @apiUse ForbiddenError
+ * @apiUse PhotoNotFoundError
+ *
  */
 photoRouter.delete('/:id/location');
 
@@ -781,6 +873,9 @@ photoRouter.delete('/:id/location');
  *      }
  *
  * @apiUse UnauthError
+ * @apiUse ForbiddenError
+ * @apiUse PhotoNotFoundError
+ * 
  */
 photoRouter.get('/:id/licenses');
 
@@ -800,7 +895,10 @@ photoRouter.get('/:id/licenses');
  *
  * @apiUse SuccessRes
  *
+ * @apiUse UnauthError
+ * @apiUse ForbiddenError
  * @apiUse PhotoNotFoundError
+ *
  *
  */
 photoRouter.patch('/:id/licenses');
@@ -823,8 +921,10 @@ photoRouter.patch('/:id/licenses');
  *
  * @apiUse SuccessRes
  *
- * @apiUse UserNotFoundError
  * @apiUse UnauthError
+ * @apiUse ForbiddenError
+ * @apiUse PhotoNotFoundError
+ *
  */
 photoRouter.post('/:id/tags/:userId');
 
@@ -841,8 +941,10 @@ photoRouter.post('/:id/tags/:userId');
  *
  * @apiUse SuccessRes
  *
- * @apiUse UnauthError
  * @apiUse UserNotFoundError
+ * @apiUse UnauthError
+ * @apiUse ForbiddenError
+ * @apiUse PhotoNotFoundError
  *
  */
 photoRouter.delete('/:id/tags/:userId');
@@ -898,6 +1000,9 @@ photoRouter.delete('/:id/tags/:userId');
  *      }
  *
  * @apiUse UnauthError
+ * @apiUse ForbiddenError
+ * @apiUse PhotoNotFoundError
+ *
  */
 photoRouter.get('/:id/tags');
 
@@ -918,6 +1023,9 @@ photoRouter.get('/:id/tags');
  * @apiUse SuccessRes
  *
  * @apiUse UnauthError
+ * @apiUse ForbiddenError
+ * @apiUse PhotoNotFoundError
+ *
  */
 photoRouter.patch('/:id/rotate');
 
