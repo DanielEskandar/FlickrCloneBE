@@ -10,68 +10,97 @@ const photoSchema = new mongoose.Schema({
     default: Date.now,
   },
   dateTaken: Date,
-  location: mongoose.Schema.ObjectId, //-----HOW IS THE LOCATION AN OBJECT? AND SHOULD WE DO IT LATITUDE AND LONGITUDE LIKE FLICKR
   location: mongoose.Schema.ObjectId,
   comments: [mongoose.Schema.ObjectId],
-  favourites: Number,
-  views: Number,
+  favourites: {
+    type: Number,
+    default: 0,
+  },
   views: {
     type: Number,
-    minimum: 0,
+    default: 0,
   },
-  urls: [String],
   permissions: {
-    public: Boolean,
-    friend: Boolean,
-    family: Boolean,
-    comment: Number,
-    addMeta: Number,
+    public: { type: Boolean, default: 0 },
+    friend: { type: Boolean, default: 0 },
+    family: { type: Boolean, default: 0 },
+    //For comment and addMeta properties
+    //0: nobody 1: friends & family 2: contacts 3: everybody
+    comment: { type: Number, default: 3 },
+    addMeta: { type: Number, default: 0 },
   },
-  sizes: [
-    {
-      size: {
+  sizes: {
+    canDownload: { type: Boolean, default: 1 },
+    size: {
+      original: {
         height: Number,
         width: Number,
-        originalheight: [
-          Number,
-          'Image dimensions cannot be longer than 2048 pixels at height!',
-        ],
-        originalwidth: [
-          Number,
-          'Image dimensions cannot be longer than 2048 pixels at width!',
-        ],
+        source: String,
+        url: String,
       },
-      //    ------------EACH LABEL HAS DIFFERENT HEIGHTS AND WIDTHS, BBOLEAN DONT SEEM FIT
-      //  Other than original, sizes are fixed
-      label: {
-        small: Boolean,
-        medium: Boolean,
-        largeSquare: Boolean,
-        thumbnail: Boolean,
-        original: Boolean,
+      large: {
+        height: Number,
+        width: Number,
+        source: String,
+        url: String,
       },
-      //
+      medium800: {
+        height: Number,
+        width: Number,
+        source: String,
+        url: String,
+      },
+      medium640: {
+        height: Number,
+        width: Number,
+        source: String,
+        url: String,
+      },
+      medium: {
+        height: Number,
+        width: Number,
+        source: String,
+        url: String,
+      },
+      small320: {
+        height: Number,
+        width: Number,
+        source: String,
+        url: String,
+      },
+      small: {
+        height: Number,
+        width: Number,
+        source: String,
+        url: String,
+      },
+      thumbnail: {
+        height: Number,
+        width: Number,
+        source: String,
+        url: String,
+      },
+      largeSquare: {
+        height: Number,
+        width: Number,
+        source: String,
+        url: String,
+      },
+      square: {
+        height: Number,
+        width: Number,
+        source: String,
+        url: String,
+      },
     },
-  ],
-  title: String,
-  description: String,
+  },
   title: {
     type: String,
-    maxlength: [
-      100,
-      'Title cannot be more than 100 characters, yours is {VALUE} long',
-    ],
   },
   description: {
     type: String,
-    maxlength: [
-      1000,
-      'Description cannot be more than 2000 characters, yours is {VALUE} long',
-    ],
   },
   EXIF: String,
-  safetyLevel: Number,
-  contentType: Number,
   safetyLevel: {
     type: Number,
     minimum: 1,
@@ -79,16 +108,21 @@ const photoSchema = new mongoose.Schema({
   },
   contentType: {
     type: String,
-    enum: ['Photo', 'Screenshot', 'Other'],
-    message: 'Has to be photo, screenshot, or other!',
+    enum: {
+      values: ['Photo', 'Screenshot', 'Other'],
+      message: 'Content type is photo, screenshot or other',
+    },
   },
+  tags: [String],
+  peopleTagged: [
+    {
+      userId: mongoose.Schema.ObjectId,
+      tagDate: { type: Date, default: Date.now },
+    },
+  ],
   hidden: Boolean,
-
-  //TO ADD BUT APPROVE FIRST
-  rotation: Number,
   license: Number,
 });
-//SET A MAXMIMUM MEMORY SIZE FOR IMAGE TO PREVENT UPLOAD OF LARGE IMAGES?
 
 // CREATE MODEL
 const photoModel = mongoose.model('photoModel', photoSchema);
