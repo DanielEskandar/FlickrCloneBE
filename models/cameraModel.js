@@ -11,7 +11,7 @@ const cameraSchema = new mongoose.Schema({
 });
 
 // CREATE MODEL
-const cameraModel = mongoose.model('albumModel', cameraSchema);
+const cameraModel = mongoose.model('cameraModel', cameraSchema);
 
 // EXPORT MODEL
 module.exports = cameraModel;

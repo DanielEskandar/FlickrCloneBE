@@ -16,7 +16,7 @@ const locationSchema = new mongoose.Schema({
 });
 
 // CREATE MODEL
-const locationModel = mongoose.model('albumModel', locationSchema);
+const locationModel = mongoose.model('locationModel', locationSchema);
 
 // EXPORT MODEL
 module.exports = locationModel;
