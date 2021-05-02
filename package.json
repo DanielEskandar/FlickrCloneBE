@@ -6,7 +6,9 @@
   "scripts": {
     "start": "nodemon server.js",
     "start:prod": "NODE_ENV=production nodemon server.js",
-    "apidoc": "apidoc -i routers/ -o apidoc/"
+    "apidoc": "apidoc -i routers/ -o apidoc/",
+    "pretest": "node devData --delete && node devData --import",
+    "test": "jest testing/ --detectOpenHandles --forceExit"
   },
   "repository": {
     "type": "git",
@@ -34,6 +36,7 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^3.4.0",
     "eslint-plugin-react": "^7.23.2",
+    "jest": "^26.6.3",
     "nodemon": "^2.0.7",
     "prettier": "^2.2.1"
   }
