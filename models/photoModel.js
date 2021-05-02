@@ -10,13 +10,10 @@ const photoSchema = new mongoose.Schema({
     default: Date.now,
   },
   dateTaken: Date,
-  location: mongoose.Schema.ObjectId,
+  location: mongoose.Schema.ObjectId, //-----HOW IS THE LOCATION AN OBJECT? AND SHOULD WE DO IT LATITUDE AND LONGITUDE LIKE FLICKR
   comments: [mongoose.Schema.ObjectId],
   favourites: Number,
-  views: {
-    type: Number,
-    minimum: 0,
-  },
+  views: Number,
   urls: [String],
   permissions: {
     public: Boolean,
@@ -30,16 +27,10 @@ const photoSchema = new mongoose.Schema({
   sizes: [
     {
       size: {
-        originalheight: [
-          Number,
-          'Image dimensions cannot be longer than 2048 pixels at height!',
-        ],
-        originalwidth: [
-          Number,
-          'Image dimensions cannot be longer than 2048 pixels at width!',
-        ],
+        height: Number,
+        width: Number,
       },
-      //  Other than original, sizes are fixed
+      //    ------------EACH LABEL HAS DIFFERENT HEIGHTS AND WIDTHS, BBOLEAN DONT SEEM FIT
       label: {
         small: Boolean,
         medium: Boolean,
@@ -48,37 +39,19 @@ const photoSchema = new mongoose.Schema({
         largeSquare: Boolean,
         original: Boolean,
       },
+      //
     },
   ],
-  title: {
-    type: String,
-    maxlength: [
-      100,
-      'Title cannot be more than 100 characters, yours is {VALUE} long',
-    ],
-  },
-  description: {
-    type: String,
-    maxlength: [
-      1000,
-      'Description cannot be more than 2000 characters, yours is {VALUE} long',
-    ],
-  },
+  title: String,
+  description: String,
   EXIF: String,
-  safetyLevel: {
-    type: Number,
-    minimum: 1,
-    maximum: 3,
-  },
-  contentType: {
-    type: String,
-    enum: ['Photo', 'Screenshot', 'Other'],
-  },
+  safetyLevel: Number,
+  contentType: Number,
   hidden: Boolean,
+
+  //TO ADD BUT APPROVE FIRST
   rotation: Number,
   license: Number,
-
-  //SET A MAXMIMUM MEMORY SIZE FOR IMAGE TO PREVENT UPLOAD OF LARGE IMAGES?
 });
 
 // CREATE MODEL
