@@ -6,11 +6,12 @@ const groupSchema = new mongoose.Schema({
   public: Boolean,
   name: {
     type: String,
-    required: true,
-    unique: true,
+    required: [true, 'A group must have a name'],
+    unique: [true, 'A group with this name already exists'],
+    maxlength: [20, 'Group name should be less than 20 characters'],
   },
   invitation: Boolean,
-  description: String,
+  description: { type: String, trim: true },
   users: [
     {
       userId: mongoose.Schema.ObjectId,
@@ -26,8 +27,16 @@ const groupSchema = new mongoose.Schema({
     default: Date.now,
   },
   photos: [mongoose.Schema.ObjectId],
-  discussionTopics: [mongoose.Schema.ObjectId],
-  pinnedThread: mongoose.Schema.ObjectId,
+  discussionTopics: {
+    type: [mongoose.Schema.ObjectId],
+    validate: function () {
+      return this.discussionTopics.includes(this.pinnedThread);
+    },
+  },
+  pinnedThread: {
+    type: mongoose.Schema.ObjectId,
+  },
+  ageRestriction: Boolean,
 });
 
 // CREATE MODEL
