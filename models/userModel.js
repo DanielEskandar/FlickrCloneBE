@@ -53,6 +53,16 @@ const userSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  limits: {
+    photos: {
+      maxdisplaypx: { type: Number, default: 1024 },
+      maxupload: { type: Number, default: 15728640 },
+    },
+    videos: {
+      maxduration: { type: Number, default: 90 },
+      maxupload: { type: Number, default: 15728640 },
+    },
+  },
   showcase: [mongoose.Schema.ObjectId],
   favourites: [mongoose.Schema.ObjectId],
   photos: [mongoose.Schema.ObjectId],
