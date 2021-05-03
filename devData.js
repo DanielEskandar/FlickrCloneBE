@@ -5,10 +5,10 @@ const dotenv = require('dotenv');
 
 // INCLUDE MODELS
 const userModel = require('./models/userModel');
-
+const groupModel = require('./models/groupModel');
 // READ JSON FILES
 const users = JSON.parse(fs.readFileSync('./data/Users.json', 'utf-8'));
-
+const groups = JSON.parse(fs.readFileSync('./data/Groups.json', 'utf-8'));
 // CONFIGURE SERVER
 dotenv.config({ path: './config.env' });
 const DB = process.env.DATABASE.replace(
@@ -31,6 +31,7 @@ mongoose
 const importData = async () => {
   try {
     await userModel.create(users);
+    await groupModel.create(groups);
     console.log('Data successfully loaded');
     process.exit();
   } catch (err) {
@@ -42,6 +43,7 @@ const importData = async () => {
 const deleteData = async () => {
   try {
     await userModel.deleteMany();
+    await groupModel.deleteMany();
     console.log('Data successfully deleted');
     process.exit();
   } catch (err) {

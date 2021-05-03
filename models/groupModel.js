@@ -30,7 +30,11 @@ const groupSchema = new mongoose.Schema({
   discussionTopics: {
     type: [mongoose.Schema.ObjectId],
     validate: function () {
-      return this.discussionTopics.includes(this.pinnedThread);
+      const id = this.discussionTopics.find(
+        (elem) => elem.ObjectId.toString() === this.pinnedThread.ObjectId.toString()
+
+      );
+
     },
   },
   pinnedThread: {
