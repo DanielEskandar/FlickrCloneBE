@@ -2,79 +2,73 @@
   {
     "_id": "608f34a634413f11f020b121",
     "galleryName": "Weather",
-    "primaryPhotoId": "508d55c7e512b74ee00791aa",
+    "primaryPhotoId": "608d5450ec00005468607a0f",
     "photos": [
       {
         "_id": "608f34a634413f11f020b122",
-        "photoId": "508d55c7e512b74ee00791aa",
+        "photoId": "608d5450ec00005468607a0f",
         "remark": "Photo1"
       },
       {
         "_id": "608f34a634413f11f020b123",
-        "photoId": "508d55c7e512b74ee00791ad",
+        "photoId": "608d5450ec00005468617a0c",
         "remark": "photo2"
       }
     ],
+    "createdAt": "2021-05-03T00:07:30.005Z",
+    "updatedAt": "2021-05-03T00:07:30.005Z",
     "description": "With Earth Day approaching, we're excited to focus on a few themes that celebrate your photography of the Earth.",
     "comments": []
   },
   {
     "_id": "608f34a634413f11f020b124",
     "galleryName": "Your City",
-    "primaryPhotoId": "508d55c7e512b74ee00791aa",
+    "primaryPhotoId": "608d5450ec00005468617a0c",
 
     "photos": [
       {
         "_id": "608f34a634413f11f020b125",
-        "photoId": "508d55c7e512b74ee00791aa",
+        "photoId": "608d5450ec00005468617a0c",
         "remark": ""
       },
       {
         "_id": "608f34a634413f11f020b126",
-        "photoId": "508d55c7e512b74ee00791ad",
+        "photoId": "608d5450ec00005468607a0f",
         "remark": ""
       }
     ],
+    "createdAt": "2021-05-03T00:07:30.005Z",
+    "updatedAt": "2021-05-03T00:07:30.005Z",
     "description": "Cities from around the world beautifully captured and shared.",
     "comments": []
   },
   {
     "_id": "608f34a634413f11f020b127",
     "galleryName": "Movement",
-    "primaryPhotoId": "508d55c7e512b74ee00791aa",
+    "primaryPhotoId": "604d5450ec00005468617a0c",
 
     "photos": [
       {
         "_id": "608f34a634413f11f020b128",
-        "photoId": "508d55c7e512b74ee00791aa",
+        "photoId": "604d5450ec00005468617a0c",
         "remark": ""
       },
       {
         "_id": "608f34a634413f11f020b129",
-        "photoId": "508d55c7e512b74ee00791ad",
+        "photoId": "608d5450ec00005468607a0f",
         "remark": ""
       }
     ],
+    "createdAt": "2021-05-03T00:07:30.005Z",
+    "updatedAt": "2021-05-03T00:07:30.005Z",
     "description": "Photos that capture the world in motion.",
     "comments": []
   },
   {
     "_id": "608f34a634413f11f020b12a",
     "galleryName": "Close-Ups",
-    "primaryPhotoId": "508d55c7e512b74ee00791aa",
-
-    "photos": [
-      {
-        "_id": "608f34a634413f11f020b12b",
-        "photoId": "508d55c7e512b74ee00791aa",
-        "remark": ""
-      },
-      {
-        "_id": "608f34a634413f11f020b12c",
-        "photoId": "508d55c7e512b74ee00791ad",
-        "remark": ""
-      }
-    ],
+    "createdAt": "2021-05-03T00:07:30.005Z",
+    "updatedAt": "2021-05-03T00:07:30.005Z",
     "description": "For the photos in this gallery, the story is in the details. Leave a comment to share your best close-up photography or to let us know how you approach capturing the important details.",
     "comments": []
   }

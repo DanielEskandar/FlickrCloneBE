@@ -262,7 +262,7 @@ albumRouter.delete('/:id/:photoid');
  *      }
  */
 
-albumRouter.delete('/comments/:id');
+albumRouter.delete('/:id/comments/:commentid');
 
 /**
  * @api {post} /photoset/ Create a new album

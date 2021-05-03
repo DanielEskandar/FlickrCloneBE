@@ -9,7 +9,7 @@ const gallerySchema = new mongoose.Schema({
     minlength: 1,
     trim: true,
   },
-  primaryPhotoId: mongoose.Schema.ObjectId,
+  primaryPhotoId: { type: mongoose.Schema.ObjectId, ref: 'photoModel' },
   viewCount: {
     type: Number,
     default: 0,
@@ -25,11 +25,16 @@ const gallerySchema = new mongoose.Schema({
   photos: {
     type: [
       {
-        photoId: mongoose.Schema.ObjectId,
+        photoId: { type: mongoose.Schema.Types.ObjectId, ref: 'photoModel' },
         remark: String,
       },
     ],
     validate: function () {
+      // if primary photo and photos array are empty ->
+      if (this.photos.length === 0 && this.primaryPhotoId === undefined)
+        return true;
+
+      // if not empty -> check if photos contains primary photo
       const id = this.photos.find(
         (element) =>
           element.photoId.toString() === this.primaryPhotoId.toString()
@@ -37,6 +42,7 @@ const gallerySchema = new mongoose.Schema({
       return this.photos.length <= 500 && id !== undefined;
     },
   },
+
   description: {
     type: String,
     trim: true,

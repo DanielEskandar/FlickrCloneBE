@@ -17,7 +17,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // ATTACH ROUTES
 app.use('/user', userRouter);
 app.use('/gallery', galleryRouter);
-app.use('/album', albumRouter);
+app.use('/photoset', albumRouter);
 
 // EXPORT APP
 module.exports = app;

@@ -216,7 +216,7 @@ galleryRouter.delete('/:id/:photoid');
  *      }
  */
 
-galleryRouter.delete('/comments/:id');
+galleryRouter.delete('/:id/comments/:commentid');
 
 /**
  * @api {post} /gallery/ Create a new gallery

@@ -1,5 +1,6 @@
 // INCLUDE MODELS
 const albumModel = require('../models/albumModel.js');
+//const commentModel = require('../models/commentModel.js');
 
 // GET REAL NAME
 exports.getInfo = async (req, res) => {
@@ -14,7 +15,7 @@ exports.getInfo = async (req, res) => {
       },
     });
   } catch (err) {
-    res.status(400).send({
+    res.status(404).send({
       status: 'error',
       message: err,
     });
@@ -23,13 +24,15 @@ exports.getInfo = async (req, res) => {
 
 exports.getPhotos = async (req, res) => {
   try {
-    const album = await albumModel.findById(req.params.id);
+    const photos = await albumModel
+      .findById(req.params.id)
+      .select({ photos: 1, _id: 0 });
     res.status(200).send({
       status: 'success',
-      data: { photos: album.photos },
+      data: { photos },
     });
   } catch (err) {
-    res.status(400).send({
+    res.status(404).send({
       status: 'error',
       message: err,
     });
