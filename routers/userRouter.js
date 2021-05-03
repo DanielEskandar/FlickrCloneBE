@@ -182,7 +182,7 @@ userRouter.delete('/');
  * @apiUse UserNotFoundError
  */
 
-userRouter.get('/:id');
+userRouter.get('/:id', userController.getUserInfo);
 
 /**
  * @api {get} /user/:id/stats Get the User's Statistics
