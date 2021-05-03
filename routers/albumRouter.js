@@ -2,7 +2,7 @@
 const express = require('express');
 
 // INCLUDE CONTROLLERS
-//const albumController = require('../controllers/albumController.js');
+const albumController = require('../controllers/albumController.js');
 
 // CREATE ROUTER
 const albumRouter = express.Router();
@@ -72,7 +72,6 @@ const albumRouter = express.Router();
  * @apiSuccess {String} description Album's Description
  * @apiSuccess {Object[]} photos Array of Album's photos
  * @apiSuccess {Number} photoscount The count of Album's photos
- * @apiSuccess {Number} videoscount The count of Album's videos
  * @apiSuccess {ObjectID} primaryphoto The primary photo's id
  * @apiSuccess {Object[]} comments  Array of Album's comments
  *
@@ -85,7 +84,6 @@ const albumRouter = express.Router();
  *              "title": sunsets,
  *              "description": best sunset photos,
  *              "photos count": 17,
- *              "videos count": 3,
  *              "primaryphoto": 292882708,
  *              "photos": [
  *
@@ -99,7 +97,7 @@ const albumRouter = express.Router();
  * @apiUse AlbumNotFoundError
  */
 
-albumRouter.get('/:id');
+albumRouter.get('/:id', albumController.getInfo);
 
 /**
  * @api {get} /photoset/:id/context/:photoid Get next and previous photos for a photo
@@ -157,7 +155,7 @@ albumRouter.get('/:id/context/:photoid');
  * @apiUse AlbumNotFoundError
  */
 
-albumRouter.get('/:id/photos');
+albumRouter.get('/:id/photos', albumController.getPhotos);
 
 /**
  * @api {get} /photoset/:id/comments Get Album Comments

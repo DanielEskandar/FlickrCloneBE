@@ -2,7 +2,7 @@
 const express = require('express');
 
 // INCLUDE CONTROLLERS
-//const galleryController = require('../controllers/galleryController.js');
+const galleryController = require('../controllers/galleryController.js');
 
 // CREATE ROUTER
 const galleryRouter = express.Router();
@@ -72,7 +72,6 @@ const galleryRouter = express.Router();
  * @apiSuccess {String} description Gallery's Description
  * @apiSuccess {Object[]} photos Array of gallery's photos
  * @apiSuccess {Number} photoscount The count of gallery's photos
- * @apiSuccess {Number} videoscount The count of gallery's videos
  * @apiSuccess {Number} viewscount The count of views
  * @apiSuccess {ObjectID} primaryphoto The primary photo's id
  * @apiSuccess {Object[]} comments  Array of gallery's comments
@@ -83,11 +82,12 @@ const galleryRouter = express.Router();
  *          "status": "success",
  *          "data":
  *          {
- *              "title": sunsets,
+ *              "galleryName": sunsets,
  *              "description": best sunset photos,
  *              "photos count": 17,
- *              "videos count": 3,
  *              "views count": 20,
+ *              "createdAt": "2021-05-03T00:07:30.005Z",
+ *              "updatedAt": "2021-05-03T00:07:30.005Z",
  *              "primary photo id": 292882708,
  *              "photos": [
  *
@@ -101,7 +101,7 @@ const galleryRouter = express.Router();
  * @apiUse GalleryNotFoundError
  */
 
-galleryRouter.get('/:id');
+galleryRouter.get('/:id', galleryController.getInfo);
 
 /**
  * @api {get} /gallery/:id/photos Get Gallery's Photos
@@ -128,7 +128,7 @@ galleryRouter.get('/:id');
  * @apiUse GalleryNotFoundError
  */
 
-galleryRouter.get('/:id/photos');
+galleryRouter.get('/:id/photos', galleryController.getPhotos);
 
 /**
  * @api {get} /gallery/:id/comments Get Gallery's Comments
