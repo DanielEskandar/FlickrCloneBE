@@ -157,14 +157,12 @@ userRouter.delete('/');
  *
  * @apiParam {String} id The User's ID
  *
- * @apiSuccess {String} username Username of the User
- * @apiSuccess {String} firstname First Name of the User
- * @apiSuccess {String} lastname Last Name of the User
- * @apiSuccess {Boolean} pro The type of user (pro or not)
- * @apiSuccess {String} aboutme Small text about the user set by the user
- * @apiSuccess {Date} joindate Date the user joined flickr
- * @apiSuccess {string} profileurl Url of the user's profile
- * @apiSuccess {string} location The user's current stored location
+ * @apiSuccess {String} joinDate Date when the user joined flickr
+ * @apiSuccess {String} occupation Occupation of the user
+ * @apiSuccess {String} hometown Hometown of the User
+ * @apiSuccess {String} currentCity Current city of the user
+ * @apiSuccess {string} country Country of the user
+ * @apiSuccess {string} email Email of the user
  *
  * @apiSuccessExample Success-Response:
  *      HTTP/1.1 200 OK
@@ -172,14 +170,12 @@ userRouter.delete('/');
  *          "status": "success",
  *          "data":
  *          {
- *              "username": "ahmedtarek914",
- *              "firstname": "Ahmed",
- *              "lastname": "Abdulkader",
- *              "pro": false,
- *              "aboutme": "Not a lot to say about me :)",
- *              "joindate": 2012-04-23T18:25:43.511Z,
- *              "profileurl": "http://www.flickr.com/people/ahmed/",
- *              "location": "Cairo, Egypt"
+ *              "joinDate": "2015-10-07T06:09:54+00:00",
+ *              "occupation": "Photographer",
+ *              "hometown": "Beverly Hills",
+ *              "currentCity": "California",
+ *              "country": "United States",
+ *              "email": "ahmedkader99@mailserver.com",
  *          }
  *      }
  *
