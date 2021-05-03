@@ -154,3 +154,56 @@ describe('should retrieve user info by id and send response correctly', () => {
     });
   });
 });
+
+// TESTING: getLimits
+describe('should retrieve limits by id and send response correctly', () => {
+  test('should retrieve limits of DanielEskandar', async () => {
+    const mReq = { headers: { userid: '608d55c7e512b74ee00791db' } };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      send: jest.fn().mockReturnThis(),
+    };
+    await userController.getLimits(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.send).toBeCalledWith({
+      status: 'success',
+      data: {
+        limits: {
+          photos: {
+            maxdisplaypx: 1024,
+            maxupload: 15728640,
+          },
+          videos: {
+            maxduration: 90,
+            maxupload: 15728640,
+          },
+        },
+      },
+    });
+  });
+
+  test('should retrieve limits AliaaKhalifa', async () => {
+    const mReq = { headers: { userid: '608d55c7e512b74ee00791dc' } };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      send: jest.fn().mockReturnThis(),
+    };
+    await userController.getLimits(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.send).toBeCalledWith({
+      status: 'success',
+      data: {
+        limits: {
+          photos: {
+            maxdisplaypx: 1024,
+            maxupload: 15728640,
+          },
+          videos: {
+            maxduration: 90,
+            maxupload: 15728640,
+          },
+        },
+      },
+    });
+  });
+});
