@@ -320,7 +320,7 @@ groupRouter.patch('/discussion/:id');
  *
  * @apiParam {String} id The discussion's ID
  *
- * @apiSuccess {Object} discussionTopics The required discussion topic //?? returns 1 object
+ * @apiSuccess {Object} discussionTopics The required discussion topic 
  *
  * @apiUse SuccessRes
  *
@@ -357,7 +357,7 @@ groupRouter.get('/discussion/:id');
 * @apiUse ForbiddenAccss
 * @apiUse GroupNotFoundError
 */
-groupRouter.get('/:id/discussion');
+groupRouter.get('/:id/discussion',groupController.GetAllDiscussions);
 
 /**
  * @api {delete} /group/discussion/:id Deleting a discussion post from the group

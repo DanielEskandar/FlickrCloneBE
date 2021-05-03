@@ -1,0 +1,22 @@
+[
+ {
+ "_id":"608f6e7519953b27004f6dab",    
+ "user":"608d55c7e512b74ee00791de",
+ "content":"Where to eat best ribeye?",
+ "replies":[]
+
+ },
+ {
+   "_id":"608f6e7519953b27004f6dad",  
+    "user":"608d55c7e512b74ee00791dc",
+    "content":"Where to get dryfood for my pet?",
+    "replies":[]
+ },
+ {
+   "_id":"608f6e7519953b27004f6dac",  
+    "user":"608d55c7e512b74ee00791de",
+    "content":"La casa de papel is overrated",
+    "replies":[]
+ }
+
+]

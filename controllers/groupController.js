@@ -53,3 +53,21 @@ exports.GetInfo = async (req, res) => {
     });
    }
  }; 
+
+ //GET ALL DISCUSSIONS IN A GROUP
+ exports.GetAllDiscussions = async (req, res) => {
+  try {
+    const discussions = await groupModel.findById(req.params.id).select({_id : 0}).select('discussionTopics').select('content')
+    
+    res.status(200).send({
+      status: 'success',
+      data: discussions
+    });
+  } catch (err)
+   {
+    res.status(400).send({
+      status: 'error',
+      message: err,
+    });
+   }
+ }; 
