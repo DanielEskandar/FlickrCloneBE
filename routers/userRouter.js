@@ -150,41 +150,6 @@ userRouter.patch('/');
 userRouter.delete('/');
 
 /**
- * @api {get} /user/:id Get the User's Information
- * @apiVersion 1.0.0
- * @apiName GetUserInfo
- * @apiGroup User
- *
- * @apiParam {String} id The User's ID
- *
- * @apiSuccess {String} joinDate Date when the user joined flickr
- * @apiSuccess {String} occupation Occupation of the user
- * @apiSuccess {String} hometown Hometown of the User
- * @apiSuccess {String} currentCity Current city of the user
- * @apiSuccess {string} country Country of the user
- * @apiSuccess {string} email Email of the user
- *
- * @apiSuccessExample Success-Response:
- *      HTTP/1.1 200 OK
- *      {
- *          "status": "success",
- *          "data":
- *          {
- *              "joinDate": "2015-10-07T06:09:54+00:00",
- *              "occupation": "Photographer",
- *              "hometown": "Beverly Hills",
- *              "currentCity": "California",
- *              "country": "United States",
- *              "email": "ahmedkader99@mailserver.com",
- *          }
- *      }
- *
- * @apiUse UserNotFoundError
- */
-
-userRouter.get('/:id', userController.getUserInfo);
-
-/**
  * @api {get} /user/:id/stats Get the User's Statistics
  * @apiVersion 1.0.0
  * @apiName GetUserStats
@@ -696,7 +661,7 @@ userRouter.get('/:id/faves');
  * @apiUse UnauthError
  */
 
-userRouter.get('/limits');
+userRouter.get('/limits', userController.getLimits);
 
 /**
  * @api {delete} /user/testimonials/:id Delete a testimonial
@@ -1470,6 +1435,76 @@ userRouter.get('/notif/follow');
  *
  * @apiUse UnauthError
  */
+
+/**
+ * @api {get} /user/:id Get the User's Information
+ * @apiVersion 1.0.0
+ * @apiName GetUserInfo
+ * @apiGroup User
+ *
+ * @apiParam {String} id The User's ID
+ *
+ * @apiSuccess {String} joinDate Date when the user joined flickr
+ * @apiSuccess {String} occupation Occupation of the user
+ * @apiSuccess {String} hometown Hometown of the User
+ * @apiSuccess {String} currentCity Current city of the user
+ * @apiSuccess {string} country Country of the user
+ * @apiSuccess {string} email Email of the user
+ *
+ * @apiSuccessExample Success-Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *          "status": "success",
+ *          "data":
+ *          {
+ *              "joinDate": "2015-10-07T06:09:54+00:00",
+ *              "occupation": "Photographer",
+ *              "hometown": "Beverly Hills",
+ *              "currentCity": "California",
+ *              "country": "United States",
+ *              "email": "ahmedkader99@mailserver.com",
+ *          }
+ *      }
+ *
+ * @apiUse UserNotFoundError
+ */
+
+userRouter.get('/:id', userController.getUserInfo);
+
+/**
+ * @api {get} /user/:id Get the User's Information
+ * @apiVersion 1.0.0
+ * @apiName GetUserInfo
+ * @apiGroup User
+ *
+ * @apiParam {String} id The User's ID
+ *
+ * @apiSuccess {String} joinDate Date when the user joined flickr
+ * @apiSuccess {String} occupation Occupation of the user
+ * @apiSuccess {String} hometown Hometown of the User
+ * @apiSuccess {String} currentCity Current city of the user
+ * @apiSuccess {string} country Country of the user
+ * @apiSuccess {string} email Email of the user
+ *
+ * @apiSuccessExample Success-Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *          "status": "success",
+ *          "data":
+ *          {
+ *              "joinDate": "2015-10-07T06:09:54+00:00",
+ *              "occupation": "Photographer",
+ *              "hometown": "Beverly Hills",
+ *              "currentCity": "California",
+ *              "country": "United States",
+ *              "email": "ahmedkader99@mailserver.com",
+ *          }
+ *      }
+ *
+ * @apiUse UserNotFoundError
+ */
+
+userRouter.get('/:id', userController.getUserInfo);
 
 userRouter.get('/notif/interact');
 

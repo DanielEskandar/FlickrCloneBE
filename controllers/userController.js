@@ -63,3 +63,22 @@ exports.getUserInfo = async (req, res) => {
     });
   }
 };
+
+// GET LIMITS
+exports.getLimits = async (req, res) => {
+  try {
+    const limits = await userModel
+      .findById(req.headers.userid)
+      .select({ limits: 1, _id: 0 });
+
+    res.status(200).send({
+      status: 'success',
+      data: limits.toJSON(),
+    });
+  } catch (err) {
+    res.status(400).send({
+      status: 'error',
+      message: err,
+    });
+  }
+};
