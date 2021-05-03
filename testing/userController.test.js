@@ -147,13 +147,10 @@ describe('should retrieve user info by id and send response correctly', () => {
       send: jest.fn().mockReturnThis(),
     };
     await userController.getUserInfo(mReq, mRes);
-    expect(mRes.status).toBeCalledWith(400);
+    expect(mRes.status).toBeCalledWith(404);
     expect(mRes.send).toBeCalledWith({
       status: 'error',
-      message: {
-        status: 'Error',
-        message: 'No user is found by that user ID',
-      },
+      message: 'No user is found by that user ID',
     });
   });
 });

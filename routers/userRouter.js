@@ -16,7 +16,7 @@ const userRouter = express.Router();
  * @apiErrorExample Error-Response:
  *      HTTP/1.1 404 Not Found
  *      {
- *          "status": "Error",
+ *          "status": "error",
  *          "message": "No user is found by that user ID"
  *      }
  */

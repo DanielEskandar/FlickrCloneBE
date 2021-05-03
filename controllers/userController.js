@@ -57,12 +57,9 @@ exports.getUserInfo = async (req, res) => {
       data: userInfo.toJSON(),
     });
   } catch (err) {
-    res.status(400).send({
+    res.status(404).send({
       status: 'error',
-      message: {
-        status: 'Error',
-        message: 'No user is found by that user ID',
-      },
+      message: 'No user is found by that user ID',
     });
   }
 };
