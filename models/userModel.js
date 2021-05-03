@@ -22,15 +22,10 @@ const userSchema = new mongoose.Schema({
     required: [true, 'a user must have a password'],
     validate: [validator.isStrongPassword, 'Weak password'],
   },
-  userType: {
-    type: String,
-    trim: true,
+  pro: {
+    type: Boolean,
     required: [true, 'A user must have a user type'],
-    enum: {
-      values: ['free', 'pro'],
-      message: 'User type is either free or pro',
-    },
-    default: 'free',
+    default: false,
   },
   firstName: {
     type: String,
