@@ -5,9 +5,13 @@ const dotenv = require('dotenv');
 
 // INCLUDE MODELS
 const userModel = require('./models/userModel');
+const galleryModel = require('./models/galleryModel');
+const albumModel = require('./models/albumModel');
 
 // READ JSON FILES
 const users = JSON.parse(fs.readFileSync('./data/Users.json', 'utf-8'));
+const galleries = JSON.parse(fs.readFileSync('./data/Galleries.json', 'utf-8'));
+const albums = JSON.parse(fs.readFileSync('./data/Albums.json', 'utf-8'));
 
 // CONFIGURE SERVER
 dotenv.config({ path: './config.env' });
@@ -31,6 +35,9 @@ mongoose
 const importData = async () => {
   try {
     await userModel.create(users);
+    await galleryModel.create(galleries);
+    await albumModel.create(albums);
+
     console.log('Data successfully loaded');
     process.exit();
   } catch (err) {
@@ -42,6 +49,9 @@ const importData = async () => {
 const deleteData = async () => {
   try {
     await userModel.deleteMany();
+    await galleryModel.deleteMany();
+    await albumModel.deleteMany();
+
     console.log('Data successfully deleted');
     process.exit();
   } catch (err) {

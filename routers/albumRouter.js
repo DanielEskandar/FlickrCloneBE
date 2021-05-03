@@ -323,7 +323,7 @@ albumRouter.post('/:id/photos');
 albumRouter.post('/:id/comments');
 
 /**
- * @api {put} /photoset/:id/photos Add, Remove and Reorder photos
+ * @api {patch} /photoset/:id/photos Add, Remove and Reorder photos
  * @apiVersion 1.0.0
  * @apiName EditPhotos
  * @apiGroup Album
@@ -340,7 +340,7 @@ albumRouter.post('/:id/comments');
  * @apiUse AlbumNotFoundError
  */
 
-albumRouter.put('/:id/photos');
+albumRouter.patch('/:id/photos');
 
 /**
  * @api {patch} /photoset/:id/meta Modify the meta-data

@@ -275,7 +275,7 @@ galleryRouter.post('/:id/photos');
 galleryRouter.post('/:id/comments');
 
 /**
- * @api {put} /gallery/:id/photos Add, Remove and Reorder photos
+ * @api {patch} /gallery/:id/photos Add, Remove and Reorder photos
  * @apiVersion 1.0.0
  * @apiName EditPhotos
  * @apiGroup Gallery
@@ -293,7 +293,7 @@ galleryRouter.post('/:id/comments');
  *
  */
 
-galleryRouter.put('/:id/photos');
+galleryRouter.patch('/:id/photos');
 
 /**
  * @api {patch} /gallery/:id/meta Modify the meta-data

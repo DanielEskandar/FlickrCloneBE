@@ -1,0 +1,35 @@
+[
+  {
+    "_id": "608f3c70197abc18509aec5e",
+
+    "albumName": "2017 Spring Tokyo",
+    "primaryPhotoId": "508d55c7e512b74ee00791aa",
+    "photos": ["508d55c7e512b74ee00791aa", "508d55c7e512b74ee00791ad"],
+    "description": "",
+    "comments": []
+  },
+  {
+    "_id": "608f3c70197abc18509aec61",
+    "albumName": "Tours",
+    "primaryPhotoId": "508d55c7e512b74ee00791aa",
+    "photos": ["508d55c7e512b74ee00791aa", "508d55c7e512b74ee00791ad"],
+    "description": "Some small tours",
+    "comments": []
+  },
+  {
+    "_id": "608f3c70197abc18509aec5f",
+    "albumName": "Family",
+    "primaryPhotoId": "508d55c7e512b74ee00791aa",
+    "photos": ["508d55c7e512b74ee00791aa", "508d55c7e512b74ee00791ad"],
+    "description": " Work is work, but family is for life",
+    "comments": []
+  },
+  {
+    "_id": "608f3c70197abc18509aec60",
+    "albumName": "Food",
+    "primaryPhotoId": "508d55c7e512b74ee00791aa",
+    "photos": ["508d55c7e512b74ee00791aa", "508d55c7e512b74ee00791ad"],
+    "description": "Good Food is good mood",
+    "comments": []
+  }
+]

@@ -5,29 +5,38 @@ const mongoose = require('mongoose');
 const gallerySchema = new mongoose.Schema({
   galleryName: {
     type: String,
-    required: [true, 'A must have a name'],
+    required: [true, 'A gallery must have a name'],
     minlength: 1,
     trim: true,
-  }, // trim
+  },
   primaryPhotoId: mongoose.Schema.ObjectId,
   viewCount: {
     type: Number,
     default: 0,
   },
-  photos: [
-    {
-      type: {
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+  updatedAt: {
+    type: Date,
+    default: Date.now,
+  },
+  photos: {
+    type: [
+      {
         photoId: mongoose.Schema.ObjectId,
         remark: String,
       },
-      validate: function () {
-        return (
-          this.photos.length <= 500 && this.photos.includes(this.primaryPhotoId)
-        );
-      },
-      // validate array length : 500 , primary photo
+    ],
+    validate: function () {
+      const id = this.photos.find(
+        (element) =>
+          element.photoId.toString() === this.primaryPhotoId.toString()
+      );
+      return this.photos.length <= 500 && id !== undefined;
     },
-  ],
+  },
   description: {
     type: String,
     trim: true,
