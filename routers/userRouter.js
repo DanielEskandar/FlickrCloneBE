@@ -16,7 +16,7 @@ const userRouter = express.Router();
  * @apiErrorExample Error-Response:
  *      HTTP/1.1 404 Not Found
  *      {
- *          "status": "Error",
+ *          "status": "error",
  *          "message": "No user is found by that user ID"
  *      }
  */
@@ -148,45 +148,6 @@ userRouter.patch('/');
  */
 
 userRouter.delete('/');
-
-/**
- * @api {get} /user/:id Get the User's Information
- * @apiVersion 1.0.0
- * @apiName GetUserInfo
- * @apiGroup User
- *
- * @apiParam {String} id The User's ID
- *
- * @apiSuccess {String} username Username of the User
- * @apiSuccess {String} firstname First Name of the User
- * @apiSuccess {String} lastname Last Name of the User
- * @apiSuccess {Boolean} pro The type of user (pro or not)
- * @apiSuccess {String} aboutme Small text about the user set by the user
- * @apiSuccess {Date} joindate Date the user joined flickr
- * @apiSuccess {string} profileurl Url of the user's profile
- * @apiSuccess {string} location The user's current stored location
- *
- * @apiSuccessExample Success-Response:
- *      HTTP/1.1 200 OK
- *      {
- *          "status": "success",
- *          "data":
- *          {
- *              "username": "ahmedtarek914",
- *              "firstname": "Ahmed",
- *              "lastname": "Abdulkader",
- *              "pro": false,
- *              "aboutme": "Not a lot to say about me :)",
- *              "joindate": 2012-04-23T18:25:43.511Z,
- *              "profileurl": "http://www.flickr.com/people/ahmed/",
- *              "location": "Cairo, Egypt"
- *          }
- *      }
- *
- * @apiUse UserNotFoundError
- */
-
-userRouter.get('/:id');
 
 /**
  * @api {get} /user/:id/stats Get the User's Statistics
@@ -700,7 +661,7 @@ userRouter.get('/:id/faves');
  * @apiUse UnauthError
  */
 
-userRouter.get('/limits');
+userRouter.get('/limits', userController.getLimits);
 
 /**
  * @api {delete} /user/testimonials/:id Delete a testimonial
@@ -1474,6 +1435,76 @@ userRouter.get('/notif/follow');
  *
  * @apiUse UnauthError
  */
+
+/**
+ * @api {get} /user/:id Get the User's Information
+ * @apiVersion 1.0.0
+ * @apiName GetUserInfo
+ * @apiGroup User
+ *
+ * @apiParam {String} id The User's ID
+ *
+ * @apiSuccess {String} joinDate Date when the user joined flickr
+ * @apiSuccess {String} occupation Occupation of the user
+ * @apiSuccess {String} hometown Hometown of the User
+ * @apiSuccess {String} currentCity Current city of the user
+ * @apiSuccess {string} country Country of the user
+ * @apiSuccess {string} email Email of the user
+ *
+ * @apiSuccessExample Success-Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *          "status": "success",
+ *          "data":
+ *          {
+ *              "joinDate": "2015-10-07T06:09:54+00:00",
+ *              "occupation": "Photographer",
+ *              "hometown": "Beverly Hills",
+ *              "currentCity": "California",
+ *              "country": "United States",
+ *              "email": "ahmedkader99@mailserver.com",
+ *          }
+ *      }
+ *
+ * @apiUse UserNotFoundError
+ */
+
+userRouter.get('/:id', userController.getUserInfo);
+
+/**
+ * @api {get} /user/:id Get the User's Information
+ * @apiVersion 1.0.0
+ * @apiName GetUserInfo
+ * @apiGroup User
+ *
+ * @apiParam {String} id The User's ID
+ *
+ * @apiSuccess {String} joinDate Date when the user joined flickr
+ * @apiSuccess {String} occupation Occupation of the user
+ * @apiSuccess {String} hometown Hometown of the User
+ * @apiSuccess {String} currentCity Current city of the user
+ * @apiSuccess {string} country Country of the user
+ * @apiSuccess {string} email Email of the user
+ *
+ * @apiSuccessExample Success-Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *          "status": "success",
+ *          "data":
+ *          {
+ *              "joinDate": "2015-10-07T06:09:54+00:00",
+ *              "occupation": "Photographer",
+ *              "hometown": "Beverly Hills",
+ *              "currentCity": "California",
+ *              "country": "United States",
+ *              "email": "ahmedkader99@mailserver.com",
+ *          }
+ *      }
+ *
+ * @apiUse UserNotFoundError
+ */
+
+userRouter.get('/:id', userController.getUserInfo);
 
 userRouter.get('/notif/interact');
 
