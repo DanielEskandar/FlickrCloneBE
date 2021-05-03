@@ -83,3 +83,77 @@ describe('should retrieve real name by id and send response correctly', () => {
     });
   });
 });
+
+// TESTING: getUserInfo
+describe('should retrieve user info by id and send response correctly', () => {
+  test('should retrieve user info of Ahmed Abdulkader', async () => {
+    const mReq = {
+      params: {
+        id: '608d5450ec00005468607a0c',
+      },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      send: jest.fn().mockReturnThis(),
+    };
+    await userController.getUserInfo(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.send).toBeCalledWith({
+      status: 'success',
+      data: {
+        email: 'ahmedkader99@mailserver.com',
+        occupation: 'Photographer',
+        hometown: 'Beverly Hills',
+        currentCity: 'California',
+        country: 'United States',
+        joinDate: new Date('2015-10-07T06:09:54.000Z'),
+      },
+    });
+  });
+
+  test('should retrieve user info of Daniel Eskandar', async () => {
+    const mReq = {
+      params: {
+        id: '608d55c7e512b74ee00791db',
+      },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      send: jest.fn().mockReturnThis(),
+    };
+    await userController.getUserInfo(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.send).toBeCalledWith({
+      status: 'success',
+      data: {
+        email: 'daniel_eskandar99@mailserver.com',
+        occupation: 'Artist',
+        hometown: 'Ile de France',
+        currentCity: 'Paris',
+        country: 'France',
+        joinDate: new Date('2020-11-03T06:10:45.000Z'),
+      },
+    });
+  });
+
+  test('should send user not found error', async () => {
+    const mReq = {
+      params: {
+        id: '608d55c7e512b74ee0',
+      },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      send: jest.fn().mockReturnThis(),
+    };
+    await userController.getUserInfo(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(400);
+    expect(mRes.send).toBeCalledWith({
+      status: 'error',
+      message: {
+        status: 'Error',
+        message: 'No user is found by that user ID',
+      },
+    });
+  });
+});
