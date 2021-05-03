@@ -2,7 +2,7 @@
 const express = require('express');
 
 // INCLUDE CONTROLLERS
-const groupController = require('../controllers/groupController.js');
+//const groupController = require('../controllers/groupController.js');
 
 // CREATE ROUTER
 const groupRouter = express.Router();

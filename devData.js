@@ -5,9 +5,11 @@ const dotenv = require('dotenv');
 
 // INCLUDE MODELS
 const userModel = require('./models/userModel');
+const photoModel = require('./models/photoModel');
 
 // READ JSON FILES
 const users = JSON.parse(fs.readFileSync('./data/Users.json', 'utf-8'));
+const photos = JSON.parse(fs.readFileSync('./data/Photos.json', 'utf-8'));
 
 // CONFIGURE SERVER
 dotenv.config({ path: './config.env' });
@@ -31,6 +33,7 @@ mongoose
 const importData = async () => {
   try {
     await userModel.create(users);
+    await photoModel.create(photos);
     console.log('Data successfully loaded');
     process.exit();
   } catch (err) {
@@ -42,6 +45,7 @@ const importData = async () => {
 const deleteData = async () => {
   try {
     await userModel.deleteMany();
+    await photoModel.deleteMany();
     console.log('Data successfully deleted');
     process.exit();
   } catch (err) {

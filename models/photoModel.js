@@ -1,5 +1,6 @@
 // INCLUDE DEPENDENCIES
 const mongoose = require('mongoose');
+const validator = require('validator');
 
 // CREATE SCHEMA
 const photoSchema = new mongoose.Schema({
