@@ -542,12 +542,12 @@ groupRouter.get('/discussions/:id/replies');
 /**
  * @api {get} /group/:id/members Get a list of the members of a group.
  * @apiVersion 1.0.0
- * @apiName GetAllReplies
+ * @apiName GetMembers
  * @apiGroup Group
  *
  * @apiParam {String} id The group's ID
  *
- * @apiSuccess {string} Token Authenticaton Token // lazem ybaa user AND member
+ * @apiSuccess {string} Token Authenticaton Token
  * @apiSuccess {Object[]} users List of the members in the group.
  *
  * @apiUse SuccessRes
@@ -555,7 +555,7 @@ groupRouter.get('/discussions/:id/replies');
  * @apiUse UnauthError
  * @apiUse GroupNotFoundError
  */
-groupRouter.get('/:id/members');
+groupRouter.get('/:id/members',groupController.GetMembers);
 
 /**
  * @api {post} /group/:id/pool/:photoid Add a Photo to a Group Photo Pool
@@ -636,7 +636,7 @@ groupRouter.get('/:id/photo/:photoid/context');
  * @apiUse UnauthError
  * @apiUse GroupNotFoundError
  */
-groupRouter.get('/:id/pool');
+groupRouter.get('/:id/pool',groupController.GetPhotoPool);
 
 /**
  * @api {delete} /group/:id/pool/:photoId Remove a Photo from a Group Photo Pool
