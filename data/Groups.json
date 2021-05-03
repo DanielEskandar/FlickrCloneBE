@@ -18,6 +18,7 @@
  },
 
  {
+     "_id":"608f3e678209d433946b946d",
     "public": false,
      "name": "Dogs Day Out",
      "invitation": true,
@@ -44,6 +45,7 @@
     "ageRestriction": false
  },
  {
+    "_id":"608f3e678209d433946b9472",
     "public": false,
      "name": "Miss Basket",
      "invitation": true,
