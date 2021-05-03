@@ -4,7 +4,7 @@
     "displayName": "AhmedAbdulkader99",
     "email": "ahmedkader99@mailserver.com",
     "password": "Security@1984",
-    "userType": true,
+    "pro": true,
     "firstName": "Ahmed",
     "lastName": "Abdulkader",
     "age": 22,
@@ -63,14 +63,15 @@
         "you": 1,
         "contacts": 1
       }
-    }
+    },
+    "joinDate": "2015-10-07T06:09:54+00:00"
   },
   {
     "_id": "608d55c7e512b74ee00791db",
     "displayName": "DanielEskandar",
     "email": "daniel_eskandar99@mailserver.com",
     "password": "ViveLaFrance&45",
-    "userType": false,
+    "pro": false,
     "firstName": "Daniel",
     "lastName": "Eskandar",
     "age": 35,
@@ -129,14 +130,15 @@
         "you": 1,
         "contacts": 1
       }
-    }
+    },
+    "joinDate": "2020-11-03T06:10:45+00:00"
   },
   {
     "_id": "608d55c7e512b74ee00791dc",
     "displayName": "AliaaKhalifa",
     "email": "aliaakhalifa@mailserver.com",
     "password": "TestingPass#21",
-    "userType": true,
+    "pro": true,
     "firstName": "Aliaa",
     "lastName": "Khalifa",
     "age": 20,
@@ -195,14 +197,15 @@
         "you": 1,
         "contacts": 1
       }
-    }
+    },
+    "joinDate": "2018-02-08T06:07:35+00:00"
   },
   {
     "_id": "608d55c7e512b74ee00791dd",
     "displayName": "MariamKhashab",
     "email": "mariamkhashab@mailserver.com",
     "password": "TestingPass#22",
-    "userType": false,
+    "pro": false,
     "firstName": "Mariam",
     "lastName": "Khashab",
     "age": 20,
@@ -261,14 +264,15 @@
         "you": 1,
         "contacts": 1
       }
-    }
+    },
+    "joinDate": "2021-09-09T06:09:54+00:00"
   },
   {
     "_id": "608d55c7e512b74ee00791de",
     "displayName": "NadineMagdy",
     "email": "nadinemagdy@mailserver.com",
     "password": "TestingPass#20",
-    "userType": false,
+    "pro": false,
     "firstName": "Nadine",
     "lastName": "Magdi",
     "age": 21,
@@ -327,6 +331,7 @@
         "you": 1,
         "contacts": 1
       }
-    }
+    },
+    "joinDate": "2021-02-07T06:04:12+00:00"
   }
 ]
