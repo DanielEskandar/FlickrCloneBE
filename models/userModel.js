@@ -39,6 +39,10 @@ const userSchema = new mongoose.Schema({
     required: [true, 'A user must have a last name'],
     validate: [validator.isAlpha, 'Invalid last name'],
   },
+  occupation: { type: String, trim: true },
+  hometown: { type: String, trim: true },
+  currentCity: { type: String, trim: true },
+  country: { type: String, trim: true },
   age: {
     type: Number,
     required: [true, 'A user must have an age'],
