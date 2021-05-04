@@ -160,7 +160,7 @@ albumRouter.get('/:id/photos', albumController.getPhotos);
 /**
  * @api {get} /photoset/:id/comments Get Album Comments
  * @apiVersion 1.0.0
- * @apiName GetAlbumComments
+ * @apiName GetComments
  * @apiGroup Album
  *
  * @apiParam {String} id The Album's ID
@@ -182,7 +182,7 @@ albumRouter.get('/:id/photos', albumController.getPhotos);
  * @apiUse AlbumNotFoundError
  */
 
-albumRouter.get('/:id/comments');
+albumRouter.get('/:id/comments', albumController.getComments);
 
 /**
  * @api {delete} /photoset/:id Delete an Album
@@ -262,7 +262,7 @@ albumRouter.delete('/:id/:photoid');
  *      }
  */
 
-albumRouter.delete('/:id/comments/:commentid');
+albumRouter.delete('/:id/comments/:commentid', albumController.deleteComment);
 
 /**
  * @api {post} /photoset/ Create a new album
@@ -318,7 +318,7 @@ albumRouter.post('/:id/photos');
  * @apiUse AlbumNotFoundError
  */
 
-albumRouter.post('/:id/comments');
+albumRouter.post('/:id/comments', albumController.addComment);
 
 /**
  * @api {patch} /photoset/:id/photos Add, Remove and Reorder photos
@@ -384,7 +384,7 @@ albumRouter.patch('/:id/meta');
  *      }
  */
 
-albumRouter.patch('/comments/:id');
+albumRouter.patch('/comments/:id', albumController.editComment);
 
 /**
  * @api {patch} /photoset/:id/primary/:photoid Set album's primary photo

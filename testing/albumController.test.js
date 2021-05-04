@@ -390,3 +390,69 @@ describe("should retrieve Album's Photos", () => {
     });
   });
 });
+
+// TESTING: getComments
+describe('should get Comments in an album', () => {
+  test(`should get Comments in an album with id 608f3c70197abc18509aec60`, async () => {
+    const mReq = { params: { id: '608f3c70197abc18509aec60' } };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      send: jest.fn().mockReturnThis(),
+    };
+    await albumController.getComments(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.send).toBeCalledWith({
+      status: 'success',
+      data: {
+        comments: [
+          {
+            _id: new mongoose.Types.ObjectId('6090c346c555f920e431f205'),
+            userId: {
+              _id: new mongoose.Types.ObjectId('608d55c7e512b74ee00791dd'),
+              displayName: 'MariamKhashab',
+            },
+            body: ' Yummy !!',
+            date: new Date('2021-05-04T03:45:10.686Z'),
+            __v: 0,
+          },
+          {
+            _id: new mongoose.Types.ObjectId('6090c39bc555f920e431f206'),
+            userId: {
+              _id: new mongoose.Types.ObjectId('608d55c7e512b74ee00791db'),
+              displayName: 'DanielEskandar',
+            },
+            body: 'delicious ',
+            date: new Date('2021-05-04T03:46:35.121Z'),
+            __v: 0,
+          },
+        ],
+      },
+    });
+  });
+});
+
+// TESTING: editComments
+describe('should edit a comment in an album', () => {
+  test(`should edit a Comments with id 6090c79e4b51ed317019966b`, async () => {
+    const mReq = {
+      params: { id: '6090c79e4b51ed317019966b' },
+      body: { body: 'family is everything <3' },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      send: jest.fn().mockReturnThis(),
+    };
+    await albumController.editComment(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.send).toBeCalledWith({
+      status: 'success',
+      data: {
+        _id: new mongoose.Types.ObjectId('6090c79e4b51ed317019966b'),
+        userId: new mongoose.Types.ObjectId('608d55c7e512b74ee00791db'),
+        body: 'family is everything <3',
+        date: new Date('2021-05-04T04:03:42.528Z'),
+        __v: 0,
+      },
+    });
+  });
+});
