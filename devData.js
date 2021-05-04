@@ -7,12 +7,20 @@ const dotenv = require('dotenv');
 const userModel = require('./models/userModel');
 const groupModel = require('./models/groupModel');
 const discussionModel = require('./models/discussionModel');
+const photoModel = require('./models/photoModel');
+const galleryModel = require('./models/galleryModel');
+const albumModel = require('./models/albumModel');
+
 // READ JSON FILES
 const users = JSON.parse(fs.readFileSync('./data/Users.json', 'utf-8'));
 const groups = JSON.parse(fs.readFileSync('./data/Groups.json', 'utf-8'));
 const discussions = JSON.parse(
   fs.readFileSync('./data/Discussions.json', 'utf-8')
 );
+const photos = JSON.parse(fs.readFileSync('./data/Photos.json', 'utf-8'));
+const galleries = JSON.parse(fs.readFileSync('./data/Galleries.json', 'utf-8'));
+const albums = JSON.parse(fs.readFileSync('./data/Albums.json', 'utf-8'));
+
 // CONFIGURE SERVER
 dotenv.config({ path: './config.env' });
 
@@ -38,6 +46,10 @@ const importData = async () => {
     await userModel.create(users);
     await groupModel.create(groups);
     await discussionModel.create(discussions);
+    await photoModel.create(photos);
+    await galleryModel.create(galleries);
+    await albumModel.create(albums);
+	
     console.log('Data successfully loaded');
     process.exit();
   } catch (err) {
@@ -51,6 +63,10 @@ const deleteData = async () => {
     await userModel.deleteMany();
     await groupModel.deleteMany();
     await discussionModel.deleteMany();
+    await photoModel.deleteMany();
+    await galleryModel.deleteMany();
+    await albumModel.deleteMany();
+	
     console.log('Data successfully deleted');
     process.exit();
   } catch (err) {

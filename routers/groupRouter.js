@@ -2,7 +2,7 @@
 const express = require('express');
 
 // INCLUDE CONTROLLERS
-const groupController = require('../controllers/groupController.js');
+//const groupController = require('../controllers/groupController.js');
 
 // CREATE ROUTER
 const groupRouter = express.Router();
@@ -357,6 +357,7 @@ groupRouter.get('/discussion/:id');
 * @apiUse ForbiddenAccss
 * @apiUse GroupNotFoundError
 */
+
 groupRouter.get('/:id/discussion', groupController.GetAllDiscussions);
 
 /**
@@ -440,6 +441,7 @@ groupRouter.patch('/:id/pinned/:topicId');
  * @apiUse UnauthError
  * @apiUse ForbiddenAccss
  */
+
 groupRouter.post('/discussion/:id/replies');
 
 /**
@@ -464,6 +466,7 @@ groupRouter.post('/discussion/:id/replies');
  * @apiUse UnauthError
  * @apiUse ForbiddenAccss
  */
+
 groupRouter.delete('/discussion/replies/:id');
 
 /**
@@ -493,6 +496,7 @@ groupRouter.delete('/discussion/replies/:id');
  * @apiUse UnauthError
  * @apiUse ForbiddenAccss
  */
+
 groupRouter.patch('/discussion/replies/:id');
 
 /**
@@ -515,6 +519,7 @@ groupRouter.patch('/discussion/replies/:id');
  *      }
  * @apiUse UnauthError
  */
+
 groupRouter.get('/discussion/replies/:id');
 
 /**
@@ -537,6 +542,7 @@ groupRouter.get('/discussion/replies/:id');
  *      }
  * @apiUse UnauthError
  */
+
 groupRouter.get('/discussion/:id/replies');
 
 /**
@@ -555,7 +561,8 @@ groupRouter.get('/discussion/:id/replies');
  * @apiUse UnauthError
  * @apiUse GroupNotFoundError
  */
-groupRouter.get('/:id/members', groupController.GetMembers);
+
+groupRouter.get('/:id/members', groupController.GetMembers)
 
 /**
  * @api {post} /group/:id/pool/:photoid Add a Photo to a Group Photo Pool
@@ -636,6 +643,7 @@ groupRouter.get('/:id/photo/:photoid/context');
  * @apiUse UnauthError
  * @apiUse GroupNotFoundError
  */
+
 groupRouter.get('/:id/pool', groupController.GetPhotoPool);
 
 /**

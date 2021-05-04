@@ -1,5 +1,6 @@
 // INCLUDE DEPENDENCIES
 const mongoose = require('mongoose');
+const validator = require('validator');
 
 // CREATE SCHEMA
 const photoSchema = new mongoose.Schema({
@@ -96,9 +97,11 @@ const photoSchema = new mongoose.Schema({
   },
   title: {
     type: String,
+    maxlength: [300, 'Title cannot be more than 300 characters long'],
   },
   description: {
     type: String,
+    maxlength: [2000, 'Description cannot be more than 2000 characters long'],
   },
   EXIF: String,
   safetyLevel: {
@@ -121,7 +124,7 @@ const photoSchema = new mongoose.Schema({
     },
   ],
   hidden: Boolean,
-  license: Number,
+  license: { type: Number, minimum: 0, maximum: 10 },
 });
 
 // CREATE MODEL

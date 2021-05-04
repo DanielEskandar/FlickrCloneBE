@@ -2,7 +2,7 @@
 const express = require('express');
 
 // INCLUDE CONTROLLERS
-//const galleryController = require('../controllers/galleryController.js');
+const galleryController = require('../controllers/galleryController.js');
 
 // CREATE ROUTER
 const galleryRouter = express.Router();
@@ -72,7 +72,6 @@ const galleryRouter = express.Router();
  * @apiSuccess {String} description Gallery's Description
  * @apiSuccess {Object[]} photos Array of gallery's photos
  * @apiSuccess {Number} photoscount The count of gallery's photos
- * @apiSuccess {Number} videoscount The count of gallery's videos
  * @apiSuccess {Number} viewscount The count of views
  * @apiSuccess {ObjectID} primaryphoto The primary photo's id
  * @apiSuccess {Object[]} comments  Array of gallery's comments
@@ -83,11 +82,12 @@ const galleryRouter = express.Router();
  *          "status": "success",
  *          "data":
  *          {
- *              "title": sunsets,
+ *              "galleryName": sunsets,
  *              "description": best sunset photos,
  *              "photos count": 17,
- *              "videos count": 3,
  *              "views count": 20,
+ *              "createdAt": "2021-05-03T00:07:30.005Z",
+ *              "updatedAt": "2021-05-03T00:07:30.005Z",
  *              "primary photo id": 292882708,
  *              "photos": [
  *
@@ -101,7 +101,7 @@ const galleryRouter = express.Router();
  * @apiUse GalleryNotFoundError
  */
 
-galleryRouter.get('/:id');
+galleryRouter.get('/:id', galleryController.getInfo);
 
 /**
  * @api {get} /gallery/:id/photos Get Gallery's Photos
@@ -128,12 +128,12 @@ galleryRouter.get('/:id');
  * @apiUse GalleryNotFoundError
  */
 
-galleryRouter.get('/:id/photos');
+galleryRouter.get('/:id/photos', galleryController.getPhotos);
 
 /**
  * @api {get} /gallery/:id/comments Get Gallery's Comments
  * @apiVersion 1.0.0
- * @apiName GetGalleryComments
+ * @apiName GetComments
  * @apiGroup Gallery
  *
  * @apiParam {String} id The Gallery's ID
@@ -155,7 +155,7 @@ galleryRouter.get('/:id/photos');
  * @apiUse GalleryNotFoundError
  */
 
-galleryRouter.get('/:id/comments');
+galleryRouter.get('/:id/comments', galleryController.getComments);
 
 /**
  * @api {delete} /gallery/:id Delete a Gallery
@@ -216,7 +216,10 @@ galleryRouter.delete('/:id/:photoid');
  *      }
  */
 
-galleryRouter.delete('/comments/:id');
+galleryRouter.delete(
+  '/:id/comments/:commentid',
+  galleryController.deleteComment
+);
 
 /**
  * @api {post} /gallery/ Create a new gallery
@@ -233,7 +236,7 @@ galleryRouter.delete('/comments/:id');
  * @apiUse UnauthError
  */
 
-galleryRouter.post('/');
+galleryRouter.post('/', galleryController.createGallery);
 
 /**
  * @api {post} /gallery/:id/photos Add a photo
@@ -272,10 +275,10 @@ galleryRouter.post('/:id/photos');
  *
  */
 
-galleryRouter.post('/:id/comments');
+galleryRouter.post('/:id/comments', galleryController.addComment);
 
 /**
- * @api {put} /gallery/:id/photos Add, Remove and Reorder photos
+ * @api {patch} /gallery/:id/photos Add, Remove and Reorder photos
  * @apiVersion 1.0.0
  * @apiName EditPhotos
  * @apiGroup Gallery
@@ -293,7 +296,7 @@ galleryRouter.post('/:id/comments');
  *
  */
 
-galleryRouter.put('/:id/photos');
+galleryRouter.patch('/:id/photos');
 
 /**
  * @api {patch} /gallery/:id/meta Modify the meta-data
@@ -339,7 +342,7 @@ galleryRouter.patch('/:id/meta');
  *      }
  */
 
-galleryRouter.patch('/comments/:id');
+galleryRouter.patch('/comments/:id', galleryController.editComment);
 
 /**
  * @api {patch} /gallery/:id/primary/:photoid Set gallery's primary photo

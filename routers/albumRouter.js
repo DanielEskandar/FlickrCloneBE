@@ -2,7 +2,7 @@
 const express = require('express');
 
 // INCLUDE CONTROLLERS
-//const albumController = require('../controllers/albumController.js');
+const albumController = require('../controllers/albumController.js');
 
 // CREATE ROUTER
 const albumRouter = express.Router();
@@ -72,7 +72,6 @@ const albumRouter = express.Router();
  * @apiSuccess {String} description Album's Description
  * @apiSuccess {Object[]} photos Array of Album's photos
  * @apiSuccess {Number} photoscount The count of Album's photos
- * @apiSuccess {Number} videoscount The count of Album's videos
  * @apiSuccess {ObjectID} primaryphoto The primary photo's id
  * @apiSuccess {Object[]} comments  Array of Album's comments
  *
@@ -85,7 +84,6 @@ const albumRouter = express.Router();
  *              "title": sunsets,
  *              "description": best sunset photos,
  *              "photos count": 17,
- *              "videos count": 3,
  *              "primaryphoto": 292882708,
  *              "photos": [
  *
@@ -99,7 +97,7 @@ const albumRouter = express.Router();
  * @apiUse AlbumNotFoundError
  */
 
-albumRouter.get('/:id');
+albumRouter.get('/:id', albumController.getInfo);
 
 /**
  * @api {get} /photoset/:id/context/:photoid Get next and previous photos for a photo
@@ -157,12 +155,12 @@ albumRouter.get('/:id/context/:photoid');
  * @apiUse AlbumNotFoundError
  */
 
-albumRouter.get('/:id/photos');
+albumRouter.get('/:id/photos', albumController.getPhotos);
 
 /**
  * @api {get} /photoset/:id/comments Get Album Comments
  * @apiVersion 1.0.0
- * @apiName GetAlbumComments
+ * @apiName GetComments
  * @apiGroup Album
  *
  * @apiParam {String} id The Album's ID
@@ -184,7 +182,7 @@ albumRouter.get('/:id/photos');
  * @apiUse AlbumNotFoundError
  */
 
-albumRouter.get('/:id/comments');
+albumRouter.get('/:id/comments', albumController.getComments);
 
 /**
  * @api {delete} /photoset/:id Delete an Album
@@ -264,7 +262,7 @@ albumRouter.delete('/:id/:photoid');
  *      }
  */
 
-albumRouter.delete('/comments/:id');
+albumRouter.delete('/:id/comments/:commentid', albumController.deleteComment);
 
 /**
  * @api {post} /photoset/ Create a new album
@@ -281,7 +279,7 @@ albumRouter.delete('/comments/:id');
  * @apiUse UnauthError
  */
 
-albumRouter.post('/');
+albumRouter.post('/', albumController.createAlbum);
 
 /**
  * @api {post} /photoset/:id/photos Add a photo
@@ -320,10 +318,10 @@ albumRouter.post('/:id/photos');
  * @apiUse AlbumNotFoundError
  */
 
-albumRouter.post('/:id/comments');
+albumRouter.post('/:id/comments', albumController.addComment);
 
 /**
- * @api {put} /photoset/:id/photos Add, Remove and Reorder photos
+ * @api {patch} /photoset/:id/photos Add, Remove and Reorder photos
  * @apiVersion 1.0.0
  * @apiName EditPhotos
  * @apiGroup Album
@@ -340,7 +338,7 @@ albumRouter.post('/:id/comments');
  * @apiUse AlbumNotFoundError
  */
 
-albumRouter.put('/:id/photos');
+albumRouter.patch('/:id/photos');
 
 /**
  * @api {patch} /photoset/:id/meta Modify the meta-data
@@ -386,7 +384,7 @@ albumRouter.patch('/:id/meta');
  *      }
  */
 
-albumRouter.patch('/comments/:id');
+albumRouter.patch('/comments/:id', albumController.editComment);
 
 /**
  * @api {patch} /photoset/:id/primary/:photoid Set album's primary photo
