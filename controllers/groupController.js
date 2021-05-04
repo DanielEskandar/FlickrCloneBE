@@ -1,13 +1,15 @@
 // INCLUDE MODELS
 const groupModel = require('../models/groupModel.js');
-const discModel = require('../models/discussionModel.js');
+//const discModel = require('../models/discussionModel.js');
+
 //GET ALL GROUPS
 exports.GetInfo = async (req, res) => {
   try {
-    const groups = await groupModel.find();
+    const group = await groupModel.find();
+
     res.status(200).send({
       status: 'success',
-      data: { groups },
+      data: { groups: JSON.parse(JSON.stringify(group)) },
     });
   } catch (err) {
     res.status(400).send({
@@ -27,7 +29,7 @@ exports.GetMembers = async (req, res) => {
 
     res.status(200).send({
       status: 'success',
-      data: members.toJSON(),
+      data: JSON.parse(JSON.stringify(members)),
     });
   } catch (err) {
     res.status(400).send({

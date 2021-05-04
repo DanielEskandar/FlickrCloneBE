@@ -20,14 +20,10 @@ describe('should retrieve all groups info', () => {
       data: {
         groups: [
           {
-            startDate: new Date('2021-01-01T00:00:00.000Z'),
-            photos: [
-              { _id: new mongoose.Types.ObjectId('608d5450ec00005468607a0f') },
-            ],
-            discussionTopics: [
-              { _id: new mongoose.Types.ObjectId('608f6e7519953b27004f6dab') },
-            ],
-            _id: new mongoose.Types.ObjectId('608f3d0fb5ba8b4f34890a5e'),
+            startDate: '2021-01-01T00:00:00.000Z',
+            photos: ['608d5450ec00005468607a0f'],
+            discussionTopics: ['608f6e7519953b27004f6dab'],
+            _id: '608f3d0fb5ba8b4f34890a5e',
             public: true,
             name: 'What to eat?',
             invitation: true,
@@ -35,13 +31,13 @@ describe('should retrieve all groups info', () => {
               'This is a platform to share food recommendations, along with restaurants rating too.',
             users: [
               {
-                joinDate: new Date('2021-01-01T00:00:00.000Z'),
-                _id: new mongoose.Types.ObjectId('608d5450ec00005468607a0c'),
+                joinDate: '2021-01-01T00:00:00.000Z',
+                _id: '608d5450ec00005468607a0c',
                 admin: true,
               },
               {
-                joinDate: new Date('2021-01-01T00:00:00.000Z'),
-                _id: new mongoose.Types.ObjectId('608d55c7e512b74ee00791dd'),
+                joinDate: '2021-01-01T00:00:00.000Z',
+                _id: '608d55c7e512b74ee00791dd',
                 admin: false,
               },
             ],
@@ -50,14 +46,10 @@ describe('should retrieve all groups info', () => {
             __v: 0,
           },
           {
-            startDate: new Date('2021-01-01T00:00:00.000Z'),
-            photos: [
-              { _id: new mongoose.Types.ObjectId('608d5450ec00005468607a0f') },
-            ],
-            discussionTopics: [
-              { _id: new mongoose.Types.ObjectId('608f6e7519953b27004f6dab') },
-            ],
-            _id: new mongoose.Types.ObjectId('608f3e678209d433946b946d'),
+            startDate: '2021-01-01T00:00:00.000Z',
+            photos: ['608d5450ec00005468607a0f'],
+            discussionTopics: ['608f6e7519953b27004f6dab'],
+            _id: '608f3e678209d433946b946d',
             public: false,
             name: 'Dogs Day Out',
             invitation: true,
@@ -65,18 +57,18 @@ describe('should retrieve all groups info', () => {
               'Welcome to Dogs Day Out, a place to share our love for our 4 legged friends!',
             users: [
               {
-                joinDate: new Date('2021-01-01T00:00:00.000Z'),
-                _id: new mongoose.Types.ObjectId('608d55c7e512b74ee00791dd'),
+                joinDate: '2021-01-01T00:00:00.000Z',
+                _id: '608d55c7e512b74ee00791dd',
                 admin: true,
               },
               {
-                joinDate: new Date('2021-01-01T00:00:00.000Z'),
-                _id: new mongoose.Types.ObjectId('608d55c7e512b74ee00791db'),
+                joinDate: '2021-01-01T00:00:00.000Z',
+                _id: '608d55c7e512b74ee00791db',
                 admin: false,
               },
               {
-                joinDate: new Date('2021-01-01T00:00:00.000Z'),
-                _id: new mongoose.Types.ObjectId('608d55c7e512b74ee00791dc'),
+                joinDate: '2021-01-01T00:00:00.000Z',
+                _id: '608d55c7e512b74ee00791dc',
                 admin: false,
               },
             ],
@@ -90,7 +82,7 @@ describe('should retrieve all groups info', () => {
   });
 });
 
-//TESTING GETMEMBERS
+//TESTING: GetMembers
 
 describe('should retrieve members in group with id 608f3d0fb5ba8b4f34890a5e', () => {
   test('should retrieve 2 users', async () => {
@@ -106,13 +98,13 @@ describe('should retrieve members in group with id 608f3d0fb5ba8b4f34890a5e', ()
       data: {
         users: [
           {
-            joinDate: new Date('2021-01-01T00:00:00.000Z'),
-            _id: new mongoose.Types.ObjectId('608d5450ec00005468607a0c'),
+            joinDate: '2021-01-01T00:00:00.000Z',
+            _id: '608d5450ec00005468607a0c',
             admin: true,
           },
           {
-            joinDate: new Date('2021-01-01T00:00:00.000Z'),
-            _id: new mongoose.Types.ObjectId('608d55c7e512b74ee00791dd'),
+            joinDate: '2021-01-01T00:00:00.000Z',
+            _id: '608d55c7e512b74ee00791dd',
             admin: false,
           },
         ],
