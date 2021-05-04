@@ -2,7 +2,7 @@
 const express = require('express');
 
 // INCLUDE CONTROLLERS
-//const groupController = require('../controllers/groupController.js');
+const groupController = require('../controllers/groupController.js');
 
 // CREATE ROUTER
 const groupRouter = express.Router();
@@ -281,7 +281,7 @@ groupRouter.get('/search');
  * @apiUse ForbiddenAccss
  * @apiUse GroupNotFoundError
  */
-groupRouter.post('/:id/discussion');
+groupRouter.post('/:id/discussion', groupController.createDiscussion);
 
 /**
  * @api {patch} /group/discussion/:id  Editting a discussion topic
@@ -310,7 +310,7 @@ groupRouter.post('/:id/discussion');
  * @apiUse UnauthError
  * @apiUse ForbiddenAccss
  */
-groupRouter.patch('/discussion/:id');
+groupRouter.patch('/discussion/:id', groupController.EditDiscussion);
 
 /**
  * @api {get} /group/discussion/:id Get information about a group discussion topic.
@@ -332,12 +332,12 @@ groupRouter.patch('/discussion/:id');
  *      }
  * @apiUse UnauthError
  */
-groupRouter.get('/discussion/:id');
+groupRouter.get('/discussion/:id', groupController.getDiscussion);
 
 /** 
 * @api {get} /group/:id/discussion Get a list of discussion topics in a group.
 * @apiVersion 1.0.0
-* @apiName GetAllDiscussionTopics
+* @apiName GetAllDiscussions
 * @apiGroup Group
 *
 * @apiParam {String} id The group's ID
@@ -382,7 +382,7 @@ groupRouter.get('/:id/discussion', groupController.GetAllDiscussions);
  * @apiUse UnauthError
  * @apiUse ForbiddenAccss
  */
-groupRouter.delete('/discussion/:id');
+groupRouter.delete('/discussion/:id', groupController.DeleteDiscussion);
 
 /**
  * @api {patch} /group/:id/pinned/:topicId Setting a new pinned thread
@@ -562,7 +562,7 @@ groupRouter.get('/discussion/:id/replies');
  * @apiUse GroupNotFoundError
  */
 
-groupRouter.get('/:id/members', groupController.GetMembers)
+groupRouter.get('/:id/members', groupController.GetMembers);
 
 /**
  * @api {post} /group/:id/pool/:photoid Add a Photo to a Group Photo Pool

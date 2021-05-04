@@ -1,6 +1,8 @@
 // INCLUDE CONTROLLER TO TEST
 const mongoose = require('mongoose');
 const galleryController = require('../controllers/galleryController.js');
+const commentModel = require('../models/commentModel');
+const galleryModel = require('../models/galleryModel');
 
 // INCLUDE COMMON TEST HEADERS
 const headers = require('./testcommons.js');
@@ -8,6 +10,7 @@ const headers = require('./testcommons.js');
 // TESTING: getInfo
 describe("should retrieve Gallery's Info by id and send response correctly", () => {
   test(`should retrieve Gallery Info`, async () => {
+    jest.setTimeout(30000);
     const mReq = { params: { id: '608f34a634413f11f020b127' } };
     const mRes = {
       status: jest.fn().mockReturnThis(),
@@ -470,6 +473,96 @@ describe('should edit a comment in a gallery', () => {
         userId: '608d5450ec00005468607a0c',
         body: 'I like it',
         date: '2021-05-04T03:25:36.334Z',
+        __v: 0,
+      },
+    });
+  });
+});
+
+// TESTING: addComments
+describe('should Add a comment to a gallery', () => {
+  test(`should Add a comment to a gallery with id 608f34a634413f11f020b121`, async () => {
+    // delete any comment with 5590beb07237ad1fb4458fae
+    await commentModel.findByIdAndDelete('5590beb07237ad1fb4458fae');
+    const mReq = {
+      params: { id: '608f34a634413f11f020b121' },
+      body: {
+        _id: '5590beb07237ad1fb4458fae',
+        userId: '608d5450ec00005468607a0c',
+        date: '2021-05-04T18:21:34.924Z',
+        body: 'good one',
+      },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      send: jest.fn().mockReturnThis(),
+    };
+    await galleryController.addComment(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.send).toBeCalledWith({
+      status: 'success',
+      data: {
+        _id: '5590beb07237ad1fb4458fae',
+        userId: '608d5450ec00005468607a0c',
+        body: 'good one',
+        date: '2021-05-04T18:21:34.924Z',
+        __v: 0,
+      },
+    });
+  });
+});
+
+// TESTING: deleteComments
+describe('should delete a comment from a gallery', () => {
+  test(`should delete a comment from a gallery with id 608f34a634413f11f020b121`, async () => {
+    const mReq = {
+      params: {
+        id: '608f34a634413f11f020b121',
+        commentid: '4590be955537ad1fb4458f11',
+      },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      send: jest.fn().mockReturnThis(),
+    };
+    await galleryController.deleteComment(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(204);
+    expect(mRes.send).toBeCalledWith({
+      status: 'success',
+      data: 'ok',
+    });
+  });
+});
+
+// TESTING: createGallery
+describe('should Create a gallery', () => {
+  test(`should Create a gallery with id 708f34a634413f11f020b139`, async () => {
+    // delete any gallery with 708f34a634413f11f020b139
+    await galleryModel.findByIdAndDelete('708f34a634413f11f020b139');
+    const mReq = {
+      body: {
+        _id: '708f34a634413f11f020b139',
+        galleryName: 'Egypt',
+        createdAt: '2021-05-03T00:07:30.005Z',
+        updatedAt: '2021-05-03T00:07:30.005Z',
+      },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      send: jest.fn().mockReturnThis(),
+    };
+    await galleryController.createGallery(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.send).toBeCalledWith({
+      status: 'success',
+      data: {
+        viewCount: 0,
+        comments: [],
+        _id: '708f34a634413f11f020b139',
+        galleryName: 'Egypt',
+        createdAt: '2021-05-03T00:07:30.005Z',
+        updatedAt: '2021-05-03T00:07:30.005Z',
+        photos: [],
         __v: 0,
       },
     });

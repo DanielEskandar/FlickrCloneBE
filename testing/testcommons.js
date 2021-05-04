@@ -17,5 +17,4 @@ mongoose
     useFindAndModify: false,
     useUnifiedTopology: true,
   })
-  .then(() => console.log('DB connection successful!'))
   .catch(() => console.log('Error connecting to the database!'));
