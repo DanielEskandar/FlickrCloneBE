@@ -1,0 +1,409 @@
+[
+  {
+    "_id": "608d5450ec00005468607a0c",
+    "displayName": "AhmedAbdulkader99",
+    "email": "ahmedkader99@mailserver.com",
+    "password": "Security@1984",
+    "pro": false,
+    "firstName": "Ahmed",
+    "lastName": "Abdulkader",
+    "occupation": "Photographer",
+    "hometown": "Beverly Hills",
+    "currentCity": "California",
+    "country": "United States",
+    "age": 22,
+    "aboutMe": "Hello! I take nice photos.. follow me \":)",
+    "showcase": [],
+    "favourites": ["608d5450ec00005468607a0f", "608d5450ec00005468617a0c"],
+    "photos": [],
+    "testimonials": [],
+    "albums": [],
+    "gallery": [],
+    "following": [
+      {
+        "_id": "60914e1ba87d736f3c382ece",
+        "user": "608d55c7e512b74ee00791dc",
+        "relation": "friend",
+        "followDate": "2021-05-04T12:12:24.255+00:00"
+      }
+    ],
+    "blocked": [],
+    "privacySettings": {
+      "global": {
+        "downloadPerm": 1,
+        "largestImgSize": 0,
+        "allowShare": 1,
+        "allowTag": 1,
+        "allowGalleryAdd": 1,
+        "hideEXIF": 0,
+        "hidePhotoSearch": 0,
+        "hideProfileSearch": 0,
+        "infoVisiblity": {
+          "email": 2,
+          "name": 1,
+          "currentCity": 1
+        }
+      },
+      "defaults": {
+        "perms": {
+          "see": 1,
+          "comment": 1,
+          "addNotes": 2
+        },
+        "license": 0,
+        "mapVisible": 1,
+        "importEXIF": 1,
+        "safetyLevel": 1,
+        "contentType": 1
+      },
+      "filters": {
+        "search": {
+          "safeSearch": 1,
+          "content": 1
+        }
+      }
+    },
+    "notificationSettings": {
+      "notifMail": {
+        "invites": 1,
+        "contact": 1,
+        "messages": 1,
+        "reminders": 1
+      },
+      "activityMail": {
+        "you": 1,
+        "contacts": 1
+      }
+    },
+    "joinDate": "2015-10-07T06:09:54+00:00"
+  },
+  {
+    "_id": "608d55c7e512b74ee00791db",
+    "displayName": "DanielEskandar",
+    "email": "daniel_eskandar99@mailserver.com",
+    "password": "ViveLaFrance&45",
+    "pro": false,
+    "firstName": "Daniel",
+    "lastName": "Eskandar",
+    "occupation": "Artist",
+    "hometown": "Ile de France",
+    "currentCity": "Paris",
+    "country": "France",
+    "age": 35,
+    "aboutMe": "Get away from my account!!!",
+    "showcase": [],
+    "favourites": ["604d5450ec00005468617a0c", "608d5450ec00005468617a0c"],
+    "photos": [],
+    "testimonials": [],
+    "albums": [],
+    "gallery": [],
+    "following": [],
+    "blocked": ["608d5450ec00005468607a0c", "608d55c7e512b74ee00791dc"],
+    "privacySettings": {
+      "global": {
+        "downloadPerm": 1,
+        "largestImgSize": 0,
+        "allowShare": 1,
+        "allowTag": 1,
+        "allowGalleryAdd": 1,
+        "hideEXIF": 0,
+        "hidePhotoSearch": 0,
+        "hideProfileSearch": 0,
+        "infoVisiblity": {
+          "email": 2,
+          "name": 1,
+          "currentCity": 1
+        }
+      },
+      "defaults": {
+        "perms": {
+          "see": 1,
+          "comment": 1,
+          "addNotes": 2
+        },
+        "license": 0,
+        "mapVisible": 1,
+        "importEXIF": 1,
+        "safetyLevel": 1,
+        "contentType": 1
+      },
+      "filters": {
+        "search": {
+          "safeSearch": 1,
+          "content": 1
+        }
+      }
+    },
+    "notificationSettings": {
+      "notifMail": {
+        "invites": 1,
+        "contact": 1,
+        "messages": 1,
+        "reminders": 1
+      },
+      "activityMail": {
+        "you": 1,
+        "contacts": 1
+      }
+    },
+    "joinDate": "2020-11-03T06:10:45+00:00"
+  },
+  {
+    "_id": "608d55c7e512b74ee00791dc",
+    "displayName": "AliaaKhalifa",
+    "email": "aliaakhalifa@mailserver.com",
+    "password": "TestingPass#21",
+    "pro": false,
+    "firstName": "Aliaa",
+    "lastName": "Khalifa",
+    "occupation": "Photographer",
+    "hometown": "Zamalek",
+    "currentCity": "Cairo",
+    "country": "Egypt",
+    "age": 20,
+    "aboutMe": "Have a nice day!",
+    "showcase": [],
+    "favourites": [],
+    "photos": [],
+    "testimonials": [],
+    "albums": [],
+    "gallery": [],
+    "following": [
+      {
+        "_id": "60914e1ba87d736f3c382ed1",
+        "user": "608d5450ec00005468607a0c",
+        "relation": "friend",
+        "followDate": "2021-05-04T12:13:24.255+00:00"
+      },
+      {
+        "_id": "60914e1ba87d736f3c382ed2",
+        "user": "608d55c7e512b74ee00791dd",
+        "relation": "family",
+        "followDate": "2021-05-04T12:14:24.255+00:00"
+      }
+    ],
+    "blocked": [],
+    "privacySettings": {
+      "global": {
+        "downloadPerm": 1,
+        "largestImgSize": 0,
+        "allowShare": 1,
+        "allowTag": 1,
+        "allowGalleryAdd": 1,
+        "hideEXIF": 0,
+        "hidePhotoSearch": 0,
+        "hideProfileSearch": 0,
+        "infoVisiblity": {
+          "email": 2,
+          "name": 1,
+          "currentCity": 1
+        }
+      },
+      "defaults": {
+        "perms": {
+          "see": 1,
+          "comment": 1,
+          "addNotes": 2
+        },
+        "license": 0,
+        "mapVisible": 1,
+        "importEXIF": 1,
+        "safetyLevel": 1,
+        "contentType": 1
+      },
+      "filters": {
+        "search": {
+          "safeSearch": 1,
+          "content": 1
+        }
+      }
+    },
+    "notificationSettings": {
+      "notifMail": {
+        "invites": 1,
+        "contact": 1,
+        "messages": 1,
+        "reminders": 1
+      },
+      "activityMail": {
+        "you": 1,
+        "contacts": 1
+      }
+    },
+    "joinDate": "2018-02-08T06:07:35+00:00"
+  },
+  {
+    "_id": "608d55c7e512b74ee00791dd",
+    "displayName": "MariamKhashab",
+    "email": "mariamkhashab@mailserver.com",
+    "password": "TestingPass#22",
+    "pro": false,
+    "firstName": "Mariam",
+    "lastName": "Khashab",
+    "occupation": "Engineer",
+    "hometown": "New Cairo",
+    "currentCity": "Cairo",
+    "country": "Egypt",
+    "age": 20,
+    "aboutMe": "Have a nice day!",
+    "showcase": [],
+    "favourites": [],
+    "photos": [],
+    "testimonials": [],
+    "albums": [],
+    "gallery": [],
+    "following": [
+      {
+        "_id": "60914e1ba87d736f3c382ed4",
+        "user": "608d55c7e512b74ee00791dc",
+        "relation": "friend",
+        "followDate": "2021-05-04T12:15:24.255+00:00"
+      }
+    ],
+    "blocked": [],
+    "privacySettings": {
+      "global": {
+        "downloadPerm": 1,
+        "largestImgSize": 0,
+        "allowShare": 1,
+        "allowTag": 1,
+        "allowGalleryAdd": 1,
+        "hideEXIF": 0,
+        "hidePhotoSearch": 0,
+        "hideProfileSearch": 0,
+        "infoVisiblity": {
+          "email": 2,
+          "name": 1,
+          "currentCity": 1
+        }
+      },
+      "defaults": {
+        "perms": {
+          "see": 1,
+          "comment": 1,
+          "addNotes": 2
+        },
+        "license": 0,
+        "mapVisible": 1,
+        "importEXIF": 1,
+        "safetyLevel": 1,
+        "contentType": 1
+      },
+      "filters": {
+        "search": {
+          "safeSearch": 1,
+          "content": 1
+        }
+      }
+    },
+    "notificationSettings": {
+      "notifMail": {
+        "invites": 1,
+        "contact": 1,
+        "messages": 1,
+        "reminders": 1
+      },
+      "activityMail": {
+        "you": 1,
+        "contacts": 1
+      }
+    },
+    "joinDate": "2021-09-09T06:09:54+00:00"
+  },
+  {
+    "_id": "608d55c7e512b74ee00791de",
+    "displayName": "NadineMagdy",
+    "email": "nadinemagdy@mailserver.com",
+    "password": "TestingPass#20",
+    "pro": false,
+    "firstName": "Nadine",
+    "lastName": "Magdi",
+    "occupation": "Engineer",
+    "hometown": "Maadi",
+    "currentCity": "Cairo",
+    "country": "Egypt",
+    "age": 21,
+    "aboutMe": "Have a nice day!",
+    "showcase": [],
+    "favourites": [],
+    "photos": [],
+    "testimonials": [],
+    "albums": [],
+    "gallery": [],
+    "following": [
+      {
+        "_id": "60914e1ba87d736f3c382ed6",
+        "user": "608d55c7e512b74ee00791db",
+        "relation": "undetermined",
+        "followDate": "2021-05-04T12:16:24.255+00:00"
+      },
+      {
+        "_id": "60914e1ba87d736f3c382ed7",
+        "user": "608d5450ec00005468607a0c",
+        "relation": "undetermined",
+        "followDate": "2021-05-04T12:17:24.255+00:00"
+      },
+      {
+        "_id": "60914e1ba87d736f3c382ed8",
+        "user": "608d55c7e512b74ee00791dc",
+        "relation": "undetermined",
+        "followDate": "2021-05-04T12:18:24.255+00:00"
+      },
+      {
+        "_id": "60914e1ba87d736f3c382ed9",
+        "user": "608d55c7e512b74ee00791dd",
+        "relation": "undetermined",
+        "followDate": "2021-05-04T12:19:24.255+00:00"
+      }
+    ],
+    "blocked": [],
+    "privacySettings": {
+      "global": {
+        "downloadPerm": 1,
+        "largestImgSize": 0,
+        "allowShare": 1,
+        "allowTag": 1,
+        "allowGalleryAdd": 1,
+        "hideEXIF": 0,
+        "hidePhotoSearch": 0,
+        "hideProfileSearch": 0,
+        "infoVisiblity": {
+          "email": 2,
+          "name": 1,
+          "currentCity": 1
+        }
+      },
+      "defaults": {
+        "perms": {
+          "see": 1,
+          "comment": 1,
+          "addNotes": 2
+        },
+        "license": 0,
+        "mapVisible": 1,
+        "importEXIF": 1,
+        "safetyLevel": 1,
+        "contentType": 1
+      },
+      "filters": {
+        "search": {
+          "safeSearch": 1,
+          "content": 1
+        }
+      }
+    },
+    "notificationSettings": {
+      "notifMail": {
+        "invites": 1,
+        "contact": 1,
+        "messages": 1,
+        "reminders": 1
+      },
+      "activityMail": {
+        "you": 1,
+        "contacts": 1
+      }
+    },
+    "joinDate": "2021-02-07T06:04:12+00:00"
+  }
+]
