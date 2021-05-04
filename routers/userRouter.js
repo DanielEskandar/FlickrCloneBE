@@ -1149,7 +1149,7 @@ userRouter.get('/follower-not-followed');
  * @apiHeader {String} Token Authenticaton Token
  *
  * @apiSuccess {Number} count User's Blocked Count
- * @apiSuccess {Object[]} blocklist Array of User ID's of the User's Blocked users
+ * @apiSuccess {Object[]} blocked Array of User ID's of the User's Blocked users
  *
  * @apiSuccessExample Success-Response:
  *      HTTP/1.1 200 OK
@@ -1158,7 +1158,7 @@ userRouter.get('/follower-not-followed');
  *          "data":
  *          {
  *              "count": 30
- *              "blocklist": [
+ *              "blocked": [
  *
  *              ]
  *          }
@@ -1167,7 +1167,7 @@ userRouter.get('/follower-not-followed');
  * @apiUse UnauthError
  */
 
-userRouter.get('/block');
+userRouter.get('/block', userController.getBlocked);
 
 /**
  * @api {post} /user/follow/:id Follow a User

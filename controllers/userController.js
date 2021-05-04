@@ -103,3 +103,26 @@ exports.getFollowing = async (req, res) => {
     });
   }
 };
+
+// GET BLOCKED
+exports.getBlocked = async (req, res) => {
+  try {
+    const blocked = await userModel
+      .findById(req.headers.userid)
+      .select({ blocked: 1 })
+      .populate('blocked', 'displayName firstName lastName');
+
+    console.log(blocked);
+
+    res.status(200).send({
+      status: 'success',
+      count: blocked.blocked.length,
+      data: JSON.parse(JSON.stringify(blocked)),
+    });
+  } catch (err) {
+    res.status(400).send({
+      status: 'error',
+      message: err,
+    });
+  }
+};
