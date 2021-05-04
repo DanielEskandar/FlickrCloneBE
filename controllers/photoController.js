@@ -126,7 +126,6 @@ exports.deleteComment = async (req, res) => {
       await commentModel.findByIdAndDelete(req.params.commentid);
       res.status(204).send({
         status: 'success',
-        data: 'ok',
       });
     } else {
       res.status(404).send({

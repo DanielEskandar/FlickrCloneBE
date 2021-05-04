@@ -122,7 +122,7 @@ describe('should retrieve photo information', () => {
           },
           canDownload: false,
         },
-        comments: ['608d5450ec16665468617a0c'],
+        comments: ['6001c346c555f920e111f205', '6090c346c555f920e121f205'],
         favourites: 119,
         views: 541,
         tags: ['#Amesterdam', '#Colorful', '#SunnyDay'],
@@ -228,7 +228,7 @@ describe('should retrieve photo information', () => {
           },
           canDownload: true,
         },
-        comments: ['608d5450ec10005468617a0c'],
+        comments: ['6090acefc4cc491a7cf8b47c', '6090beb07237ad1fb4458fae'],
         favourites: 51,
         views: 337,
         tags: ['#Sakure', '#Flowers', '#Nihon'],
@@ -254,7 +254,7 @@ describe('should retrieve photo information', () => {
 
 // TESTING: getComments
 describe('should retrieve the comments on a photo (their IDs)', () => {
-  test('should retrieve IDs 608d5450ec16665468617a0c', async () => {
+  test('should retrieve IDs 604d5450ec00005468617a0c', async () => {
     const mReq = { params: { id: '604d5450ec00005468617a0c' } };
     const mRes = {
       status: jest.fn().mockReturnThis(),
@@ -265,7 +265,7 @@ describe('should retrieve the comments on a photo (their IDs)', () => {
     expect(mRes.send).toBeCalledWith({
       status: 'success',
       data: {
-        comments: ['608d5450ec16665468617a0c'],
+        comments: ['6001c346c555f920e111f205', '6090c346c555f920e121f205'],
       },
     });
   });
@@ -302,7 +302,7 @@ describe('should add comments on a photo', () => {
     const mReq = {
       params: { id: '604d5450ec00005468617a0c' },
       body: {
-        body: 'Unit testing add comment',
+        body: 'Unit testing comment',
         userId: '608d55c7e512b74ee00791db',
         date: '2021-05-04T14:07:48.071Z',
         commentid: '508d55c7e512b74ee00791db',
@@ -318,7 +318,7 @@ describe('should add comments on a photo', () => {
       status: 'success',
       data: {
         _id: '508d55c7e512b74ee00791db',
-        body: 'Unit testing add comment',
+        body: 'Unit testing comment',
         userId: '608d55c7e512b74ee00791db',
         date: '2021-05-04T14:07:48.071Z',
         __v: 0,
@@ -327,32 +327,85 @@ describe('should add comments on a photo', () => {
   });
 });
 
-describe('should add comments on a photo', () => {
-  test('should retrieve information about new comment', async () => {
+// describe('should add comments on a photo', () => {
+//   test('should retrieve information about new comment', async () => {
+//     const mReq = {
+//       params: { id: '608d5450ec00005468607a0f' },
+//       body: {
+//         body: 'Unit testing2',
+//         userId: '608d55c7e512b74ee00791db',
+//         date: '2012-12-04T14:07:48.071Z',
+//         commentid: '508d5450ec00005468607a0f',
+//       },
+//     };
+//     const mRes = {
+//       status: jest.fn().mockReturnThis(),
+//       send: jest.fn().mockReturnThis(),
+//     };
+//     await photoController.addComment(mReq, mRes);
+//     expect(mRes.status).toBeCalledWith(200);
+//     expect(mRes.send).toBeCalledWith({
+//       status: 'success',
+//       data: {
+//         _id: '508d5450ec00005468607a0f',
+//         body: 'Unit testing add comment',
+//         userId: '608d55c7e512b74ee00791db',
+//         date: '2012-12-04T14:07:48.071Z',
+//         __v: 0,
+//       },
+//     });
+//   });
+// });
+
+// EDIT COMMENT
+describe('should edit comments on a photo', () => {
+  test('should comment on comment 6001c346c555f920e111f205', async () => {
     const mReq = {
-      params: { id: '608d5450ec00005468607a0f' },
+      params: { id: '6001c346c555f920e111f205' },
       body: {
-        body: 'Unit testing add comment',
-        userId: '608d55c7e512b74ee00791db',
-        date: '2012-12-04T14:07:48.071Z',
-        commentid: '508d5450ec00005468607a0f',
+        body: 'Edited successfully',
       },
     };
     const mRes = {
       status: jest.fn().mockReturnThis(),
       send: jest.fn().mockReturnThis(),
     };
-    await photoController.addComment(mReq, mRes);
+    await photoController.editComment(mReq, mRes);
     expect(mRes.status).toBeCalledWith(200);
     expect(mRes.send).toBeCalledWith({
       status: 'success',
       data: {
-        _id: '508d5450ec00005468607a0f',
-        body: 'Unit testing add comment',
+        _id: '6001c346c555f920e111f205',
+        body: 'Edited successfully',
         userId: '608d55c7e512b74ee00791db',
-        date: '2012-12-04T14:07:48.071Z',
+        date: '2021-05-04T14:07:48.071Z',
         __v: 0,
       },
+    });
+  });
+});
+
+// TESTING DELETE COMMENT
+describe('should delete a comment', () => {
+  test('should comment on comment 608d5450ec00005468617a0c', async () => {
+    const mReq = {
+      params: {
+        id: '608d5450ec00005468617a0c',
+        commentid: '6090acefc4cc491a7cf8b47c',
+      },
+      body: {
+        body: 'Edited successfully',
+      },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      send: jest.fn().mockReturnThis(),
+    };
+    await photoController.editComment(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.send).toBeCalledWith({
+      status: 'success',
+      data: null,
     });
   });
 });
