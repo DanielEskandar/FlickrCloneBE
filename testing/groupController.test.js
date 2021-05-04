@@ -113,4 +113,21 @@ describe('should retrieve members in group with id 608f3d0fb5ba8b4f34890a5e', ()
   });
 });
 
-//PHOTO POOL TESTER
+//TESTING GET PHOTO POOL
+describe('should retrieve photos in group with id 608f3d0fb5ba8b4f34890a5e', () => {
+  test('should retrieve 1 photo ', async () => {
+    const mReq = { params: { id: '608f3d0fb5ba8b4f34890a5e' } };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      send: jest.fn().mockReturnThis(),
+    };
+    await groupController.GetPhotoPool(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.send).toBeCalledWith({
+      status: 'success',
+      data: {
+        photos: ['608d5450ec00005468607a0f'],
+      },
+    });
+  });
+});
