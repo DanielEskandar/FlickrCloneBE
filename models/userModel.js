@@ -22,15 +22,10 @@ const userSchema = new mongoose.Schema({
     required: [true, 'a user must have a password'],
     validate: [validator.isStrongPassword, 'Weak password'],
   },
-  userType: {
-    type: String,
-    trim: true,
+  pro: {
+    type: Boolean,
     required: [true, 'A user must have a user type'],
-    enum: {
-      values: ['free', 'pro'],
-      message: 'User type is either free or pro',
-    },
-    default: 'free',
+    default: false,
   },
   firstName: {
     type: String,
@@ -44,6 +39,10 @@ const userSchema = new mongoose.Schema({
     required: [true, 'A user must have a last name'],
     validate: [validator.isAlpha, 'Invalid last name'],
   },
+  occupation: { type: String, trim: true },
+  hometown: { type: String, trim: true },
+  currentCity: { type: String, trim: true },
+  country: { type: String, trim: true },
   age: {
     type: Number,
     required: [true, 'A user must have an age'],
@@ -53,6 +52,16 @@ const userSchema = new mongoose.Schema({
   joinDate: {
     type: Date,
     default: Date.now,
+  },
+  limits: {
+    photos: {
+      maxdisplaypx: { type: Number, default: 1024 },
+      maxupload: { type: Number, default: 15728640 },
+    },
+    videos: {
+      maxduration: { type: Number, default: 90 },
+      maxupload: { type: Number, default: 15728640 },
+    },
   },
   showcase: [mongoose.Schema.ObjectId],
   favourites: [mongoose.Schema.ObjectId],
