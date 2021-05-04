@@ -618,7 +618,7 @@ describe('should remove image from faves by id and send response correctly', () 
 
   test('remove image from faves of Daniel Eskandar', async () => {
     const mReq = {
-      params: { id: '604d5450ec00005468617a0c' },
+      params: { id: '608d5450ec00005468607a0f' },
       headers: { userid: '608d55c7e512b74ee00791db' },
     };
     const mRes = {
@@ -631,11 +631,11 @@ describe('should remove image from faves by id and send response correctly', () 
       status: 'success',
       data: {
         newPhotoFaveCount: {
-          favourites: 118,
-          _id: '604d5450ec00005468617a0c',
+          favourites: 7,
+          _id: '608d5450ec00005468607a0f',
         },
         newUserFaveList: {
-          favourites: ['608d5450ec00005468617a0c', '608d5450ec00005468607a0f'],
+          favourites: ['608d5450ec00005468617a0c', '604d5450ec00005468617a0c'],
           _id: '608d55c7e512b74ee00791db',
         },
       },
