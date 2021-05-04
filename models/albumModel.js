@@ -9,10 +9,11 @@ const albumSchema = new mongoose.Schema({
   },
   primaryPhotoId: {
     type: mongoose.Schema.ObjectId,
+    ref: 'photoModel',
     required: [true, 'An album must have a primary photo'],
   },
   photos: {
-    type: [mongoose.Schema.ObjectId],
+    type: [{ type: mongoose.Schema.ObjectId, ref: 'photoModel' }],
     required: [true, 'An album must have at least 1 photo'],
     validate: function () {
       const id = this.photos.find(

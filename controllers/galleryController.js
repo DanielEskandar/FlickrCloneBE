@@ -1,10 +1,10 @@
 // INCLUDE MODELS
 const galleryModel = require('../models/galleryModel.js');
+// eslint-disable-next-line no-unused-vars
 const photoModel = require('../models/photoModel.js');
 
 //const commentModel = require('../models/commentModel.js');
 
-// GET REAL NAME
 exports.getInfo = async (req, res) => {
   try {
     const gallery = await galleryModel
