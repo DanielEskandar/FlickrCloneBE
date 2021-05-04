@@ -664,7 +664,7 @@ photoRouter.patch('/:id/safety-level');
  * @apiUse PhotoNotFoundError
  *
  */
-photoRouter.post('/:id/comments');
+photoRouter.post('/:id/comments', photoController.addComment);
 
 /**
  * @api {delete} /photo/comments/:id Delete a Comment by Commenting User
@@ -672,7 +672,8 @@ photoRouter.post('/:id/comments');
  * @apiName DeleteComment
  * @apiGroup Photo
  *
- * @apiParam {String} id The Comment's ID
+ * @apiParam {String} photoId The Photo's ID
+ * @apiParam {String} commentId The Comment's ID
  *
  * @apiHeader {String} Token Authenticaton Token
  *
@@ -683,7 +684,7 @@ photoRouter.post('/:id/comments');
  * @apiUse PhotoNotFoundError
  *
  */
-photoRouter.delete('/comments/:id');
+photoRouter.delete('/:id/comments/:commentid', photoController.deleteComment);
 
 /**
  * @api {patch} /photo/comments/:id Edit a Text of a Comment as the Commenting User
@@ -706,7 +707,7 @@ photoRouter.delete('/comments/:id');
  * @apiUse PhotoNotFoundError
  *
  */
-photoRouter.patch('/comments/:id');
+photoRouter.patch('/comments/:id', photoController.editComment);
 
 /**
  * @api {get} /photo/:id/comments Get List of Comments for a Photo
@@ -716,13 +717,7 @@ photoRouter.patch('/comments/:id');
  *
  * @apiParam {String} id The Photo's ID
  *
- * @apiBody {Date} mindate Starting Date to Get Comments
- * @apiBody {Date} maxdate Latest Date to Get Comments
- *
  * @apiSuccess {Object[]} commentlist Array of Comments on a Photo
- * @apiSuccess {Object[]} permalink Array of Permalinks of Comments
- * @apiSuccess {Date[]} datelist Array of Dates Comment was Added
- *
  *
  * @apiSuccessExample Success-Response:
  *      HTTP/1.1 200 OK
@@ -733,13 +728,6 @@ photoRouter.patch('/comments/:id');
  *              "commentlist": [
  *
  *              ]
- *              "permalinklist": [
- *
- *              ]
- *              "datelist": [
- *
- *              ]
- *          }
  *      }
  *
  * @apiUse UnauthError
@@ -747,7 +735,7 @@ photoRouter.patch('/comments/:id');
  * @apiUse PhotoNotFoundError
  *
  */
-photoRouter.get('/:id/comments');
+photoRouter.get('/:id/comments', photoController.getComments);
 
 /**
  * @api {get} /photo/:id/comments/recent Get List of Recent Comments of Contact's Photos

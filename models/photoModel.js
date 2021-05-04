@@ -4,15 +4,15 @@ const validator = require('validator');
 
 // CREATE SCHEMA
 const photoSchema = new mongoose.Schema({
-  userId: mongoose.Schema.ObjectId,
-  cameraId: mongoose.Schema.ObjectId,
+  userId: { type: mongoose.Schema.ObjectId, ref: 'userModel' },
+  cameraId: { type: mongoose.Schema.ObjectId, ref: 'cameraModel' },
   dateUploaded: {
     type: Date,
     default: Date.now,
   },
   dateTaken: Date,
   location: mongoose.Schema.ObjectId,
-  comments: [mongoose.Schema.ObjectId],
+  comments: [{ type: mongoose.Schema.ObjectId, ref: 'commentModel' }],
   favourites: {
     type: Number,
     default: 0,
@@ -119,7 +119,7 @@ const photoSchema = new mongoose.Schema({
   tags: [String],
   peopleTagged: [
     {
-      userId: mongoose.Schema.ObjectId,
+      userId: { type: mongoose.Schema.ObjectId, ref: 'userModel' },
       tagDate: { type: Date, default: Date.now },
     },
   ],
