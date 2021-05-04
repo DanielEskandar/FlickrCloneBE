@@ -71,14 +71,15 @@ const userSchema = new mongoose.Schema({
   gallery: [mongoose.Schema.ObjectId],
   following: [
     {
-      userId: mongoose.Schema.ObjectId,
+      user: mongoose.Schema.ObjectId,
       relation: {
         type: String,
         enum: {
-          values: ['friend', 'family', 'undtermined'],
+          values: ['friend', 'family', 'undetermined'],
           message: 'Relation must be either: friend, family or undetermined',
         },
       },
+      followDate: { type: Date, default: Date.now },
     },
   ],
   blocked: [mongoose.Schema.ObjectId],
