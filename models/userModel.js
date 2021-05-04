@@ -75,10 +75,11 @@ const userSchema = new mongoose.Schema({
       relation: {
         type: String,
         enum: {
-          values: ['friend', 'family', 'undtermined'],
+          values: ['friend', 'family', 'undetermined'],
           message: 'Relation must be either: friend, family or undetermined',
         },
       },
+      followDate: { type: Date, default: Date.now },
     },
   ],
   blocked: [mongoose.Schema.ObjectId],
