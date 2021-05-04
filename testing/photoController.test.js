@@ -18,7 +18,7 @@ describe('should retrieve number of times photo was favourited', () => {
     expect(mRes.send).toBeCalledWith({
       status: 'success',
       data: {
-        favourites: 7,
+        favourites: 8,
       },
     });
   });
@@ -123,7 +123,7 @@ describe('should retrieve photo information', () => {
           canDownload: false,
         },
         comments: ['6001c346c555f920e111f205', '6090c346c555f920e121f205'],
-        favourites: 119,
+        favourites: 118,
         views: 541,
         tags: ['#Amesterdam', '#Colorful', '#SunnyDay'],
         dateUploaded: '2018-12-23T18:29:43.511Z',
