@@ -14,7 +14,7 @@ exports.getInfo = async (req, res) => {
       .populate('primaryPhotoId', 'sizes')
       .populate('photos', 'sizes');
 
-    const albumJson = album.toJSON();
+    const albumJson = JSON.parse(JSON.stringify(album));
     albumJson.photocount = album.photos.length;
 
     res.status(200).send({
@@ -38,7 +38,7 @@ exports.getPhotos = async (req, res) => {
 
     res.status(200).send({
       status: 'success',
-      data: photos.toJSON(),
+      data: JSON.parse(JSON.stringify(photos)),
     });
   } catch (err) {
     res.status(404).send({
@@ -73,7 +73,7 @@ exports.addComment = async (req, res) => {
     );
     res.status(200).send({
       status: 'success',
-      data: comment.toJSON(),
+      data: JSON.parse(JSON.stringify(comment)),
     });
   } catch (err) {
     res.status(400).send({
@@ -102,7 +102,7 @@ exports.getComments = async (req, res) => {
 
     res.status(200).send({
       status: 'success',
-      data: comments.toJSON(),
+      data: JSON.parse(JSON.stringify(comments)),
     });
   } catch (err) {
     res.status(404).send({
@@ -124,7 +124,7 @@ exports.editComment = async (req, res) => {
     );
     res.status(200).send({
       status: 'success',
-      data: newComment.toJSON(),
+      data: JSON.parse(JSON.stringify(newComment)),
     });
   } catch (err) {
     res.status(404).send({
@@ -183,7 +183,7 @@ exports.createAlbum = async (req, res) => {
     const album = await albumModel.create(req.body);
     res.status(200).send({
       status: 'success',
-      data: album.toJSON(),
+      data: JSON.parse(JSON.stringify(album)),
     });
   } catch (err) {
     res.status(400).send({

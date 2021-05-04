@@ -20,7 +20,7 @@ describe("should retrieve Gallery's Info by id and send response correctly", () 
       data: {
         viewCount: 0,
         comments: [],
-        _id: new mongoose.Types.ObjectId('608f34a634413f11f020b127'),
+        _id: '608f34a634413f11f020b127',
         galleryName: 'Movement',
         primaryPhotoId: {
           sizes: {
@@ -88,11 +88,11 @@ describe("should retrieve Gallery's Info by id and send response correctly", () 
             },
             canDownload: false,
           },
-          _id: new mongoose.Types.ObjectId('604d5450ec00005468617a0c'),
+          _id: '604d5450ec00005468617a0c',
         },
         photos: [
           {
-            _id: new mongoose.Types.ObjectId('608f34a634413f11f020b128'),
+            _id: '608f34a634413f11f020b128',
             photoId: {
               sizes: {
                 size: {
@@ -159,12 +159,12 @@ describe("should retrieve Gallery's Info by id and send response correctly", () 
                 },
                 canDownload: false,
               },
-              _id: new mongoose.Types.ObjectId('604d5450ec00005468617a0c'),
+              _id: '604d5450ec00005468617a0c',
             },
             remark: '',
           },
           {
-            _id: new mongoose.Types.ObjectId('608f34a634413f11f020b129'),
+            _id: '608f34a634413f11f020b129',
             photoId: {
               sizes: {
                 size: {
@@ -231,13 +231,13 @@ describe("should retrieve Gallery's Info by id and send response correctly", () 
                 },
                 canDownload: false,
               },
-              _id: new mongoose.Types.ObjectId('608d5450ec00005468607a0f'),
+              _id: '608d5450ec00005468607a0f',
             },
             remark: '',
           },
         ],
-        createdAt: new Date('2021-05-03T00:07:30.005Z'),
-        updatedAt: new Date('2021-05-03T00:07:30.005Z'),
+        createdAt: '2021-05-03T00:07:30.005Z',
+        updatedAt: '2021-05-03T00:07:30.005Z',
         description: 'Photos that capture the world in motion.',
         __v: 0,
         photocount: 2,
@@ -261,7 +261,7 @@ describe("should retrieve Gallery's Photos", () => {
       data: {
         photos: [
           {
-            _id: new mongoose.Types.ObjectId('608f34a634413f11f020b128'),
+            _id: '608f34a634413f11f020b128',
             photoId: {
               sizes: {
                 size: {
@@ -328,12 +328,12 @@ describe("should retrieve Gallery's Photos", () => {
                 },
                 canDownload: false,
               },
-              _id: new mongoose.Types.ObjectId('604d5450ec00005468617a0c'),
+              _id: '604d5450ec00005468617a0c',
             },
             remark: '',
           },
           {
-            _id: new mongoose.Types.ObjectId('608f34a634413f11f020b129'),
+            _id: '608f34a634413f11f020b129',
             photoId: {
               sizes: {
                 size: {
@@ -400,7 +400,7 @@ describe("should retrieve Gallery's Photos", () => {
                 },
                 canDownload: false,
               },
-              _id: new mongoose.Types.ObjectId('608d5450ec00005468607a0f'),
+              _id: '608d5450ec00005468607a0f',
             },
             remark: '',
           },
@@ -425,23 +425,23 @@ describe('should get Comments in a gallery', () => {
       data: {
         comments: [
           {
-            _id: new mongoose.Types.ObjectId('6090acefc4cc491a7cf8b47c'),
+            _id: '6090acefc4cc491a7cf8b47c',
             userId: {
-              _id: new mongoose.Types.ObjectId('608d55c7e512b74ee00791dc'),
+              _id: '608d55c7e512b74ee00791dc',
               displayName: 'AliaaKhalifa',
             },
             body: 'Love it!',
-            date: new Date('2021-05-04T02:09:51.993Z'),
+            date: '2021-05-04T02:09:51.993Z',
             __v: 0,
           },
           {
-            _id: new mongoose.Types.ObjectId('6090b5e00c36663c94566fbe'),
+            _id: '6090b5e00c36663c94566fbe',
             userId: {
-              _id: new mongoose.Types.ObjectId('608d5450ec00005468607a0c'),
+              _id: '608d5450ec00005468607a0c',
               displayName: 'AhmedAbdulkader99',
             },
             body: 'Wow',
-            date: new Date('2021-05-04T02:48:00.264Z'),
+            date: '2021-05-04T02:48:00.264Z',
             __v: 0,
           },
         ],
@@ -466,10 +466,10 @@ describe('should edit a comment in a gallery', () => {
     expect(mRes.send).toBeCalledWith({
       status: 'success',
       data: {
-        _id: new mongoose.Types.ObjectId('6090beb07237ad1fb4458fae'),
-        userId: new mongoose.Types.ObjectId('608d5450ec00005468607a0c'),
+        _id: '6090beb07237ad1fb4458fae',
+        userId: '608d5450ec00005468607a0c',
         body: 'I like it',
-        date: new Date('2021-05-04T03:25:36.334Z'),
+        date: '2021-05-04T03:25:36.334Z',
         __v: 0,
       },
     });
