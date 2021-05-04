@@ -133,7 +133,7 @@ galleryRouter.get('/:id/photos', galleryController.getPhotos);
 /**
  * @api {get} /gallery/:id/comments Get Gallery's Comments
  * @apiVersion 1.0.0
- * @apiName GetGalleryComments
+ * @apiName GetComments
  * @apiGroup Gallery
  *
  * @apiParam {String} id The Gallery's ID
@@ -155,7 +155,7 @@ galleryRouter.get('/:id/photos', galleryController.getPhotos);
  * @apiUse GalleryNotFoundError
  */
 
-galleryRouter.get('/:id/comments');
+galleryRouter.get('/:id/comments', galleryController.getComments);
 
 /**
  * @api {delete} /gallery/:id Delete a Gallery
@@ -216,7 +216,10 @@ galleryRouter.delete('/:id/:photoid');
  *      }
  */
 
-galleryRouter.delete('/:id/comments/:commentid');
+galleryRouter.delete(
+  '/:id/comments/:commentid',
+  galleryController.deleteComment
+);
 
 /**
  * @api {post} /gallery/ Create a new gallery
@@ -272,7 +275,7 @@ galleryRouter.post('/:id/photos');
  *
  */
 
-galleryRouter.post('/:id/comments');
+galleryRouter.post('/:id/comments', galleryController.addComment);
 
 /**
  * @api {patch} /gallery/:id/photos Add, Remove and Reorder photos
@@ -339,7 +342,7 @@ galleryRouter.patch('/:id/meta');
  *      }
  */
 
-galleryRouter.patch('/comments/:id');
+galleryRouter.patch('/comments/:id', galleryController.editComment);
 
 /**
  * @api {patch} /gallery/:id/primary/:photoid Set gallery's primary photo

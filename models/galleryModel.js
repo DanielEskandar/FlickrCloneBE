@@ -47,7 +47,7 @@ const gallerySchema = new mongoose.Schema({
     type: String,
     trim: true,
   },
-  comments: [mongoose.Schema.ObjectId],
+  comments: [{ type: mongoose.Schema.ObjectId, ref: 'commentModel' }],
 });
 
 // CREATE MODEL

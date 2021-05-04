@@ -409,3 +409,69 @@ describe("should retrieve Gallery's Photos", () => {
     });
   });
 });
+
+// TESTING: getComments
+describe('should get Comments in a gallery', () => {
+  test(`should get Comments in a gallery with id 608f34a634413f11f020b124`, async () => {
+    const mReq = { params: { id: '608f34a634413f11f020b124' } };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      send: jest.fn().mockReturnThis(),
+    };
+    await galleryController.getComments(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.send).toBeCalledWith({
+      status: 'success',
+      data: {
+        comments: [
+          {
+            _id: new mongoose.Types.ObjectId('6090acefc4cc491a7cf8b47c'),
+            userId: {
+              _id: new mongoose.Types.ObjectId('608d55c7e512b74ee00791dc'),
+              displayName: 'AliaaKhalifa',
+            },
+            body: 'Love it!',
+            date: new Date('2021-05-04T02:09:51.993Z'),
+            __v: 0,
+          },
+          {
+            _id: new mongoose.Types.ObjectId('6090b5e00c36663c94566fbe'),
+            userId: {
+              _id: new mongoose.Types.ObjectId('608d5450ec00005468607a0c'),
+              displayName: 'AhmedAbdulkader99',
+            },
+            body: 'Wow',
+            date: new Date('2021-05-04T02:48:00.264Z'),
+            __v: 0,
+          },
+        ],
+      },
+    });
+  });
+});
+
+// TESTING: editComments
+describe('should edit a comment in a gallery', () => {
+  test(`should edit a Comments with id 6090beb07237ad1fb4458fae`, async () => {
+    const mReq = {
+      params: { id: '6090beb07237ad1fb4458fae' },
+      body: { body: 'I like it' },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      send: jest.fn().mockReturnThis(),
+    };
+    await galleryController.editComment(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.send).toBeCalledWith({
+      status: 'success',
+      data: {
+        _id: new mongoose.Types.ObjectId('6090beb07237ad1fb4458fae'),
+        userId: new mongoose.Types.ObjectId('608d5450ec00005468607a0c'),
+        body: 'I like it',
+        date: new Date('2021-05-04T03:25:36.334Z'),
+        __v: 0,
+      },
+    });
+  });
+});
