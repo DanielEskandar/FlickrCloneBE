@@ -624,7 +624,7 @@ userRouter.get('/:id/showcase');
  * @apiUse UserNotFoundError
  */
 
-userRouter.get('/:id/faves');
+userRouter.get('/:id/faves', userController.getFaves);
 
 /**
  * @api {get} /user/limits Return a List of User Upload and Size Limits
@@ -951,7 +951,7 @@ userRouter.patch('/notif');
  * @apiUse UnauthError
  */
 
-userRouter.post('/faves/:id');
+userRouter.post('/faves/:id', userController.addFave);
 
 /**
  * @api {delete} /user/faves/:id Remove a Photo from User Faves
@@ -968,7 +968,7 @@ userRouter.post('/faves/:id');
  * @apiUse UnauthError
  */
 
-userRouter.delete('/faves/:id');
+userRouter.delete('/faves/:id', userController.removeFave);
 
 /**
  * @api {get} /user/faves-context Get the context for a photo in Faves
