@@ -251,3 +251,42 @@ describe('should delete discussion with id 608f6e7519953b27004f6dab ', () => {
     });
   });
 });
+
+//TESTING CREATE GROUP
+describe('userid in headers should create new group with content in body, add userid as member and set as admin', () => {
+  test('', async () => {
+    const mReq = {
+      params: {},
+      body: {
+        _id: '608f3d0fb5b8884f34890a5e',
+        public: true,
+        name: 'Backend Test Group',
+        invitation: true,
+        description: 'this is create group api test.',
+        startDate: '2021-01-01',
+      },
+      headers: { userid: '608d5450ec00005468607a0c' },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      send: jest.fn().mockReturnThis(),
+    };
+    await groupController.CreateGroup(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.send).toBeCalledWith({
+      status: 'success',
+      data: {
+        startDate: '2021-01-01T00:00:00.000Z',
+        photos: [],
+        discussionTopics: [],
+        _id: '608f3d0fb5b8884f34890a5e',
+        public: true,
+        name: 'Backend Test Group',
+        invitation: true,
+        description: 'this is create group api test.',
+        users: [],
+        __v: 0,
+      },
+    });
+  });
+});

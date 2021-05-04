@@ -1,7 +1,7 @@
 // INCLUDE MODELS
 const groupModel = require('../models/groupModel.js');
 const discModel = require('../models/discussionModel.js');
-
+const userModel = require('../models/userModel.js');
 //GET ALL GROUPS
 exports.GetInfo = async (req, res) => {
   try {
@@ -154,6 +154,26 @@ exports.EditDiscussion = async (req, res) => {
   } catch (err) {
     res.status(404).send({
       status: 'fail',
+      message: err,
+    });
+  }
+};
+//CREATE NEW GROUP
+exports.CreateGroup = async (req, res) => {
+  try {
+    const admin = await userModel.findById(req.headers.userid); //group creator
+    const newGroup = await groupModel.create(req.body); //create instance of groupModel
+    //add group creator and set as admin
+    const grp = await groupModel.findByIdAndUpdate(newGroup.id, {
+      $push: { users: admin, $set: { admin: true } },
+    });
+    res.status(200).send({
+      status: 'success',
+      data: JSON.parse(JSON.stringify(newGroup)),
+    });
+  } catch (err) {
+    res.status(400).send({
+      status: 'error',
       message: err,
     });
   }
