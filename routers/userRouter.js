@@ -1056,13 +1056,13 @@ userRouter.get('/camera-roll');
 /**
  * @api {get} /user/followed Gets a list of followed users
  * @apiVersion 1.0.0
- * @apiName GetFollowed
+ * @apiName GetFollowing
  * @apiGroup User
  *
- * @apiHeader {String} Token Authenticaton Token
+ * @apiParam {ObjectID} id The of the User whose following list is to be retrieved
  *
- * @apiSuccess {Number} count Followed Users Count
- * @apiSuccess {Object[]} follwedlist Array of User ID's of the Followed Users
+ * @apiSuccess {Number} count Following list length
+ * @apiSuccess {Object[]} Follwing list Array of User ID's of the Followed Users
  *
  * @apiSuccessExample Success-Response:
  *      HTTP/1.1 200 OK
@@ -1071,16 +1071,16 @@ userRouter.get('/camera-roll');
  *          "data":
  *          {
  *              "count": 30
- *              "follwedlist": [
+ *              "following": [
  *
  *              ]
  *          }
  *      }
  *
- * @apiUse UnauthError
+ * @apiUse UserNotFoundError
  */
 
-userRouter.get('/followed');
+userRouter.get('/:id/following');
 
 /**
  * @api {get} /user/follower Gets a list of User's followers
