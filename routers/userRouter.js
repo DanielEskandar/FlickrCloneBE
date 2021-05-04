@@ -1080,7 +1080,7 @@ userRouter.get('/camera-roll');
  * @apiUse UserNotFoundError
  */
 
-userRouter.get('/:id/following');
+userRouter.get('/:id/following', userController.getFollowing);
 
 /**
  * @api {get} /user/follower Gets a list of User's followers

@@ -71,7 +71,7 @@ const userSchema = new mongoose.Schema({
   gallery: [mongoose.Schema.ObjectId],
   following: [
     {
-      userId: mongoose.Schema.ObjectId,
+      user: mongoose.Schema.ObjectId,
       relation: {
         type: String,
         enum: {

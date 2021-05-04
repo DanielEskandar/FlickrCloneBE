@@ -82,3 +82,24 @@ exports.getLimits = async (req, res) => {
     });
   }
 };
+
+// GET FOLLOWING
+exports.getFollowing = async (req, res) => {
+  try {
+    const following = await userModel
+      .findById(req.params.id)
+      .select({ following: 1 })
+      .populate('following.user', 'displayName firstName lastName');
+
+    res.status(200).send({
+      status: 'success',
+      count: following.following.length,
+      data: JSON.parse(JSON.stringify(following)),
+    });
+  } catch (err) {
+    res.status(404).send({
+      status: 'error',
+      message: 'No user is found by that user ID',
+    });
+  }
+};

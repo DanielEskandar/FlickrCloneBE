@@ -21,7 +21,8 @@
     "gallery": [],
     "following": [
       {
-        "userID": "608d55c7e512b74ee00791dc",
+        "_id": "60914e1ba87d736f3c382ece",
+        "user": "608d55c7e512b74ee00791dc",
         "relation": "friend",
         "followDate": "2021-05-04T12:12:24.255+00:00"
       }
@@ -169,12 +170,14 @@
     "gallery": [],
     "following": [
       {
-        "userID": "608d5450ec00005468607a0c",
+        "_id": "60914e1ba87d736f3c382ed1",
+        "user": "608d5450ec00005468607a0c",
         "relation": "friend",
         "followDate": "2021-05-04T12:13:24.255+00:00"
       },
       {
-        "userID": "608d55c7e512b74ee00791dd",
+        "_id": "60914e1ba87d736f3c382ed2",
+        "user": "608d55c7e512b74ee00791dd",
         "relation": "family",
         "followDate": "2021-05-04T12:14:24.255+00:00"
       }
@@ -251,7 +254,8 @@
     "gallery": [],
     "following": [
       {
-        "userID": "608d55c7e512b74ee00791dc",
+        "_id": "60914e1ba87d736f3c382ed4",
+        "user": "608d55c7e512b74ee00791dc",
         "relation": "friend",
         "followDate": "2021-05-04T12:15:24.255+00:00"
       }
@@ -328,22 +332,26 @@
     "gallery": [],
     "following": [
       {
-        "userID": "608d55c7e512b74ee00791db",
+        "_id": "60914e1ba87d736f3c382ed6",
+        "user": "608d55c7e512b74ee00791db",
         "relation": "undetermined",
         "followDate": "2021-05-04T12:16:24.255+00:00"
       },
       {
-        "userID": "608d5450ec00005468607a0c",
+        "_id": "60914e1ba87d736f3c382ed7",
+        "user": "608d5450ec00005468607a0c",
         "relation": "undetermined",
         "followDate": "2021-05-04T12:17:24.255+00:00"
       },
       {
-        "userID": "608d55c7e512b74ee00791dc",
+        "_id": "60914e1ba87d736f3c382ed8",
+        "user": "608d55c7e512b74ee00791dc",
         "relation": "undetermined",
         "followDate": "2021-05-04T12:18:24.255+00:00"
       },
       {
-        "userID": "608d55c7e512b74ee00791dd",
+        "_id": "60914e1ba87d736f3c382ed9",
+        "user": "608d55c7e512b74ee00791dd",
         "relation": "undetermined",
         "followDate": "2021-05-04T12:19:24.255+00:00"
       }
