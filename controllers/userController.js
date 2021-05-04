@@ -132,7 +132,7 @@ exports.addFave = async (req, res) => {
         favourites: { $elemMatch: { $eq: req.params.id } },
       })) !== null
     ) {
-      res.status(404).send({
+      res.status(409).send({
         status: 'Error',
         message: 'This PhotoID is already in Faves',
       });
@@ -179,6 +179,69 @@ exports.addFave = async (req, res) => {
   } catch (err) {
     res.status(400).send({
       status: 'Error',
+      message: 'Bad Request',
+    });
+  }
+};
+
+exports.removeFave = async (req, res) => {
+  try {
+    const faveList = await userModel
+      .findById(req.headers.userid)
+      .select({ favourites: 1 });
+
+    // Check if the Photo exits in User's Faves
+    const favePhoto = faveList.favourites.find(
+      (el) => el.toString() === req.params.id.toString()
+    );
+
+    if (favePhoto !== undefined) {
+      //Decrease Fave Count on Photo Model
+      const updatedFaveCount = await photoModel
+        .findByIdAndUpdate(
+          req.params.id,
+          {
+            $inc: { favourites: -1 },
+          },
+          {
+            new: true,
+            runValidators: true,
+          }
+        )
+        .select({ favourites: 1 });
+
+      // Remove PhotoID from Faves array in User model
+      const updatedFaves = await userModel
+        .findByIdAndUpdate(
+          req.headers.userid,
+          {
+            $pull: { favourites: req.params.id },
+          },
+          {
+            new: true,
+            runValidators: true,
+          }
+        )
+        .select({ favourites: 1 });
+
+      const Updates = {
+        newPhotoFaveCount: JSON.parse(JSON.stringify(updatedFaveCount)),
+        newUserFaveList: JSON.parse(JSON.stringify(updatedFaves)),
+      };
+
+      res.status(200).send({
+        status: 'success',
+        data: Updates,
+      });
+    } else {
+      res.status(404).send({
+        status: 'fail',
+        message: "This Photo doesn't exist in Faves",
+      });
+    }
+  } catch (err) {
+    res.status(400).send({
+      status: 'fail',
       message: 'Bad Request',
     });
   }
