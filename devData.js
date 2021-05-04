@@ -10,9 +10,12 @@ const discussionModel = require('./models/discussionModel');
 // READ JSON FILES
 const users = JSON.parse(fs.readFileSync('./data/Users.json', 'utf-8'));
 const groups = JSON.parse(fs.readFileSync('./data/Groups.json', 'utf-8'));
-const discussions = JSON.parse(fs.readFileSync('./data/Discussions.json', 'utf-8'));
+const discussions = JSON.parse(
+  fs.readFileSync('./data/Discussions.json', 'utf-8')
+);
 // CONFIGURE SERVER
 dotenv.config({ path: './config.env' });
+
 const DB = process.env.DATABASE.replace(
   '<PASSWORD>',
   process.env.DATABASE_PASSWORD

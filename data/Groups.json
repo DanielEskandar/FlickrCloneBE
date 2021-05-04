@@ -1,71 +1,56 @@
 [
- {
-    "_id":"608f3d0fb5ba8b4f34890a5e", 
+  {
+    "_id": "608f3d0fb5ba8b4f34890a5e",
     "public": true,
-     "name": "What to eat?",
-     "invitation": true,
-     "description": "This is a platform to share food recommendations, along with restaurants rating too.",
-     "users": [
-         {"_id":"608d5450ec00005468607a0c",
-         "admin":true},
-         {"_id":"608d55c7e512b74ee00791dd",
-        "admin":false}
-        ],
-    "photos": [{"_id":"608d5450ec00005468607a0c"},
-    {"_id":"608d5450ec00005468617a0c"}],
-    "discussionTopics": [],
+    "name": "What to eat?",
+    "invitation": true,
+    "description": "This is a platform to share food recommendations, along with restaurants rating too.",
+    "users": [
+      {
+        "_id": "608d5450ec00005468607a0c",
+        "admin": true,
+        "joinDate": "2021-01-01"
+      },
+      {
+        "_id": "608d55c7e512b74ee00791dd",
+        "admin": false,
+        "joinDate": "2021-01-01"
+      }
+    ],
+    "photos": [{ "_id": "608d5450ec00005468607a0f" }],
+    "discussionTopics": [{ "_id": "608f6e7519953b27004f6dab" }],
     "pinnedThread": null,
-    "ageRestriction": false
- },
+    "ageRestriction": false,
+    "startDate": "2021-01-01"
+  },
 
- {
-     "_id":"608f3e678209d433946b946d",
+  {
+    "_id": "608f3e678209d433946b946d",
     "public": false,
-     "name": "Dogs Day Out",
-     "invitation": true,
-     "description": "Welcome to Dogs Day Out, a place to share our love for our 4 legged friends!",
-     "users": [
-         {"_id":"608d55c7e512b74ee00791dd",
-        "admin":true},
-        {
-            "_id":"608d55c7e512b74ee00791db",
-        "admin":false
-        },
-        {
-            "_id":"608d55c7e512b74ee00791dc",
-        "admin":false
-        },
-        {
-            "_id":"608d55c7e512b74ee00791de",
-        "admin":false
-        }
-        ],
-    "photos": [{"_id":"608d5450ec00005468617a0c"}],
-    "discussionTopics": [],
+    "name": "Dogs Day Out",
+    "invitation": true,
+    "description": "Welcome to Dogs Day Out, a place to share our love for our 4 legged friends!",
+    "users": [
+      {
+        "_id": "608d55c7e512b74ee00791dd",
+        "admin": true,
+        "joinDate": "2021-01-01"
+      },
+      {
+        "_id": "608d55c7e512b74ee00791db",
+        "admin": false,
+        "joinDate": "2021-01-01"
+      },
+      {
+        "_id": "608d55c7e512b74ee00791dc",
+        "admin": false,
+        "joinDate": "2021-01-01"
+      }
+    ],
+    "photos": [{ "_id": "608d5450ec00005468607a0f" }],
+    "discussionTopics": [{ "_id": "608f6e7519953b27004f6dab" }],
     "pinnedThread": null,
-    "ageRestriction": false
- },
- {
-    "_id":"608f3e678209d433946b9472",
-    "public": false,
-     "name": "Miss Basket",
-     "invitation": true,
-     "description": "Only members can see who's in the group and what they post",
-     "users": [
-         {"_id":"608d55c7e512b74ee00791dd",
-        "admin":false},
-        {
-            "_id":"608d55c7e512b74ee00791dc",
-        "admin":true
-        },
-        {
-            "_id":"608d55c7e512b74ee00791de",
-        "admin":false
-        }
-        ],
-    "photos": [],
-    "discussionTopics": [],
-    "pinnedThread": null,
-    "ageRestriction": true
- }
+    "ageRestriction": false,
+    "startDate": "2021-01-01"
+  }
 ]

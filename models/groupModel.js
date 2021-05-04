@@ -1,4 +1,5 @@
 // INCLUDE DEPENDENCIES
+const { json } = require('body-parser');
 const mongoose = require('mongoose');
 
 // CREATE SCHEMA
@@ -17,25 +18,24 @@ const groupSchema = new mongoose.Schema({
       userId: mongoose.Schema.ObjectId,
       joinDate: {
         type: Date,
-        default: Date.now,
+        default: Date.now(),
       },
       admin: Boolean,
     },
   ], // group members
   startDate: {
     type: Date,
-    default: Date.now,
+    default: Date.now(),
   },
   photos: [mongoose.Schema.ObjectId],
   discussionTopics: {
     type: [mongoose.Schema.ObjectId],
-    validate: function () {
-      const id = this.discussionTopics.find(
-        (elem) => elem.ObjectId.toString() === this.pinnedThread.ObjectId.toString()
+    //validate: function () {
+    //const id = this.discussionTopics.find(
+    //(elem) => elem.ObjectId.toString() === this.pinnedThread.ObjectId.toString()
+    //);
 
-      );
-
-    },
+    // },
   },
   pinnedThread: {
     type: mongoose.Schema.ObjectId,

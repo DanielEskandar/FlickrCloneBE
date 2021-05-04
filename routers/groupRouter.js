@@ -167,7 +167,7 @@ groupRouter.get('/:id');
  *
  * @apiUse UnauthError
  */
- groupRouter.get('/',groupController.GetInfo);
+groupRouter.get('/', groupController.GetInfo);
 /**
  * @api {post} /group/:id/user/:userid Join a public non-invitation group as a member
  * @apiVersion 1.0.0
@@ -262,9 +262,9 @@ groupRouter.delete('/:id/user/:userid');
 groupRouter.get('/search');
 
 /**
- * @api {post} /group/:id/discussions Post a new discussion topic to the group
+ * @api {post} /group/:id/discussion Post a new discussion topic to the group
  * @apiVersion 1.0.0
- * @apiName CreateDiscussionTopic
+ * @apiName createDiscussion
  * @apiGroup Group
  *
  * @apiParam {String} id The Group's ID
@@ -284,7 +284,7 @@ groupRouter.get('/search');
 groupRouter.post('/:id/discussion');
 
 /**
- * @api {patch} /group/discussion/:id Update Editting a discussion topic
+ * @api {patch} /group/discussion/:id  Editting a discussion topic
  * @apiVersion 1.0.0
  * @apiName EditDiscussion
  * @apiGroup Group
@@ -315,12 +315,12 @@ groupRouter.patch('/discussion/:id');
 /**
  * @api {get} /group/discussion/:id Get information about a group discussion topic.
  * @apiVersion 1.0.0
- * @apiName GetDiscussionTopic
+ * @apiName getDiscussion
  * @apiGroup Group
  *
  * @apiParam {String} id The discussion's ID
  *
- * @apiSuccess {Object} discussionTopics The required discussion topic 
+ * @apiSuccess {Object} discussionTopics The required discussion topic
  *
  * @apiUse SuccessRes
  *
@@ -357,12 +357,12 @@ groupRouter.get('/discussion/:id');
 * @apiUse ForbiddenAccss
 * @apiUse GroupNotFoundError
 */
-groupRouter.get('/:id/discussion',groupController.GetAllDiscussions);
+groupRouter.get('/:id/discussion', groupController.GetAllDiscussions);
 
 /**
  * @api {delete} /group/discussion/:id Deleting a discussion post from the group
  * @apiVersion 1.0.0
- * @apiName DeleteDiscussionTopic
+ * @apiName DeleteDiscussion
  * @apiGroup Group
  *
  * @apiParam {String} id The discussion's ID
@@ -440,7 +440,7 @@ groupRouter.patch('/:id/pinned/:topicId');
  * @apiUse UnauthError
  * @apiUse ForbiddenAccss
  */
-groupRouter.post('/discussions/:id/replies');
+groupRouter.post('/discussion/:id/replies');
 
 /**
  * @api {delete} /group/discussion/replies/:id Deleting a reply on a discussion topic
@@ -464,7 +464,7 @@ groupRouter.post('/discussions/:id/replies');
  * @apiUse UnauthError
  * @apiUse ForbiddenAccss
  */
-groupRouter.delete('/discussions/replies/:id');
+groupRouter.delete('/discussion/replies/:id');
 
 /**
  * @api {patch} /group/discussion/replies/:id Edit a post reply
@@ -493,7 +493,7 @@ groupRouter.delete('/discussions/replies/:id');
  * @apiUse UnauthError
  * @apiUse ForbiddenAccss
  */
-groupRouter.patch('/discussions/replies/:id');
+groupRouter.patch('/discussion/replies/:id');
 
 /**
  * @api {get} /group/discussion/replies/:id Get info about a discussion topic reply
@@ -515,7 +515,7 @@ groupRouter.patch('/discussions/replies/:id');
  *      }
  * @apiUse UnauthError
  */
-groupRouter.get('/discussions/replies/:id');
+groupRouter.get('/discussion/replies/:id');
 
 /**
  * @api {get} /group/discussion/:id/replies Get a list of replies from a group discussion topic.
@@ -537,7 +537,7 @@ groupRouter.get('/discussions/replies/:id');
  *      }
  * @apiUse UnauthError
  */
-groupRouter.get('/discussions/:id/replies');
+groupRouter.get('/discussion/:id/replies');
 
 /**
  * @api {get} /group/:id/members Get a list of the members of a group.
@@ -555,7 +555,7 @@ groupRouter.get('/discussions/:id/replies');
  * @apiUse UnauthError
  * @apiUse GroupNotFoundError
  */
-groupRouter.get('/:id/members',groupController.GetMembers);
+groupRouter.get('/:id/members', groupController.GetMembers);
 
 /**
  * @api {post} /group/:id/pool/:photoid Add a Photo to a Group Photo Pool
@@ -636,7 +636,7 @@ groupRouter.get('/:id/photo/:photoid/context');
  * @apiUse UnauthError
  * @apiUse GroupNotFoundError
  */
-groupRouter.get('/:id/pool',groupController.GetPhotoPool);
+groupRouter.get('/:id/pool', groupController.GetPhotoPool);
 
 /**
  * @api {delete} /group/:id/pool/:photoId Remove a Photo from a Group Photo Pool
