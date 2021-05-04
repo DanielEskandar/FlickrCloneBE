@@ -369,3 +369,65 @@ describe('should retrieve blocked list of a user and send response correctly', (
     });
   });
 });
+
+// TESTING: getFaves
+describe('should retrieve faves by id and send response correctly', () => {
+  test('should retrieve faves of Ahmed Abdulkader', async () => {
+    const mReq = { params: { id: '608d5450ec00005468607a0c' } };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      send: jest.fn().mockReturnThis(),
+    };
+    await userController.getFaves(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.send).toBeCalledWith({
+      status: 'success',
+      count: 2,
+      data: {
+        favourites: [
+          {
+            sizes: {
+              size: {
+                small: {
+                  height: 1000,
+                  width: 60,
+                  source: 'https://www.google.com/',
+                  url: 'https://www.google.com/',
+                },
+              },
+            },
+            favourites: 7,
+            _id: '608d5450ec00005468607a0f',
+            userId: {
+              _id: '608d55c7e512b74ee00791db',
+              firstName: 'Daniel',
+              lastName: 'Eskandar',
+            },
+            title: 'Sunset in Bora Bora',
+          },
+          {
+            sizes: {
+              size: {
+                small: {
+                  height: 1000,
+                  width: 60,
+                  source: 'https://www.google.com/',
+                  url: 'https://www.google.com/',
+                },
+              },
+            },
+            favourites: 51,
+            _id: '608d5450ec00005468617a0c',
+            userId: {
+              _id: '608d55c7e512b74ee00791dc',
+              firstName: 'Aliaa',
+              lastName: 'Khalifa',
+            },
+            title: 'Sakura Season in Nihon',
+          },
+        ],
+        _id: '608d5450ec00005468607a0c',
+      },
+    });
+  });
+});
