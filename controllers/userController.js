@@ -154,12 +154,9 @@ exports.getFaves = async (req, res) => {
     res.status(400).send({
       status: 'error',
       message: err,
-	  
     });
   }
 };
-
-
 
 // ADD TO FAVES
 exports.addFave = async (req, res) => {
@@ -231,6 +228,7 @@ exports.addFave = async (req, res) => {
   }
 };
 
+// REMOVE FROM FAVES
 exports.removeFave = async (req, res) => {
   try {
     const faveList = await userModel
@@ -293,4 +291,3 @@ exports.removeFave = async (req, res) => {
     });
   }
 };
-
