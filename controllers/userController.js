@@ -112,9 +112,6 @@ exports.getBlocked = async (req, res) => {
       .findById(req.headers.userid)
       .select({ blocked: 1 })
       .populate('blocked', 'displayName firstName lastName');
-
-    console.log(blocked);
-
     res.status(200).send({
       status: 'success',
       count: blocked.blocked.length,
