@@ -1,5 +1,6 @@
 // INCLUDE MODELS
 const userModel = require('../models/userModel.js');
+const photoModel = require('../models/photoModel');
 
 // GET REAL NAME
 exports.getRealName = async (req, res) => {
@@ -79,6 +80,106 @@ exports.getLimits = async (req, res) => {
     res.status(400).send({
       status: 'error',
       message: err,
+    });
+  }
+};
+
+// GET FAVES
+exports.getFaves = async (req, res) => {
+  try {
+    const favourites = await userModel
+      .findById(req.params.id)
+      .select({ favourites: 1 })
+      .populate({
+        path: 'favourites',
+        model: 'photoModel',
+        select: 'title favourites userId sizes.size.small',
+        populate: {
+          path: 'userId',
+          model: 'userModel',
+          select: 'firstName lastName',
+        },
+      });
+
+    res.status(200).send({
+      status: 'success',
+      count: favourites.favourites.length,
+      data: JSON.parse(JSON.stringify(favourites)),
+    });
+  } catch (err) {
+    res.status(400).send({
+      status: 'error',
+      message: err,
+    });
+  }
+};
+
+// ADD TO FAVES
+exports.addFave = async (req, res) => {
+  try {
+    // Check for existence of Photo
+    if ((await photoModel.findById(req.params.id)) === null) {
+      res.status(404).send({
+        status: 'Error',
+        message: 'This PhotoID does not exist',
+      });
+      return;
+    }
+
+    if (
+      (await userModel.findOne({
+        _id: req.headers.userid,
+        favourites: { $elemMatch: { $eq: req.params.id } },
+      })) !== null
+    ) {
+      res.status(404).send({
+        status: 'Error',
+        message: 'This PhotoID is already in Faves',
+      });
+      return;
+    }
+
+    //Increase Fave Count on Photo Model
+    const updatedFaveCount = await photoModel
+      .findByIdAndUpdate(
+        req.params.id,
+        {
+          $inc: { favourites: 1 },
+        },
+        {
+          new: true,
+          runValidators: true,
+        }
+      )
+      .select({ favourites: 1 });
+
+    // Add PhotoID to Faves array in User model
+    const updatedFaves = await userModel
+      .findByIdAndUpdate(
+        req.headers.userid,
+        {
+          $addToSet: { favourites: req.params.id },
+        },
+        {
+          new: true,
+          runValidators: true,
+        }
+      )
+      .select({ favourites: 1 });
+
+    const Updates = {
+      newPhotoFaveCount: JSON.parse(JSON.stringify(updatedFaveCount)),
+      newUserFaveList: JSON.parse(JSON.stringify(updatedFaves)),
+    };
+
+    res.status(200).send({
+      status: 'success',
+      data: Updates,
+    });
+  } catch (err) {
+    res.status(400).send({
+      status: 'Error',
+      message: 'Bad Request',
     });
   }
 };
