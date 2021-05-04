@@ -232,3 +232,22 @@ describe('should edit content field in discussion with id 608f6e7519953b27004f6d
     });
   });
 });
+
+//TESTING DELETE DICSUSSION
+describe('should delete discussion with id 608f6e7519953b27004f6dab ', () => {
+  test('returns null data', async () => {
+    const mReq = {
+      params: { id: '608f6e7519953b27004f6dab' },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      send: jest.fn().mockReturnThis(),
+    };
+    await groupController.DeleteDiscussion(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.send).toBeCalledWith({
+      status: 'success',
+      data: null,
+    });
+  });
+});

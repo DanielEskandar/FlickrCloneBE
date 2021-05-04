@@ -84,12 +84,12 @@ exports.GetAllDiscussions = async (req, res) => {
 exports.DeleteDiscussion = async (req, res) => {
   try {
     await discModel.findByIdAndDelete(req.params.id);
-    res.status(200).json({
+    res.status(200).send({
       status: 'success',
       data: null,
     });
   } catch (err) {
-    res.status(400).json({
+    res.status(400).send({
       status: 'error',
       message: err,
     });
