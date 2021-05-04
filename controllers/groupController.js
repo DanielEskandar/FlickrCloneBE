@@ -99,10 +99,9 @@ exports.DeleteDiscussion = async (req, res) => {
 //GET A DISCUSSION BY ID
 exports.getDiscussion = async (req, res) => {
   try {
-    const discussion = await groupModel
+    const discussion = await discModel
       .findById(req.params.id)
-      .select({ _id: 0 })
-      .select('discussionTopics'); // returns id
+      .select({ _id: 0 });
 
     res.status(200).send({
       status: 'success',
@@ -120,8 +119,6 @@ exports.getDiscussion = async (req, res) => {
 exports.createDiscussion = async (req, res) => {
   try {
     const newDiscussion = await discModel.create(req.body);
-    //console.log(newDiscussion);
-    console.log(req.body);
     await groupModel.findByIdAndUpdate(
       req.params.id,
       {
@@ -132,14 +129,14 @@ exports.createDiscussion = async (req, res) => {
         runValidators: true,
       }
     );
-    res.status(200).json({
+    res.status(200).send({
       status: 'success',
       data: JSON.parse(JSON.stringify(newDiscussion)),
     });
   } catch (err) {
-    res.status(400).json({
+    res.status(400).send({
       status: 'fail',
-      message: err,
+      message: 'failed to create',
     });
   }
 };
