@@ -624,7 +624,7 @@ userRouter.get('/:id/showcase');
  * @apiUse UserNotFoundError
  */
 
-userRouter.get('/:id/faves');
+userRouter.get('/:id/faves', userController.getFaves);
 
 /**
  * @api {get} /user/limits Return a List of User Upload and Size Limits
@@ -951,7 +951,7 @@ userRouter.patch('/notif');
  * @apiUse UnauthError
  */
 
-userRouter.post('/faves/:id');
+userRouter.post('/faves/:id', userController.addFave);
 
 /**
  * @api {delete} /user/faves/:id Remove a Photo from User Faves
@@ -968,7 +968,7 @@ userRouter.post('/faves/:id');
  * @apiUse UnauthError
  */
 
-userRouter.delete('/faves/:id');
+userRouter.delete('/faves/:id', userController.removeFave);
 
 /**
  * @api {get} /user/faves-context Get the context for a photo in Faves
@@ -1056,13 +1056,13 @@ userRouter.get('/camera-roll');
 /**
  * @api {get} /user/followed Gets a list of followed users
  * @apiVersion 1.0.0
- * @apiName GetFollowed
+ * @apiName GetFollowing
  * @apiGroup User
  *
- * @apiHeader {String} Token Authenticaton Token
+ * @apiParam {ObjectID} id The of the User whose following list is to be retrieved
  *
- * @apiSuccess {Number} count Followed Users Count
- * @apiSuccess {Object[]} follwedlist Array of User ID's of the Followed Users
+ * @apiSuccess {Number} count Following list length
+ * @apiSuccess {Object[]} Follwing list Array of User ID's of the Followed Users
  *
  * @apiSuccessExample Success-Response:
  *      HTTP/1.1 200 OK
@@ -1071,16 +1071,16 @@ userRouter.get('/camera-roll');
  *          "data":
  *          {
  *              "count": 30
- *              "follwedlist": [
+ *              "following": [
  *
  *              ]
  *          }
  *      }
  *
- * @apiUse UnauthError
+ * @apiUse UserNotFoundError
  */
 
-userRouter.get('/followed');
+userRouter.get('/:id/following', userController.getFollowing);
 
 /**
  * @api {get} /user/follower Gets a list of User's followers
@@ -1149,7 +1149,7 @@ userRouter.get('/follower-not-followed');
  * @apiHeader {String} Token Authenticaton Token
  *
  * @apiSuccess {Number} count User's Blocked Count
- * @apiSuccess {Object[]} blocklist Array of User ID's of the User's Blocked users
+ * @apiSuccess {Object[]} blocked Array of User ID's of the User's Blocked users
  *
  * @apiSuccessExample Success-Response:
  *      HTTP/1.1 200 OK
@@ -1158,7 +1158,7 @@ userRouter.get('/follower-not-followed');
  *          "data":
  *          {
  *              "count": 30
- *              "blocklist": [
+ *              "blocked": [
  *
  *              ]
  *          }
@@ -1167,7 +1167,7 @@ userRouter.get('/follower-not-followed');
  * @apiUse UnauthError
  */
 
-userRouter.get('/block');
+userRouter.get('/block', userController.getBlocked);
 
 /**
  * @api {post} /user/follow/:id Follow a User
