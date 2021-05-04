@@ -635,7 +635,7 @@ describe('should remove image from faves by id and send response correctly', () 
           _id: '608d5450ec00005468607a0f',
         },
         newUserFaveList: {
-          favourites: ['608d5450ec00005468617a0c', '604d5450ec00005468617a0c'],
+          favourites: ['604d5450ec00005468617a0c', '608d5450ec00005468617a0c'],
           _id: '608d55c7e512b74ee00791db',
         },
       },
