@@ -317,3 +317,55 @@ describe('should retrieve following list of a user and send response correctly',
     });
   });
 });
+
+// TESTING: getBlocked
+describe('should retrieve blocked list of a user and send response correctly', () => {
+  test('should retrieve blocked list of DanielEskandar', async () => {
+    const mReq = { headers: { userid: '608d55c7e512b74ee00791db' } };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      send: jest.fn().mockReturnThis(),
+    };
+    await userController.getBlocked(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.send).toBeCalledWith({
+      status: 'success',
+      count: 2,
+      data: {
+        blocked: [
+          {
+            _id: '608d5450ec00005468607a0c',
+            displayName: 'AhmedAbdulkader99',
+            firstName: 'Ahmed',
+            lastName: 'Abdulkader',
+          },
+          {
+            _id: '608d55c7e512b74ee00791dc',
+            displayName: 'AliaaKhalifa',
+            firstName: 'Aliaa',
+            lastName: 'Khalifa',
+          },
+        ],
+        _id: '608d55c7e512b74ee00791db',
+      },
+    });
+  });
+
+  test('should retrieve blocked list of AliaaKhalifa', async () => {
+    const mReq = { headers: { userid: '608d55c7e512b74ee00791dc' } };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      send: jest.fn().mockReturnThis(),
+    };
+    await userController.getBlocked(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.send).toBeCalledWith({
+      status: 'success',
+      count: 0,
+      data: {
+        blocked: [],
+        _id: '608d55c7e512b74ee00791dc',
+      },
+    });
+  });
+});
