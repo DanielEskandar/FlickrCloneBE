@@ -279,7 +279,7 @@ albumRouter.delete('/:id/comments/:commentid', albumController.deleteComment);
  * @apiUse UnauthError
  */
 
-albumRouter.post('/');
+albumRouter.post('/', albumController.createAlbum);
 
 /**
  * @api {post} /photoset/:id/photos Add a photo

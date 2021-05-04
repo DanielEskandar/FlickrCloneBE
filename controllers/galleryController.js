@@ -176,3 +176,18 @@ exports.deleteComment = async (req, res) => {
     });
   }
 };
+
+exports.createGallery = async (req, res) => {
+  try {
+    const gallery = await galleryModel.create(req.body);
+    res.status(200).send({
+      status: 'success',
+      data: gallery.toJSON(),
+    });
+  } catch (err) {
+    res.status(400).send({
+      status: 'error',
+      message: err,
+    });
+  }
+};

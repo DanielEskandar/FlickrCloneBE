@@ -236,7 +236,7 @@ galleryRouter.delete(
  * @apiUse UnauthError
  */
 
-galleryRouter.post('/');
+galleryRouter.post('/', galleryController.createGallery);
 
 /**
  * @api {post} /gallery/:id/photos Add a photo

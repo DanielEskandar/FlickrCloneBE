@@ -177,3 +177,18 @@ exports.deleteComment = async (req, res) => {
     });
   }
 };
+
+exports.createAlbum = async (req, res) => {
+  try {
+    const album = await albumModel.create(req.body);
+    res.status(200).send({
+      status: 'success',
+      data: album.toJSON(),
+    });
+  } catch (err) {
+    res.status(400).send({
+      status: 'error',
+      message: err,
+    });
+  }
+};
