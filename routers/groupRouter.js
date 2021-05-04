@@ -2,7 +2,7 @@
 const express = require('express');
 
 // INCLUDE CONTROLLERS
-const groupController = require('../controllers/groupController.js');
+//const groupController = require('../controllers/groupController.js');
 
 // CREATE ROUTER
 const groupRouter = express.Router();
@@ -87,7 +87,7 @@ const groupRouter = express.Router();
  *
  * @apiUse UnauthError
  */
-groupRouter.POST('/');
+groupRouter.post('/');
 
 /**
  * @api {delete} /group/:id Admin deletes a group
@@ -105,7 +105,7 @@ groupRouter.POST('/');
  * @apiUse ForbiddenAccss
  * @apiUse GroupNotFoundError
  */
-groupRouter.DELETE('/:id');
+groupRouter.delete('/:id');
 
 /**
  * @api {get} /group/:id Get group's info
@@ -144,8 +144,30 @@ groupRouter.DELETE('/:id');
  * @apiUse ForbiddenAccss
  * @apiUse GroupNotFoundError
  */
-groupRouter.GET('/:id');
+groupRouter.get('/:id');
 
+/**
+ * @api {get} /group/ Get All group's info
+ * @apiVersion 1.0.0
+ * @apiName GetInfo
+ * @apiGroup Group
+ *
+ * @apiSuccess {Object[]} group All groups
+ *
+ * @apiSuccessExample Success-Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *          "status": "success",
+ *          "data":
+ *          {
+ *              groups
+ *
+ *          }
+ *      }
+ *
+ * @apiUse UnauthError
+ */
+groupRouter.get('/', groupController.GetInfo);
 /**
  * @api {post} /group/:id/user/:userid Join a public non-invitation group as a member
  * @apiVersion 1.0.0
@@ -160,7 +182,7 @@ groupRouter.GET('/:id');
  * @apiUse UnauthError
  * @apiUse GroupNotFoundError
  */
-groupRouter.POST('/:id/user/:userid');
+groupRouter.post('/:id/user/:userid');
 
 /**
  * @api {post} /group/:id/request/:userid Request to join an invitation only group
@@ -176,7 +198,7 @@ groupRouter.POST('/:id/user/:userid');
  * @apiUse UnauthError
  * @apiUse GroupNotFoundError
  */
-groupRouter.POST('/:id/request/:userid');
+groupRouter.post('/:id/request/:userid');
 
 /**
  * @api {post} /group/:id/invite/:userId A group member sends an invitation to join the group
@@ -192,7 +214,7 @@ groupRouter.POST('/:id/request/:userid');
  * @apiUse UnauthError
  * @apiUse GroupNotFoundError
  */
-groupRouter.POST('/:id/invite/:userid');
+groupRouter.post('/:id/invite/:userid');
 
 /**
  * @api {delete} /group/:id/user/:userId Leaving group If the user is the last person in the group, the group will be deleted.
@@ -210,7 +232,7 @@ groupRouter.POST('/:id/invite/:userid');
  * @apiUse UnauthError
  * @apiUse GroupNotFoundError
  */
-groupRouter.DELETE('/:id/user/:userid');
+groupRouter.delete('/:id/user/:userid');
 
 /**
  * @api {get} /group/search Search for groups
@@ -237,12 +259,12 @@ groupRouter.DELETE('/:id/user/:userid');
  * @apiUse UnauthError
  * @apiUse GroupNotFoundError
  */
-groupRouter.GET('/search');
+groupRouter.get('/search');
 
 /**
- * @api {post} /group/:id/discussions Post a new discussion topic to the group
+ * @api {post} /group/:id/discussion Post a new discussion topic to the group
  * @apiVersion 1.0.0
- * @apiName CreateDiscussionTopic
+ * @apiName createDiscussion
  * @apiGroup Group
  *
  * @apiParam {String} id The Group's ID
@@ -259,10 +281,10 @@ groupRouter.GET('/search');
  * @apiUse ForbiddenAccss
  * @apiUse GroupNotFoundError
  */
-groupRouter.POST('/:id/discussion');
+groupRouter.post('/:id/discussion');
 
 /**
- * @api {patch} /group/discussion/:id Update Editting a discussion topic
+ * @api {patch} /group/discussion/:id  Editting a discussion topic
  * @apiVersion 1.0.0
  * @apiName EditDiscussion
  * @apiGroup Group
@@ -288,17 +310,17 @@ groupRouter.POST('/:id/discussion');
  * @apiUse UnauthError
  * @apiUse ForbiddenAccss
  */
-groupRouter.PATCH('/discussion/:id');
+groupRouter.patch('/discussion/:id');
 
 /**
  * @api {get} /group/discussion/:id Get information about a group discussion topic.
  * @apiVersion 1.0.0
- * @apiName GetDiscussionTopic
+ * @apiName getDiscussion
  * @apiGroup Group
  *
  * @apiParam {String} id The discussion's ID
  *
- * @apiSuccess {Object} discussionTopics The required discussion topic //?? returns 1 object
+ * @apiSuccess {Object} discussionTopics The required discussion topic
  *
  * @apiUse SuccessRes
  *
@@ -310,7 +332,7 @@ groupRouter.PATCH('/discussion/:id');
  *      }
  * @apiUse UnauthError
  */
-groupRouter.GET('/discussion/:id');
+groupRouter.get('/discussion/:id');
 
 /** 
 * @api {get} /group/:id/discussion Get a list of discussion topics in a group.
@@ -335,12 +357,13 @@ groupRouter.GET('/discussion/:id');
 * @apiUse ForbiddenAccss
 * @apiUse GroupNotFoundError
 */
-groupRouter.GET('/:id/discussion');
+
+groupRouter.get('/:id/discussion', groupController.GetAllDiscussions);
 
 /**
  * @api {delete} /group/discussion/:id Deleting a discussion post from the group
  * @apiVersion 1.0.0
- * @apiName DeleteDiscussionTopic
+ * @apiName DeleteDiscussion
  * @apiGroup Group
  *
  * @apiParam {String} id The discussion's ID
@@ -359,7 +382,7 @@ groupRouter.GET('/:id/discussion');
  * @apiUse UnauthError
  * @apiUse ForbiddenAccss
  */
-groupRouter.DELETE('/discussion/:id');
+groupRouter.delete('/discussion/:id');
 
 /**
  * @api {patch} /group/:id/pinned/:topicId Setting a new pinned thread
@@ -390,7 +413,7 @@ groupRouter.DELETE('/discussion/:id');
  * @apiUse ForbiddenAccss
  * @apiUse GroupNotFoundError
  */
-groupRouter.PATCH('/:id/pinned/:topicId');
+groupRouter.patch('/:id/pinned/:topicId');
 
 /**
  * @api {post} /group/discussion/:id/replies Add a reply to a discussion topic
@@ -418,7 +441,8 @@ groupRouter.PATCH('/:id/pinned/:topicId');
  * @apiUse UnauthError
  * @apiUse ForbiddenAccss
  */
-groupRouter.POST('/discussions/:id/replies');
+
+groupRouter.post('/discussion/:id/replies');
 
 /**
  * @api {delete} /group/discussion/replies/:id Deleting a reply on a discussion topic
@@ -442,7 +466,8 @@ groupRouter.POST('/discussions/:id/replies');
  * @apiUse UnauthError
  * @apiUse ForbiddenAccss
  */
-groupRouter.DELETE('/discussions/replies/:id');
+
+groupRouter.delete('/discussion/replies/:id');
 
 /**
  * @api {patch} /group/discussion/replies/:id Edit a post reply
@@ -471,7 +496,8 @@ groupRouter.DELETE('/discussions/replies/:id');
  * @apiUse UnauthError
  * @apiUse ForbiddenAccss
  */
-groupRouter.PATCH('/discussions/replies/:id');
+
+groupRouter.patch('/discussion/replies/:id');
 
 /**
  * @api {get} /group/discussion/replies/:id Get info about a discussion topic reply
@@ -493,7 +519,8 @@ groupRouter.PATCH('/discussions/replies/:id');
  *      }
  * @apiUse UnauthError
  */
-groupRouter.GET('/discussions/replies/:id');
+
+groupRouter.get('/discussion/replies/:id');
 
 /**
  * @api {get} /group/discussion/:id/replies Get a list of replies from a group discussion topic.
@@ -515,17 +542,18 @@ groupRouter.GET('/discussions/replies/:id');
  *      }
  * @apiUse UnauthError
  */
-groupRouter.GET('/discussions/:id/replies');
+
+groupRouter.get('/discussion/:id/replies');
 
 /**
  * @api {get} /group/:id/members Get a list of the members of a group.
  * @apiVersion 1.0.0
- * @apiName GetAllReplies
+ * @apiName GetMembers
  * @apiGroup Group
  *
  * @apiParam {String} id The group's ID
  *
- * @apiSuccess {string} Token Authenticaton Token // lazem ybaa user AND member
+ * @apiSuccess {string} Token Authenticaton Token
  * @apiSuccess {Object[]} users List of the members in the group.
  *
  * @apiUse SuccessRes
@@ -533,7 +561,8 @@ groupRouter.GET('/discussions/:id/replies');
  * @apiUse UnauthError
  * @apiUse GroupNotFoundError
  */
-groupRouter.GET('/:id/members');
+
+groupRouter.get('/:id/members', groupController.GetMembers)
 
 /**
  * @api {post} /group/:id/pool/:photoid Add a Photo to a Group Photo Pool
@@ -560,7 +589,7 @@ groupRouter.GET('/:id/members');
  * @apiUse UnauthError
  * @apiUse ForbiddenAccss
  */
-groupRouter.POST('/:id/pool/:id');
+groupRouter.post('/:id/pool/:id');
 
 /**
  * @api {get} /group/:id/photo/:photoid/context Get Next and Previous Photos in Group Pool
@@ -597,7 +626,7 @@ groupRouter.POST('/:id/pool/:id');
  * @apiUse UnauthError
  * @apiUse GroupNotFoundError
  */
-groupRouter.GET('/:id/photo/:photoid/context');
+groupRouter.get('/:id/photo/:photoid/context');
 
 /**
  * @api {get} /group/:id/pool Returns a list of pool photos for a given group
@@ -614,7 +643,8 @@ groupRouter.GET('/:id/photo/:photoid/context');
  * @apiUse UnauthError
  * @apiUse GroupNotFoundError
  */
-groupRouter.GET('/:id/pool');
+
+groupRouter.get('/:id/pool', groupController.GetPhotoPool);
 
 /**
  * @api {delete} /group/:id/pool/:photoId Remove a Photo from a Group Photo Pool
@@ -640,4 +670,7 @@ groupRouter.GET('/:id/pool');
  * @apiUse ForbiddenAccss
  * @apiUse GroupNotFoundError
  */
-groupRouter.DELETE('/:id/pool');
+groupRouter.delete('/:id/pool');
+
+// EXPORT ROUTER
+module.exports = groupRouter;

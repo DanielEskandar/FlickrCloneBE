@@ -3,6 +3,7 @@ const express = require('express');
 
 // INCLUDE CONTROLLERS
 const photoController = require('../controllers/photoController.js');
+const photoModel = require('../models/photoModel.js');
 
 // CREATE ROUTER
 const photoRouter = express.Router();
@@ -180,7 +181,7 @@ photoRouter.delete('/:id/');
  * @apiUse PhotoNotFoundError
  *
  */
-photoRouter.get('/:id');
+photoRouter.get('/:id', photoController.getInformation);
 
 /**
  * @api {get} /photo/:id Gets a Photo's URL for Specific Size
@@ -467,7 +468,7 @@ photoRouter.get('/:id/exif');
  * @apiUse PhotoNotFoundError
  *
  */
-photoRouter.get('/:id/faves');
+photoRouter.get('/:id/faves', photoController.getFavourites);
 
 /**
  * @api {get} /photo/:id/perm Gets Permissions and Visibility for a Photo

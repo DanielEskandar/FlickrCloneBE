@@ -9,24 +9,24 @@ const albumSchema = new mongoose.Schema({
   },
   primaryPhotoId: {
     type: mongoose.Schema.ObjectId,
+    ref: 'photoModel',
     required: [true, 'An album must have a primary photo'],
   },
-  photos: [
-    {
-      type: mongoose.Schema.ObjectId,
-      required: true,
-      validate: function () {
-        return (
-          this.photos.length >= 1 && this.photos.includes(this.primaryPhotoId)
-        );
-      },
+  photos: {
+    type: [{ type: mongoose.Schema.ObjectId, ref: 'photoModel' }],
+    required: [true, 'An album must have at least 1 photo'],
+    validate: function () {
+      const id = this.photos.find(
+        (element) => element.toString() === this.primaryPhotoId.toString()
+      );
+      return this.photos.length >= 1 && id !== undefined;
     },
-  ], // check min 1 , primary photo
+  },
   description: {
     type: String,
     trim: true,
   },
-  comments: [mongoose.Schema.ObjectId],
+  comments: [{ type: mongoose.Schema.ObjectId, ref: 'commentModel' }],
 });
 
 // CREATE MODEL
