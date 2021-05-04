@@ -10,7 +10,7 @@ exports.getFavourites = async (req, res) => {
 
     res.status(200).send({
       status: 'success',
-      data: faves.toJSON(),
+      data: JSON.parse(JSON.stringify(faves)),
     });
   } catch (err) {
     res.status(400).send({
@@ -32,7 +32,7 @@ exports.getInformation = async (req, res) => {
     });
     res.status(200).send({
       status: 'success',
-      data: info.toJSON(),
+      data: JSON.parse(JSON.stringify(info)),
     });
   } catch (err) {
     res.status(400).send({
