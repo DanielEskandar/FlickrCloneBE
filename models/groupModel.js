@@ -30,14 +30,14 @@ const groupSchema = new mongoose.Schema({
   photos: [mongoose.Schema.ObjectId],
   discussionTopics: {
     type: [mongoose.Schema.ObjectId],
-    validate: function () {
+    /* validate: function () {
       //if pinnedThread exists, must be in discussionTopics array
       if (
         this.discussionTopics.length === 0 &&
         this.pinnedThread.ObjectId === undefined
       )
         return true;
-    },
+    },*/
   },
   pinnedThread: {
     type: mongoose.Schema.ObjectId,

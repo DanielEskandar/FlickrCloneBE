@@ -155,29 +155,11 @@ exports.getDiscussion = async (req, res) => {
 exports.createDiscussion = async (req, res) => {
   try {
     const newDiscussion = await discModel.create(req.body); //create new discussion instance
-    //if newDiscussion id is duplicated
-    if (await discModel.findById(newDiscussion)) {
-      res.status(400).send({
-        status: 'error',
-        message: 'ID is duplicated',
-      });
-      return;
-    }
 
-    //if group doesnt exist,end
-    if ((await groupModel.findById(req.params.id)) === null) {
-      res.status(400).send({
-        status: 'error',
-        message: 'group doesnt exist',
-      });
-      return;
-    }
-
-    //else add new discusion to the group
     await groupModel.findByIdAndUpdate(
       req.params.id,
       {
-        $push: { discussionTopics: newDiscussion._id },
+        $push: { discussionTopics: newDiscussion },
       },
       {
         new: true,
@@ -226,11 +208,14 @@ exports.EditDiscussion = async (req, res) => {
 exports.CreateGroup = async (req, res) => {
   try {
     const admin = await userModel.findById(req.headers.userid); //group creator
+    // console.log(admin);
     const newGroup = await groupModel.create(req.body); //create instance of groupModel
+    console.log(req.body);
     //add group creator and set as admin
-    const grp = await groupModel.findByIdAndUpdate(newGroup.id, {
+    await groupModel.findByIdAndUpdate(newGroup._id, {
       $push: { users: admin, $set: { admin: true } },
     });
+    console.log(newGroup);
     res.status(200).send({
       status: 'success',
       data: JSON.parse(JSON.stringify(newGroup)),

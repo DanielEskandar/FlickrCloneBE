@@ -258,14 +258,14 @@ describe('userid in headers should create new group with content in body, add us
     const mReq = {
       params: {},
       body: {
-        _id: '608f3d0fb5b8884f34890a5e',
+        _id: '608f3d0fb5b8184f34890a50',
         public: true,
-        name: 'Backend Test Group',
+        name: 'Backend Test1',
         invitation: true,
         description: 'this is create group api test.',
         startDate: '2021-01-01',
       },
-      headers: { userid: '608d5450ec00005468607a0c' },
+      headers: { userid: '608d5450ec0005468607a0c' },
     };
     const mRes = {
       status: jest.fn().mockReturnThis(),
@@ -276,13 +276,14 @@ describe('userid in headers should create new group with content in body, add us
     expect(mRes.send).toBeCalledWith({
       status: 'success',
       data: {
+        public: true,
+        invitation: true,
         startDate: '2021-01-01T00:00:00.000Z',
         photos: [],
         discussionTopics: [],
-        _id: '608f3d0fb5b8884f34890a5e',
-        public: true,
-        name: 'Backend Test Group',
-        invitation: true,
+        ageRestriction: false,
+        _id: '608f3d0fb5b8184f34890a50',
+        name: 'Backend Test1',
         description: 'this is create group api test.',
         users: [],
         __v: 0,
