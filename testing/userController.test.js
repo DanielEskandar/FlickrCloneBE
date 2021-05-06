@@ -495,7 +495,7 @@ describe('should retrieve faves by id and send response correctly', () => {
 describe('should add image to faves by id and send response correctly', () => {
   test('add an image to faves of Ahmed Abdulkader', async () => {
     const mReq = {
-      params: { id: '604d5450ec00005468617a0c' },
+      params: { id: '608d5560ec00005468607a0e' },
       headers: { userid: '608d5450ec00005468607a0c' },
     };
     const mRes = {
@@ -508,14 +508,14 @@ describe('should add image to faves by id and send response correctly', () => {
       status: 'success',
       data: {
         newPhotoFaveCount: {
-          favourites: 120,
-          _id: '604d5450ec00005468617a0c',
+          favourites: 8,
+          _id: '608d5560ec00005468607a0e',
         },
         newUserFaveList: {
           favourites: [
             '608d5450ec00005468607a0f',
             '608d5450ec00005468617a0c',
-            '604d5450ec00005468617a0c',
+            '608d5560ec00005468607a0e',
           ],
           _id: '608d5450ec00005468607a0c',
         },
@@ -523,10 +523,10 @@ describe('should add image to faves by id and send response correctly', () => {
     });
   });
 
-  test('add an image to faves of Daniel Eskandar', async () => {
+  test('add an image to faves of Ahmed Abdulkader', async () => {
     const mReq = {
-      params: { id: '604d5450ec00005468617a0c' },
-      headers: { userid: '608d55c7e512b74ee00791db' },
+      params: { id: '608d5560ec00005468607a0e' },
+      headers: { userid: '608d5450ec00005468607a0c' },
     };
     const mRes = {
       status: jest.fn().mockReturnThis(),
@@ -542,7 +542,7 @@ describe('should add image to faves by id and send response correctly', () => {
 
   test('add an image to faves of Daniel Eskandar', async () => {
     const mReq = {
-      params: { id: '608d5450ec00005468607a0f' },
+      params: { id: '608d5560ec00005468607a0e' },
       headers: { userid: '608d55c7e512b74ee00791db' },
     };
     const mRes = {
@@ -555,14 +555,14 @@ describe('should add image to faves by id and send response correctly', () => {
       status: 'success',
       data: {
         newPhotoFaveCount: {
-          favourites: 8,
-          _id: '608d5450ec00005468607a0f',
+          favourites: 9,
+          _id: '608d5560ec00005468607a0e',
         },
         newUserFaveList: {
           favourites: [
             '604d5450ec00005468617a0c',
             '608d5450ec00005468617a0c',
-            '608d5450ec00005468607a0f',
+            '608d5560ec00005468607a0e',
           ],
           _id: '608d55c7e512b74ee00791db',
         },
@@ -575,7 +575,7 @@ describe('should add image to faves by id and send response correctly', () => {
 describe('should remove image from faves by id and send response correctly', () => {
   test('remove image from faves faves of Ahmed Abdulkader', async () => {
     const mReq = {
-      params: { id: '604d5450ec00005468617a0c' },
+      params: { id: '608d5560ec00005468607a0e' },
       headers: { userid: '608d5450ec00005468607a0c' },
     };
     const mRes = {
@@ -588,8 +588,8 @@ describe('should remove image from faves by id and send response correctly', () 
       status: 'success',
       data: {
         newPhotoFaveCount: {
-          favourites: 119,
-          _id: '604d5450ec00005468617a0c',
+          favourites: 8,
+          _id: '608d5560ec00005468607a0e',
         },
         newUserFaveList: {
           favourites: ['608d5450ec00005468607a0f', '608d5450ec00005468617a0c'],
@@ -601,7 +601,7 @@ describe('should remove image from faves by id and send response correctly', () 
 
   test('remove image from faves of Ahmed Abdulkader', async () => {
     const mReq = {
-      params: { id: '604d5450ec00005468617a0c' },
+      params: { id: '608d5560ec00005468607a0e' },
       headers: { userid: '608d5450ec00005468607a0c' },
     };
     const mRes = {
@@ -618,7 +618,7 @@ describe('should remove image from faves by id and send response correctly', () 
 
   test('remove image from faves of Daniel Eskandar', async () => {
     const mReq = {
-      params: { id: '608d5450ec00005468607a0f' },
+      params: { id: '608d5560ec00005468607a0e' },
       headers: { userid: '608d55c7e512b74ee00791db' },
     };
     const mRes = {
@@ -632,7 +632,7 @@ describe('should remove image from faves by id and send response correctly', () 
       data: {
         newPhotoFaveCount: {
           favourites: 7,
-          _id: '608d5450ec00005468607a0f',
+          _id: '608d5560ec00005468607a0e',
         },
         newUserFaveList: {
           favourites: ['604d5450ec00005468617a0c', '608d5450ec00005468617a0c'],
