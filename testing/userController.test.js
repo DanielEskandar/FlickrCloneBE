@@ -642,3 +642,163 @@ describe('should remove image from faves by id and send response correctly', () 
     });
   });
 });
+
+// TESTING: getNotificationSettings
+describe('should retrieve notification settings by id and send response correctly', () => {
+  test('should retrieve notification settings of DanielEskandar', async () => {
+    const mReq = { headers: { userid: '608d55c7e512b74ee00791db' } };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      send: jest.fn().mockReturnThis(),
+    };
+    await userController.getNotificationSettings(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.send).toBeCalledWith({
+      status: 'success',
+      data: {
+        notificationSettings: {
+          notifMail: {
+            invites: true,
+            contact: true,
+            messages: true,
+            reminders: true,
+          },
+          activityMail: {
+            you: true,
+            contacts: true,
+          },
+        },
+      },
+    });
+  });
+
+  test('should retrieve notification settings of AliaaKhalifa', async () => {
+    const mReq = { headers: { userid: '608d55c7e512b74ee00791dc' } };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      send: jest.fn().mockReturnThis(),
+    };
+    await userController.getNotificationSettings(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.send).toBeCalledWith({
+      status: 'success',
+      data: {
+        notificationSettings: {
+          notifMail: {
+            invites: true,
+            contact: true,
+            messages: true,
+            reminders: true,
+          },
+          activityMail: {
+            you: true,
+            contacts: true,
+          },
+        },
+      },
+    });
+  });
+});
+
+// TESTING: getPrivacySettings
+describe('should retrieve privacy settings by id and send response correctly', () => {
+  test('should retrieve privacy settings of DanielEskandar', async () => {
+    const mReq = { headers: { userid: '608d55c7e512b74ee00791db' } };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      send: jest.fn().mockReturnThis(),
+    };
+    await userController.getPrivacySettings(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.send).toBeCalledWith({
+      status: 'success',
+      data: {
+        privacySettings: {
+          global: {
+            infoVisiblity: {
+              email: 2,
+              name: 1,
+              currentCity: 1,
+            },
+            downloadPerm: 1,
+            largestImgSize: 0,
+            allowShare: 1,
+            allowTag: 1,
+            allowGalleryAdd: true,
+            hideEXIF: false,
+            hidePhotoSearch: false,
+            hideProfileSearch: false,
+          },
+          defaults: {
+            perms: {
+              see: 1,
+              comment: 1,
+              addNotes: 2,
+            },
+            license: 0,
+            mapVisible: 1,
+            importEXIF: true,
+            safetyLevel: 1,
+            contentType: 1,
+          },
+          filters: {
+            search: {
+              safeSearch: true,
+              content: 1,
+            },
+          },
+        },
+      },
+    });
+  });
+
+  test('should retrieve privacy settings of AliaaKhalifa', async () => {
+    const mReq = { headers: { userid: '608d55c7e512b74ee00791dc' } };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      send: jest.fn().mockReturnThis(),
+    };
+    await userController.getPrivacySettings(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.send).toBeCalledWith({
+      status: 'success',
+      data: {
+        privacySettings: {
+          global: {
+            infoVisiblity: {
+              email: 2,
+              name: 1,
+              currentCity: 1,
+            },
+            downloadPerm: 1,
+            largestImgSize: 0,
+            allowShare: 1,
+            allowTag: 1,
+            allowGalleryAdd: true,
+            hideEXIF: false,
+            hidePhotoSearch: false,
+            hideProfileSearch: false,
+          },
+          defaults: {
+            perms: {
+              see: 1,
+              comment: 1,
+              addNotes: 2,
+            },
+            license: 0,
+            mapVisible: 1,
+            importEXIF: true,
+            safetyLevel: 1,
+            contentType: 1,
+          },
+          filters: {
+            search: {
+              safeSearch: true,
+              content: 1,
+            },
+          },
+        },
+      },
+    });
+  });
+});
