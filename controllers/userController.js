@@ -291,7 +291,6 @@ exports.removeFave = async (req, res) => {
 
 // GET BLOCKED
 exports.getNotificationSettings = async (req, res) => {
-  console.log('Inside getNotificationsSettings');
   try {
     const notificationSettings = await userModel
       .findById(req.headers.userid)

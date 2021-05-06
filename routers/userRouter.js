@@ -895,22 +895,21 @@ userRouter.patch('/perm');
  * @apiSuccessExample Success-Response:
  *      HTTP/1.1 200 OK
  *      {
- *          "status": "success",
- *          "data":
- *          {
- *              "notifmail":
- *              {
- *                 "invites": 1,
- *                 "contact": 1,
- *                 "messages": 1,
- *                 "reminders": 1
- *              },
- *              "activitymail":
- *              {
- *                  "you": 1,
- *                 "contacts": 1
- *              }
- *          }
+ *         "status": "success",
+ *           "data": {
+ *               "notificationSettings": {
+ *               "notifMail": {
+ *                   "invites": true,
+ *                   "contact": true,
+ *                   "messages": true,
+ *                   "reminders": true
+ *               },
+ *               "activityMail": {
+ *                   "you": true,
+ *                   "contacts": true
+ *               }
+ *            }
+ *         }
  *      }
  *
  *
