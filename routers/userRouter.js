@@ -809,9 +809,9 @@ userRouter.post('/forget-password');
 userRouter.post('/confirm-password');
 
 /**
- * @api {get} /user/perm Get User Permission Settings
+ * @api {get} /user/perm Get User Privacy Settings
  * @apiVersion 1.0.0
- * @apiName GetPermissions
+ * @apiName GetPrivacySettings
  * @apiGroup User
  *
  * @apiHeader {string} Token Authenticaton Token
@@ -823,39 +823,41 @@ userRouter.post('/confirm-password');
  *      {
  *          "status": "success",
  *          "data": {
- *              "global": {
- *                  "whocandownload": "Anyone",
- *                  "largestimgsize": "Best",
- *                  "allowshare": 1,
- *                  "allowtag": "any",
- *                  "allowgallery": 1,
- *                  "hideexif": 0,
- *                  "hidephotopublicsearch": 0,
- *                  "hideprofilepublicsearch": 0,
- *                  "whocansee": {
- *                      "email": "followed",
- *                      "name": "anyone",
- *                      "currentcity": "anyone"
- *                  }
- *              },
- *              "defaults": {
- *                  "perms": {
- *                      "see": "anyone",
- *                      "comment": "anyone",
- *                      "addnotes": "followed"
+ *               "privacySettings": {
+ *               "global": {
+ *                   "infoVisiblity": {
+ *                   "email": 2,
+ *                   "name": 1,
+ *                   "currentCity": 1
+ *                   },
+ *                   "downloadPerm": 1,
+ *                   "largestImgSize": 0,
+ *                   "allowShare": 1,
+ *                   "allowTag": 1,
+ *                   "allowGalleryAdd": true,
+ *                   "hideEXIF": false,
+ *                   "hidePhotoSearch": false,
+ *                   "hideProfileSearch": false
  *                  },
- *                  "license": "All Rights Reserved (c)",
- *                  "mapvisible": "Anyone",
- *                  "importexif": 1,
- *                  "safetylevel": "safe",
- *                  "contenttype": "photos"
- *              },
- *              "filters": {
- *                  "search": {
- *                      "safesearch": 1,
- *                      "content": "photovideo"
+ *                  "defaults": {
+ *                      "perms": {
+ *                      "see": 1,
+ *                      "comment": 1,
+ *                      "addNotes": 2
+ *                      },
+ *                      "license": 0,
+ *                      "mapVisible": 1,
+ *                      "importEXIF": true,
+ *                      "safetyLevel": 1,
+ *                      "contentType": 1
+ *                  },
+ *                  "filters": {
+ *                      "search": {
+ *                      "safeSearch": true,
+ *                      "content": 1
+ *                      }
  *                  }
- *              }
+ *               }
  *          }
  *      }
  *
@@ -863,7 +865,7 @@ userRouter.post('/confirm-password');
  * @apiUse UnauthError
  */
 
-userRouter.get('/perm');
+userRouter.get('/perm', userController.getPrivacySettings);
 
 /**
  * @api {patch} /user/perm Update the User Permission Settings

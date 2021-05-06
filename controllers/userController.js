@@ -289,7 +289,7 @@ exports.removeFave = async (req, res) => {
   }
 };
 
-// GET BLOCKED
+// GET NOTIFICATION SETTINGS
 exports.getNotificationSettings = async (req, res) => {
   try {
     const notificationSettings = await userModel
@@ -299,6 +299,25 @@ exports.getNotificationSettings = async (req, res) => {
     res.status(200).send({
       status: 'success',
       data: JSON.parse(JSON.stringify(notificationSettings)),
+    });
+  } catch (err) {
+    res.status(400).send({
+      status: 'error',
+      message: err,
+    });
+  }
+};
+
+// GET PRIVACY SETTINGS
+exports.getPrivacySettings = async (req, res) => {
+  try {
+    const privacySettings = await userModel
+      .findById(req.headers.userid)
+      .select({ privacySettings: 1, _id: 0 });
+
+    res.status(200).send({
+      status: 'success',
+      data: JSON.parse(JSON.stringify(privacySettings)),
     });
   } catch (err) {
     res.status(400).send({
