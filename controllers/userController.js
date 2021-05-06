@@ -238,7 +238,7 @@ exports.removeFave = async (req, res) => {
     );
 
     if (favePhoto !== undefined) {
-      //Decrease Fave Count on Photo Model
+      // Decrease Fave Count on Photo Model
       const updatedFaveCount = await photoModel
         .findByIdAndUpdate(
           req.params.id,
@@ -285,6 +285,26 @@ exports.removeFave = async (req, res) => {
     res.status(400).send({
       status: 'fail',
       message: 'Bad Request',
+    });
+  }
+};
+
+// GET BLOCKED
+exports.getNotificationSettings = async (req, res) => {
+  console.log('Inside getNotificationsSettings');
+  try {
+    const notificationSettings = await userModel
+      .findById(req.headers.userid)
+      .select({ notificationSettings: 1, _id: 0 });
+
+    res.status(200).send({
+      status: 'success',
+      data: JSON.parse(JSON.stringify(notificationSettings)),
+    });
+  } catch (err) {
+    res.status(400).send({
+      status: 'error',
+      message: err,
     });
   }
 };
