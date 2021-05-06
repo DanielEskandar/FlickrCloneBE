@@ -885,7 +885,7 @@ userRouter.patch('/perm');
 /**
  * @api {get} /user/notif Get User Notification Settings
  * @apiVersion 1.0.0
- * @apiName GetNotifications
+ * @apiName GetNotificationSettings
  * @apiGroup User
  *
  * @apiHeader {string} Token Authenticaton Token
@@ -900,8 +900,8 @@ userRouter.patch('/perm');
  *          {
  *              "notifmail":
  *              {
- *                  "invites": 1,
- *                  "contact": 1,
+ *                 "invites": 1,
+ *                 "contact": 1,
  *                 "messages": 1,
  *                 "reminders": 1
  *              },
@@ -917,7 +917,7 @@ userRouter.patch('/perm');
  * @apiUse UnauthError
  */
 
-userRouter.get('/notif');
+userRouter.get('/notif', userController.getNotificationSettings);
 
 /**
  * @api {patch} /user/notif Update the User Notification Settings

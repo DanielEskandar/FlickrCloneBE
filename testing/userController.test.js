@@ -642,3 +642,60 @@ describe('should remove image from faves by id and send response correctly', () 
     });
   });
 });
+
+// TESTING: getNotificationSettings
+describe('should retrieve notification settings by id and send response correctly', () => {
+  test('should retrieve notification settings of DanielEskandar', async () => {
+    const mReq = { headers: { userid: '608d55c7e512b74ee00791db' } };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      send: jest.fn().mockReturnThis(),
+    };
+    await userController.getNotificationSettings(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.send).toBeCalledWith({
+      status: 'success',
+      data: {
+        notificationSettings: {
+          notifMail: {
+            invites: true,
+            contact: true,
+            messages: true,
+            reminders: true,
+          },
+          activityMail: {
+            you: true,
+            contacts: true,
+          },
+        },
+      },
+    });
+  });
+
+  test('should retrieve notification settings of AliaaKhalifa', async () => {
+    const mReq = { headers: { userid: '608d55c7e512b74ee00791dc' } };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      send: jest.fn().mockReturnThis(),
+    };
+    await userController.getNotificationSettings(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.send).toBeCalledWith({
+      status: 'success',
+      data: {
+        notificationSettings: {
+          notifMail: {
+            invites: true,
+            contact: true,
+            messages: true,
+            reminders: true,
+          },
+          activityMail: {
+            you: true,
+            contacts: true,
+          },
+        },
+      },
+    });
+  });
+});
