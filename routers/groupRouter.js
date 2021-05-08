@@ -87,7 +87,7 @@ const groupRouter = express.Router();
  *
  * @apiUse UnauthError
  */
-groupRouter.post('/', groupController.CreateGroup);
+groupRouter.post('/');
 
 /**
  * @api {delete} /group/:id Admin deletes a group

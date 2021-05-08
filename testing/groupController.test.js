@@ -184,7 +184,6 @@ describe('should create new discussion with id 608f3d0fb5998b4f34890a5e in group
         content: 'i want fresh mango',
         date: '2020-02-02',
       },
-      headers: { id: '608d5450ec00005468607a0c' },
     };
     const mRes = {
       status: jest.fn().mockReturnThis(),
@@ -249,46 +248,6 @@ describe('should delete discussion with id 608f6e7519953b27004f6dab ', () => {
     expect(mRes.send).toBeCalledWith({
       status: 'success',
       data: null,
-    });
-  });
-});
-
-//TESTING CREATE GROUP
-describe('userid in headers should create new group with content in body, add userid as member and set as admin', () => {
-  test('', async () => {
-    const mReq = {
-      params: {},
-      body: {
-        _id: '608f3d0fb5b8184f34890a50',
-        public: true,
-        name: 'Backend Test1',
-        invitation: true,
-        description: 'this is create group api test.',
-        startDate: '2021-01-01',
-      },
-      headers: { userid: '608d5450ec00005468607a0c' },
-    };
-    const mRes = {
-      status: jest.fn().mockReturnThis(),
-      send: jest.fn().mockReturnThis(),
-    };
-    await groupController.CreateGroup(mReq, mRes);
-    expect(mRes.status).toBeCalledWith(200);
-    expect(mRes.send).toBeCalledWith({
-      status: 'success',
-      data: {
-        public: true,
-        invitation: true,
-        startDate: '2021-01-01T00:00:00.000Z',
-        photos: [],
-        discussionTopics: [],
-        ageRestriction: false,
-        _id: '608f3d0fb5b8184f34890a50',
-        name: 'Backend Test1',
-        description: 'this is create group api test.',
-        users: [],
-        __v: 0,
-      },
     });
   });
 });

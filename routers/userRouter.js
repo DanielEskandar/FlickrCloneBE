@@ -809,9 +809,9 @@ userRouter.post('/forget-password');
 userRouter.post('/confirm-password');
 
 /**
- * @api {get} /user/perm Get User Privacy Settings
+ * @api {get} /user/perm Get User Permission Settings
  * @apiVersion 1.0.0
- * @apiName GetPrivacySettings
+ * @apiName GetPermissions
  * @apiGroup User
  *
  * @apiHeader {string} Token Authenticaton Token
@@ -823,41 +823,39 @@ userRouter.post('/confirm-password');
  *      {
  *          "status": "success",
  *          "data": {
- *               "privacySettings": {
- *               "global": {
- *                   "infoVisiblity": {
- *                   "email": 2,
- *                   "name": 1,
- *                   "currentCity": 1
- *                   },
- *                   "downloadPerm": 1,
- *                   "largestImgSize": 0,
- *                   "allowShare": 1,
- *                   "allowTag": 1,
- *                   "allowGalleryAdd": true,
- *                   "hideEXIF": false,
- *                   "hidePhotoSearch": false,
- *                   "hideProfileSearch": false
- *                  },
- *                  "defaults": {
- *                      "perms": {
- *                      "see": 1,
- *                      "comment": 1,
- *                      "addNotes": 2
- *                      },
- *                      "license": 0,
- *                      "mapVisible": 1,
- *                      "importEXIF": true,
- *                      "safetyLevel": 1,
- *                      "contentType": 1
- *                  },
- *                  "filters": {
- *                      "search": {
- *                      "safeSearch": true,
- *                      "content": 1
- *                      }
+ *              "global": {
+ *                  "whocandownload": "Anyone",
+ *                  "largestimgsize": "Best",
+ *                  "allowshare": 1,
+ *                  "allowtag": "any",
+ *                  "allowgallery": 1,
+ *                  "hideexif": 0,
+ *                  "hidephotopublicsearch": 0,
+ *                  "hideprofilepublicsearch": 0,
+ *                  "whocansee": {
+ *                      "email": "followed",
+ *                      "name": "anyone",
+ *                      "currentcity": "anyone"
  *                  }
- *               }
+ *              },
+ *              "defaults": {
+ *                  "perms": {
+ *                      "see": "anyone",
+ *                      "comment": "anyone",
+ *                      "addnotes": "followed"
+ *                  },
+ *                  "license": "All Rights Reserved (c)",
+ *                  "mapvisible": "Anyone",
+ *                  "importexif": 1,
+ *                  "safetylevel": "safe",
+ *                  "contenttype": "photos"
+ *              },
+ *              "filters": {
+ *                  "search": {
+ *                      "safesearch": 1,
+ *                      "content": "photovideo"
+ *                  }
+ *              }
  *          }
  *      }
  *
@@ -865,7 +863,7 @@ userRouter.post('/confirm-password');
  * @apiUse UnauthError
  */
 
-userRouter.get('/perm', userController.getPrivacySettings);
+userRouter.get('/perm');
 
 /**
  * @api {patch} /user/perm Update the User Permission Settings
@@ -887,7 +885,7 @@ userRouter.patch('/perm');
 /**
  * @api {get} /user/notif Get User Notification Settings
  * @apiVersion 1.0.0
- * @apiName GetNotificationSettings
+ * @apiName GetNotifications
  * @apiGroup User
  *
  * @apiHeader {string} Token Authenticaton Token
@@ -897,28 +895,29 @@ userRouter.patch('/perm');
  * @apiSuccessExample Success-Response:
  *      HTTP/1.1 200 OK
  *      {
- *         "status": "success",
- *           "data": {
- *               "notificationSettings": {
- *               "notifMail": {
- *                   "invites": true,
- *                   "contact": true,
- *                   "messages": true,
- *                   "reminders": true
- *               },
- *               "activityMail": {
- *                   "you": true,
- *                   "contacts": true
- *               }
- *            }
- *         }
+ *          "status": "success",
+ *          "data":
+ *          {
+ *              "notifmail":
+ *              {
+ *                  "invites": 1,
+ *                  "contact": 1,
+ *                 "messages": 1,
+ *                 "reminders": 1
+ *              },
+ *              "activitymail":
+ *              {
+ *                  "you": 1,
+ *                 "contacts": 1
+ *              }
+ *          }
  *      }
  *
  *
  * @apiUse UnauthError
  */
 
-userRouter.get('/notif', userController.getNotificationSettings);
+userRouter.get('/notif');
 
 /**
  * @api {patch} /user/notif Update the User Notification Settings
