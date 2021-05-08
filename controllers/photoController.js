@@ -159,7 +159,7 @@ exports.getComments = async (req, res) => {
   }
 };
 
-//GTE SIZES
+//GET SIZES
 exports.getSizes = async (req, res) => {
   try {
     const sizes = await photoModel
