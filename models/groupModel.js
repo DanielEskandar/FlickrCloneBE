@@ -4,14 +4,14 @@ const mongoose = require('mongoose');
 
 // CREATE SCHEMA
 const groupSchema = new mongoose.Schema({
-  public: { type: Boolean, default: false },
+  public: Boolean,
   name: {
     type: String,
     required: [true, 'A group must have a name'],
     unique: [true, 'A group with this name already exists'],
     maxlength: [20, 'Group name should be less than 20 characters'],
   },
-  invitation: { type: Boolean, default: false },
+  invitation: Boolean,
   description: { type: String, trim: true },
   users: [
     {
@@ -30,19 +30,17 @@ const groupSchema = new mongoose.Schema({
   photos: [mongoose.Schema.ObjectId],
   discussionTopics: {
     type: [mongoose.Schema.ObjectId],
-    /* validate: function () {
-      //if pinnedThread exists, must be in discussionTopics array
-      if (
-        this.discussionTopics.length === 0 &&
-        this.pinnedThread.ObjectId === undefined
-      )
-        return true;
-    },*/
+    //validate: function () {
+    //const id = this.discussionTopics.find(
+    //(elem) => elem.ObjectId.toString() === this.pinnedThread.ObjectId.toString()
+    //);
+
+    // },
   },
   pinnedThread: {
     type: mongoose.Schema.ObjectId,
   },
-  ageRestriction: { type: Boolean, default: false },
+  ageRestriction: Boolean,
 });
 
 // CREATE MODEL
