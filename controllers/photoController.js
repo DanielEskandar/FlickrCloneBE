@@ -55,7 +55,7 @@ exports.addComment = async (req, res) => {
     }
     const newComment = await commentModel.create(req.body);
     newComment._id = req.body.commentid;
-    const addToPhoto = await photoModel.findByIdAndUpdate(
+    await photoModel.findByIdAndUpdate(
       req.params.id,
       {
         $push: { comments: newComment._id },
@@ -125,6 +125,7 @@ exports.deleteComment = async (req, res) => {
       await commentModel.findByIdAndDelete(req.params.commentid);
       res.status(204).send({
         status: 'success',
+        data: 'deleted',
       });
     } else {
       res.status(404).send({
@@ -149,6 +150,24 @@ exports.getComments = async (req, res) => {
     res.status(200).send({
       status: 'success',
       data: JSON.parse(JSON.stringify(comments)),
+    });
+  } catch (err) {
+    res.status(400).send({
+      status: 'error',
+      message: err,
+    });
+  }
+};
+
+//GET SIZES
+exports.getSizes = async (req, res) => {
+  try {
+    const sizes = await photoModel
+      .findById(req.params.id)
+      .select({ sizes: 1, _id: 0 });
+    res.status(200).send({
+      status: 'success',
+      data: JSON.parse(JSON.stringify(sizes)),
     });
   } catch (err) {
     res.status(400).send({
