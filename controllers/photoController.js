@@ -55,7 +55,7 @@ exports.addComment = async (req, res) => {
     }
     const newComment = await commentModel.create(req.body);
     newComment._id = req.body.commentid;
-    const addToPhoto = await photoModel.findByIdAndUpdate(
+    await photoModel.findByIdAndUpdate(
       req.params.id,
       {
         $push: { comments: newComment._id },
