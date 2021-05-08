@@ -329,39 +329,66 @@ describe('should add comments on a photo', () => {
   });
 });
 
-// describe('should add comments on a photo', () => {
-//   test('should retrieve information about new comment', async () => {
-//     const mReq = {
-//       params: { id: '608d5450ec00005468607a0f' },
-//       body: {
-//         body: 'Unit testing2',
-//         userId: '608d55c7e512b74ee00791db',
-//         date: '2012-12-04T14:07:48.071Z',
-//         commentid: '508d5450ec00005468607a0f',
-//       },
-//     };
-//     const mRes = {
-//       status: jest.fn().mockReturnThis(),
-//       send: jest.fn().mockReturnThis(),
-//     };
-//     await photoController.addComment(mReq, mRes);
-//     expect(mRes.status).toBeCalledWith(200);
-//     expect(mRes.send).toBeCalledWith({
-//       status: 'success',
-//       data: {
-//         _id: '508d5450ec00005468607a0f',
-//         body: 'Unit testing add comment',
-//         userId: '608d55c7e512b74ee00791db',
-//         date: '2012-12-04T14:07:48.071Z',
-//         __v: 0,
-//       },
-//     });
-//   });
-// });
+describe('should add comments on a photo', () => {
+  test('should retrieve information about new comment', async () => {
+    const mReq = {
+      params: { id: '604d5450ec00005468617a0c' },
+      body: {
+        body: 'Comment to add by photo testing',
+        userId: '608d55c7e512b74ee00791db',
+        date: '2021-05-04T14:07:48.071Z',
+        commentid: '508d55c7e512b74ee00791db',
+      },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      send: jest.fn().mockReturnThis(),
+    };
+    await photoController.addComment(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.send).toBeCalledWith({
+      status: 'success',
+      data: {
+        _id: '508d55c7e512b74ee00791db',
+        body: 'Comment to add by photo testing',
+        userId: '608d55c7e512b74ee00791db',
+        date: '2021-05-04T14:07:48.071Z',
+        __v: 0,
+      },
+    });
+  });
+});
 
 // EDIT COMMENT
 describe('should edit comments on a photo', () => {
-  test('should comment on comment 6001c346c555f920e111f205', async () => {
+  test('should edit comment 6090c346c555f920e121f205', async () => {
+    const mReq = {
+      params: { id: '6090c346c555f920e121f205' },
+      body: {
+        body: 'Nice angle, edit comment test',
+      },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      send: jest.fn().mockReturnThis(),
+    };
+    await photoController.editComment(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.send).toBeCalledWith({
+      status: 'success',
+      data: {
+        _id: '6090c346c555f920e121f205',
+        body: 'Nice angle, edit comment test',
+        date: '2021-12-04T14:07:48.071Z',
+        userId: '608d55c7e512b74ee00791db',
+        __v: 0,
+      },
+    });
+  });
+});
+
+describe('should edit comments on a photo', () => {
+  test('should edit comment 6001c346c555f920e111f205', async () => {
     const mReq = {
       params: { id: '6001c346c555f920e111f205' },
       body: {
@@ -389,25 +416,187 @@ describe('should edit comments on a photo', () => {
 
 // TESTING DELETE COMMENT
 describe('should delete a comment', () => {
-  test('should comment on comment 608d5450ec00005468617a0c', async () => {
+  test('should delete comment on 604d5450ec01005468617a04 with ID 6091c557d6c7ec6b48c51e60', async () => {
     const mReq = {
       params: {
-        id: '608d5450ec00005468617a0c',
-        commentid: '6090acefc4cc491a7cf8b47c',
-      },
-      body: {
-        body: 'Edited successfully',
+        id: '604d5450ec01005468617a04',
+        commentid: '6091c557d6c7ec6b48c51e60',
       },
     };
     const mRes = {
       status: jest.fn().mockReturnThis(),
       send: jest.fn().mockReturnThis(),
     };
-    await photoController.editComment(mReq, mRes);
+    await photoController.deleteComment(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(204);
+    expect(mRes.send).toBeCalledWith({
+      status: 'success',
+      data: 'deleted',
+    });
+  });
+});
+
+//TESTING GET SIZES
+describe('should retrieve all sizes of a photo', () => {
+  test('should retrieve sizes of photo 608d5450ec00005468607a0f', async () => {
+    const mReq = { params: { id: '608d5450ec00005468607a0f' } };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      send: jest.fn().mockReturnThis(),
+    };
+    await photoController.getSizes(mReq, mRes);
     expect(mRes.status).toBeCalledWith(200);
     expect(mRes.send).toBeCalledWith({
       status: 'success',
-      data: null,
+      data: {
+        sizes: {
+          size: {
+            original: {
+              height: 120,
+              width: 60,
+              source: 'https://www.google.com/',
+              url: 'https://www.google.com/',
+            },
+            large: {
+              height: 190,
+              width: 20,
+              source: 'https://www.google.com/',
+              url: 'https://www.google.com/',
+            },
+            medium800: {
+              height: 200,
+              width: 60,
+              source: 'https://www.google.com/',
+              url: 'https://www.google.com/',
+            },
+            medium640: {
+              height: 1200,
+              width: 60,
+              source: 'https://www.google.com/',
+              url: 'https://www.google.com/',
+            },
+            medium: {
+              height: 120,
+              width: 600,
+              source: 'https://www.google.com/',
+              url: 'https://www.google.com/',
+            },
+            small320: {
+              height: 12,
+              width: 60,
+              source: 'https://www.google.com/',
+              url: 'https://www.google.com/',
+            },
+            small: {
+              height: 1000,
+              width: 60,
+              source: 'https://www.google.com/',
+              url: 'https://www.google.com/',
+            },
+            thumbnail: {
+              height: 50,
+              width: 50,
+              source: 'https://www.google.com/',
+              url: 'https://www.google.com/',
+            },
+            largeSquare: {
+              height: 120,
+              width: 120,
+              source: 'https://www.google.com/',
+              url: 'https://www.google.com/',
+            },
+            square: {
+              height: 60,
+              width: 60,
+              source: 'https://www.google.com/',
+              url: 'https://www.google.com/',
+            },
+          },
+          canDownload: false,
+        },
+      },
+    });
+  });
+});
+
+describe('should retrieve all sizes of a photo', () => {
+  test('should retrieve sizes of photo 608d5450ec00005468607a0f', async () => {
+    const mReq = { params: { id: '608d5450ec00005468607a0f' } };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      send: jest.fn().mockReturnThis(),
+    };
+    await photoController.getSizes(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.send).toBeCalledWith({
+      status: 'success',
+      data: {
+        sizes: {
+          size: {
+            original: {
+              height: 120,
+              width: 60,
+              source: 'https://www.google.com/',
+              url: 'https://www.google.com/',
+            },
+            large: {
+              height: 190,
+              width: 20,
+              source: 'https://www.google.com/',
+              url: 'https://www.google.com/',
+            },
+            medium800: {
+              height: 200,
+              width: 60,
+              source: 'https://www.google.com/',
+              url: 'https://www.google.com/',
+            },
+            medium640: {
+              height: 1200,
+              width: 60,
+              source: 'https://www.google.com/',
+              url: 'https://www.google.com/',
+            },
+            medium: {
+              height: 120,
+              width: 600,
+              source: 'https://www.google.com/',
+              url: 'https://www.google.com/',
+            },
+            small320: {
+              height: 12,
+              width: 60,
+              source: 'https://www.google.com/',
+              url: 'https://www.google.com/',
+            },
+            small: {
+              height: 1000,
+              width: 60,
+              source: 'https://www.google.com/',
+              url: 'https://www.google.com/',
+            },
+            thumbnail: {
+              height: 50,
+              width: 50,
+              source: 'https://www.google.com/',
+              url: 'https://www.google.com/',
+            },
+            largeSquare: {
+              height: 120,
+              width: 120,
+              source: 'https://www.google.com/',
+              url: 'https://www.google.com/',
+            },
+            square: {
+              height: 60,
+              width: 60,
+              source: 'https://www.google.com/',
+              url: 'https://www.google.com/',
+            },
+          },
+          canDownload: false,
+        },
+      },
     });
   });
 });
