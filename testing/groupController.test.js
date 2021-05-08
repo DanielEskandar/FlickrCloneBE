@@ -184,6 +184,7 @@ describe('should create new discussion with id 608f3d0fb5998b4f34890a5e in group
         content: 'i want fresh mango',
         date: '2020-02-02',
       },
+      headers: { id: '608d5450ec00005468607a0c' },
     };
     const mRes = {
       status: jest.fn().mockReturnThis(),
@@ -265,7 +266,7 @@ describe('userid in headers should create new group with content in body, add us
         description: 'this is create group api test.',
         startDate: '2021-01-01',
       },
-      headers: { userid: '608d5450ec0005468607a0c' },
+      headers: { userid: '608d5450ec00005468607a0c' },
     };
     const mRes = {
       status: jest.fn().mockReturnThis(),

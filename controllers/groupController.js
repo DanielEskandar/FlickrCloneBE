@@ -155,7 +155,6 @@ exports.getDiscussion = async (req, res) => {
 exports.createDiscussion = async (req, res) => {
   try {
     const newDiscussion = await discModel.create(req.body); //create new discussion instance
-
     await groupModel.findByIdAndUpdate(
       req.params.id,
       {
@@ -177,11 +176,13 @@ exports.createDiscussion = async (req, res) => {
     });
   }
 };
+
 //EDIT A DISCUSSION
 exports.EditDiscussion = async (req, res) => {
   try {
     //if discussion doesnt exist, end
-    if ((await discModel.findById(req.params.id)) === null) {
+    const disc = await discModel.findById(req.params.id);
+    if (disc === null) {
       res.status(400).send({
         status: 'error',
         message: 'discussion doesnt exist',
@@ -204,18 +205,16 @@ exports.EditDiscussion = async (req, res) => {
     });
   }
 };
+
 //CREATE NEW GROUP
 exports.CreateGroup = async (req, res) => {
   try {
     const admin = await userModel.findById(req.headers.userid); //group creator
-    // console.log(admin);
     const newGroup = await groupModel.create(req.body); //create instance of groupModel
-    console.log(req.body);
     //add group creator and set as admin
     await groupModel.findByIdAndUpdate(newGroup._id, {
       $push: { users: admin, $set: { admin: true } },
     });
-    console.log(newGroup);
     res.status(200).send({
       status: 'success',
       data: JSON.parse(JSON.stringify(newGroup)),
