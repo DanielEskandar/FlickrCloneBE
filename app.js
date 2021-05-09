@@ -22,5 +22,13 @@ app.use('/photo', photoRouter);
 app.use('/gallery', galleryRouter);
 app.use('/photoset', albumRouter);
 app.use('/group', groupRouter);
+
+app.all('*', (req, res) => {
+  res.status(404).json({
+    status: 'fail',
+    message: `Cannot find ${req.originalUrl} on the server`,
+  });
+});
+
 // EXPORT APP
 module.exports = app;
