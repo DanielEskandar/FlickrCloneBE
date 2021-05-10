@@ -1,4 +1,4 @@
-module.exports = (err, req, res, next) => {
+exports.sendError = (err, req, res) => {
   err.statusCode = err.statusCode || 500;
   err.status = err.status || 'error';
 

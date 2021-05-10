@@ -2,6 +2,10 @@
 const userModel = require('../models/userModel.js');
 const photoModel = require('../models/photoModel');
 
+// INCLUDE ERROR CLASS AND ERROR CONTROLLER
+const AppError = require('../utils/appError.js');
+const errorController = require('./errorController.js');
+
 // GET REAL NAME
 exports.getRealName = async (req, res) => {
   try {
@@ -9,15 +13,16 @@ exports.getRealName = async (req, res) => {
       .findById(req.headers.userid)
       .select({ firstName: 1, lastName: 1, _id: 0 });
 
-    res.status(200).send({
+    if (!realName) {
+      throw new AppError('No user is found by that ID', 404);
+    }
+
+    res.status(200).json({
       status: 'success',
-      data: realName.toJSON(),
+      data: JSON.parse(JSON.stringify(realName)),
     });
   } catch (err) {
-    res.status(400).send({
-      status: 'error',
-      message: err,
-    });
+    errorController.sendError(err, req, res);
   }
 };
 
@@ -28,15 +33,16 @@ exports.getDispName = async (req, res) => {
       .findById(req.headers.userid)
       .select({ displayName: 1, _id: 0 });
 
-    res.status(200).send({
+    if (!dispName) {
+      throw new AppError('No user is found by that ID', 404);
+    }
+
+    res.status(200).json({
       status: 'success',
-      data: dispName.toJSON(),
+      data: JSON.parse(JSON.stringify(dispName)),
     });
   } catch (err) {
-    res.status(400).send({
-      status: 'error',
-      message: err,
-    });
+    errorController.sendError(err, req, res);
   }
 };
 
@@ -53,15 +59,16 @@ exports.getUserInfo = async (req, res) => {
       _id: 0,
     });
 
-    res.status(200).send({
+    if (!userInfo) {
+      throw new AppError('No user is found by that ID', 404);
+    }
+
+    res.status(200).json({
       status: 'success',
-      data: userInfo.toJSON(),
+      data: JSON.parse(JSON.stringify(userInfo)),
     });
   } catch (err) {
-    res.status(404).send({
-      status: 'error',
-      message: 'No user is found by that user ID',
-    });
+    errorController.sendError(err, req, res);
   }
 };
 
@@ -72,15 +79,16 @@ exports.getLimits = async (req, res) => {
       .findById(req.headers.userid)
       .select({ limits: 1, _id: 0 });
 
-    res.status(200).send({
+    if (!limits) {
+      throw new AppError('No user is found by that ID', 404);
+    }
+
+    res.status(200).json({
       status: 'success',
-      data: limits.toJSON(),
+      data: JSON.parse(JSON.stringify(limits)),
     });
   } catch (err) {
-    res.status(400).send({
-      status: 'error',
-      message: err,
-    });
+    errorController.sendError(err, req, res);
   }
 };
 
@@ -92,16 +100,17 @@ exports.getFollowing = async (req, res) => {
       .select({ following: 1 })
       .populate('following.user', 'displayName firstName lastName');
 
-    res.status(200).send({
+    if (!following) {
+      throw new AppError('No user is found by that ID', 404);
+    }
+
+    res.status(200).json({
       status: 'success',
       count: following.following.length,
       data: JSON.parse(JSON.stringify(following)),
     });
   } catch (err) {
-    res.status(404).send({
-      status: 'error',
-      message: 'No user is found by that user ID',
-    });
+    errorController.sendError(err, req, res);
   }
 };
 
@@ -112,16 +121,18 @@ exports.getBlocked = async (req, res) => {
       .findById(req.headers.userid)
       .select({ blocked: 1 })
       .populate('blocked', 'displayName firstName lastName');
-    res.status(200).send({
+
+    if (!blocked) {
+      throw new AppError('No user is found by that ID', 404);
+    }
+
+    res.status(200).json({
       status: 'success',
       count: blocked.blocked.length,
       data: JSON.parse(JSON.stringify(blocked)),
     });
   } catch (err) {
-    res.status(400).send({
-      status: 'error',
-      message: err,
-    });
+    errorController.sendError(err, req, res);
   }
 };
 
@@ -296,15 +307,16 @@ exports.getNotificationSettings = async (req, res) => {
       .findById(req.headers.userid)
       .select({ notificationSettings: 1, _id: 0 });
 
-    res.status(200).send({
+    if (!notificationSettings) {
+      throw new AppError('No user is found by that ID', 404);
+    }
+
+    res.status(200).json({
       status: 'success',
       data: JSON.parse(JSON.stringify(notificationSettings)),
     });
   } catch (err) {
-    res.status(400).send({
-      status: 'error',
-      message: err,
-    });
+    errorController.sendError(err, req, res);
   }
 };
 
@@ -315,14 +327,15 @@ exports.getPrivacySettings = async (req, res) => {
       .findById(req.headers.userid)
       .select({ privacySettings: 1, _id: 0 });
 
-    res.status(200).send({
+    if (!privacySettings) {
+      throw new AppError('No user is found by that ID', 404);
+    }
+
+    res.status(200).json({
       status: 'success',
       data: JSON.parse(JSON.stringify(privacySettings)),
     });
   } catch (err) {
-    res.status(400).send({
-      status: 'error',
-      message: err,
-    });
+    errorController.sendError(err, req, res);
   }
 };

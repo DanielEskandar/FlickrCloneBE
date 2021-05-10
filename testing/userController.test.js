@@ -10,11 +10,11 @@ describe('should retrieve display name by id and send response correctly', () =>
     const mReq = { headers: { userid: '608d55c7e512b74ee00791db' } };
     const mRes = {
       status: jest.fn().mockReturnThis(),
-      send: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
     };
     await userController.getDispName(mReq, mRes);
     expect(mRes.status).toBeCalledWith(200);
-    expect(mRes.send).toBeCalledWith({
+    expect(mRes.json).toBeCalledWith({
       status: 'success',
       data: {
         displayName: 'DanielEskandar',
@@ -26,11 +26,11 @@ describe('should retrieve display name by id and send response correctly', () =>
     const mReq = { headers: { userid: '608d55c7e512b74ee00791dc' } };
     const mRes = {
       status: jest.fn().mockReturnThis(),
-      send: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
     };
     await userController.getDispName(mReq, mRes);
     expect(mRes.status).toBeCalledWith(200);
-    expect(mRes.send).toBeCalledWith({
+    expect(mRes.json).toBeCalledWith({
       status: 'success',
       data: {
         displayName: 'AliaaKhalifa',
@@ -49,11 +49,11 @@ describe('should retrieve real name by id and send response correctly', () => {
     };
     const mRes = {
       status: jest.fn().mockReturnThis(),
-      send: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
     };
     await userController.getRealName(mReq, mRes);
     expect(mRes.status).toBeCalledWith(200);
-    expect(mRes.send).toBeCalledWith({
+    expect(mRes.json).toBeCalledWith({
       status: 'success',
       data: {
         firstName: 'Ahmed',
@@ -70,11 +70,11 @@ describe('should retrieve real name by id and send response correctly', () => {
     };
     const mRes = {
       status: jest.fn().mockReturnThis(),
-      send: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
     };
     await userController.getRealName(mReq, mRes);
     expect(mRes.status).toBeCalledWith(200);
-    expect(mRes.send).toBeCalledWith({
+    expect(mRes.json).toBeCalledWith({
       status: 'success',
       data: {
         firstName: 'Mariam',
@@ -94,11 +94,11 @@ describe('should retrieve user info by id and send response correctly', () => {
     };
     const mRes = {
       status: jest.fn().mockReturnThis(),
-      send: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
     };
     await userController.getUserInfo(mReq, mRes);
     expect(mRes.status).toBeCalledWith(200);
-    expect(mRes.send).toBeCalledWith({
+    expect(mRes.json).toBeCalledWith({
       status: 'success',
       data: {
         email: 'ahmedkader99@mailserver.com',
@@ -106,7 +106,7 @@ describe('should retrieve user info by id and send response correctly', () => {
         hometown: 'Beverly Hills',
         currentCity: 'California',
         country: 'United States',
-        joinDate: new Date('2015-10-07T06:09:54.000Z'),
+        joinDate: '2015-10-07T06:09:54.000Z',
       },
     });
   });
@@ -119,11 +119,11 @@ describe('should retrieve user info by id and send response correctly', () => {
     };
     const mRes = {
       status: jest.fn().mockReturnThis(),
-      send: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
     };
     await userController.getUserInfo(mReq, mRes);
     expect(mRes.status).toBeCalledWith(200);
-    expect(mRes.send).toBeCalledWith({
+    expect(mRes.json).toBeCalledWith({
       status: 'success',
       data: {
         email: 'daniel_eskandar99@mailserver.com',
@@ -131,7 +131,7 @@ describe('should retrieve user info by id and send response correctly', () => {
         hometown: 'Ile de France',
         currentCity: 'Paris',
         country: 'France',
-        joinDate: new Date('2020-11-03T06:10:45.000Z'),
+        joinDate: '2020-11-03T06:10:45.000Z',
       },
     });
   });
@@ -139,18 +139,18 @@ describe('should retrieve user info by id and send response correctly', () => {
   test('should send user not found error', async () => {
     const mReq = {
       params: {
-        id: '608d55c7e512b74ee0',
+        id: '608d55c7e512b74ee00791df',
       },
     };
     const mRes = {
       status: jest.fn().mockReturnThis(),
-      send: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
     };
     await userController.getUserInfo(mReq, mRes);
     expect(mRes.status).toBeCalledWith(404);
-    expect(mRes.send).toBeCalledWith({
+    expect(mRes.json).toBeCalledWith({
       status: 'error',
-      message: 'No user is found by that user ID',
+      message: 'No user is found by that ID',
     });
   });
 });
@@ -161,11 +161,11 @@ describe('should retrieve limits by id and send response correctly', () => {
     const mReq = { headers: { userid: '608d55c7e512b74ee00791db' } };
     const mRes = {
       status: jest.fn().mockReturnThis(),
-      send: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
     };
     await userController.getLimits(mReq, mRes);
     expect(mRes.status).toBeCalledWith(200);
-    expect(mRes.send).toBeCalledWith({
+    expect(mRes.json).toBeCalledWith({
       status: 'success',
       data: {
         limits: {
@@ -186,11 +186,11 @@ describe('should retrieve limits by id and send response correctly', () => {
     const mReq = { headers: { userid: '608d55c7e512b74ee00791dc' } };
     const mRes = {
       status: jest.fn().mockReturnThis(),
-      send: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
     };
     await userController.getLimits(mReq, mRes);
     expect(mRes.status).toBeCalledWith(200);
-    expect(mRes.send).toBeCalledWith({
+    expect(mRes.json).toBeCalledWith({
       status: 'success',
       data: {
         limits: {
@@ -214,11 +214,11 @@ describe('should retrieve following list of a user and send response correctly',
     const mReq = { params: { id: '608d55c7e512b74ee00791de' } };
     const mRes = {
       status: jest.fn().mockReturnThis(),
-      send: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
     };
     await userController.getFollowing(mReq, mRes);
     expect(mRes.status).toBeCalledWith(200);
-    expect(mRes.send).toBeCalledWith({
+    expect(mRes.json).toBeCalledWith({
       status: 'success',
       count: 4,
       data: {
@@ -277,11 +277,11 @@ describe('should retrieve following list of a user and send response correctly',
     const mReq = { params: { id: '608d5450ec00005468607a0c' } };
     const mRes = {
       status: jest.fn().mockReturnThis(),
-      send: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
     };
     await userController.getFollowing(mReq, mRes);
     expect(mRes.status).toBeCalledWith(200);
-    expect(mRes.send).toBeCalledWith({
+    expect(mRes.json).toBeCalledWith({
       status: 'success',
       count: 1,
       data: {
@@ -304,16 +304,16 @@ describe('should retrieve following list of a user and send response correctly',
   });
 
   test('should send user not found error', async () => {
-    const mReq = { params: { id: '608d5450ec00005468607a' } };
+    const mReq = { params: { id: '608d55c7e512b74ee00791df' } };
     const mRes = {
       status: jest.fn().mockReturnThis(),
-      send: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
     };
     await userController.getFollowing(mReq, mRes);
     expect(mRes.status).toBeCalledWith(404);
-    expect(mRes.send).toBeCalledWith({
+    expect(mRes.json).toBeCalledWith({
       status: 'error',
-      message: 'No user is found by that user ID',
+      message: 'No user is found by that ID',
     });
   });
 });
@@ -324,11 +324,11 @@ describe('should retrieve blocked list of a user and send response correctly', (
     const mReq = { headers: { userid: '608d55c7e512b74ee00791db' } };
     const mRes = {
       status: jest.fn().mockReturnThis(),
-      send: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
     };
     await userController.getBlocked(mReq, mRes);
     expect(mRes.status).toBeCalledWith(200);
-    expect(mRes.send).toBeCalledWith({
+    expect(mRes.json).toBeCalledWith({
       status: 'success',
       count: 2,
       data: {
@@ -355,11 +355,11 @@ describe('should retrieve blocked list of a user and send response correctly', (
     const mReq = { headers: { userid: '608d55c7e512b74ee00791dc' } };
     const mRes = {
       status: jest.fn().mockReturnThis(),
-      send: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
     };
     await userController.getBlocked(mReq, mRes);
     expect(mRes.status).toBeCalledWith(200);
-    expect(mRes.send).toBeCalledWith({
+    expect(mRes.json).toBeCalledWith({
       status: 'success',
       count: 0,
       data: {
@@ -649,11 +649,11 @@ describe('should retrieve notification settings by id and send response correctl
     const mReq = { headers: { userid: '608d55c7e512b74ee00791db' } };
     const mRes = {
       status: jest.fn().mockReturnThis(),
-      send: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
     };
     await userController.getNotificationSettings(mReq, mRes);
     expect(mRes.status).toBeCalledWith(200);
-    expect(mRes.send).toBeCalledWith({
+    expect(mRes.json).toBeCalledWith({
       status: 'success',
       data: {
         notificationSettings: {
@@ -676,11 +676,11 @@ describe('should retrieve notification settings by id and send response correctl
     const mReq = { headers: { userid: '608d55c7e512b74ee00791dc' } };
     const mRes = {
       status: jest.fn().mockReturnThis(),
-      send: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
     };
     await userController.getNotificationSettings(mReq, mRes);
     expect(mRes.status).toBeCalledWith(200);
-    expect(mRes.send).toBeCalledWith({
+    expect(mRes.json).toBeCalledWith({
       status: 'success',
       data: {
         notificationSettings: {
@@ -706,11 +706,11 @@ describe('should retrieve privacy settings by id and send response correctly', (
     const mReq = { headers: { userid: '608d55c7e512b74ee00791db' } };
     const mRes = {
       status: jest.fn().mockReturnThis(),
-      send: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
     };
     await userController.getPrivacySettings(mReq, mRes);
     expect(mRes.status).toBeCalledWith(200);
-    expect(mRes.send).toBeCalledWith({
+    expect(mRes.json).toBeCalledWith({
       status: 'success',
       data: {
         privacySettings: {
@@ -756,11 +756,11 @@ describe('should retrieve privacy settings by id and send response correctly', (
     const mReq = { headers: { userid: '608d55c7e512b74ee00791dc' } };
     const mRes = {
       status: jest.fn().mockReturnThis(),
-      send: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
     };
     await userController.getPrivacySettings(mReq, mRes);
     expect(mRes.status).toBeCalledWith(200);
-    expect(mRes.send).toBeCalledWith({
+    expect(mRes.json).toBeCalledWith({
       status: 'success',
       data: {
         privacySettings: {
