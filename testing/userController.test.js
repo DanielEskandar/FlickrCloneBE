@@ -2,7 +2,7 @@
 const userController = require('../controllers/userController.js');
 
 // INCLUDE COMMON TEST HEADERS
-const headers = require('./testcommons.js');
+const headers = require('./testCommon.js');
 
 // TESTING: getDispName
 describe('should retrieve display name by id and send response correctly', () => {

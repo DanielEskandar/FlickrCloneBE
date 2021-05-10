@@ -5,7 +5,7 @@ const commentModel = require('../models/commentModel');
 const albumModel = require('../models/albumModel');
 
 // INCLUDE COMMON TEST HEADERS
-const headers = require('./testcommons.js');
+const headers = require('./testCommon.js');
 
 // TESTING: getInfo
 describe("should retrieve Album's Info by id and send response correctly", () => {
