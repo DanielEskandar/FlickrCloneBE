@@ -249,7 +249,7 @@ exports.removeFave = async (req, res) => {
     );
 
     if (favePhoto !== undefined) {
-      // Decrease Fave Count on Photo Model
+      //Decrease Fave Count on Photo Model
       const updatedFaveCount = await photoModel
         .findByIdAndUpdate(
           req.params.id,

@@ -525,7 +525,21 @@ photoRouter.get('/:id/perm');
  *          "status": "success",
  *          "data":
  *          {
+ *             "nameofsize": [
  *
+ *              ]
+ *             "widths": [
+ *
+ *              ]
+ *             "heights": [
+ *
+ *              ]
+ *             "sizeurl": [
+ *
+ *              ]
+ *             "sourceurl": [
+ *
+ *              ]
  *          }
  *      }
  *
@@ -534,7 +548,7 @@ photoRouter.get('/:id/perm');
  * @apiUse PhotoNotFoundError
  *
  */
-photoRouter.get('/:id/sizes', photoController.getSizes);
+photoRouter.get('/:id/sizes');
 
 /**
  * @api {patch} /photo/:id/content Set a Photo's Content Type
