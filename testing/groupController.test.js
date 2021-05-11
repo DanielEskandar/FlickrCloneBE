@@ -2,8 +2,7 @@
 const groupController = require('../controllers/groupController.js');
 
 // INCLUDE COMMON TEST HEADERS
-const headers = require('./testcommons.js');
-const mongoose = require('mongoose');
+const headers = require('./testCommon.js');
 
 // TESTING: getInfo
 describe('should retrieve all groups info', () => {

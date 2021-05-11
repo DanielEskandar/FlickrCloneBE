@@ -5,7 +5,7 @@ const commentModel = require('../models/commentModel');
 const galleryModel = require('../models/galleryModel');
 
 // INCLUDE COMMON TEST HEADERS
-const headers = require('./testcommons.js');
+const headers = require('./testCommon.js');
 
 // TESTING: getInfo
 describe("should retrieve Gallery's Info by id and send response correctly", () => {

@@ -2,6 +2,12 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 
+// INCLUDE ERROR CLASS
+const AppError = require('./utils/appError.js');
+
+// INCLUDE ERROR CONTROLLER
+const errorController = require('./controllers/errorController.js');
+
 // INCLUDE ROUTES
 const userRouter = require('./routers/userRouter.js');
 const photoRouter = require('./routers/photoRouter.js');
@@ -22,5 +28,16 @@ app.use('/photo', photoRouter);
 app.use('/gallery', galleryRouter);
 app.use('/photoset', albumRouter);
 app.use('/group', groupRouter);
+
+// UNHANDLED ROUTES
+app.all('*', (req, res, next) => {
+  errorController.sendError(
+    new AppError(`Cannot find ${req.originalUrl} on the server`, 404),
+    req,
+    res,
+    next
+  );
+});
+
 // EXPORT APP
 module.exports = app;
