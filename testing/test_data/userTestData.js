@@ -299,14 +299,14 @@ module.exports.addFavesData1 = {
   status: 'success',
   data: {
     newPhotoFaveCount: {
-      favourites: 120,
-      _id: '604d5450ec00005468617a0c',
+      favourites: 52,
+      _id: '608d5450ec00005468628a0d',
     },
     newUserFaveList: {
       favourites: [
         '608d5450ec00005468607a0f',
         '608d5450ec00005468617a0c',
-        '604d5450ec00005468617a0c',
+        '608d5450ec00005468628a0d',
       ],
       _id: '608d5450ec00005468607a0c',
     },
@@ -322,14 +322,14 @@ module.exports.addFavesData3 = {
   status: 'success',
   data: {
     newPhotoFaveCount: {
-      favourites: 8,
-      _id: '608d5450ec00005468607a0f',
+      favourites: 53,
+      _id: '608d5450ec00005468628a0d',
     },
     newUserFaveList: {
       favourites: [
         '604d5450ec00005468617a0c',
         '608d5450ec00005468617a0c',
-        '608d5450ec00005468607a0f',
+        '608d5450ec00005468628a0d',
       ],
       _id: '608d55c7e512b74ee00791db',
     },
@@ -340,8 +340,8 @@ module.exports.removeFavesData1 = {
   status: 'success',
   data: {
     newPhotoFaveCount: {
-      favourites: 119,
-      _id: '604d5450ec00005468617a0c',
+      favourites: 52,
+      _id: '608d5450ec00005468628a0d',
     },
     newUserFaveList: {
       favourites: ['608d5450ec00005468607a0f', '608d5450ec00005468617a0c'],
@@ -359,8 +359,8 @@ module.exports.removeFavesData3 = {
   status: 'success',
   data: {
     newPhotoFaveCount: {
-      favourites: 7,
-      _id: '608d5450ec00005468607a0f',
+      favourites: 51,
+      _id: '608d5450ec00005468628a0d',
     },
     newUserFaveList: {
       favourites: ['604d5450ec00005468617a0c', '608d5450ec00005468617a0c'],
