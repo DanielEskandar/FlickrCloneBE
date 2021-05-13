@@ -1,6 +1,9 @@
 // INCLUDE CONTROLLER TO TEST
 const groupController = require('../controllers/groupController.js');
 
+// INCLUDE TEST DATA
+const groupTestData = require('./test_data/groupTestData.js');
+
 // INCLUDE COMMON TEST HEADERS
 const headers = require('./testCommon.js');
 
@@ -10,74 +13,11 @@ describe('should retrieve all groups info', () => {
     const mReq = {};
     const mRes = {
       status: jest.fn().mockReturnThis(),
-      send: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
     };
-    await groupController.GetInfo(mReq, mRes);
+    await groupController.getInfo(mReq, mRes);
     expect(mRes.status).toBeCalledWith(200);
-    expect(mRes.send).toBeCalledWith({
-      status: 'success',
-      data: {
-        groups: [
-          {
-            startDate: '2021-01-01T00:00:00.000Z',
-            photos: ['608d5450ec00005468607a0f'],
-            discussionTopics: ['608f6e7519953b27004f6dab'],
-            _id: '608f3d0fb5ba8b4f34890a5e',
-            public: true,
-            name: 'What to eat?',
-            invitation: true,
-            description:
-              'This is a platform to share food recommendations, along with restaurants rating too.',
-            users: [
-              {
-                joinDate: '2021-01-01T00:00:00.000Z',
-                _id: '608d5450ec00005468607a0c',
-                admin: true,
-              },
-              {
-                joinDate: '2021-01-01T00:00:00.000Z',
-                _id: '608d55c7e512b74ee00791dd',
-                admin: false,
-              },
-            ],
-            pinnedThread: null,
-            ageRestriction: false,
-            __v: 0,
-          },
-          {
-            startDate: '2021-01-01T00:00:00.000Z',
-            photos: ['608d5450ec00005468607a0f'],
-            discussionTopics: ['608f6e7519953b27004f6dab'],
-            _id: '608f3e678209d433946b946d',
-            public: false,
-            name: 'Dogs Day Out',
-            invitation: true,
-            description:
-              'Welcome to Dogs Day Out, a place to share our love for our 4 legged friends!',
-            users: [
-              {
-                joinDate: '2021-01-01T00:00:00.000Z',
-                _id: '608d55c7e512b74ee00791dd',
-                admin: true,
-              },
-              {
-                joinDate: '2021-01-01T00:00:00.000Z',
-                _id: '608d55c7e512b74ee00791db',
-                admin: false,
-              },
-              {
-                joinDate: '2021-01-01T00:00:00.000Z',
-                _id: '608d55c7e512b74ee00791dc',
-                admin: false,
-              },
-            ],
-            pinnedThread: null,
-            ageRestriction: false,
-            __v: 0,
-          },
-        ],
-      },
-    });
+    expect(mRes.json).toBeCalledWith(groupTestData.getInfoData);
   });
 });
 
@@ -88,27 +28,11 @@ describe('should retrieve members in group with id 608f3d0fb5ba8b4f34890a5e', ()
     const mReq = { params: { id: '608f3d0fb5ba8b4f34890a5e' } };
     const mRes = {
       status: jest.fn().mockReturnThis(),
-      send: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
     };
-    await groupController.GetMembers(mReq, mRes);
+    await groupController.getMembers(mReq, mRes);
     expect(mRes.status).toBeCalledWith(200);
-    expect(mRes.send).toBeCalledWith({
-      status: 'success',
-      data: {
-        users: [
-          {
-            joinDate: '2021-01-01T00:00:00.000Z',
-            _id: '608d5450ec00005468607a0c',
-            admin: true,
-          },
-          {
-            joinDate: '2021-01-01T00:00:00.000Z',
-            _id: '608d55c7e512b74ee00791dd',
-            admin: false,
-          },
-        ],
-      },
-    });
+    expect(mRes.json).toBeCalledWith(groupTestData.getMembersData);
   });
 });
 
@@ -118,16 +42,11 @@ describe('should retrieve photos in group with id 608f3d0fb5ba8b4f34890a5e', () 
     const mReq = { params: { id: '608f3d0fb5ba8b4f34890a5e' } };
     const mRes = {
       status: jest.fn().mockReturnThis(),
-      send: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
     };
-    await groupController.GetPhotoPool(mReq, mRes);
+    await groupController.getPhotoPool(mReq, mRes);
     expect(mRes.status).toBeCalledWith(200);
-    expect(mRes.send).toBeCalledWith({
-      status: 'success',
-      data: {
-        photos: ['608d5450ec00005468607a0f'],
-      },
-    });
+    expect(mRes.json).toBeCalledWith(groupTestData.getPhotoPoolData);
   });
 });
 
@@ -137,16 +56,11 @@ describe('should retrieve discussions in group with id 608f3d0fb5ba8b4f34890a5e'
     const mReq = { params: { id: '608f3d0fb5ba8b4f34890a5e' } };
     const mRes = {
       status: jest.fn().mockReturnThis(),
-      send: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
     };
-    await groupController.GetAllDiscussions(mReq, mRes);
+    await groupController.getAllDiscussions(mReq, mRes);
     expect(mRes.status).toBeCalledWith(200);
-    expect(mRes.send).toBeCalledWith({
-      status: 'success',
-      data: {
-        discussionTopics: ['608f6e7519953b27004f6dab'],
-      },
-    });
+    expect(mRes.json).toBeCalledWith(groupTestData.getAllDiscussionsData);
   });
 });
 
@@ -156,20 +70,11 @@ describe('should retrieve discussion with ID 608f6e7519953b27004f6dac', () => {
     const mReq = { params: { id: '608f6e7519953b27004f6dac' } };
     const mRes = {
       status: jest.fn().mockReturnThis(),
-      send: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
     };
     await groupController.getDiscussion(mReq, mRes);
     expect(mRes.status).toBeCalledWith(200);
-    expect(mRes.send).toBeCalledWith({
-      status: 'success',
-      data: {
-        replies: [],
-        user: '608f3e678209d433946b946d',
-        content: 'La casa de papel is overrated',
-        date: '2021-01-01T00:00:00.000Z',
-        __v: 0,
-      },
-    });
+    expect(mRes.json).toBeCalledWith(groupTestData.getDiscussionData);
   });
 });
 
@@ -187,20 +92,11 @@ describe('should create new discussion with id 608f3d0fb5998b4f34890a5e in group
     };
     const mRes = {
       status: jest.fn().mockReturnThis(),
-      send: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
     };
     await groupController.createDiscussion(mReq, mRes);
     expect(mRes.status).toBeCalledWith(200);
-    expect(mRes.send).toBeCalledWith({
-      status: 'success',
-      data: {
-        replies: [],
-        _id: '608f3d0fb5998b4f34890a5e',
-        content: 'i want fresh mango',
-        date: '2020-02-02T00:00:00.000Z',
-        __v: 0,
-      },
-    });
+    expect(mRes.json).toBeCalledWith(groupTestData.createDiscussionData);
   });
 });
 
@@ -215,21 +111,11 @@ describe('should edit content field in discussion with id 608f6e7519953b27004f6d
     };
     const mRes = {
       status: jest.fn().mockReturnThis(),
-      send: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
     };
-    await groupController.EditDiscussion(mReq, mRes);
+    await groupController.editDiscussion(mReq, mRes);
     expect(mRes.status).toBeCalledWith(200);
-    expect(mRes.send).toBeCalledWith({
-      status: 'success',
-      data: {
-        replies: [],
-        _id: '608f6e7519953b27004f6dab',
-        user: '608d5450ec00005468607a0c',
-        content: 'i want pasta',
-        date: '2021-01-01T00:00:00.000Z',
-        __v: 0,
-      },
-    });
+    expect(mRes.json).toBeCalledWith(groupTestData.editDiscussionData);
   });
 });
 
@@ -241,14 +127,11 @@ describe('should delete discussion with id 608f6e7519953b27004f6dab ', () => {
     };
     const mRes = {
       status: jest.fn().mockReturnThis(),
-      send: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
     };
-    await groupController.DeleteDiscussion(mReq, mRes);
+    await groupController.deleteDiscussion(mReq, mRes);
     expect(mRes.status).toBeCalledWith(200);
-    expect(mRes.send).toBeCalledWith({
-      status: 'success',
-      data: null,
-    });
+    expect(mRes.json).toBeCalledWith(groupTestData.deleteDiscussionData);
   });
 });
 
@@ -269,25 +152,10 @@ describe('userid in headers should create new group with content in body, add us
     };
     const mRes = {
       status: jest.fn().mockReturnThis(),
-      send: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
     };
-    await groupController.CreateGroup(mReq, mRes);
+    await groupController.createGroup(mReq, mRes);
     expect(mRes.status).toBeCalledWith(200);
-    expect(mRes.send).toBeCalledWith({
-      status: 'success',
-      data: {
-        public: true,
-        invitation: true,
-        startDate: '2021-01-01T00:00:00.000Z',
-        photos: [],
-        discussionTopics: [],
-        ageRestriction: false,
-        _id: '608f3d0fb5b8184f34890a50',
-        name: 'Backend Test1',
-        description: 'this is create group api test.',
-        users: [],
-        __v: 0,
-      },
-    });
+    expect(mRes.json).toBeCalledWith(groupTestData.createGroupData);
   });
 });

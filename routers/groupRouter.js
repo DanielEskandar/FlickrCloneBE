@@ -87,7 +87,7 @@ const groupRouter = express.Router();
  *
  * @apiUse UnauthError
  */
-groupRouter.post('/', groupController.CreateGroup);
+groupRouter.post('/', groupController.createGroup);
 
 /**
  * @api {delete} /group/:id Admin deletes a group
@@ -167,7 +167,7 @@ groupRouter.get('/:id');
  *
  * @apiUse UnauthError
  */
-groupRouter.get('/', groupController.GetInfo);
+groupRouter.get('/', groupController.getInfo);
 /**
  * @api {post} /group/:id/user/:userid Join a public non-invitation group as a member
  * @apiVersion 1.0.0
@@ -310,7 +310,7 @@ groupRouter.post('/:id/discussion', groupController.createDiscussion);
  * @apiUse UnauthError
  * @apiUse ForbiddenAccss
  */
-groupRouter.patch('/discussion/:id', groupController.EditDiscussion);
+groupRouter.patch('/discussion/:id', groupController.editDiscussion);
 
 /**
  * @api {get} /group/discussion/:id Get information about a group discussion topic.
@@ -358,7 +358,7 @@ groupRouter.get('/discussion/:id', groupController.getDiscussion);
 * @apiUse GroupNotFoundError
 */
 
-groupRouter.get('/:id/discussion', groupController.GetAllDiscussions);
+groupRouter.get('/:id/discussion', groupController.getAllDiscussions);
 
 /**
  * @api {delete} /group/discussion/:id Deleting a discussion post from the group
@@ -382,7 +382,7 @@ groupRouter.get('/:id/discussion', groupController.GetAllDiscussions);
  * @apiUse UnauthError
  * @apiUse ForbiddenAccss
  */
-groupRouter.delete('/discussion/:id', groupController.DeleteDiscussion);
+groupRouter.delete('/discussion/:id', groupController.deleteDiscussion);
 
 /**
  * @api {patch} /group/:id/pinned/:topicId Setting a new pinned thread
@@ -562,7 +562,7 @@ groupRouter.get('/discussion/:id/replies');
  * @apiUse GroupNotFoundError
  */
 
-groupRouter.get('/:id/members', groupController.GetMembers);
+groupRouter.get('/:id/members', groupController.getMembers);
 
 /**
  * @api {post} /group/:id/pool/:photoid Add a Photo to a Group Photo Pool
@@ -644,7 +644,7 @@ groupRouter.get('/:id/photo/:photoid/context');
  * @apiUse GroupNotFoundError
  */
 
-groupRouter.get('/:id/pool', groupController.GetPhotoPool);
+groupRouter.get('/:id/pool', groupController.getPhotoPool);
 
 /**
  * @api {delete} /group/:id/pool/:photoId Remove a Photo from a Group Photo Pool

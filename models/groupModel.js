@@ -1,5 +1,4 @@
 // INCLUDE DEPENDENCIES
-const { json } = require('body-parser');
 const mongoose = require('mongoose');
 
 // CREATE SCHEMA
@@ -8,8 +7,6 @@ const groupSchema = new mongoose.Schema({
   name: {
     type: String,
     required: [true, 'A group must have a name'],
-    unique: [true, 'A group with this name already exists'],
-    maxlength: [20, 'Group name should be less than 20 characters'],
   },
   invitation: { type: Boolean, default: false },
   description: { type: String, trim: true },
@@ -22,26 +19,14 @@ const groupSchema = new mongoose.Schema({
       },
       admin: Boolean,
     },
-  ], // group members
+  ],
   startDate: {
     type: Date,
     default: Date.now(),
   },
   photos: [mongoose.Schema.ObjectId],
-  discussionTopics: {
-    type: [mongoose.Schema.ObjectId],
-    /* validate: function () {
-      //if pinnedThread exists, must be in discussionTopics array
-      if (
-        this.discussionTopics.length === 0 &&
-        this.pinnedThread.ObjectId === undefined
-      )
-        return true;
-    },*/
-  },
-  pinnedThread: {
-    type: mongoose.Schema.ObjectId,
-  },
+  discussionTopics: [mongoose.Schema.ObjectId],
+  pinnedThread: mongoose.Schema.ObjectId,
   ageRestriction: { type: Boolean, default: false },
 });
 
