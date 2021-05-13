@@ -209,55 +209,7 @@ describe('should retrieve faves by id and send response correctly', () => {
     };
     await userController.getFaves(mReq, mRes);
     expect(mRes.status).toBeCalledWith(200);
-    expect(mRes.send).toBeCalledWith({
-      status: 'success',
-      count: 2,
-      data: {
-        favourites: [
-          {
-            sizes: {
-              size: {
-                small: {
-                  height: 1000,
-                  width: 60,
-                  source: 'https://www.google.com/',
-                  url: 'https://www.google.com/',
-                },
-              },
-            },
-            favourites: 7,
-            _id: '608d5450ec00005468607a0f',
-            userId: {
-              _id: '608d55c7e512b74ee00791db',
-              firstName: 'Daniel',
-              lastName: 'Eskandar',
-            },
-            title: 'Sunset in Bora Bora',
-          },
-          {
-            sizes: {
-              size: {
-                small: {
-                  height: 1000,
-                  width: 60,
-                  source: 'https://www.google.com/',
-                  url: 'https://www.google.com/',
-                },
-              },
-            },
-            favourites: 51,
-            _id: '608d5450ec00005468617a0c',
-            userId: {
-              _id: '608d55c7e512b74ee00791dc',
-              firstName: 'Aliaa',
-              lastName: 'Khalifa',
-            },
-            title: 'Sakura Season in Nihon',
-          },
-        ],
-        _id: '608d5450ec00005468607a0c',
-      },
-    });
+    expect(mRes.send).toBeCalledWith(userTestData.getFavesData1);
   });
 
   test('should retrieve faves of Daniel Eskandar', async () => {
@@ -268,55 +220,7 @@ describe('should retrieve faves by id and send response correctly', () => {
     };
     await userController.getFaves(mReq, mRes);
     expect(mRes.status).toBeCalledWith(200);
-    expect(mRes.send).toBeCalledWith({
-      status: 'success',
-      count: 2,
-      data: {
-        favourites: [
-          {
-            sizes: {
-              size: {
-                small: {
-                  height: 1000,
-                  width: 60,
-                  source: 'https://www.google.com/',
-                  url: 'https://www.google.com/',
-                },
-              },
-            },
-            favourites: 119,
-            _id: '604d5450ec00005468617a0c',
-            userId: {
-              _id: '608d55c7e512b74ee00791dd',
-              firstName: 'Mariam',
-              lastName: 'Khashab',
-            },
-            title: 'Wijdesteeg in Amsterdam',
-          },
-          {
-            sizes: {
-              size: {
-                small: {
-                  height: 1000,
-                  width: 60,
-                  source: 'https://www.google.com/',
-                  url: 'https://www.google.com/',
-                },
-              },
-            },
-            favourites: 51,
-            _id: '608d5450ec00005468617a0c',
-            userId: {
-              _id: '608d55c7e512b74ee00791dc',
-              firstName: 'Aliaa',
-              lastName: 'Khalifa',
-            },
-            title: 'Sakura Season in Nihon',
-          },
-        ],
-        _id: '608d55c7e512b74ee00791db',
-      },
-    });
+    expect(mRes.send).toBeCalledWith(userTestData.getFavesData2);
   });
 });
 
@@ -333,23 +237,7 @@ describe('should add image to faves by id and send response correctly', () => {
     };
     await userController.addFave(mReq, mRes);
     expect(mRes.status).toBeCalledWith(200);
-    expect(mRes.send).toBeCalledWith({
-      status: 'success',
-      data: {
-        newPhotoFaveCount: {
-          favourites: 120,
-          _id: '604d5450ec00005468617a0c',
-        },
-        newUserFaveList: {
-          favourites: [
-            '608d5450ec00005468607a0f',
-            '608d5450ec00005468617a0c',
-            '604d5450ec00005468617a0c',
-          ],
-          _id: '608d5450ec00005468607a0c',
-        },
-      },
-    });
+    expect(mRes.send).toBeCalledWith(userTestData.addFavesData1);
   });
 
   test('add an image to faves of Daniel Eskandar', async () => {
@@ -363,10 +251,7 @@ describe('should add image to faves by id and send response correctly', () => {
     };
     await userController.addFave(mReq, mRes);
     expect(mRes.status).toBeCalledWith(409);
-    expect(mRes.send).toBeCalledWith({
-      status: 'Error',
-      message: 'This PhotoID is already in Faves',
-    });
+    expect(mRes.send).toBeCalledWith(userTestData.addFavesData2);
   });
 
   test('add an image to faves of Daniel Eskandar', async () => {
@@ -380,23 +265,7 @@ describe('should add image to faves by id and send response correctly', () => {
     };
     await userController.addFave(mReq, mRes);
     expect(mRes.status).toBeCalledWith(200);
-    expect(mRes.send).toBeCalledWith({
-      status: 'success',
-      data: {
-        newPhotoFaveCount: {
-          favourites: 8,
-          _id: '608d5450ec00005468607a0f',
-        },
-        newUserFaveList: {
-          favourites: [
-            '604d5450ec00005468617a0c',
-            '608d5450ec00005468617a0c',
-            '608d5450ec00005468607a0f',
-          ],
-          _id: '608d55c7e512b74ee00791db',
-        },
-      },
-    });
+    expect(mRes.send).toBeCalledWith(userTestData.addFavesData3);
   });
 });
 
@@ -413,19 +282,7 @@ describe('should remove image from faves by id and send response correctly', () 
     };
     await userController.removeFave(mReq, mRes);
     expect(mRes.status).toBeCalledWith(200);
-    expect(mRes.send).toBeCalledWith({
-      status: 'success',
-      data: {
-        newPhotoFaveCount: {
-          favourites: 119,
-          _id: '604d5450ec00005468617a0c',
-        },
-        newUserFaveList: {
-          favourites: ['608d5450ec00005468607a0f', '608d5450ec00005468617a0c'],
-          _id: '608d5450ec00005468607a0c',
-        },
-      },
-    });
+    expect(mRes.send).toBeCalledWith(userTestData.removeFavesData1);
   });
 
   test('remove image from faves of Ahmed Abdulkader', async () => {
@@ -439,10 +296,7 @@ describe('should remove image from faves by id and send response correctly', () 
     };
     await userController.removeFave(mReq, mRes);
     expect(mRes.status).toBeCalledWith(404);
-    expect(mRes.send).toBeCalledWith({
-      status: 'fail',
-      message: "This Photo doesn't exist in Faves",
-    });
+    expect(mRes.send).toBeCalledWith(userTestData.removeFavesData2);
   });
 
   test('remove image from faves of Daniel Eskandar', async () => {
@@ -456,19 +310,7 @@ describe('should remove image from faves by id and send response correctly', () 
     };
     await userController.removeFave(mReq, mRes);
     expect(mRes.status).toBeCalledWith(200);
-    expect(mRes.send).toBeCalledWith({
-      status: 'success',
-      data: {
-        newPhotoFaveCount: {
-          favourites: 7,
-          _id: '608d5450ec00005468607a0f',
-        },
-        newUserFaveList: {
-          favourites: ['604d5450ec00005468617a0c', '608d5450ec00005468617a0c'],
-          _id: '608d55c7e512b74ee00791db',
-        },
-      },
-    });
+    expect(mRes.send).toBeCalledWith(userTestData.removeFavesData3);
   });
 });
 

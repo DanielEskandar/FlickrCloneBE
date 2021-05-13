@@ -195,6 +195,180 @@ module.exports.getBlockedData2 = {
   },
 };
 
+module.exports.getFavesData1 = {
+  status: 'success',
+  count: 2,
+  data: {
+    favourites: [
+      {
+        sizes: {
+          size: {
+            small: {
+              height: 1000,
+              width: 60,
+              source: 'https://www.google.com/',
+              url: 'https://www.google.com/',
+            },
+          },
+        },
+        favourites: 7,
+        _id: '608d5450ec00005468607a0f',
+        userId: {
+          _id: '608d55c7e512b74ee00791db',
+          firstName: 'Daniel',
+          lastName: 'Eskandar',
+        },
+        title: 'Sunset in Bora Bora',
+      },
+      {
+        sizes: {
+          size: {
+            small: {
+              height: 1000,
+              width: 60,
+              source: 'https://www.google.com/',
+              url: 'https://www.google.com/',
+            },
+          },
+        },
+        favourites: 51,
+        _id: '608d5450ec00005468617a0c',
+        userId: {
+          _id: '608d55c7e512b74ee00791dc',
+          firstName: 'Aliaa',
+          lastName: 'Khalifa',
+        },
+        title: 'Sakura Season in Nihon',
+      },
+    ],
+    _id: '608d5450ec00005468607a0c',
+  },
+};
+
+module.exports.getFavesData2 = {
+  status: 'success',
+  count: 2,
+  data: {
+    favourites: [
+      {
+        sizes: {
+          size: {
+            small: {
+              height: 1000,
+              width: 60,
+              source: 'https://www.google.com/',
+              url: 'https://www.google.com/',
+            },
+          },
+        },
+        favourites: 119,
+        _id: '604d5450ec00005468617a0c',
+        userId: {
+          _id: '608d55c7e512b74ee00791dd',
+          firstName: 'Mariam',
+          lastName: 'Khashab',
+        },
+        title: 'Wijdesteeg in Amsterdam',
+      },
+      {
+        sizes: {
+          size: {
+            small: {
+              height: 1000,
+              width: 60,
+              source: 'https://www.google.com/',
+              url: 'https://www.google.com/',
+            },
+          },
+        },
+        favourites: 51,
+        _id: '608d5450ec00005468617a0c',
+        userId: {
+          _id: '608d55c7e512b74ee00791dc',
+          firstName: 'Aliaa',
+          lastName: 'Khalifa',
+        },
+        title: 'Sakura Season in Nihon',
+      },
+    ],
+    _id: '608d55c7e512b74ee00791db',
+  },
+};
+
+module.exports.addFavesData1 = {
+  status: 'success',
+  data: {
+    newPhotoFaveCount: {
+      favourites: 120,
+      _id: '604d5450ec00005468617a0c',
+    },
+    newUserFaveList: {
+      favourites: [
+        '608d5450ec00005468607a0f',
+        '608d5450ec00005468617a0c',
+        '604d5450ec00005468617a0c',
+      ],
+      _id: '608d5450ec00005468607a0c',
+    },
+  },
+};
+
+module.exports.addFavesData2 = {
+  status: 'Error',
+  message: 'This PhotoID is already in Faves',
+};
+
+module.exports.addFavesData3 = {
+  status: 'success',
+  data: {
+    newPhotoFaveCount: {
+      favourites: 8,
+      _id: '608d5450ec00005468607a0f',
+    },
+    newUserFaveList: {
+      favourites: [
+        '604d5450ec00005468617a0c',
+        '608d5450ec00005468617a0c',
+        '608d5450ec00005468607a0f',
+      ],
+      _id: '608d55c7e512b74ee00791db',
+    },
+  },
+};
+
+module.exports.removeFavesData1 = {
+  status: 'success',
+  data: {
+    newPhotoFaveCount: {
+      favourites: 119,
+      _id: '604d5450ec00005468617a0c',
+    },
+    newUserFaveList: {
+      favourites: ['608d5450ec00005468607a0f', '608d5450ec00005468617a0c'],
+      _id: '608d5450ec00005468607a0c',
+    },
+  },
+};
+
+module.exports.removeFavesData2 = {
+  status: 'fail',
+  message: "This Photo doesn't exist in Faves",
+};
+
+module.exports.removeFavesData3 = {
+  status: 'success',
+  data: {
+    newPhotoFaveCount: {
+      favourites: 7,
+      _id: '608d5450ec00005468607a0f',
+    },
+    newUserFaveList: {
+      favourites: ['604d5450ec00005468617a0c', '608d5450ec00005468617a0c'],
+      _id: '608d55c7e512b74ee00791db',
+    },
+  },
+};
+
 module.exports.getNotificationSettingsData1 = {
   status: 'success',
   data: {
