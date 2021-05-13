@@ -314,8 +314,8 @@ module.exports.addFavesData1 = {
 };
 
 module.exports.addFavesData2 = {
-  status: 'Error',
-  message: 'This PhotoID is already in Faves',
+  status: 'error',
+  message: 'Photo is already in Faves',
 };
 
 module.exports.addFavesData3 = {
@@ -351,8 +351,8 @@ module.exports.removeFavesData1 = {
 };
 
 module.exports.removeFavesData2 = {
-  status: 'fail',
-  message: "This Photo doesn't exist in Faves",
+  status: 'error',
+  message: 'No photo is found by that ID in User faves',
 };
 
 module.exports.removeFavesData3 = {

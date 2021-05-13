@@ -205,22 +205,22 @@ describe('should retrieve faves by id and send response correctly', () => {
     const mReq = { params: { id: '608d5450ec00005468607a0c' } };
     const mRes = {
       status: jest.fn().mockReturnThis(),
-      send: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
     };
     await userController.getFaves(mReq, mRes);
     expect(mRes.status).toBeCalledWith(200);
-    expect(mRes.send).toBeCalledWith(userTestData.getFavesData1);
+    expect(mRes.json).toBeCalledWith(userTestData.getFavesData1);
   });
 
   test('should retrieve faves of Daniel Eskandar', async () => {
     const mReq = { params: { id: '608d55c7e512b74ee00791db' } };
     const mRes = {
       status: jest.fn().mockReturnThis(),
-      send: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
     };
     await userController.getFaves(mReq, mRes);
     expect(mRes.status).toBeCalledWith(200);
-    expect(mRes.send).toBeCalledWith(userTestData.getFavesData2);
+    expect(mRes.json).toBeCalledWith(userTestData.getFavesData2);
   });
 });
 
@@ -233,11 +233,11 @@ describe('should add image to faves by id and send response correctly', () => {
     };
     const mRes = {
       status: jest.fn().mockReturnThis(),
-      send: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
     };
     await userController.addFave(mReq, mRes);
     expect(mRes.status).toBeCalledWith(200);
-    expect(mRes.send).toBeCalledWith(userTestData.addFavesData1);
+    expect(mRes.json).toBeCalledWith(userTestData.addFavesData1);
   });
 
   test('add an image to faves of Daniel Eskandar', async () => {
@@ -247,11 +247,11 @@ describe('should add image to faves by id and send response correctly', () => {
     };
     const mRes = {
       status: jest.fn().mockReturnThis(),
-      send: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
     };
     await userController.addFave(mReq, mRes);
     expect(mRes.status).toBeCalledWith(409);
-    expect(mRes.send).toBeCalledWith(userTestData.addFavesData2);
+    expect(mRes.json).toBeCalledWith(userTestData.addFavesData2);
   });
 
   test('add an image to faves of Daniel Eskandar', async () => {
@@ -261,11 +261,11 @@ describe('should add image to faves by id and send response correctly', () => {
     };
     const mRes = {
       status: jest.fn().mockReturnThis(),
-      send: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
     };
     await userController.addFave(mReq, mRes);
     expect(mRes.status).toBeCalledWith(200);
-    expect(mRes.send).toBeCalledWith(userTestData.addFavesData3);
+    expect(mRes.json).toBeCalledWith(userTestData.addFavesData3);
   });
 });
 
@@ -278,11 +278,11 @@ describe('should remove image from faves by id and send response correctly', () 
     };
     const mRes = {
       status: jest.fn().mockReturnThis(),
-      send: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
     };
     await userController.removeFave(mReq, mRes);
     expect(mRes.status).toBeCalledWith(200);
-    expect(mRes.send).toBeCalledWith(userTestData.removeFavesData1);
+    expect(mRes.json).toBeCalledWith(userTestData.removeFavesData1);
   });
 
   test('remove image from faves of Ahmed Abdulkader', async () => {
@@ -292,11 +292,11 @@ describe('should remove image from faves by id and send response correctly', () 
     };
     const mRes = {
       status: jest.fn().mockReturnThis(),
-      send: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
     };
     await userController.removeFave(mReq, mRes);
     expect(mRes.status).toBeCalledWith(404);
-    expect(mRes.send).toBeCalledWith(userTestData.removeFavesData2);
+    expect(mRes.json).toBeCalledWith(userTestData.removeFavesData2);
   });
 
   test('remove image from faves of Daniel Eskandar', async () => {
@@ -306,11 +306,11 @@ describe('should remove image from faves by id and send response correctly', () 
     };
     const mRes = {
       status: jest.fn().mockReturnThis(),
-      send: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
     };
     await userController.removeFave(mReq, mRes);
     expect(mRes.status).toBeCalledWith(200);
-    expect(mRes.send).toBeCalledWith(userTestData.removeFavesData3);
+    expect(mRes.json).toBeCalledWith(userTestData.removeFavesData3);
   });
 });
 
