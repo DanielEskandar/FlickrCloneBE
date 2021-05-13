@@ -1,11 +1,13 @@
 // INCLUDE CONTROLLER TO TEST
-const mongoose = require('mongoose');
 const galleryController = require('../controllers/galleryController.js');
 const commentModel = require('../models/commentModel');
 const galleryModel = require('../models/galleryModel');
 
 // INCLUDE COMMON TEST HEADERS
 const headers = require('./testCommon.js');
+
+// INIT TEST COMMONS
+headers.initTesting();
 
 // TESTING: getInfo
 describe("should retrieve Gallery's Info by id and send response correctly", () => {

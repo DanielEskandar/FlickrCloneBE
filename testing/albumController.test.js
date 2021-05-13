@@ -1,11 +1,13 @@
 // INCLUDE CONTROLLER TO TEST
-const mongoose = require('mongoose');
 const albumController = require('../controllers/albumController.js');
 const commentModel = require('../models/commentModel');
 const albumModel = require('../models/albumModel');
 
 // INCLUDE COMMON TEST HEADERS
 const headers = require('./testCommon.js');
+
+// INIT TEST COMMONS
+headers.initTesting();
 
 // TESTING: getInfo
 describe("should retrieve Album's Info by id and send response correctly", () => {

@@ -7,6 +7,9 @@ const groupTestData = require('./test_data/groupTestData.js');
 // INCLUDE COMMON TEST HEADERS
 const headers = require('./testCommon.js');
 
+// INIT TEST COMMONS
+headers.initTesting();
+
 // TESTING: getInfo
 describe('should retrieve all groups info', () => {
   test('should retrieve info about 3 groups', async () => {

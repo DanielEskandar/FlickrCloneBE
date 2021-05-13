@@ -1,9 +1,11 @@
 // INCLUDE CONTROLLER TO TEST
-const mongoose = require('mongoose');
 const photoController = require('../controllers/photoController.js');
 
 // INCLUDE COMMON TEST HEADERS
 const headers = require('./testCommon.js');
+
+// INIT TEST COMMONS
+headers.initTesting();
 
 // TESTING: getFavourites
 describe('should retrieve number of times photo was favourited', () => {

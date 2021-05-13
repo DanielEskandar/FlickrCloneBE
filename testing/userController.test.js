@@ -7,6 +7,9 @@ const userTestData = require('./test_data/userTestData.js');
 // INCLUDE COMMON TEST HEADERS
 const headers = require('./testCommon.js');
 
+// INIT TEST COMMONS
+headers.initTesting();
+
 // TESTING: getDispName
 describe('should retrieve display name by id and send response correctly', () => {
   test('should retrieve display name DanielEskandar', async () => {
