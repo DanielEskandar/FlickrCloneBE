@@ -29,7 +29,6 @@ exports.getInfo = async (req, res) => {
 exports.createGroup = async (req, res) => {
   try {
     const creator = await userModel.findById(req.headers.userid);
-    /// console.log(creator);
     const newGroup = await groupModel.create(req.body);
 
     if (!newGroup) {
@@ -37,15 +36,28 @@ exports.createGroup = async (req, res) => {
     }
 
     //add group creator and set as admin
-    await groupModel.findByIdAndUpdate(newGroup, {
-      $addToSet: {
-        users: creator,
-      },
-    });
+    const updatedGroup = await groupModel
+      .findByIdAndUpdate(
+        newGroup,
+        {
+          $addToSet: {
+            users: {
+              userId: creator,
+              joinDate: '2021-01-01',
+              admin: true,
+            },
+          },
+        },
+        {
+          new: true,
+          runValidators: true,
+        }
+      )
+      .select({ users: { _id: 0 } });
 
     res.status(200).json({
       status: 'success',
-      data: JSON.parse(JSON.stringify(newGroup)),
+      data: JSON.parse(JSON.stringify(updatedGroup)),
     });
   } catch (err) {
     errorController.sendError(err, req, res);
@@ -129,7 +141,12 @@ exports.createDiscussion = async (req, res) => {
     await groupModel.findByIdAndUpdate(
       req.params.id,
       {
-        $push: { discussionTopics: newDiscussion },
+        $push: {
+          discussionTopics: {
+            _id: newDiscussion._id,
+            user: req.headers.userid,
+          },
+        },
       },
       {
         new: true,
