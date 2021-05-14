@@ -5,7 +5,9 @@ const photoModel = require('../models/photoModel.js');
 const userModel = require('../models/userModel.js');
 const commentModel = require('../models/commentModel.js');
 
-//const commentModel = require('../models/commentModel.js');
+// INCLUDE ERROR CLASS AND ERROR CONTROLLER
+const AppError = require('../utils/appError.js');
+const errorController = require('./errorController.js');
 
 exports.getInfo = async (req, res) => {
   try {
@@ -14,18 +16,19 @@ exports.getInfo = async (req, res) => {
       .populate('primaryPhotoId', 'sizes')
       .populate('photos', 'sizes');
 
+    if (!album) {
+      throw new AppError('No Album Found with This ID', 404);
+    }
+
     const albumJson = JSON.parse(JSON.stringify(album));
     albumJson.photocount = album.photos.length;
 
-    res.status(200).send({
+    res.status(200).json({
       status: 'success',
       data: albumJson,
     });
   } catch (err) {
-    res.status(404).send({
-      status: 'error',
-      message: "ID doesn't  exist",
-    });
+    errorController.sendError(err, req, res);
   }
 };
 
@@ -36,27 +39,24 @@ exports.getPhotos = async (req, res) => {
       .select({ photos: 1, _id: 0 })
       .populate('photos', 'sizes');
 
-    res.status(200).send({
+    if (!photos) {
+      throw new AppError('No Album Found with This ID', 404);
+    }
+
+    res.status(200).json({
       status: 'success',
       data: JSON.parse(JSON.stringify(photos)),
     });
   } catch (err) {
-    res.status(404).send({
-      status: 'error',
-      message: "This ID doesn't exist",
-    });
+    errorController.sendError(err, req, res);
   }
 };
 
 exports.addComment = async (req, res) => {
   try {
     // check if album id exist or not
-    if ((await albumModel.findById(req.params.id)) === null) {
-      res.status(400).send({
-        status: 'error',
-        message: "This ID doesn't exist",
-      });
-      return;
+    if (!(await albumModel.findById(req.params.id))) {
+      throw new AppError('No Album Found with This ID', 404);
     }
     // add comment to comment model
     const comment = await commentModel.create(req.body);
@@ -71,15 +71,12 @@ exports.addComment = async (req, res) => {
         runValidators: true,
       }
     );
-    res.status(200).send({
+    res.status(200).json({
       status: 'success',
       data: JSON.parse(JSON.stringify(comment)),
     });
   } catch (err) {
-    res.status(400).send({
-      status: 'error',
-      message: "This ID doesn't exist",
-    });
+    errorController.sendError(err, req, res);
   }
 };
 
@@ -100,15 +97,16 @@ exports.getComments = async (req, res) => {
         },
       ]);
 
-    res.status(200).send({
+    if (!comments) {
+      throw new AppError('No Album Found with This ID', 404);
+    }
+
+    res.status(200).json({
       status: 'success',
       data: JSON.parse(JSON.stringify(comments)),
     });
   } catch (err) {
-    res.status(404).send({
-      status: 'error',
-      message: err,
-    });
+    errorController.sendError(err, req, res);
   }
 };
 
@@ -122,15 +120,12 @@ exports.editComment = async (req, res) => {
         runValidators: true,
       }
     );
-    res.status(200).send({
+    res.status(200).json({
       status: 'success',
       data: JSON.parse(JSON.stringify(newComment)),
     });
   } catch (err) {
-    res.status(404).send({
-      status: 'fail',
-      message: "This Comment ID doesn't exist",
-    });
+    errorController.sendError(err, req, res);
   }
 };
 
@@ -139,6 +134,10 @@ exports.deleteComment = async (req, res) => {
     const album = await albumModel /// get array of comments in album
       .findById(req.params.id)
       .select({ comments: 1, _id: 0 });
+
+    if (!album) {
+      throw new AppError('No Album Found with This ID', 404);
+    }
 
     // check if the comment exits in album's comments
     const comment = album.comments.find(
@@ -160,35 +159,27 @@ exports.deleteComment = async (req, res) => {
       // delete comment from comment model
       await commentModel.findByIdAndDelete(req.params.commentid);
 
-      res.status(204).send({
+      res.status(204).json({
         status: 'success',
         data: 'ok',
       });
     } else {
-      res.status(404).send({
-        status: 'fail',
-        message: "This comment doesn't exist in the album",
-      });
+      throw new AppError('No Comment Found with This ID', 404);
     }
   } catch (err) {
-    res.status(404).send({
-      status: 'fail',
-      message: "This album ID doesn't exist",
-    });
+    errorController.sendError(err, req, res);
   }
 };
 
 exports.createAlbum = async (req, res) => {
   try {
     const album = await albumModel.create(req.body);
-    res.status(200).send({
+
+    res.status(200).json({
       status: 'success',
       data: JSON.parse(JSON.stringify(album)),
     });
   } catch (err) {
-    res.status(400).send({
-      status: 'error',
-      message: err,
-    });
+    errorController.sendError(err, req, res);
   }
 };

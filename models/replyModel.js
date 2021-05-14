@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 
 // CREATE SCHEMA
 const replySchema = new mongoose.Schema({
-  user: mongoose.Schema.ObjectId, // author
+  user: mongoose.Schema.ObjectId,
   date: {
     type: Date,
     default: Date.now,
