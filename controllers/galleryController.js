@@ -9,6 +9,7 @@ const commentModel = require('../models/commentModel.js');
 const AppError = require('../utils/appError.js');
 const errorController = require('./errorController.js');
 
+// GET GALLERY INFORMATION
 exports.getInfo = async (req, res) => {
   try {
     const gallery = await galleryModel
@@ -32,6 +33,7 @@ exports.getInfo = async (req, res) => {
   }
 };
 
+// GET PHOTOS
 exports.getPhotos = async (req, res) => {
   try {
     const photos = await galleryModel
@@ -52,6 +54,7 @@ exports.getPhotos = async (req, res) => {
   }
 };
 
+// ADD A COMMENT
 exports.addComment = async (req, res) => {
   try {
     // check if gallery id exist or not
@@ -80,6 +83,7 @@ exports.addComment = async (req, res) => {
   }
 };
 
+// GET ALL COMMENTS
 exports.getComments = async (req, res) => {
   try {
     const comments = await galleryModel
@@ -110,6 +114,7 @@ exports.getComments = async (req, res) => {
   }
 };
 
+// EDIT COMMENT
 exports.editComment = async (req, res) => {
   try {
     const newComment = await commentModel.findByIdAndUpdate(
@@ -129,6 +134,7 @@ exports.editComment = async (req, res) => {
   }
 };
 
+// DELETE COMMENT
 exports.deleteComment = async (req, res) => {
   try {
     const gallery = await galleryModel /// get array of comments in gallery
@@ -171,6 +177,7 @@ exports.deleteComment = async (req, res) => {
   }
 };
 
+// CREATE GALLERY
 exports.createGallery = async (req, res) => {
   try {
     const gallery = await galleryModel.create(req.body);

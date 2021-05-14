@@ -171,7 +171,7 @@ exports.getComments = async (req, res) => {
   }
 };
 
-//GET SIZES
+// GET SIZES
 exports.getSizes = async (req, res) => {
   try {
     if (!(await photoModel.findById(req.params.id))) {

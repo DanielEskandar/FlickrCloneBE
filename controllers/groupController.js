@@ -7,7 +7,7 @@ const userModel = require('../models/userModel.js');
 const AppError = require('../utils/appError.js');
 const errorController = require('./errorController.js');
 
-//GET ALL GROUPS INFO
+// GET ALL GROUPS INFO
 exports.getInfo = async (req, res) => {
   try {
     const group = await groupModel.find().sort({ startDate: -1 });
@@ -25,7 +25,7 @@ exports.getInfo = async (req, res) => {
   }
 };
 
-//CREATE NEW GROUP
+// CREATE NEW GROUP
 exports.createGroup = async (req, res) => {
   try {
     const admin = await userModel.findById(req.headers.userid);
@@ -49,7 +49,7 @@ exports.createGroup = async (req, res) => {
   }
 };
 
-//GET ALL DISCUSSIONS IN A GROUP
+// GET ALL DISCUSSIONS IN A GROUP
 exports.getAllDiscussions = async (req, res) => {
   try {
     if ((await groupModel.findById(req.params.id)) === null) {
@@ -74,7 +74,7 @@ exports.getAllDiscussions = async (req, res) => {
   }
 };
 
-//DELETE A DISCUSSION BY ID
+// DELETE A DISCUSSION BY ID
 exports.deleteDiscussion = async (req, res) => {
   try {
     if ((await discModel.findById(req.params.id)) === null) {
@@ -92,7 +92,7 @@ exports.deleteDiscussion = async (req, res) => {
   }
 };
 
-//GET A DISCUSSION BY ID
+// GET A DISCUSSION BY ID
 exports.getDiscussion = async (req, res) => {
   try {
     const discussion = await discModel
@@ -112,7 +112,7 @@ exports.getDiscussion = async (req, res) => {
   }
 };
 
-//CREATE DISCUSSION
+// CREATE DISCUSSION
 exports.createDiscussion = async (req, res) => {
   try {
     if ((await groupModel.findById(req.params.id)) === null) {
@@ -141,7 +141,7 @@ exports.createDiscussion = async (req, res) => {
   }
 };
 
-//EDIT A DISCUSSION
+// EDIT A DISCUSSION
 exports.editDiscussion = async (req, res) => {
   try {
     //if discussion doesnt exist, end
@@ -165,7 +165,7 @@ exports.editDiscussion = async (req, res) => {
   }
 };
 
-//GET MEMBERS
+// GET MEMBERS
 exports.getMembers = async (req, res) => {
   try {
     if ((await groupModel.findById(req.params.id)) === null) {
@@ -190,7 +190,7 @@ exports.getMembers = async (req, res) => {
   }
 };
 
-//GET PHOTO POOL
+// GET PHOTO POOL
 exports.getPhotoPool = async (req, res) => {
   try {
     if ((await groupModel.findById(req.params.id)) === null) {
