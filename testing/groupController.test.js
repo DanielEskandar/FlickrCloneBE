@@ -82,7 +82,7 @@ describe('should retrieve discussion with ID 608f6e7519953b27004f6dac', () => {
 });
 
 //TESTING CREATE DISCUSSION
-describe('should create new discussion with id 608f3d0fb5998b4f34890a5e in group with id 608f3d0fb5ba8b4f34890a5e', () => {
+/*describe('should create new discussion with id 608f3d0fb5998b4f34890a5e in group with id 608f3d0fb5ba8b4f34890a5e', () => {
   test('', async () => {
     const mReq = {
       params: { id: '608f3d0fb5ba8b4f34890a5e' },
@@ -102,14 +102,14 @@ describe('should create new discussion with id 608f3d0fb5998b4f34890a5e in group
     expect(mRes.json).toBeCalledWith(groupTestData.createDiscussionData);
   });
 });
-
+*/
 //TESTING EDIT DISCUSSION
 describe('should edit content field in discussion with id 608f6e7519953b27004f6dab in group with id 608f3d0fb5ba8b4f34890a5e', () => {
   test('', async () => {
     const mReq = {
       params: { id: '608f6e7519953b27004f6dab' },
       body: {
-        content: 'i want pasta',
+        content: 'edit 1',
       },
     };
     const mRes = {
@@ -139,7 +139,7 @@ describe('should delete discussion with id 608f6e7519953b27004f6dab ', () => {
 });
 
 //TESTING CREATE GROUP
-describe('userid in headers should create new group with content in body, add userid as member and set as admin', () => {
+/*describe('userid in headers should create new group with content in body, add userid as member and set as admin', () => {
   test('', async () => {
     const mReq = {
       params: {},
@@ -162,3 +162,4 @@ describe('userid in headers should create new group with content in body, add us
     expect(mRes.json).toBeCalledWith(groupTestData.createGroupData);
   });
 });
+*/

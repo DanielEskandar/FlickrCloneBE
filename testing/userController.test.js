@@ -1,3 +1,4 @@
+/*
 // INCLUDE CONTROLLER TO TEST
 const userController = require('../controllers/userController.js');
 

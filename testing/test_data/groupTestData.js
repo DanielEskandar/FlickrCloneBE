@@ -121,7 +121,7 @@ module.exports.editDiscussionData = {
     replies: [],
     _id: '608f6e7519953b27004f6dab',
     user: '608d5450ec00005468607a0c',
-    content: 'i want pasta',
+    content: 'edit 1',
     date: '2021-01-01T00:00:00.000Z',
     __v: 0,
   },

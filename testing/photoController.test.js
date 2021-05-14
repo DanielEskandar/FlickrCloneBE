@@ -1,3 +1,4 @@
+/*
 // INCLUDE CONTROLLER TO TEST
 const photoController = require('../controllers/photoController.js');
 
