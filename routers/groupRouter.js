@@ -77,9 +77,9 @@ const groupRouter = express.Router();
  * @apiName CreateGroup
  * @apiGroup Group
  *
- * @apiBody {string} name Group Name
- * @apiBody {string} description About the group
- * @apiBody {date} startDate Creation date
+ * @apiParam (Request Body) {string} name Group Name
+ * @apiParam (Request Body) {string} description About the group
+ * @apiParam (Request Body) {date} startDate Creation date
  *
  * @apiSuccess {Object} user Authenticaton Token
  *
@@ -87,7 +87,7 @@ const groupRouter = express.Router();
  *
  * @apiUse UnauthError
  */
-groupRouter.post('/');
+groupRouter.post('/', groupController.createGroup);
 
 /**
  * @api {delete} /group/:id Admin deletes a group
@@ -167,7 +167,7 @@ groupRouter.get('/:id');
  *
  * @apiUse UnauthError
  */
-groupRouter.get('/', groupController.GetInfo);
+groupRouter.get('/', groupController.getInfo);
 /**
  * @api {post} /group/:id/user/:userid Join a public non-invitation group as a member
  * @apiVersion 1.0.0
@@ -269,9 +269,9 @@ groupRouter.get('/search');
  *
  * @apiParam {String} id The Group's ID
  *
- * @apiBody {Object} user Author
- * @apiBody {Date} date Date of publish
- * @apiBody {String} content Discussion content
+ * @apiParam (Request Body) {Object} user Author
+ * @apiParam (Request Body) {Date} date Date of publish
+ * @apiParam (Request Body) {String} content Discussion content
  *
  * @apiSuccess {Object} user Authenticaton Token
  *
@@ -293,8 +293,8 @@ groupRouter.post('/:id/discussion', groupController.createDiscussion);
  *
  * @apiParam {String} id The discussion's ID
  *
- * @apiBody {Object} discussion The old discussion
- * @apiBody {Object} discussion The updated discussion
+ * @apiParam (Request Body) {Object} discussion The old discussion
+ * @apiParam (Request Body) {Object} discussion The updated discussion
  *
  * @apiSuccess {string} Status Status of API
  *
@@ -310,7 +310,7 @@ groupRouter.post('/:id/discussion', groupController.createDiscussion);
  * @apiUse UnauthError
  * @apiUse ForbiddenAccss
  */
-groupRouter.patch('/discussion/:id', groupController.EditDiscussion);
+groupRouter.patch('/discussion/:id', groupController.editDiscussion);
 
 /**
  * @api {get} /group/discussion/:id Get information about a group discussion topic.
@@ -358,7 +358,7 @@ groupRouter.get('/discussion/:id', groupController.getDiscussion);
 * @apiUse GroupNotFoundError
 */
 
-groupRouter.get('/:id/discussion', groupController.GetAllDiscussions);
+groupRouter.get('/:id/discussion', groupController.getAllDiscussions);
 
 /**
  * @api {delete} /group/discussion/:id Deleting a discussion post from the group
@@ -382,7 +382,7 @@ groupRouter.get('/:id/discussion', groupController.GetAllDiscussions);
  * @apiUse UnauthError
  * @apiUse ForbiddenAccss
  */
-groupRouter.delete('/discussion/:id', groupController.DeleteDiscussion);
+groupRouter.delete('/discussion/:id', groupController.deleteDiscussion);
 
 /**
  * @api {patch} /group/:id/pinned/:topicId Setting a new pinned thread
@@ -395,8 +395,8 @@ groupRouter.delete('/discussion/:id', groupController.DeleteDiscussion);
  *
  * @apiHeader {string} Token Authenticaton Token
  *
- * @apiBody {Object} pinnedThread Old pinned thread or null
- * @apiBody {Object} pinnedThread new pinned thread
+ * @apiParam (Request Body) {Object} pinnedThread Old pinned thread or null
+ * @apiParam (Request Body) {Object} pinnedThread new pinned thread
  *
  * @apiSuccess {string} Status Status of API
  *
@@ -423,9 +423,9 @@ groupRouter.patch('/:id/pinned/:topicId');
  *
  * @apiParam {String} id The discussion's ID
  *
- * @apiBody {Object} user Author
- * @apiBody {Date} date Date of comment
- * @apiBody {String} content Reply content
+ * @apiParam (Request Body) {Object} user Author
+ * @apiParam (Request Body) {Date} date Date of comment
+ * @apiParam (Request Body) {String} content Reply content
  *
  * @apiSuccess {Object} user Authenticaton Token
  *
@@ -479,8 +479,8 @@ groupRouter.delete('/discussion/replies/:id');
  *
  * @apiHeader {string} Token Authenticaton Token
  *
- * @apiBody {Object} reply old reply
- * @apiBody {Object} reply new reply
+ * @apiParam (Request Body) {Object} reply old reply
+ * @apiParam (Request Body) {Object} reply new reply
  *
  * @apiSuccess {string} Status Status of API
  *
@@ -562,7 +562,7 @@ groupRouter.get('/discussion/:id/replies');
  * @apiUse GroupNotFoundError
  */
 
-groupRouter.get('/:id/members', groupController.GetMembers);
+groupRouter.get('/:id/members', groupController.getMembers);
 
 /**
  * @api {post} /group/:id/pool/:photoid Add a Photo to a Group Photo Pool
@@ -573,7 +573,7 @@ groupRouter.get('/:id/members', groupController.GetMembers);
  * @apiParam {String} id The Group's ID
  * @apiParam {String} photoid The photo's ID
  *
- * @apiBody {Object} photo Author
+ * @apiParam (Request Body) {Object} photo Author
  *
  * @apiSuccess {Object} user Authenticaton Token
  *
@@ -644,7 +644,7 @@ groupRouter.get('/:id/photo/:photoid/context');
  * @apiUse GroupNotFoundError
  */
 
-groupRouter.get('/:id/pool', groupController.GetPhotoPool);
+groupRouter.get('/:id/pool', groupController.getPhotoPool);
 
 /**
  * @api {delete} /group/:id/pool/:photoId Remove a Photo from a Group Photo Pool

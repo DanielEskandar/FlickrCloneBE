@@ -153,16 +153,17 @@ exports.getFaves = async (req, res) => {
         },
       });
 
-    res.status(200).send({
+    if (!favourites) {
+      throw new AppError('No user is found by that ID', 404);
+    }
+
+    res.status(200).json({
       status: 'success',
       count: favourites.favourites.length,
       data: JSON.parse(JSON.stringify(favourites)),
     });
   } catch (err) {
-    res.status(400).send({
-      status: 'error',
-      message: err,
-    });
+    errorController.sendError(err, req, res);
   }
 };
 
@@ -171,11 +172,11 @@ exports.addFave = async (req, res) => {
   try {
     // Check for existence of Photo
     if ((await photoModel.findById(req.params.id)) === null) {
-      res.status(404).send({
-        status: 'Error',
-        message: 'This PhotoID does not exist',
-      });
-      return;
+      throw new AppError('No photo is found by that ID', 404);
+    }
+
+    if ((await userModel.findById(req.headers.userid)) === null) {
+      throw new AppError('No user is found by that ID', 404);
     }
 
     if (
@@ -184,11 +185,7 @@ exports.addFave = async (req, res) => {
         favourites: { $elemMatch: { $eq: req.params.id } },
       })) !== null
     ) {
-      res.status(409).send({
-        status: 'Error',
-        message: 'This PhotoID is already in Faves',
-      });
-      return;
+      throw new AppError('Photo is already in Faves', 409);
     }
 
     //Increase Fave Count on Photo Model
@@ -224,15 +221,12 @@ exports.addFave = async (req, res) => {
       newUserFaveList: JSON.parse(JSON.stringify(updatedFaves)),
     };
 
-    res.status(200).send({
+    res.status(200).json({
       status: 'success',
       data: Updates,
     });
   } catch (err) {
-    res.status(400).send({
-      status: 'Error',
-      message: 'Bad Request',
-    });
+    errorController.sendError(err, req, res);
   }
 };
 
@@ -242,6 +236,10 @@ exports.removeFave = async (req, res) => {
     const faveList = await userModel
       .findById(req.headers.userid)
       .select({ favourites: 1 });
+
+    if (!faveList) {
+      throw new AppError('No user is found by that ID', 404);
+    }
 
     // Check if the Photo exits in User's Faves
     const favePhoto = faveList.favourites.find(
@@ -282,21 +280,15 @@ exports.removeFave = async (req, res) => {
         newUserFaveList: JSON.parse(JSON.stringify(updatedFaves)),
       };
 
-      res.status(200).send({
+      res.status(200).json({
         status: 'success',
         data: Updates,
       });
     } else {
-      res.status(404).send({
-        status: 'fail',
-        message: "This Photo doesn't exist in Faves",
-      });
+      throw new AppError('No photo is found by that ID in User faves', 404);
     }
   } catch (err) {
-    res.status(400).send({
-      status: 'fail',
-      message: 'Bad Request',
-    });
+    errorController.sendError(err, req, res);
   }
 };
 

@@ -209,7 +209,7 @@ albumRouter.delete('/:id');
  *
  * @apiParam {String} id The Album's ID
  *
- * @apiBody {Object[]} photos List of photos to remove from the album
+ * @apiParam (Request Body) {Object[]} photos List of photos to remove from the album
  *
  * @apiUse SuccessRes
  *
@@ -270,9 +270,9 @@ albumRouter.delete('/:id/comments/:commentid', albumController.deleteComment);
  * @apiName CreateAlbum
  * @apiGroup Album
  *
- * @apiBody {String} title Album's Name
- * @apiBody {String} description Album's Description
- * @apiBody {String} primaryphoto The first photo to add to your Album
+ * @apiParam (Request Body) {String} title Album's Name
+ * @apiParam (Request Body) {String} description Album's Description
+ * @apiParam (Request Body) {String} primaryphoto The first photo to add to your Album
  *
  * @apiUse SuccessRes
  *
@@ -289,7 +289,7 @@ albumRouter.post('/', albumController.createAlbum);
  *
  * @apiParam {String} id The album's ID
  *
- * @apiBody {String} photo The Photo to add to the album
+ * @apiParam (Request Body) {String} photo The Photo to add to the album
  *
  * @apiUse SuccessRes
  *
@@ -309,7 +309,7 @@ albumRouter.post('/:id/photos');
  *
  * @apiParam {String} id The album's ID
  *
- * @apiBody {String} body The body of the comment
+ * @apiParam (Request Body) {String} body The body of the comment
  *
  * @apiUse SuccessRes
  *
@@ -328,8 +328,8 @@ albumRouter.post('/:id/comments', albumController.addComment);
  *
  * @apiParam {String} id The album's ID
  *
- * @apiBody {String} primaryphoto The photo to use as primary photo for the album. Must also be included in the photos list
- * @apiBody {Object[]} photos The ordered list of photos to include in the album
+ * @apiParam (Request Body) {String} primaryphoto The photo to use as primary photo for the album. Must also be included in the photos list
+ * @apiParam (Request Body) {Object[]} photos The ordered list of photos to include in the album
  *
  * @apiUse SuccessRes
  *
@@ -348,8 +348,8 @@ albumRouter.patch('/:id/photos');
  *
  * @apiParam {String} id The album's ID
  *
- * @apiBody {String} title The title of the album
- * @apiBody {String} description The new description for the album
+ * @apiParam (Request Body) {String} title The title of the album
+ * @apiParam (Request Body) {String} description The new description for the album
  *
  * @apiUse SuccessRes
  *
@@ -368,7 +368,7 @@ albumRouter.patch('/:id/meta');
  *
  * @apiParam {String} id The comment's ID
  *
- * @apiBody {String} body Update  the comment to this text
+ * @apiParam (Request Body) {String} body Update  the comment to this text
  *
  * @apiUse SuccessRes
  *
@@ -412,7 +412,7 @@ albumRouter.patch('/:id/primary/:photoid');
  * @apiName SetAlbumsOrder
  * @apiGroup Album
  *
- * @apiBody {Object[]} albums Ordered list of albums
+ * @apiParam (Request Body) {Object[]} albums Ordered list of albums
  *
  * @apiUse SuccessRes
  *
@@ -429,7 +429,7 @@ albumRouter.patch('/setorder');
  *
  * @apiParam {String} id The album's ID
  *
- * @apiBody {Object[]} photos Ordered list of photos
+ * @apiParam (Request Body) {Object[]} photos Ordered list of photos
  *
  * @apiUse SuccessRes
  *
