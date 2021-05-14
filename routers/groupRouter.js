@@ -77,9 +77,9 @@ const groupRouter = express.Router();
  * @apiName CreateGroup
  * @apiGroup Group
  *
- * @apiBody {string} name Group Name
- * @apiBody {string} description About the group
- * @apiBody {date} startDate Creation date
+ * @apiParam (Request Body) {string} name Group Name
+ * @apiParam (Request Body) {string} description About the group
+ * @apiParam (Request Body) {date} startDate Creation date
  *
  * @apiSuccess {Object} user Authenticaton Token
  *
@@ -269,9 +269,9 @@ groupRouter.get('/search');
  *
  * @apiParam {String} id The Group's ID
  *
- * @apiBody {Object} user Author
- * @apiBody {Date} date Date of publish
- * @apiBody {String} content Discussion content
+ * @apiParam (Request Body) {Object} user Author
+ * @apiParam (Request Body) {Date} date Date of publish
+ * @apiParam (Request Body) {String} content Discussion content
  *
  * @apiSuccess {Object} user Authenticaton Token
  *
@@ -293,8 +293,8 @@ groupRouter.post('/:id/discussion', groupController.createDiscussion);
  *
  * @apiParam {String} id The discussion's ID
  *
- * @apiBody {Object} discussion The old discussion
- * @apiBody {Object} discussion The updated discussion
+ * @apiParam (Request Body) {Object} discussion The old discussion
+ * @apiParam (Request Body) {Object} discussion The updated discussion
  *
  * @apiSuccess {string} Status Status of API
  *
@@ -395,8 +395,8 @@ groupRouter.delete('/discussion/:id', groupController.deleteDiscussion);
  *
  * @apiHeader {string} Token Authenticaton Token
  *
- * @apiBody {Object} pinnedThread Old pinned thread or null
- * @apiBody {Object} pinnedThread new pinned thread
+ * @apiParam (Request Body) {Object} pinnedThread Old pinned thread or null
+ * @apiParam (Request Body) {Object} pinnedThread new pinned thread
  *
  * @apiSuccess {string} Status Status of API
  *
@@ -423,9 +423,9 @@ groupRouter.patch('/:id/pinned/:topicId');
  *
  * @apiParam {String} id The discussion's ID
  *
- * @apiBody {Object} user Author
- * @apiBody {Date} date Date of comment
- * @apiBody {String} content Reply content
+ * @apiParam (Request Body) {Object} user Author
+ * @apiParam (Request Body) {Date} date Date of comment
+ * @apiParam (Request Body) {String} content Reply content
  *
  * @apiSuccess {Object} user Authenticaton Token
  *
@@ -479,8 +479,8 @@ groupRouter.delete('/discussion/replies/:id');
  *
  * @apiHeader {string} Token Authenticaton Token
  *
- * @apiBody {Object} reply old reply
- * @apiBody {Object} reply new reply
+ * @apiParam (Request Body) {Object} reply old reply
+ * @apiParam (Request Body) {Object} reply new reply
  *
  * @apiSuccess {string} Status Status of API
  *
@@ -573,7 +573,7 @@ groupRouter.get('/:id/members', groupController.getMembers);
  * @apiParam {String} id The Group's ID
  * @apiParam {String} photoid The photo's ID
  *
- * @apiBody {Object} photo Author
+ * @apiParam (Request Body) {Object} photo Author
  *
  * @apiSuccess {Object} user Authenticaton Token
  *

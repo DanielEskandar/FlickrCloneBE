@@ -54,11 +54,11 @@ const userRouter = express.Router();
  * @apiName SignUp
  * @apiGroup User
  *
- * @apiBody {string} username The Username of the User
- * @apiBody {string} email The Email of the User
- * @apiBody {string} firstname The First Name of the User
- * @apiBody {string} lastname The Last Name of the User
- * @apiBody {string} age The Age of the User
+ * @apiParam (Request Body) {string} username The Username of the User
+ * @apiParam (Request Body) {string} email The Email of the User
+ * @apiParam (Request Body) {string} firstname The First Name of the User
+ * @apiParam (Request Body) {string} lastname The Last Name of the User
+ * @apiParam (Request Body) {string} age The Age of the User
  *
  * @apiSuccess {string} Status Status of API
  *
@@ -92,8 +92,8 @@ userRouter.post('/confirm');
  * @apiName SignUpConfirm
  * @apiGroup User
  *
- * @apiBody {string} username Username entered by user
- * @apiBody (string) password Password entered by user
+ * @apiParam (Request Body) {string} username Username entered by user
+ * @apiParam (Request Body) (string) password Password entered by user
  *
  * @apiSuccess {string} Token Authenticaton Token
  *
@@ -738,7 +738,7 @@ userRouter.get('/disp-name', userController.getDispName);
  *
  * @apiHeader {string} Token Authenticaton Token
  *
- * @apiBody {string} displayname The New Display name of the calling User
+ * @apiParam (Request Body) {string} displayname The New Display name of the calling User
  *
  * @apiSuccess {string} Status Status of API
  *
@@ -757,9 +757,9 @@ userRouter.patch('/disp-name');
  *
  * @apiHeader {string} Token Authenticaton Token
  *
- * @apiBody {string} oldpassword The Pervious Password of the calling User
- * @apiBody {string} newpassword The New Password of the calling User
- * @apiBody {string} confirmpassword Confirming the New Password of the calling User
+ * @apiParam (Request Body) {string} oldpassword The Pervious Password of the calling User
+ * @apiParam (Request Body) {string} newpassword The New Password of the calling User
+ * @apiParam (Request Body) {string} confirmpassword Confirming the New Password of the calling User
  *
  * @apiSuccess {string} Status Status of API
  *
@@ -776,8 +776,8 @@ userRouter.patch('/password');
  * @apiName ForgetPassword
  * @apiGroup User
  *
- * @apiBody {string} username The Username of the User
- * @apiBody {string} email The Email of the User
+ * @apiParam (Request Body) {string} username The Username of the User
+ * @apiParam (Request Body) {string} email The Email of the User
  *
  * @apiSuccess {string} Status Status of API
  *
@@ -796,8 +796,8 @@ userRouter.post('/forget-password');
  *
  * @apiHeader {string} Token Authenticaton Token
  *
- * @apiBody {string} newpassword The New Password of the calling User
- * @apiBody {string} confirmpassword Confirming the New Password of the calling User
+ * @apiParam (Request Body) {string} newpassword The New Password of the calling User
+ * @apiParam (Request Body) {string} confirmpassword Confirming the New Password of the calling User
  *
  * @apiSuccess {string} Status Status of API
  *
@@ -1194,7 +1194,7 @@ userRouter.post('/follow/:id');
  *
  * @apiParam {String} id The Followed User's ID
  *
- * @apiBody {String} relation New Relation Setting (Friend, Family, none)
+ * @apiParam (Request Body) {String} relation New Relation Setting (Friend, Family, none)
  *
  * @apiHeader {string} Token Authenticaton Token
  *
@@ -1322,10 +1322,10 @@ userRouter.get('/messages/inbox');
  *
  * @apiHeader {String} Token Authenticaton Token
  *
- * @apiBody {ObjectID} recieverid User ID of the User recieving the Message
- * @apiBody {String} subject Subject Line of the Message
- * @apiBody {String} body Main Content of the Message
- * @apiBody {ObjectID} replymsg Message being replied to (null if none)
+ * @apiParam (Request Body) {ObjectID} recieverid User ID of the User recieving the Message
+ * @apiParam (Request Body) {String} subject Subject Line of the Message
+ * @apiParam (Request Body) {String} body Main Content of the Message
+ * @apiParam (Request Body) {ObjectID} replymsg Message being replied to (null if none)
  *
  * @apiUse SuccessRes
  *
