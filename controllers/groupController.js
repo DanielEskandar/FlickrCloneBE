@@ -151,13 +151,11 @@ exports.createDiscussion = async (req, res) => {
         runValidators: true,
       }
     ); //pushing new discussion topic to group
-
+    //   const author = await userModel.findById(req.headers.userid);
     const newDiscussion = await discModel.findByIdAndUpdate(
       Discussion,
       {
-        $addToSet: {
-          user: req.headers.userid,
-        },
+        user: req.headers.userid,
       },
       {
         new: true,

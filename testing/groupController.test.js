@@ -91,7 +91,7 @@ describe('should create new discussion with id 608d33c7e512b74ee00791df in group
         content: 'best pastaaa ever',
         date: '2021-01-01',
       },
-      headers: { id: '608d55c7e512b74ee00791de' },
+      headers: { userid: '608d55c7e512b74ee00791de' },
     };
     const mRes = {
       status: jest.fn().mockReturnThis(),
