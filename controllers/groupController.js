@@ -2,8 +2,9 @@
 const groupModel = require('../models/groupModel.js');
 const discModel = require('../models/discussionModel.js');
 const userModel = require('../models/userModel.js');
-
+const replyModel = require('../models/replyModel.js');
 // INCLUDE ERROR CLASS AND ERROR CONTROLLER
+
 const AppError = require('../utils/appError.js');
 const errorController = require('./errorController.js');
 
@@ -239,6 +240,47 @@ exports.getPhotoPool = async (req, res) => {
     res.status(200).json({
       status: 'success',
       data: JSON.parse(JSON.stringify(photos)),
+    });
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};
+
+exports.getReply = async (req, res) => {
+  try {
+    const reply = await replyModel.findById(req.params.id).select({ _id: 0 });
+
+    if (!reply) {
+      throw new AppError('No Reply Found with this ID', 404);
+    }
+
+    res.status(200).json({
+      status: 'success',
+      data: JSON.parse(JSON.stringify(reply)),
+    });
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};
+
+exports.getAllReplies = async (req, res) => {
+  try {
+    if ((await discModel.findById(req.params.id)) === null) {
+      throw new AppError('No discussion Found with this ID', 404);
+    }
+
+    const replies = await discModel
+      .findById(req.params.id)
+      .select({ _id: 0 })
+      .select('replies');
+
+    if (replies === null) {
+      throw new AppError('No Replies Found', 404);
+    }
+
+    res.status(200).json({
+      status: 'success',
+      data: JSON.parse(JSON.stringify(replies)),
     });
   } catch (err) {
     errorController.sendError(err, req, res);

@@ -81,6 +81,33 @@ describe('should retrieve discussion with ID 608f6e7519953b27004f6dac', () => {
   });
 });
 
+//TESTING GET REPLY
+describe('should retrieve reply with ID 609fe93c38075024f8d3e6f5', () => {
+  test(' ', async () => {
+    const mReq = { params: { id: '609fe93c38075024f8d3e6f5' } };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await groupController.getReply(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(groupTestData.getReplyData);
+  });
+});
+
+//TEST GET ALL REPLIES
+describe('should retrieve replies on discussion id 608d55c7e512b74ee00791dd', () => {
+  test('should retrieve 1 reply ', async () => {
+    const mReq = { params: { id: '608d55c7e512b74ee00791dd' } };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await groupController.getAllReplies(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(groupTestData.getAllRepliesData);
+  });
+});
 //TESTING CREATE DISCUSSION
 describe('should create new discussion with id 608d33c7e512b74ee00791df in group with id 608f3d0fb5ba8b4f34890a5e', () => {
   test('', async () => {
@@ -104,10 +131,10 @@ describe('should create new discussion with id 608d33c7e512b74ee00791df in group
 });
 
 //TESTING EDIT DISCUSSION
-describe('should edit content field in discussion with id 608f6e7519953b27004f6dab in group with id 608f3d0fb5ba8b4f34890a5e', () => {
+describe('should edit content field in discussion with id 608f6e7519953b27004f6dac', () => {
   test('', async () => {
     const mReq = {
-      params: { id: '608f6e7519953b27004f6dab' },
+      params: { id: '608f6e7519953b27004f6dac' },
       body: {
         content: 'edit 1',
       },

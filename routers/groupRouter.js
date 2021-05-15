@@ -502,7 +502,7 @@ groupRouter.patch('/discussion/replies/:id');
 /**
  * @api {get} /group/discussion/replies/:id Get info about a discussion topic reply
  * @apiVersion 1.0.0
- * @apiName GetReply
+ * @apiName getReply
  * @apiGroup Group
  *
  * @apiParam {String} id The reply's ID
@@ -520,12 +520,12 @@ groupRouter.patch('/discussion/replies/:id');
  * @apiUse UnauthError
  */
 
-groupRouter.get('/discussion/replies/:id');
+groupRouter.get('/discussion/replies/:id', groupController.getReply);
 
 /**
  * @api {get} /group/discussion/:id/replies Get a list of replies from a group discussion topic.
  * @apiVersion 1.0.0
- * @apiName GetAllReplies
+ * @apiName getAllReplies
  * @apiGroup Group
  *
  * @apiParam {String} id The discussion's ID
@@ -543,7 +543,7 @@ groupRouter.get('/discussion/replies/:id');
  * @apiUse UnauthError
  */
 
-groupRouter.get('/discussion/:id/replies');
+groupRouter.get('/discussion/:id/replies', groupController.getAllReplies);
 
 /**
  * @api {get} /group/:id/members Get a list of the members of a group.
