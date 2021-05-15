@@ -418,7 +418,7 @@ groupRouter.patch('/:id/pinned/:topicId');
 /**
  * @api {post} /group/discussion/:id/replies Add a reply to a discussion topic
  * @apiVersion 1.0.0
- * @apiName AddReply
+ * @apiName addReply
  * @apiGroup Group
  *
  * @apiParam {String} id The discussion's ID
@@ -442,7 +442,7 @@ groupRouter.patch('/:id/pinned/:topicId');
  * @apiUse ForbiddenAccss
  */
 
-groupRouter.post('/discussion/:id/replies');
+groupRouter.post('/discussion/:id/replies', groupController.addReply);
 
 /**
  * @api {delete} /group/discussion/replies/:id Deleting a reply on a discussion topic

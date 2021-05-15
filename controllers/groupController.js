@@ -189,6 +189,50 @@ exports.createDiscussion = async (req, res) => {
   }
 };
 
+// ADD REPLY
+exports.addReply = async (req, res) => {
+  try {
+    //validations on discussion ID
+    if ((await discModel.findById(req.params.id)) === null) {
+      throw new AppError('No Discussion Found with this ID', 404);
+    }
+
+    const reply = await replyModel.create(req.body); //create new reply instance
+
+    await discModel.findByIdAndUpdate(
+      req.params.id,
+      {
+        $push: {
+          replies: {
+            _id: reply._id,
+          },
+        },
+      },
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
+    //  authoriztation
+    const newReply = await replyModel.findByIdAndUpdate(
+      reply,
+      {
+        user: req.headers.userid,
+      },
+      {
+        new: true,
+        runValidators: true,
+      }
+    ); //reply author
+    res.status(200).json({
+      status: 'success',
+      data: JSON.parse(JSON.stringify(newReply)),
+    });
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};
+
 // EDIT A DISCUSSION
 exports.editDiscussion = async (req, res) => {
   try {

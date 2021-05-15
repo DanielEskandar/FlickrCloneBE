@@ -130,6 +130,28 @@ describe('should create new discussion with id 608d33c7e512b74ee00791df in group
   });
 });
 
+//TESTING ADD REPLY
+describe('should create new reply with id 610fe93c38075024f8d3e6f3 on discussion with id 608d55c7e512b74ee00791dd', () => {
+  test('', async () => {
+    const mReq = {
+      params: { id: '608d55c7e512b74ee00791dd' },
+      body: {
+        _id: '610fe93c38075024f8d3e6f3',
+        content: 'mori sushi is the best',
+        date: '2021-01-01',
+      },
+      headers: { userid: '608d55c7e512b74ee00791de' },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await groupController.addReply(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(groupTestData.addReplyData);
+  });
+});
+
 //TESTING EDIT DISCUSSION
 describe('should edit content field in discussion with id 608f6e7519953b27004f6dac', () => {
   test('', async () => {

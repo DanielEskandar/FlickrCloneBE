@@ -133,6 +133,17 @@ module.exports.createDiscussionData = {
   },
 };
 
+module.exports.addReplyData = {
+  status: 'success',
+  data: {
+    _id: '610fe93c38075024f8d3e6f3',
+    content: 'mori sushi is the best',
+    date: '2021-01-01T00:00:00.000Z',
+    __v: 0,
+    user: '608d55c7e512b74ee00791de',
+  },
+};
+
 module.exports.editDiscussionData = {
   status: 'success',
   data: {
