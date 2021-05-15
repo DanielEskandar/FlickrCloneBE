@@ -28,7 +28,7 @@ exports.getInfo = async (req, res) => {
 // CREATE NEW GROUP
 exports.createGroup = async (req, res) => {
   try {
-    const admin = await userModel.findById(req.headers.userid);
+    const creator = await userModel.findById(req.headers.userid);
     const newGroup = await groupModel.create(req.body);
 
     if (!newGroup) {
@@ -36,13 +36,28 @@ exports.createGroup = async (req, res) => {
     }
 
     //add group creator and set as admin
-    await groupModel.findByIdAndUpdate(newGroup._id, {
-      $push: { users: admin, $set: { admin: true } },
-    });
+    const updatedGroup = await groupModel
+      .findByIdAndUpdate(
+        newGroup,
+        {
+          $addToSet: {
+            users: {
+              userId: creator,
+              joinDate: '2021-01-01',
+              admin: true,
+            },
+          },
+        },
+        {
+          new: true,
+          runValidators: true,
+        }
+      )
+      .select({ users: { _id: 0 } });
 
     res.status(200).json({
       status: 'success',
-      data: JSON.parse(JSON.stringify(newGroup)),
+      data: JSON.parse(JSON.stringify(updatedGroup)),
     });
   } catch (err) {
     errorController.sendError(err, req, res);
@@ -115,23 +130,38 @@ exports.getDiscussion = async (req, res) => {
 // CREATE DISCUSSION
 exports.createDiscussion = async (req, res) => {
   try {
+    //validations on group ID
     if ((await groupModel.findById(req.params.id)) === null) {
       throw new AppError('No Group Found with this ID', 404);
     }
 
-    const newDiscussion = await discModel.create(req.body); //create new discussion instance
+    const Discussion = await discModel.create(req.body); //create new discussion instance
 
     await groupModel.findByIdAndUpdate(
       req.params.id,
       {
-        $push: { discussionTopics: newDiscussion },
+        $push: {
+          discussionTopics: {
+            _id: Discussion._id,
+          },
+        },
       },
       {
         new: true,
         runValidators: true,
       }
-    );
-
+    ); //pushing new discussion topic to group
+    //   const author = await userModel.findById(req.headers.userid);
+    const newDiscussion = await discModel.findByIdAndUpdate(
+      Discussion,
+      {
+        user: req.headers.userid,
+      },
+      {
+        new: true,
+        runValidators: true,
+      }
+    ); //pushing user in new discussion
     res.status(200).json({
       status: 'success',
       data: JSON.parse(JSON.stringify(newDiscussion)),

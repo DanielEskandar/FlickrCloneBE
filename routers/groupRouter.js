@@ -149,7 +149,7 @@ groupRouter.get('/:id');
 /**
  * @api {get} /group/ Get All group's info
  * @apiVersion 1.0.0
- * @apiName GetInfo
+ * @apiName getInfo
  * @apiGroup Group
  *
  * @apiSuccess {Object[]} group All groups
@@ -289,7 +289,7 @@ groupRouter.post('/:id/discussion', groupController.createDiscussion);
  * @apiName EditDiscussion
  * @apiGroup Group
  *
- * @apiHeader {string} Token Authenticaton Token
+ * @apiHeader {string} user Authenticaton Token
  *
  * @apiParam {String} id The discussion's ID
  *
@@ -337,7 +337,7 @@ groupRouter.get('/discussion/:id', groupController.getDiscussion);
 /** 
 * @api {get} /group/:id/discussion Get a list of discussion topics in a group.
 * @apiVersion 1.0.0
-* @apiName GetAllDiscussions
+* @apiName getAllDiscussions
 * @apiGroup Group
 *
 * @apiParam {String} id The group's ID

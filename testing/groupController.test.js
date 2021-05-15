@@ -82,16 +82,16 @@ describe('should retrieve discussion with ID 608f6e7519953b27004f6dac', () => {
 });
 
 //TESTING CREATE DISCUSSION
-describe('should create new discussion with id 608f3d0fb5998b4f34890a5e in group with id 608f3d0fb5ba8b4f34890a5e', () => {
+describe('should create new discussion with id 608d33c7e512b74ee00791df in group with id 608f3d0fb5ba8b4f34890a5e', () => {
   test('', async () => {
     const mReq = {
       params: { id: '608f3d0fb5ba8b4f34890a5e' },
       body: {
-        _id: '608f3d0fb5998b4f34890a5e',
-        content: 'i want fresh mango',
-        date: '2020-02-02',
+        _id: '608d33c7e512b74ee00791df',
+        content: 'best pastaaa ever',
+        date: '2021-01-01',
       },
-      headers: { id: '608d5450ec00005468607a0c' },
+      headers: { userid: '608d55c7e512b74ee00791de' },
     };
     const mRes = {
       status: jest.fn().mockReturnThis(),
@@ -109,7 +109,7 @@ describe('should edit content field in discussion with id 608f6e7519953b27004f6d
     const mReq = {
       params: { id: '608f6e7519953b27004f6dab' },
       body: {
-        content: 'i want pasta',
+        content: 'edit 1',
       },
     };
     const mRes = {
@@ -144,14 +144,11 @@ describe('userid in headers should create new group with content in body, add us
     const mReq = {
       params: {},
       body: {
-        _id: '608f3d0fb5b8184f34890a50',
-        public: true,
-        name: 'Backend Test1',
-        invitation: true,
-        description: 'this is create group api test.',
-        startDate: '2021-01-01',
+        _id: '609eed338a55978b34e2f061',
+        name: 'backend unit test',
+        startDate: '2021-01-02',
       },
-      headers: { userid: '608d5450ec00005468607a0c' },
+      headers: { userid: '608d55c7e512b74ee00791de' },
     };
     const mRes = {
       status: jest.fn().mockReturnThis(),
