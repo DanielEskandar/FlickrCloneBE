@@ -1,4 +1,3 @@
-/*
 // INCLUDE CONTROLLER TO TEST
 const galleryController = require('../controllers/galleryController.js');
 const commentModel = require('../models/commentModel');

@@ -1,4 +1,3 @@
-/*
 // INCLUDE CONTROLLER TO TEST
 const albumController = require('../controllers/albumController.js');
 const commentModel = require('../models/commentModel');
@@ -140,4 +139,3 @@ describe('should Create an album', () => {
     expect(mRes.json).toBeCalledWith(albumTestData.createAlbumData);
   });
 });
-*/
