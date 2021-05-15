@@ -167,11 +167,93 @@ photoRouter.delete('/:id/');
  *          "status": "success",
  *          "data":
  *          {
- *              "permissions": {
- *                0, 1, 1
- *              }
- *              "isfavourite : " 0,
- *              "rotationAngle: " 90
+ *            "sizes": {
+ *             "size": {
+ *             "original": {
+ *                "height": 120,
+ *                "width": 60,
+ *                "source": "https://www.google.com/",
+ *                "url": "https://www.google.com/"
+ *              },
+ *             "large": {
+ *               "height": 190,
+ *                "width": 20,
+ *                "source": "https://www.google.com/",
+ *                "url": "https://www.google.com/"
+ *               },
+ *             "medium800": {
+ *               "height": 200,
+ *               "width": 60,
+ *               "source": "https://www.google.com/",
+ *               "url": "https://www.google.com/"
+ *               },
+ *             "medium640": {
+ *               "height": 1200,
+ *               "width": 60,
+ *               "source": "https://www.google.com/",
+ *               "url": "https://www.google.com/"
+ *               },
+ *             "medium": {
+ *               "height": 120,
+ *               "width": 600,
+ *               "source": "https://www.google.com/",
+ *               "url": "https://www.google.com/"
+ *               },
+ *             "small320": {
+ *               "height": 12,
+ *               "width": 60,
+ *               "source": "https://www.google.com/",
+ *               "url": "https://www.google.com/"
+ *               },
+ *             "small": {
+ *               "height": 1000,
+ *               "width": 60,
+ *               "source": "https://www.google.com/",
+ *               "url": "https://www.google.com/"
+ *               },
+ *             "thumbnail": {
+ *               "height": 50,
+ *               "width": 50,
+ *               "source": "https://www.google.com/",
+ *               "url": "https://www.google.com/"
+ *               },
+ *             "largeSquare": {
+ *               "height": 120,
+ *               "width": 120,
+ *               "source": "https://www.google.com/",
+ *               "url": "https://www.google.com/"
+ *               },
+ *             "square": {
+ *               "height": 60,
+ *               "width": 60,
+ *               "source": "https://www.google.com/",
+ *               "url": "https://www.google.com/"
+ *               }
+ *           },
+ *           "canDownload": false
+ *           },
+ *       "comments": [],
+ *       "favourites": 7,
+ *       "views": 21,
+ *       "tags": [
+ *       "#sunset"
+ *       ],
+ *       "userId": "608d55c7e512b74ee00791db",
+ *       "title": "Some Title",
+ *       "description": "Amazing shot",
+ *       "dateUploaded": "2012-04-23T18:25:43.511Z",
+ *      "dateTaken": "2013-04-23T18:25:43.511Z",
+ *       "location": "608d5450ec00005468604a0c",
+ *       "EXIF": "123erf",
+ *       "contentType": "Screenshot",
+ *       "peopleTagged": [
+ *       {
+ *           "_id": "609093af84b808271488fafd",
+ *          "userId": "608d5450ec00005468604a0c",
+ *           "tagDate": "2012-04-13T18:25:43.511Z"
+ *       }
+ *       ],
+ *       "__v": 0
  *          }
  *      }
  *
@@ -512,11 +594,7 @@ photoRouter.get('/:id/perm');
  *
  * @apiParam {String} id The Photo's ID
  *
- * @apiSuccess {String[]} nameofsize Array of The Labels for the Size
- * @apiSuccess {Number[]} widths Array of the Widths of the Photo in Each Size
- * @apiSuccess {Number[]} heigths Array of the Heights of the Photo in Each Size
- * @apiSuccess {String[]} sizeurl Array of the URLs of the Photo in each Size
- * @apiSuccess {String[]} sourceurl Array of the Source URLs
+ * @apiSuccess {String[]} sizes Array of the Size
  *
  * @apiSuccessExample Success-Response:
  *      HTTP/1.1 200 OK
@@ -524,7 +602,71 @@ photoRouter.get('/:id/perm');
  *          "status": "success",
  *          "data":
  *          {
- *
+ *              "sizes": {
+ *                  "size": {
+ *                  "original": {
+ *                   "height": 120,
+ *                   "width": 60,
+ *                   "source": "https://www.google.com/",
+ *                   "url": "https://www.google.com/"
+ *                  },
+ *                 "large": {
+ *                   "height": 190,
+ *                   "width": 20,
+ *                  "source": "https://www.google.com/",
+ *                  "url": "https://www.google.com/"
+ *                  },
+ *                  "medium800": {
+ *                  "height": 200,
+ *                  "width": 60,
+ *                  "source": "https://www.google.com/",
+ *                  "url": "https://www.google.com/"
+ *                  },
+ *                  "medium640": {
+ *                  "height": 1200,
+ *                  "width": 60,
+ *                  "source": "https://www.google.com/",
+ *                   "url": "https://www.google.com/"
+ *                   },
+ *                   "medium": {
+ *                   "height": 120,
+ *                   "width": 600,
+ *                  "source": "https://www.google.com/",
+ *                   "url": "https://www.google.com/"
+ *                   },
+ *                   "small320": {
+ *                   "height": 12,
+ *                   "width": 60,
+ *                   "source": "https://www.google.com/",
+ *                   "url": "https://www.google.com/"
+ *                   },
+ *                   "small": {
+ *                   "height": 1000,
+ *                   "width": 60,
+ *                   "source": "https://www.google.com/",
+ *                   "url": "https://www.google.com/"
+ *                   },
+ *                   "thumbnail": {
+ *                   "height": 50,
+ *                   "width": 50,
+ *                   "source": "https://www.google.com/",
+ *                   "url": "https://www.google.com/"
+ *                   },
+ *                   "largeSquare": {
+ *                   "height": 120,
+ *                   "width": 120,
+ *                   "source": "https://www.google.com/",
+ *                   "url": "https://www.google.com/"
+ *                   },
+ *                   "square": {
+ *                   "height": 60,
+ *                   "width": 60,
+ *                   "source": "https://www.google.com/",
+ *                   "url": "https://www.google.com/"
+ *                   }
+ *               },
+ *               "canDownload": false
+ *               }
  *          }
  *      }
  *
@@ -640,7 +782,8 @@ photoRouter.patch('/:id/safety-level');
  *
  * @apiHeader {string} Token Authenticaton Token
  *
- * @apiParam (Request Body) {String} commenttext The Text in the Comment
+ * @apiParam (Request Body) {String} body The Text in the Comment
+ * @apiParam (Request Body) {String} userId The ID of the Commenting User
  *
  * @apiUse SuccessRes
  *
@@ -681,7 +824,7 @@ photoRouter.delete('/:id/comments/:commentid', photoController.deleteComment);
  *
  * @apiHeader {string} Token Authenticaton Token
  *
- * @apiParam (Request Body) {String} id The New Comment Text
+ * @apiParam (Request Body) {String} body The New Comment Text
  *
  * @apiSuccess {string} Status Status of API
  *
