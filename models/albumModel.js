@@ -1,5 +1,6 @@
 // INCLUDE DEPENDENCIES
 const mongoose = require('mongoose');
+
 // CREATE SCHEMA
 const albumSchema = new mongoose.Schema({
   albumName: {

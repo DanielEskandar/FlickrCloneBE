@@ -227,9 +227,9 @@ galleryRouter.delete(
  * @apiName CreateGallery
  * @apiGroup Gallery
  *
- * @apiBody {String} title Gallery's Name
- * @apiBody {String} description Gallery's Description
- * @apiBody {String} primaryphoto The first photo to add to your gallery
+ * @apiParam (Request Body) {String} title Gallery's Name
+ * @apiParam (Request Body) {String} description Gallery's Description
+ * @apiParam (Request Body) {String} primaryphoto The first photo to add to your gallery
  *
  * @apiUse SuccessRes
  *
@@ -246,7 +246,7 @@ galleryRouter.post('/', galleryController.createGallery);
  *
  * @apiParam {String} id The gallery's ID
  *
- * @apiBody {String} photo The Photo to add to the gallery
+ * @apiParam (Request Body) {String} photo The Photo to add to the gallery
  *
  * @apiUse SuccessRes
  *
@@ -265,7 +265,7 @@ galleryRouter.post('/:id/photos');
  *
  * @apiParam {String} id The gallery's ID
  *
- * @apiBody {String} body The body of the comment
+ * @apiParam (Request Body) {String} body The body of the comment
  *
  * @apiUse SuccessRes
  *
@@ -285,8 +285,8 @@ galleryRouter.post('/:id/comments', galleryController.addComment);
  *
  * @apiParam {String} id The gallery's ID
  *
- * @apiBody {String} primaryphoto The photo to use as primary photo for the gallery. Must also be included in the photos list
- * @apiBody {Object[]} photos The ordered list of photos to include in the gallery
+ * @apiParam (Request Body) {String} primaryphoto The photo to use as primary photo for the gallery. Must also be included in the photos list
+ * @apiParam (Request Body) {Object[]} photos The ordered list of photos to include in the gallery
  *
  * @apiUse SuccessRes
  *
@@ -306,8 +306,8 @@ galleryRouter.patch('/:id/photos');
  *
  * @apiParam {String} id The gallery's ID
  *
- * @apiBody {String} title The title of the Gallery
- * @apiBody {String} description The new description for the gallery
+ * @apiParam (Request Body) {String} title The title of the Gallery
+ * @apiParam (Request Body) {String} description The new description for the gallery
  *
  * @apiUse SuccessRes
  *
@@ -326,7 +326,7 @@ galleryRouter.patch('/:id/meta');
  *
  * @apiParam {String} id The comment's ID
  *
- * @apiBody {String} body Update the comment to this text
+ * @apiParam (Request Body) {String} body Update the comment to this text
  *
  * @apiUse SuccessRes
  *
@@ -372,7 +372,7 @@ galleryRouter.patch('/:id/primary/:photoid');
  * @apiParam {String} id The Gallery's ID
  * @apiParam {String} photoid The ID of the photo to set as primary
  *
- * @apiBody {String} comment The updated comment
+ * @apiParam (Request Body) {String} comment The updated comment
  *
  * @apiUse SuccessRes
  *

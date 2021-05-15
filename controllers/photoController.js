@@ -2,24 +2,9 @@
 const photoModel = require('../models/photoModel.js');
 const commentModel = require('../models/commentModel.js');
 
-// GET FAVOURITES FOR A PHOTO
-exports.getFavourites = async (req, res) => {
-  try {
-    const faves = await photoModel
-      .findById(req.params.id)
-      .select({ favourites: 1, _id: 0 });
-
-    res.status(200).send({
-      status: 'success',
-      data: JSON.parse(JSON.stringify(faves)),
-    });
-  } catch (err) {
-    res.status(400).send({
-      status: 'error',
-      message: err,
-    });
-  }
-};
+// INCLUDE ERROR CLASS AND ERROR CONTROLLER
+const AppError = require('../utils/appError.js');
+const errorController = require('./errorController.js');
 
 // GET INFORMATION FOR A PHOTO
 exports.getInformation = async (req, res) => {
@@ -31,30 +16,53 @@ exports.getInformation = async (req, res) => {
       hidden: 0,
       license: 0,
     });
-    res.status(200).send({
+
+    if (!info) {
+      throw new AppError('No Photo Found with this ID', 404);
+    }
+
+    res.status(200).json({
       status: 'success',
       data: JSON.parse(JSON.stringify(info)),
     });
   } catch (err) {
-    res.status(400).send({
-      status: 'error',
-      message: err,
+    errorController.sendError(err, req, res);
+  }
+};
+
+// GET FAVOURITES FOR A PHOTO
+exports.getFavourites = async (req, res) => {
+  try {
+    if (!(await photoModel.findById(req.params.id))) {
+      throw new AppError('No Photo Found with this ID', 404);
+    }
+
+    const faves = await photoModel
+      .findById(req.params.id)
+      .select({ favourites: 1, _id: 0 });
+
+    if (!faves) {
+      throw new AppError('No Faves Found for this Photo', 404);
+    }
+
+    res.status(200).json({
+      status: 'success',
+      data: JSON.parse(JSON.stringify(faves)),
     });
+  } catch (err) {
+    errorController.sendError(err, req, res);
   }
 };
 
 // ADD COMMENT TO PHOTO --
 exports.addComment = async (req, res) => {
   try {
-    if ((await photoModel.findById(req.params.id)) === null) {
-      res.status(400).send({
-        status: 'error',
-        message: "This photo ID doesn't exist",
-      });
-      return;
+    if (!(await photoModel.findById(req.params.id))) {
+      throw new AppError('No Photo Found with this ID', 404);
     }
+
     const newComment = await commentModel.create(req.body);
-    newComment._id = req.body.commentid;
+
     await photoModel.findByIdAndUpdate(
       req.params.id,
       {
@@ -65,15 +73,13 @@ exports.addComment = async (req, res) => {
         runValidators: true,
       }
     );
-    res.status(200).send({
+
+    res.status(200).json({
       status: 'success',
       data: JSON.parse(JSON.stringify(newComment)),
     });
   } catch (err) {
-    res.status(400).send({
-      status: 'error',
-      message: err,
-    });
+    errorController.sendError(err, req, res);
   }
 };
 
@@ -81,7 +87,7 @@ exports.addComment = async (req, res) => {
 exports.editComment = async (req, res) => {
   try {
     // Incoming ID in params is of comment this time
-    const edittedComment = await commentModel.findByIdAndUpdate(
+    const editedComment = await commentModel.findByIdAndUpdate(
       req.params.id,
       req.body,
       {
@@ -89,15 +95,17 @@ exports.editComment = async (req, res) => {
         new: true,
       }
     );
-    res.status(200).send({
+
+    if (!editedComment) {
+      throw new AppError('No Comment Found with this ID', 404);
+    }
+
+    res.status(200).json({
       status: 'success',
-      data: JSON.parse(JSON.stringify(edittedComment)),
+      data: JSON.parse(JSON.stringify(editedComment)),
     });
   } catch (err) {
-    res.status(404).send({
-      status: 'fail',
-      message: 'This Comment ID does not exist.',
-    });
+    errorController.sendError(err, req, res);
   }
 };
 
@@ -107,6 +115,10 @@ exports.deleteComment = async (req, res) => {
     const photoWithComment = await photoModel
       .findById(req.params.id)
       .select({ comments: 1, _id: 0 });
+
+    if (!photoWithComment) {
+      throw new AppError('No Photo Found with this ID', 404);
+    }
     const comment = photoWithComment.comments.find(
       (element) => element.toString() === req.params.commentid.toString()
     );
@@ -123,56 +135,62 @@ exports.deleteComment = async (req, res) => {
         }
       );
       await commentModel.findByIdAndDelete(req.params.commentid);
-      res.status(204).send({
+      res.status(204).json({
         status: 'success',
         data: 'deleted',
       });
     } else {
-      res.status(404).send({
-        status: 'fail',
-        message: 'This comment does not exist in this photo.',
-      });
+      throw new AppError('No Comment Found with this ID', 404);
     }
   } catch (err) {
-    res.status(404).send({
-      status: 'fail',
-      message: 'This photo ID does not exist.',
-    });
+    errorController.sendError(err, req, res);
   }
 };
 
 // GET COMMENTS
 exports.getComments = async (req, res) => {
   try {
+    if (!(await photoModel.findById(req.params.id))) {
+      throw new AppError('No Photo Found with this ID', 404);
+    }
+
     const comments = await photoModel
       .findById(req.params.id)
       .select({ comments: 1, _id: 0 });
-    res.status(200).send({
+
+    if (!comments) {
+      throw new AppError('No Comments Found for this Photo', 404);
+    }
+
+    res.status(200).json({
       status: 'success',
       data: JSON.parse(JSON.stringify(comments)),
     });
   } catch (err) {
-    res.status(400).send({
-      status: 'error',
-      message: err,
-    });
+    errorController.sendError(err, req, res);
   }
 };
 
-//GET SIZES
+// GET SIZES
 exports.getSizes = async (req, res) => {
   try {
+    if (!(await photoModel.findById(req.params.id))) {
+      throw new AppError('No Photo Found with this ID', 404);
+    }
+
     const sizes = await photoModel
       .findById(req.params.id)
       .select({ sizes: 1, _id: 0 });
-    res.status(200).send({
+
+    if (!sizes) {
+      throw new AppError('No Sizes Found for this Photo', 404);
+    }
+
+    res.status(200).json({
       status: 'success',
       data: JSON.parse(JSON.stringify(sizes)),
     });
   } catch (err) {
-    res.status(400).send({
-      status: 'error',
-      message: err,
-    });
+    errorController.sendError(err, req, res);
   }
 };

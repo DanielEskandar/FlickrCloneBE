@@ -2,6 +2,10 @@
 const userModel = require('../models/userModel.js');
 const photoModel = require('../models/photoModel');
 
+// INCLUDE ERROR CLASS AND ERROR CONTROLLER
+const AppError = require('../utils/appError.js');
+const errorController = require('./errorController.js');
+
 // GET REAL NAME
 exports.getRealName = async (req, res) => {
   try {
@@ -9,15 +13,16 @@ exports.getRealName = async (req, res) => {
       .findById(req.headers.userid)
       .select({ firstName: 1, lastName: 1, _id: 0 });
 
-    res.status(200).send({
+    if (!realName) {
+      throw new AppError('No user is found by that ID', 404);
+    }
+
+    res.status(200).json({
       status: 'success',
-      data: realName.toJSON(),
+      data: JSON.parse(JSON.stringify(realName)),
     });
   } catch (err) {
-    res.status(400).send({
-      status: 'error',
-      message: err,
-    });
+    errorController.sendError(err, req, res);
   }
 };
 
@@ -28,15 +33,16 @@ exports.getDispName = async (req, res) => {
       .findById(req.headers.userid)
       .select({ displayName: 1, _id: 0 });
 
-    res.status(200).send({
+    if (!dispName) {
+      throw new AppError('No user is found by that ID', 404);
+    }
+
+    res.status(200).json({
       status: 'success',
-      data: dispName.toJSON(),
+      data: JSON.parse(JSON.stringify(dispName)),
     });
   } catch (err) {
-    res.status(400).send({
-      status: 'error',
-      message: err,
-    });
+    errorController.sendError(err, req, res);
   }
 };
 
@@ -53,15 +59,16 @@ exports.getUserInfo = async (req, res) => {
       _id: 0,
     });
 
-    res.status(200).send({
+    if (!userInfo) {
+      throw new AppError('No user is found by that ID', 404);
+    }
+
+    res.status(200).json({
       status: 'success',
-      data: userInfo.toJSON(),
+      data: JSON.parse(JSON.stringify(userInfo)),
     });
   } catch (err) {
-    res.status(404).send({
-      status: 'error',
-      message: 'No user is found by that user ID',
-    });
+    errorController.sendError(err, req, res);
   }
 };
 
@@ -72,15 +79,16 @@ exports.getLimits = async (req, res) => {
       .findById(req.headers.userid)
       .select({ limits: 1, _id: 0 });
 
-    res.status(200).send({
+    if (!limits) {
+      throw new AppError('No user is found by that ID', 404);
+    }
+
+    res.status(200).json({
       status: 'success',
-      data: limits.toJSON(),
+      data: JSON.parse(JSON.stringify(limits)),
     });
   } catch (err) {
-    res.status(400).send({
-      status: 'error',
-      message: err,
-    });
+    errorController.sendError(err, req, res);
   }
 };
 
@@ -92,16 +100,17 @@ exports.getFollowing = async (req, res) => {
       .select({ following: 1 })
       .populate('following.user', 'displayName firstName lastName');
 
-    res.status(200).send({
+    if (!following) {
+      throw new AppError('No user is found by that ID', 404);
+    }
+
+    res.status(200).json({
       status: 'success',
       count: following.following.length,
       data: JSON.parse(JSON.stringify(following)),
     });
   } catch (err) {
-    res.status(404).send({
-      status: 'error',
-      message: 'No user is found by that user ID',
-    });
+    errorController.sendError(err, req, res);
   }
 };
 
@@ -112,16 +121,18 @@ exports.getBlocked = async (req, res) => {
       .findById(req.headers.userid)
       .select({ blocked: 1 })
       .populate('blocked', 'displayName firstName lastName');
-    res.status(200).send({
+
+    if (!blocked) {
+      throw new AppError('No user is found by that ID', 404);
+    }
+
+    res.status(200).json({
       status: 'success',
       count: blocked.blocked.length,
       data: JSON.parse(JSON.stringify(blocked)),
     });
   } catch (err) {
-    res.status(400).send({
-      status: 'error',
-      message: err,
-    });
+    errorController.sendError(err, req, res);
   }
 };
 
@@ -142,16 +153,17 @@ exports.getFaves = async (req, res) => {
         },
       });
 
-    res.status(200).send({
+    if (!favourites) {
+      throw new AppError('No user is found by that ID', 404);
+    }
+
+    res.status(200).json({
       status: 'success',
       count: favourites.favourites.length,
       data: JSON.parse(JSON.stringify(favourites)),
     });
   } catch (err) {
-    res.status(400).send({
-      status: 'error',
-      message: err,
-    });
+    errorController.sendError(err, req, res);
   }
 };
 
@@ -160,11 +172,11 @@ exports.addFave = async (req, res) => {
   try {
     // Check for existence of Photo
     if ((await photoModel.findById(req.params.id)) === null) {
-      res.status(404).send({
-        status: 'Error',
-        message: 'This PhotoID does not exist',
-      });
-      return;
+      throw new AppError('No photo is found by that ID', 404);
+    }
+
+    if ((await userModel.findById(req.headers.userid)) === null) {
+      throw new AppError('No user is found by that ID', 404);
     }
 
     if (
@@ -173,11 +185,7 @@ exports.addFave = async (req, res) => {
         favourites: { $elemMatch: { $eq: req.params.id } },
       })) !== null
     ) {
-      res.status(409).send({
-        status: 'Error',
-        message: 'This PhotoID is already in Faves',
-      });
-      return;
+      throw new AppError('Photo is already in Faves', 409);
     }
 
     //Increase Fave Count on Photo Model
@@ -213,15 +221,12 @@ exports.addFave = async (req, res) => {
       newUserFaveList: JSON.parse(JSON.stringify(updatedFaves)),
     };
 
-    res.status(200).send({
+    res.status(200).json({
       status: 'success',
       data: Updates,
     });
   } catch (err) {
-    res.status(400).send({
-      status: 'Error',
-      message: 'Bad Request',
-    });
+    errorController.sendError(err, req, res);
   }
 };
 
@@ -232,13 +237,17 @@ exports.removeFave = async (req, res) => {
       .findById(req.headers.userid)
       .select({ favourites: 1 });
 
+    if (!faveList) {
+      throw new AppError('No user is found by that ID', 404);
+    }
+
     // Check if the Photo exits in User's Faves
     const favePhoto = faveList.favourites.find(
       (el) => el.toString() === req.params.id.toString()
     );
 
     if (favePhoto !== undefined) {
-      // Decrease Fave Count on Photo Model
+      //Decrease Fave Count on Photo Model
       const updatedFaveCount = await photoModel
         .findByIdAndUpdate(
           req.params.id,
@@ -271,21 +280,15 @@ exports.removeFave = async (req, res) => {
         newUserFaveList: JSON.parse(JSON.stringify(updatedFaves)),
       };
 
-      res.status(200).send({
+      res.status(200).json({
         status: 'success',
         data: Updates,
       });
     } else {
-      res.status(404).send({
-        status: 'fail',
-        message: "This Photo doesn't exist in Faves",
-      });
+      throw new AppError('No photo is found by that ID in User faves', 404);
     }
   } catch (err) {
-    res.status(400).send({
-      status: 'fail',
-      message: 'Bad Request',
-    });
+    errorController.sendError(err, req, res);
   }
 };
 
@@ -296,15 +299,16 @@ exports.getNotificationSettings = async (req, res) => {
       .findById(req.headers.userid)
       .select({ notificationSettings: 1, _id: 0 });
 
-    res.status(200).send({
+    if (!notificationSettings) {
+      throw new AppError('No user is found by that ID', 404);
+    }
+
+    res.status(200).json({
       status: 'success',
       data: JSON.parse(JSON.stringify(notificationSettings)),
     });
   } catch (err) {
-    res.status(400).send({
-      status: 'error',
-      message: err,
-    });
+    errorController.sendError(err, req, res);
   }
 };
 
@@ -315,14 +319,15 @@ exports.getPrivacySettings = async (req, res) => {
       .findById(req.headers.userid)
       .select({ privacySettings: 1, _id: 0 });
 
-    res.status(200).send({
+    if (!privacySettings) {
+      throw new AppError('No user is found by that ID', 404);
+    }
+
+    res.status(200).json({
       status: 'success',
       data: JSON.parse(JSON.stringify(privacySettings)),
     });
   } catch (err) {
-    res.status(400).send({
-      status: 'error',
-      message: err,
-    });
+    errorController.sendError(err, req, res);
   }
 };

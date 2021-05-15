@@ -3,7 +3,6 @@ const express = require('express');
 
 // INCLUDE CONTROLLERS
 const photoController = require('../controllers/photoController.js');
-const photoModel = require('../models/photoModel.js');
 
 // CREATE ROUTER
 const photoRouter = express.Router();
@@ -77,7 +76,7 @@ const photoRouter = express.Router();
  * @apiName UploadPhoto
  * @apiGroup Photo
  *
- * @apiBody {Number} ticket The Ticket of the Upload
+ * @apiParam (Request Body) {Number} ticket The Ticket of the Upload
  *
  * @apiUse SuccessRes
  *
@@ -96,11 +95,11 @@ photoRouter.post('/');
  *
  * @apiParam {String} id The Photo's ID
  *
- * @apiBody {boolean} isfriend The Photo is Visible to Friends when Private or not
- * @apiBody {boolean} ispublic The Photo is Visible to the Public when Private or not
- * @apiBody {boolean} isfamily The Photo is Visible to Family when Private or not
- * @apiBody {Number} permcomment Who is Allowed to Comment on the Photo
- * @apiBody {Number} permaddmeta Who can Add Notes and Tags to the Photo
+ * @apiParam (Request Body) {boolean} isfriend The Photo is Visible to Friends when Private or not
+ * @apiParam (Request Body) {boolean} ispublic The Photo is Visible to the Public when Private or not
+ * @apiParam (Request Body) {boolean} isfamily The Photo is Visible to Family when Private or not
+ * @apiParam (Request Body) {Number} permcomment Who is Allowed to Comment on the Photo
+ * @apiParam (Request Body) {Number} permaddmeta Who can Add Notes and Tags to the Photo
  *
  * @apiSuccess {string} Status Status of API
  *
@@ -193,7 +192,7 @@ photoRouter.get('/:id', photoController.getInformation);
  *
  * @apiParam {String} id The Photo's ID
  * 
- * @apiBody {String} size All The Current Photo Size
+ * @apiParam (Request Body) {String} size All The Current Photo Size
  * 
  * @apiSuccess {string} photourl The Photo's URL for the Chosen Size
  * 
@@ -224,7 +223,7 @@ photoRouter.get('/:id/url');
  *
  * @apiParam {String} id The Photo's ID
  *
- * @apiBody {String} tags All Tags for the Photo
+ * @apiParam (Request Body) {String} tags All Tags for the Photo
  *
  * @apiSuccess {string} Status Status of API
  *
@@ -247,7 +246,7 @@ photoRouter.patch('/:id/tags');
  *
  * @apiParam {String} id The Photo's ID
  *
- * @apiBody {String} tags All Tags for the Photo
+ * @apiParam (Request Body) {String} tags All Tags for the Photo
  *
  * @apiUse SuccessRes
  *
@@ -268,7 +267,7 @@ photoRouter.post('/:id/tags');
  *
  * @apiHeader {String} Token Authenticaton Token
  *
- * @apiBody {String} tags All Tags to Delete
+ * @apiParam (Request Body) {String} tags All Tags to Delete
  *
  * @apiUse SuccessRes
  *
@@ -287,10 +286,10 @@ photoRouter.delete('/:id/tags');
  *
  * @apiParam {String} id The Photo's ID 
  * 
- * @apiBody {Number} galleriesperpage Number of Galleries to return Per Page
- * @apiBody {Number} page The Page of Results to Return
- * @apiBody {Number} perpage Number of Comments Per Page to Return
- * @apiBody {Number} page The Page Number to Return
+ * @apiParam (Request Body) {Number} galleriesperpage Number of Galleries to return Per Page
+ * @apiParam (Request Body) {Number} page The Page of Results to Return
+ * @apiParam (Request Body) {Number} perpage Number of Comments Per Page to Return
+ * @apiParam (Request Body) {Number} page The Page Number to Return
  * 
  * @apiSuccess {Object[]} gallerylist Array of Gallery ID's Photo Belong to
  * 
@@ -546,7 +545,7 @@ photoRouter.get('/:id/sizes', photoController.getSizes);
  *
  * @apiHeader {string} Token Authenticaton Token
  *
- * @apiBody {Number} contenttype The Content Type to be Set
+ * @apiParam (Request Body) {Number} contenttype The Content Type to be Set
  *
  * @apiSuccess {string} Status Status of API
  *
@@ -570,7 +569,7 @@ photoRouter.patch('/:id/content');
  *
  * @apiHeader {string} Token Authenticaton Token
  *
- * @apiBody {Date} datetaken The Date the Photo was Taken
+ * @apiParam (Request Body) {Date} datetaken The Date the Photo was Taken
  *
  * @apiSuccess {string} Status Status of API
  *
@@ -593,8 +592,8 @@ photoRouter.patch('/:id/date');
  *
  * @apiHeader {string} Token Authenticaton Token
  *
- * @apiBody {String} title The New Title to be Set
- * @apiBody {String} desc The New Description to be Set
+ * @apiParam (Request Body) {String} title The New Title to be Set
+ * @apiParam (Request Body) {String} desc The New Description to be Set
  *
  * @apiSuccess {string} Status Status of API
  *
@@ -617,8 +616,8 @@ photoRouter.patch('/:id/meta-data');
  *
  * @apiHeader {string} Token Authenticaton Token
  *
- * @apiBody {Number} safetylevel The Safety Level to be set
- * @apiBody {Boolean} hidden Whether the Photo is to be Hidden from Public Searches or Not
+ * @apiParam (Request Body) {Number} safetylevel The Safety Level to be set
+ * @apiParam (Request Body) {Boolean} hidden Whether the Photo is to be Hidden from Public Searches or Not
  *
  * @apiSuccess {string} Status Status of API
  *
@@ -641,7 +640,7 @@ photoRouter.patch('/:id/safety-level');
  *
  * @apiHeader {string} Token Authenticaton Token
  *
- * @apiBody {String} commenttext The Text in the Comment
+ * @apiParam (Request Body) {String} commenttext The Text in the Comment
  *
  * @apiUse SuccessRes
  *
@@ -682,7 +681,7 @@ photoRouter.delete('/:id/comments/:commentid', photoController.deleteComment);
  *
  * @apiHeader {string} Token Authenticaton Token
  *
- * @apiBody {String} id The New Comment Text
+ * @apiParam (Request Body) {String} id The New Comment Text
  *
  * @apiSuccess {string} Status Status of API
  *
@@ -731,10 +730,10 @@ photoRouter.get('/:id/comments', photoController.getComments);
  *
  * @apiHeader {String} Token Authenticaton Token
  *
- * @apiBody {Date} latestdate Latest Date to Get Comments
- * @apiBody {Object[]} userids User IDs to Get Comments of
- * @apiBody {Number} perpage Number of Comments Per Page to Return
- * @apiBody {Number} page The Page Number to Return
+ * @apiParam (Request Body) {Date} latestdate Latest Date to Get Comments
+ * @apiParam (Request Body) {Object[]} userids User IDs to Get Comments of
+ * @apiParam (Request Body) {Number} perpage Number of Comments Per Page to Return
+ * @apiParam (Request Body) {Number} page The Page Number to Return
  *
  * @apiSuccess {Object[]} commentlist Array of Comments on
  *
@@ -794,8 +793,8 @@ photoRouter.get('/:id/location');
  *
  * @apiHeader {string} Token Authenticaton Token
  *
- * @apiBody {String} latitude The Latitude to be Set
- * @apiBody {String} longtitude The Longtitude to be Set
+ * @apiParam (Request Body) {String} latitude The Latitude to be Set
+ * @apiParam (Request Body) {String} longtitude The Longtitude to be Set
  *
  * @apiSuccess {string} Status Status of API
  *
@@ -864,7 +863,7 @@ photoRouter.get('/:id/licenses');
  *
  * @apiHeader {string} Token Authenticaton Token
  *
- * @apiBody {Number} licenses The License to be Set
+ * @apiParam (Request Body) {Number} licenses The License to be Set
  *
  * @apiSuccess {string} Status Status of API
  *
@@ -889,10 +888,10 @@ photoRouter.patch('/:id/licenses');
  *
  * @apiHeader {string} Token Authenticaton Token
  *
- * @apiBody {Number} xcoordinate The Left Most Pixel Coordinate Around the Tagged Person
- * @apiBody {Number} ycoordinate The Top Most Pixel Coordinate Around the Tagged Person
- * @apiBody {Number} width The Width of the Box Around the Person
- * @apiBody {Number} heigth The Height of the Box Around the Person
+ * @apiParam (Request Body) {Number} xcoordinate The Left Most Pixel Coordinate Around the Tagged Person
+ * @apiParam (Request Body) {Number} ycoordinate The Top Most Pixel Coordinate Around the Tagged Person
+ * @apiParam (Request Body) {Number} width The Width of the Box Around the Person
+ * @apiParam (Request Body) {Number} heigth The Height of the Box Around the Person
  *
  * @apiUse SuccessRes
  *
@@ -991,7 +990,7 @@ photoRouter.get('/:id/tags');
  *
  * @apiHeader {string} Token Authenticaton Token
  *
- * @apiBody {Number} degrees Degrees by which you Rotate a Photo Clockwise
+ * @apiParam (Request Body) {Number} degrees Degrees by which you Rotate a Photo Clockwise
  *
  * @apiSuccess {string} Status Status of API
  *

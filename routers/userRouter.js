@@ -54,11 +54,11 @@ const userRouter = express.Router();
  * @apiName SignUp
  * @apiGroup User
  *
- * @apiBody {string} username The Username of the User
- * @apiBody {string} email The Email of the User
- * @apiBody {string} firstname The First Name of the User
- * @apiBody {string} lastname The Last Name of the User
- * @apiBody {string} age The Age of the User
+ * @apiParam (Request Body) {string} username The Username of the User
+ * @apiParam (Request Body) {string} email The Email of the User
+ * @apiParam (Request Body) {string} firstname The First Name of the User
+ * @apiParam (Request Body) {string} lastname The Last Name of the User
+ * @apiParam (Request Body) {string} age The Age of the User
  *
  * @apiSuccess {string} Status Status of API
  *
@@ -92,8 +92,8 @@ userRouter.post('/confirm');
  * @apiName SignUpConfirm
  * @apiGroup User
  *
- * @apiBody {string} username Username entered by user
- * @apiBody (string) password Password entered by user
+ * @apiParam (Request Body) {string} username Username entered by user
+ * @apiParam (Request Body) (string) password Password entered by user
  *
  * @apiSuccess {string} Token Authenticaton Token
  *
@@ -738,7 +738,7 @@ userRouter.get('/disp-name', userController.getDispName);
  *
  * @apiHeader {string} Token Authenticaton Token
  *
- * @apiBody {string} displayname The New Display name of the calling User
+ * @apiParam (Request Body) {string} displayname The New Display name of the calling User
  *
  * @apiSuccess {string} Status Status of API
  *
@@ -757,9 +757,9 @@ userRouter.patch('/disp-name');
  *
  * @apiHeader {string} Token Authenticaton Token
  *
- * @apiBody {string} oldpassword The Pervious Password of the calling User
- * @apiBody {string} newpassword The New Password of the calling User
- * @apiBody {string} confirmpassword Confirming the New Password of the calling User
+ * @apiParam (Request Body) {string} oldpassword The Pervious Password of the calling User
+ * @apiParam (Request Body) {string} newpassword The New Password of the calling User
+ * @apiParam (Request Body) {string} confirmpassword Confirming the New Password of the calling User
  *
  * @apiSuccess {string} Status Status of API
  *
@@ -776,8 +776,8 @@ userRouter.patch('/password');
  * @apiName ForgetPassword
  * @apiGroup User
  *
- * @apiBody {string} username The Username of the User
- * @apiBody {string} email The Email of the User
+ * @apiParam (Request Body) {string} username The Username of the User
+ * @apiParam (Request Body) {string} email The Email of the User
  *
  * @apiSuccess {string} Status Status of API
  *
@@ -796,8 +796,8 @@ userRouter.post('/forget-password');
  *
  * @apiHeader {string} Token Authenticaton Token
  *
- * @apiBody {string} newpassword The New Password of the calling User
- * @apiBody {string} confirmpassword Confirming the New Password of the calling User
+ * @apiParam (Request Body) {string} newpassword The New Password of the calling User
+ * @apiParam (Request Body) {string} confirmpassword Confirming the New Password of the calling User
  *
  * @apiSuccess {string} Status Status of API
  *
@@ -809,9 +809,9 @@ userRouter.post('/forget-password');
 userRouter.post('/confirm-password');
 
 /**
- * @api {get} /user/perm Get User Privacy Settings
+ * @api {get} /user/perm Get User Permission Settings
  * @apiVersion 1.0.0
- * @apiName GetPrivacySettings
+ * @apiName GetPermissions
  * @apiGroup User
  *
  * @apiHeader {string} Token Authenticaton Token
@@ -823,41 +823,39 @@ userRouter.post('/confirm-password');
  *      {
  *          "status": "success",
  *          "data": {
- *               "privacySettings": {
- *               "global": {
- *                   "infoVisiblity": {
- *                   "email": 2,
- *                   "name": 1,
- *                   "currentCity": 1
- *                   },
- *                   "downloadPerm": 1,
- *                   "largestImgSize": 0,
- *                   "allowShare": 1,
- *                   "allowTag": 1,
- *                   "allowGalleryAdd": true,
- *                   "hideEXIF": false,
- *                   "hidePhotoSearch": false,
- *                   "hideProfileSearch": false
- *                  },
- *                  "defaults": {
- *                      "perms": {
- *                      "see": 1,
- *                      "comment": 1,
- *                      "addNotes": 2
- *                      },
- *                      "license": 0,
- *                      "mapVisible": 1,
- *                      "importEXIF": true,
- *                      "safetyLevel": 1,
- *                      "contentType": 1
- *                  },
- *                  "filters": {
- *                      "search": {
- *                      "safeSearch": true,
- *                      "content": 1
- *                      }
+ *              "global": {
+ *                  "whocandownload": "Anyone",
+ *                  "largestimgsize": "Best",
+ *                  "allowshare": 1,
+ *                  "allowtag": "any",
+ *                  "allowgallery": 1,
+ *                  "hideexif": 0,
+ *                  "hidephotopublicsearch": 0,
+ *                  "hideprofilepublicsearch": 0,
+ *                  "whocansee": {
+ *                      "email": "followed",
+ *                      "name": "anyone",
+ *                      "currentcity": "anyone"
  *                  }
- *               }
+ *              },
+ *              "defaults": {
+ *                  "perms": {
+ *                      "see": "anyone",
+ *                      "comment": "anyone",
+ *                      "addnotes": "followed"
+ *                  },
+ *                  "license": "All Rights Reserved (c)",
+ *                  "mapvisible": "Anyone",
+ *                  "importexif": 1,
+ *                  "safetylevel": "safe",
+ *                  "contenttype": "photos"
+ *              },
+ *              "filters": {
+ *                  "search": {
+ *                      "safesearch": 1,
+ *                      "content": "photovideo"
+ *                  }
+ *              }
  *          }
  *      }
  *
@@ -865,7 +863,7 @@ userRouter.post('/confirm-password');
  * @apiUse UnauthError
  */
 
-userRouter.get('/perm', userController.getPrivacySettings);
+userRouter.get('/perm');
 
 /**
  * @api {patch} /user/perm Update the User Permission Settings
@@ -887,7 +885,7 @@ userRouter.patch('/perm');
 /**
  * @api {get} /user/notif Get User Notification Settings
  * @apiVersion 1.0.0
- * @apiName GetNotificationSettings
+ * @apiName GetNotifications
  * @apiGroup User
  *
  * @apiHeader {string} Token Authenticaton Token
@@ -897,28 +895,29 @@ userRouter.patch('/perm');
  * @apiSuccessExample Success-Response:
  *      HTTP/1.1 200 OK
  *      {
- *         "status": "success",
- *           "data": {
- *               "notificationSettings": {
- *               "notifMail": {
- *                   "invites": true,
- *                   "contact": true,
- *                   "messages": true,
- *                   "reminders": true
- *               },
- *               "activityMail": {
- *                   "you": true,
- *                   "contacts": true
- *               }
- *            }
- *         }
+ *          "status": "success",
+ *          "data":
+ *          {
+ *              "notifmail":
+ *              {
+ *                  "invites": 1,
+ *                  "contact": 1,
+ *                 "messages": 1,
+ *                 "reminders": 1
+ *              },
+ *              "activitymail":
+ *              {
+ *                  "you": 1,
+ *                 "contacts": 1
+ *              }
+ *          }
  *      }
  *
  *
  * @apiUse UnauthError
  */
 
-userRouter.get('/notif', userController.getNotificationSettings);
+userRouter.get('/notif');
 
 /**
  * @api {patch} /user/notif Update the User Notification Settings
@@ -1195,7 +1194,7 @@ userRouter.post('/follow/:id');
  *
  * @apiParam {String} id The Followed User's ID
  *
- * @apiBody {String} relation New Relation Setting (Friend, Family, none)
+ * @apiParam (Request Body) {String} relation New Relation Setting (Friend, Family, none)
  *
  * @apiHeader {string} Token Authenticaton Token
  *
@@ -1323,10 +1322,10 @@ userRouter.get('/messages/inbox');
  *
  * @apiHeader {String} Token Authenticaton Token
  *
- * @apiBody {ObjectID} recieverid User ID of the User recieving the Message
- * @apiBody {String} subject Subject Line of the Message
- * @apiBody {String} body Main Content of the Message
- * @apiBody {ObjectID} replymsg Message being replied to (null if none)
+ * @apiParam (Request Body) {ObjectID} recieverid User ID of the User recieving the Message
+ * @apiParam (Request Body) {String} subject Subject Line of the Message
+ * @apiParam (Request Body) {String} body Main Content of the Message
+ * @apiParam (Request Body) {ObjectID} replymsg Message being replied to (null if none)
  *
  * @apiUse SuccessRes
  *
