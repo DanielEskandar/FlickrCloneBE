@@ -135,16 +135,14 @@ exports.createDiscussion = async (req, res) => {
       throw new AppError('No Group Found with this ID', 404);
     }
 
-    const author = await userModel.findById(req.headers.userid);
-    const newDiscussion = await discModel.create(req.body); //create new discussion instance
+    const Discussion = await discModel.create(req.body); //create new discussion instance
 
     await groupModel.findByIdAndUpdate(
       req.params.id,
       {
         $push: {
           discussionTopics: {
-            _id: newDiscussion._id,
-            user: req.headers.userid,
+            _id: Discussion._id,
           },
         },
       },
@@ -152,8 +150,20 @@ exports.createDiscussion = async (req, res) => {
         new: true,
         runValidators: true,
       }
-    );
+    ); //pushing new discussion topic to group
 
+    const newDiscussion = await discModel.findByIdAndUpdate(
+      Discussion,
+      {
+        $addToSet: {
+          user: req.headers.userid,
+        },
+      },
+      {
+        new: true,
+        runValidators: true,
+      }
+    ); //pushing user in new discussion
     res.status(200).json({
       status: 'success',
       data: JSON.parse(JSON.stringify(newDiscussion)),

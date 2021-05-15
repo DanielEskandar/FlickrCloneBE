@@ -111,6 +111,7 @@ module.exports.createDiscussionData = {
     _id: '608d33c7e512b74ee00791df',
     content: 'best pastaaa ever',
     date: '2021-01-01T00:00:00.000Z',
+    user: '608d55c7e512b74ee00791de',
     __v: 0,
   },
 };
