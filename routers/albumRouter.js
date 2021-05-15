@@ -68,12 +68,14 @@ const albumRouter = express.Router();
  *
  * @apiParam {String} id The Album's ID
  *
- * @apiSuccess {String} title Album's Name
+ * @apiSuccess {String} albumName Album's Name
  * @apiSuccess {String} description Album's Description
  * @apiSuccess {Object[]} photos Array of Album's photos
  * @apiSuccess {Number} photoscount The count of Album's photos
  * @apiSuccess {ObjectID} primaryphoto The primary photo's id
  * @apiSuccess {Object[]} comments  Array of Album's comments
+ * @apiSuccess {Date} createdAt created At Date
+ * @apiSuccess {Date} updatedAt  updated At Date
  *
  * @apiSuccessExample Success-Response:
  *      HTTP/1.1 200 OK
@@ -81,9 +83,10 @@ const albumRouter = express.Router();
  *          "status": "success",
  *          "data":
  *          {
- *              "title": sunsets,
+ *  *            "_id": "5590beb07237ad1fb4458fae",
+ *              "albumName": sunsets,
  *              "description": best sunset photos,
- *              "photos count": 17,
+ *              "photoscount": 17,
  *              "primaryphoto": 292882708,
  *              "photos": [
  *
@@ -91,6 +94,8 @@ const albumRouter = express.Router();
  *              "comments" : [
  *
  *               ]
+ *             "createdAt": "2021-05-03T00:07:30.005Z",
+ *             "updatedAt": "2021-05-03T00:07:30.005Z"
  *          }
  *      }
  *
@@ -248,17 +253,32 @@ albumRouter.delete('/:id/:photoid');
  *
  * @apiParam {String} id The Comment's ID
  *
- * @apiUse SuccessRes
+ * @apiDefine SuccessRes
+ * @apiSuccess {String} status Status of the Operation
+ * @apiSuccess {String} data Success Message
+ *
+ * @apiSuccessExample Success-Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *          "status": "success",
+ *          "data":
+ *          {
+ *            "_id": "5590beb07237ad1fb4458fae",
+ *            "userId": "608d5450ec00005468607a0c",
+ *            "body": "good one",
+ *            "date": "2021-05-14T20:53:10.256Z"
+ *         }
+ *      }
  *
  * @apiUse UnauthError
  *
- * @apiError CommentNotFoundError No comment is found by that comment ID
+ * @apiError CommentNotFoundError No Comment Found with This ID
  *
  * @apiErrorExample Error-Response:
  *      HTTP/1.1 404 Not Found
  *      {
  *          "status": "Error",
- *          "message": "No comment is found by that comment ID"
+ *          "message": "No Comment Found with This ID"
  *      }
  */
 
@@ -274,7 +294,36 @@ albumRouter.delete('/:id/comments/:commentid', albumController.deleteComment);
  * @apiParam (Request Body) {String} description Album's Description
  * @apiParam (Request Body) {String} primaryphoto The first photo to add to your Album
  *
- * @apiUse SuccessRes
+ * @apiSuccess {String} albumName Album's Name
+ * @apiSuccess {String} description Album's Description
+ * @apiSuccess {Object[]} photos Array of Album's photos
+ * @apiSuccess {Number} photoscount The count of Album's photos
+ * @apiSuccess {ObjectID} primaryphoto The primary photo's id
+ * @apiSuccess {Object[]} comments  Array of Album's comments
+ * @apiSuccess {Date} createdAt created At Date
+ * @apiSuccess {Date} updatedAt  updated At Date
+ *
+ * @apiSuccessExample Success-Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *          "status": "success",
+ *          "data":
+ *          {
+ *              "_id": "5590beb07237ad1fb4458fae",
+ *              "albumName": sunsets,
+ *              "description": best sunset photos,
+ *              "photocount": 17,
+ *              "primaryphoto": 292882708,
+ *              "photos": [
+ *
+ *               ]
+ *              "comments" : [
+ *
+ *               ]
+ *             "createdAt": "2021-05-03T00:07:30.005Z",
+ *             "updatedAt": "2021-05-03T00:07:30.005Z"
+ *          }
+ *      }
  *
  * @apiUse UnauthError
  */
@@ -311,7 +360,22 @@ albumRouter.post('/:id/photos');
  *
  * @apiParam (Request Body) {String} body The body of the comment
  *
- * @apiUse SuccessRes
+ * @apiDefine SuccessRes
+ * @apiSuccess {String} status Status of the Operation
+ * @apiSuccess {String} data Success Message
+ *
+ * @apiSuccessExample Success-Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *          "status": "success",
+ *          "data":
+ *          {
+ *            "_id": "5590beb07237ad1fb4458fae",
+ *            "userId": "608d5450ec00005468607a0c",
+ *            "body": "good one",
+ *            "date": "2021-05-14T20:53:10.256Z"
+ *         }
+ *      }
  *
  * @apiUse UnauthError
  *
@@ -370,17 +434,32 @@ albumRouter.patch('/:id/meta');
  *
  * @apiParam (Request Body) {String} body Update  the comment to this text
  *
- * @apiUse SuccessRes
+ * @apiDefine SuccessRes
+ * @apiSuccess {String} status Status of the Operation
+ * @apiSuccess {String} data Success Message
+ *
+ * @apiSuccessExample Success-Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *          "status": "success",
+ *          "data":
+ *          {
+ *            "_id": "5590beb07237ad1fb4458fae",
+ *            "userId": "608d5450ec00005468607a0c",
+ *            "body": "good one",
+ *            "date": "2021-05-14T20:53:10.256Z"
+ *         }
+ *      }
  *
  * @apiUse UnauthError
  *
- * @apiError CommentNotFoundError No comment is found by that comment ID
+ * @apiError CommentNotFoundError No Comment Found with This ID
  *
  * @apiErrorExample Error-Response:
  *      HTTP/1.1 404 Not Found
  *      {
  *          "status": "Error",
- *          "message": "No comment is found by that comment ID"
+ *          "message": "No Comment Found with This ID"
  *      }
  */
 
