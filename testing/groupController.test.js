@@ -149,6 +149,24 @@ describe('should edit content field in discussion with id 608f6e7519953b27004f6d
   });
 });
 
+//TESTING EDIT REPLY
+describe('should edit content field in reply with id 609fe93c38075024f8d3e6f5', () => {
+  test('', async () => {
+    const mReq = {
+      params: { id: '609fe93c38075024f8d3e6f5' },
+      body: {
+        content: 'try seoudi',
+      },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await groupController.editReply(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(groupTestData.editReplyData);
+  });
+});
 //TESTING DELETE DICSUSSION
 describe('should delete discussion with id 608f6e7519953b27004f6dab ', () => {
   test('returns null data', async () => {
@@ -165,6 +183,21 @@ describe('should delete discussion with id 608f6e7519953b27004f6dab ', () => {
   });
 });
 
+//TESTING DELETE REPLY
+describe('should reply id 609fe93c38075024f8d3e6f5 ', () => {
+  test('returns null data', async () => {
+    const mReq = {
+      params: { id: '609fe93c38075024f8d3e6f5' },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await groupController.deleteReply(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(groupTestData.deleteReplyData);
+  });
+});
 //TESTING CREATE GROUP
 describe('userid in headers should create new group with content in body, add userid as member and set as admin', () => {
   test('', async () => {

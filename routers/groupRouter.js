@@ -447,7 +447,7 @@ groupRouter.post('/discussion/:id/replies');
 /**
  * @api {delete} /group/discussion/replies/:id Deleting a reply on a discussion topic
  * @apiVersion 1.0.0
- * @apiName DeleteReply
+ * @apiName deleteReply
  * @apiGroup Group
  *
  * @apiParam {String} id The reply's ID
@@ -467,12 +467,12 @@ groupRouter.post('/discussion/:id/replies');
  * @apiUse ForbiddenAccss
  */
 
-groupRouter.delete('/discussion/replies/:id');
+groupRouter.delete('/discussion/replies/:id', groupController.deleteReply);
 
 /**
  * @api {patch} /group/discussion/replies/:id Edit a post reply
  * @apiVersion 1.0.0
- * @apiName Edit reply
+ * @apiName editReply
  * @apiGroup Group
  *
  * @apiParam {String} id The new reply's ID
@@ -497,7 +497,7 @@ groupRouter.delete('/discussion/replies/:id');
  * @apiUse ForbiddenAccss
  */
 
-groupRouter.patch('/discussion/replies/:id');
+groupRouter.patch('/discussion/replies/:id', groupController.editReply);
 
 /**
  * @api {get} /group/discussion/replies/:id Get info about a discussion topic reply

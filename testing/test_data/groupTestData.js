@@ -145,7 +145,22 @@ module.exports.editDiscussionData = {
   },
 };
 
+module.exports.editReplyData = {
+  status: 'success',
+  data: {
+    _id: '609fe93c38075024f8d3e6f5',
+    user: '608d5450ec00005468607a0c',
+    content: 'try seoudi',
+    date: '2021-01-01T00:00:00.000Z',
+    __v: 0,
+  },
+};
 module.exports.deleteDiscussionData = {
+  status: 'success',
+  data: null,
+};
+
+module.exports.deleteReplyData = {
   status: 'success',
   data: null,
 };

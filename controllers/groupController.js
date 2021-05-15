@@ -108,6 +108,23 @@ exports.deleteDiscussion = async (req, res) => {
   }
 };
 
+// DELETE A REPLY BY ID
+exports.deleteReply = async (req, res) => {
+  try {
+    if ((await replyModel.findById(req.params.id)) === null) {
+      throw new AppError('No Reply Found with this ID', 404);
+    }
+
+    await replyModel.findByIdAndDelete(req.params.id);
+
+    res.status(200).json({
+      status: 'success',
+      data: null,
+    });
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};
 // GET A DISCUSSION BY ID
 exports.getDiscussion = async (req, res) => {
   try {
@@ -195,7 +212,32 @@ exports.editDiscussion = async (req, res) => {
     errorController.sendError(err, req, res);
   }
 };
+// EDIT A REPLY
+exports.editReply = async (req, res) => {
+  try {
+    const reply = await replyModel.findById(req.params.id);
 
+    if (!reply) {
+      throw new AppError('No Reply Found with this ID', 404);
+    }
+
+    //else update
+    const newReply = await replyModel.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
+    res.status(200).json({
+      status: 'success',
+      data: JSON.parse(JSON.stringify(newReply)),
+    });
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};
 // GET MEMBERS
 exports.getMembers = async (req, res) => {
   try {
