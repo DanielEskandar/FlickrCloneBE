@@ -121,6 +121,7 @@ describe('should Create a gallery', () => {
     // delete any gallery with 708f34a634413f11f020b139
     await galleryModel.findByIdAndDelete('708f34a634413f11f020b139');
     const mReq = {
+      headers: { userid: '608d5450ec00005468607a11' },
       body: {
         _id: '708f34a634413f11f020b139',
         galleryName: 'Egypt',
@@ -135,5 +136,28 @@ describe('should Create a gallery', () => {
     await galleryController.createGallery(mReq, mRes);
     expect(mRes.status).toBeCalledWith(200);
     expect(mRes.json).toBeCalledWith(galleryTestData.createAlbumData);
+  });
+});
+
+// TESTING: addPhoto
+describe('should add Photo to a gallery', () => {
+  test(`should should add Photo to a gallery id 608f34a634413f11f020b12a`, async () => {
+    const mReq = {
+      params: { id: '608f34a634413f11f020b12a' },
+      headers: { userid: '608d5450ec00005468607a11' },
+      body: {
+        photoID: '608d5560ec00005468607a0e',
+      },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await galleryController.addPhoto(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith({
+      status: 'success',
+      data: 'ok',
+    });
   });
 });

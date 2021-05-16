@@ -246,7 +246,7 @@ galleryRouter.post('/', galleryController.createGallery);
  *
  * @apiParam {String} id The gallery's ID
  *
- * @apiParam (Request Body) {String} photo The Photo to add to the gallery
+ * @apiParam (Request Body) {objectID} photoID The PhotoID to add to the gallery
  *
  * @apiUse SuccessRes
  *
@@ -255,7 +255,7 @@ galleryRouter.post('/', galleryController.createGallery);
  * @apiUse GalleryNotFoundError
  */
 
-galleryRouter.post('/:id/photos');
+galleryRouter.post('/:id/photos', galleryController.addPhoto);
 
 /**
  * @api {post} /gallery/:id/comments Add a comment

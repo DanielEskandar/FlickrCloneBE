@@ -182,10 +182,58 @@ exports.createAlbum = async (req, res) => {
   try {
     const album = await albumModel.create(req.body);
 
+    // add album to current user's array of albums
+    await userModel.findByIdAndUpdate(req.headers.userid, {
+      $push: { albums: album._id },
+    });
     res.status(200).json({
       status: 'success',
       data: JSON.parse(JSON.stringify(album)),
     });
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};
+
+// ADD A PHOTO
+exports.addPhoto = async (req, res) => {
+  try {
+    // check if album id exist or not
+
+    const album = await albumModel.findById(req.params.id);
+    if (!album) {
+      throw new AppError('No Album Found with This ID', 404);
+    }
+
+    // check if photo id exist or not
+    const photoFromModel = await photoModel.findById(req.body.photoID);
+    if (!photoFromModel) {
+      throw new AppError('No Photo Found with This ID', 404);
+    }
+    // check if the photo alread exist in the album
+    const isExist = album.photos.find(
+      (element) => element.toString() === req.body.photoID.toString()
+    );
+    if (!isExist) {
+      // add photo to photos array in album
+      const updatedAlbum = await albumModel.findByIdAndUpdate(
+        req.params.id,
+        {
+          $push: { photos: req.body.photoID },
+        },
+        {
+          new: true,
+          runValidators: false,
+        }
+      );
+
+      res.status(200).json({
+        status: 'success',
+        data: 'ok',
+      });
+    } else {
+      throw new AppError('This Photo Already Exist !', 404);
+    }
   } catch (err) {
     errorController.sendError(err, req, res);
   }

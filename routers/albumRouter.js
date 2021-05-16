@@ -299,7 +299,7 @@ albumRouter.post('/', albumController.createAlbum);
  *
  */
 
-albumRouter.post('/:id/photos');
+albumRouter.post('/:id/photos', albumController.addPhoto);
 
 /**
  * @api {post} /photoset/:id/comments Add a comment
