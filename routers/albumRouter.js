@@ -223,7 +223,7 @@ albumRouter.delete('/:id');
  * @apiUse UnauthError
  */
 
-albumRouter.delete('/:id/photos');
+albumRouter.delete('/:id/photos', albumController.removePhotos);
 
 /**
  * @api {delete} /photoset/:id/:photoid Delete Photo

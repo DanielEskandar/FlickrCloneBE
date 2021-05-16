@@ -275,7 +275,7 @@ exports.removePhoto = async (req, res) => {
         const index = album.photos.findIndex(
           (element) => element.toString() === req.params.photoid.toString()
         );
-        primPhoto = album.photos[(index + 1) / album.photos.length];
+        primPhoto = album.photos[(index + 1) % album.photos.length];
       }
 
       // update album
@@ -297,6 +297,67 @@ exports.removePhoto = async (req, res) => {
     } else {
       throw new AppError('This Photo not in the album!', 404);
     }
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};
+
+// Delete PHOTOS
+exports.removePhotos = async (req, res) => {
+  try {
+    // check if album id exist or not
+    const album = await albumModel.findById(req.params.id);
+    if (!album) {
+      throw new AppError('No Album Found with This ID', 404);
+    }
+
+    // check if photos id exist or not
+    const photosList = await photoModel.find({
+      _id: { $in: req.body.photos },
+    });
+    if (photosList.length !== req.body.photos.length)
+      throw new AppError('No Photo Found with ID', 404);
+
+    // check if the photos exists in the album
+
+    // // check if there's no other photos in the album
+    if (
+      album.photos.length === 1 ||
+      album.photos.length === req.body.photos.length
+    ) {
+      throw new AppError('Album cannot be Empty!', 404);
+    }
+
+    // check if the removed photos is the primary photo
+    let primPhoto = album.primaryPhotoId;
+    const isExist = req.body.photos.find(
+      (element) => element.toString() === album.primaryPhotoId.toString()
+    );
+    const remainingphotos = [];
+    if (isExist) {
+      // loop on photos in album -> if this photo isn't in the list to be deleted -> it can be primary photo
+      album.photos.forEach((element) => {
+        if (!req.body.photos.includes(element.toString()))
+          remainingphotos.push(element);
+      });
+      primPhoto = remainingphotos[0];
+    }
+    // update album
+    await albumModel.findByIdAndUpdate(
+      req.params.id,
+      {
+        $pull: { photos: { $in: req.body.photos } },
+        $set: { primaryPhotoId: primPhoto, updatedAt: new Date(Date.now()) },
+      },
+      {
+        new: true,
+        runValidators: false,
+      }
+    );
+    res.status(204).json({
+      status: 'success',
+      data: 'ok',
+    });
   } catch (err) {
     errorController.sendError(err, req, res);
   }
