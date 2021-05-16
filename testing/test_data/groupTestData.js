@@ -96,7 +96,7 @@ module.exports.getAllDiscussionsData = {
 module.exports.getDiscussionData = {
   status: 'success',
   data: {
-    replies: [],
+    replies: ['609fe93c38075024f8d3e6f6'],
     user: '608f3e678209d433946b946d',
     content: 'La casa de papel is overrated',
     date: '2021-01-01T00:00:00.000Z',
@@ -104,30 +104,84 @@ module.exports.getDiscussionData = {
   },
 };
 
+module.exports.getReplyData = {
+  status: 'success',
+  data: {
+    user: '608d5450ec00005468607a0c',
+    content: 'pet shops',
+    date: '2021-01-01T00:00:00.000Z',
+    __v: 0,
+  },
+};
+
+module.exports.getAllRepliesData = {
+  status: 'success',
+  data: {
+    replies: [
+      {
+        user: {
+          _id: '608d5450ec00005468607a0c',
+          displayName: 'AhmedAbdulkader99',
+        },
+        content: 'fastfood',
+        date: '2021-01-01T00:00:00.000Z',
+        __v: 0,
+      },
+    ],
+  },
+};
+
 module.exports.createDiscussionData = {
   status: 'success',
   data: {
     replies: [],
-    _id: '608f3d0fb5998b4f34890a5e',
-    content: 'i want fresh mango',
-    date: '2020-02-02T00:00:00.000Z',
+    _id: '608d33c7e512b74ee00791df',
+    content: 'best pastaaa ever',
+    date: '2021-01-01T00:00:00.000Z',
+    user: '608d55c7e512b74ee00791de',
     __v: 0,
+  },
+};
+
+module.exports.addReplyData = {
+  status: 'success',
+  data: {
+    _id: '610fe93c38075024f8d3e6f3',
+    content: 'mori sushi is the best',
+    date: '2021-01-01T00:00:00.000Z',
+    __v: 0,
+    user: '608d55c7e512b74ee00791de',
   },
 };
 
 module.exports.editDiscussionData = {
   status: 'success',
   data: {
-    replies: [],
-    _id: '608f6e7519953b27004f6dab',
-    user: '608d5450ec00005468607a0c',
-    content: 'i want pasta',
+    replies: ['609fe93c38075024f8d3e6f6'],
+    _id: '608f6e7519953b27004f6dac',
+    user: '608f3e678209d433946b946d',
+    content: 'edit 1',
     date: '2021-01-01T00:00:00.000Z',
     __v: 0,
   },
 };
 
+module.exports.editReplyData = {
+  status: 'success',
+  data: {
+    _id: '609fe93c38075024f8d3e6f5',
+    user: '608d5450ec00005468607a0c',
+    content: 'try seoudi',
+    date: '2021-01-01T00:00:00.000Z',
+    __v: 0,
+  },
+};
 module.exports.deleteDiscussionData = {
+  status: 'success',
+  data: null,
+};
+
+module.exports.deleteReplyData = {
   status: 'success',
   data: null,
 };
@@ -135,16 +189,21 @@ module.exports.deleteDiscussionData = {
 module.exports.createGroupData = {
   status: 'success',
   data: {
-    public: true,
-    invitation: true,
-    startDate: '2021-01-01T00:00:00.000Z',
+    public: false,
+    invitation: false,
+    startDate: '2021-01-02T00:00:00.000Z',
     photos: [],
     discussionTopics: [],
     ageRestriction: false,
-    _id: '608f3d0fb5b8184f34890a50',
-    name: 'Backend Test1',
-    description: 'this is create group api test.',
-    users: [],
+    _id: '609eed338a55978b34e2f061',
+    name: 'backend unit test',
+    users: [
+      {
+        joinDate: '2021-01-01T00:00:00.000Z',
+        userId: '608d55c7e512b74ee00791de',
+        admin: true,
+      },
+    ],
     __v: 0,
   },
 };

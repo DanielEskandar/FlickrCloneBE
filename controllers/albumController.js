@@ -125,6 +125,11 @@ exports.editComment = async (req, res) => {
         runValidators: true,
       }
     );
+
+    if (!newComment) {
+      throw new AppError('No Comment Found with This ID', 404);
+    }
+
     res.status(200).json({
       status: 'success',
       data: JSON.parse(JSON.stringify(newComment)),
