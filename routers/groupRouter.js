@@ -705,7 +705,7 @@ groupRouter.get('/:id/members', groupController.getMembers);
 /**
  * @api {post} /group/:id/pool/:photoid Add a Photo to a Group Photo Pool
  * @apiVersion 1.0.0
- * @apiName AddPhototoPool
+ * @apiName addToPhotoPool
  * @apiGroup Group
  *
  * @apiParam {String} id The Group's ID
@@ -716,7 +716,15 @@ groupRouter.get('/:id/members', groupController.getMembers);
  * @apiSuccess {Object} user Authenticaton Token
  *
  * @apiUse SuccessRes
- *
+ *@apiSuccessExample Success-Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *           status: 'success',
+ *           data:
+ *                 {
+ *               photos: ['608d5450ec00005468607a0f', '604d5450ec00005468617a0c'],
+ *                 }
+ *      }
  * @apiErrorExample Error-Response:
  *      HTTP/1.1 401 FAILED
  *      {
@@ -727,7 +735,7 @@ groupRouter.get('/:id/members', groupController.getMembers);
  * @apiUse UnauthError
  * @apiUse ForbiddenAccss
  */
-groupRouter.post('/:id/pool/:id');
+groupRouter.post('/:id/pool/:photoid', groupController.addToPhotoPool);
 
 /**
  * @api {get} /group/:id/photo/:photoid/context Get Next and Previous Photos in Group Pool

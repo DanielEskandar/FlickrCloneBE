@@ -154,6 +154,12 @@ module.exports.addReplyData = {
   },
 };
 
+module.exports.addToPhotoPoolData = {
+  status: 'success',
+  data: {
+    photos: ['608d5450ec00005468607a0f', '604d5450ec00005468617a0c'],
+  },
+};
 module.exports.editDiscussionData = {
   status: 'success',
   data: {

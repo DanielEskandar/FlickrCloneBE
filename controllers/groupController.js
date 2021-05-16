@@ -3,6 +3,7 @@ const groupModel = require('../models/groupModel.js');
 const discModel = require('../models/discussionModel.js');
 const userModel = require('../models/userModel.js');
 const replyModel = require('../models/replyModel.js');
+const photoModel = require('../models/photoModel.js');
 // INCLUDE ERROR CLASS AND ERROR CONTROLLER
 
 const AppError = require('../utils/appError.js');
@@ -384,6 +385,51 @@ exports.getAllReplies = async (req, res) => {
     res.status(200).json({
       status: 'success',
       data: JSON.parse(JSON.stringify(replies)),
+    });
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};
+
+exports.addToPhotoPool = async (req, res) => {
+  try {
+    //validations on group ID
+    if ((await groupModel.findById(req.params.id)) === null) {
+      throw new AppError('No GROUP Found with this ID', 404);
+    }
+
+    if ((await photoModel.findById(req.params.photoid)) === null) {
+      throw new AppError('No PHOTO Found with this ID', 404);
+    } //check if the photo is valid /exists
+
+    const photo = await photoModel.findById(req.params.photoid); //else get photo
+
+    //if photo is already in group pool
+    const exists = await groupModel.findOne({ photos: req.params.photoid });
+    if (exists) {
+      throw new AppError('Photo already exists', 404);
+    }
+    //else add photo
+    const updatedGroup = await groupModel
+      .findByIdAndUpdate(
+        req.params.id,
+        {
+          $push: {
+            photos: {
+              _id: photo._id,
+            }, //needs user authorization
+          },
+        },
+        {
+          new: true,
+          runValidators: true,
+        }
+      )
+      .select('photos')
+      .select({ _id: 0 });
+    res.status(200).json({
+      status: 'success',
+      data: JSON.parse(JSON.stringify(updatedGroup)),
     });
   } catch (err) {
     errorController.sendError(err, req, res);
