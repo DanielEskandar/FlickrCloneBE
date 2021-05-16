@@ -803,7 +803,7 @@ groupRouter.get('/:id/pool', groupController.getPhotoPool);
 /**
  * @api {delete} /group/:id/pool/:photoId Remove a Photo from a Group Photo Pool
  * @apiVersion 1.0.0
- * @apiName RemovePhotofromPool
+ * @apiName removePhotofromPool
  * @apiGroup Group
  *
  * @apiParam {String} id The Group's ID
@@ -812,7 +812,14 @@ groupRouter.get('/:id/pool', groupController.getPhotoPool);
  * @apiHeader {String} user Authenticaton Token
  *
  * @apiUse SuccessRes
- *
+ * @apiSuccessExample Success-Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *         status: 'success',
+ *           data: {
+ *               photos: ['608d5450ec00005468607a0f'],
+ *                  },
+ *       }
  * @apiErrorExample Error-Response:
  *      HTTP/1.1 401 FAILED
  *      {
@@ -824,7 +831,7 @@ groupRouter.get('/:id/pool', groupController.getPhotoPool);
  * @apiUse ForbiddenAccss
  * @apiUse GroupNotFoundError
  */
-groupRouter.delete('/:id/pool');
+groupRouter.delete('/:id/pool/:photoid', groupController.removePhotofromPool);
 
 // EXPORT ROUTER
 module.exports = groupRouter;

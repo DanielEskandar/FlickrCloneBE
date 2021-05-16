@@ -192,6 +192,13 @@ module.exports.deleteReplyData = {
   data: null,
 };
 
+module.exports.removePhotofromPoolData = {
+  status: 'success',
+  data: {
+    photos: ['608d5450ec00005468607a0f'],
+  },
+};
+
 module.exports.createGroupData = {
   status: 'success',
   data: {

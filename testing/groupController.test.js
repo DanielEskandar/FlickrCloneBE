@@ -224,6 +224,25 @@ describe('should delete discussion with id 608f6e7519953b27004f6dab ', () => {
   });
 });
 
+//TESTING REMOVE PHOTO FROM PHOTO POOL
+describe('should remove photo with id 604d5450ec00005468617a0c from group pool with id 608f3d0fb5ba8b4f34890a5e ', () => {
+  test('returns 1 photo only', async () => {
+    const mReq = {
+      params: {
+        id: '608f3d0fb5ba8b4f34890a5e',
+        photoid: '604d5450ec00005468617a0c',
+      },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await groupController.removePhotofromPool(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(groupTestData.removePhotofromPoolData);
+  });
+});
+
 // TESTING DELETE REPLY
 describe('should delete reply with id 609fe93c38075024f8d3e6f5 ', () => {
   test('returns null data', async () => {

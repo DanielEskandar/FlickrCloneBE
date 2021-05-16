@@ -126,6 +126,53 @@ exports.deleteReply = async (req, res) => {
     errorController.sendError(err, req, res);
   }
 };
+//REMOVE PHOTO FROM PHOTO POOL
+exports.removePhotofromPool = async (req, res) => {
+  try {
+    //group check
+    if ((await groupModel.findById(req.params.id)) === null) {
+      throw new AppError('No Group Found with this ID', 404);
+    }
+
+    //check if photo exists in DB
+    if ((await photoModel.findById(req.params.photoid)) === null) {
+      throw new AppError('Photo doesnt Exist', 404);
+    }
+
+    const group = await groupModel.findById(req.params.id);
+
+    //check if photo already exists in group pool
+    const exists = group.photos.find(
+      (photo) => photo.toString() === req.params.photoid.toString()
+    );
+    if (exists === undefined) {
+      throw new AppError('Photo Already isnt in group Pool', 404);
+    }
+
+    inPhoto = await photoModel.findById(req.params.photoid);
+    const updatedGroup = await groupModel
+      .findByIdAndUpdate(
+        req.params.id,
+        {
+          $pull: {
+            photos: inPhoto.id,
+          },
+        },
+        {
+          new: true,
+          runValidators: true,
+        }
+      )
+      .select({ _id: 0 })
+      .select('photos');
+    res.status(200).json({
+      status: 'success',
+      data: JSON.parse(JSON.stringify(updatedGroup)),
+    });
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};
 
 // GET A DISCUSSION BY ID
 exports.getDiscussion = async (req, res) => {
