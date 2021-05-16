@@ -225,6 +225,7 @@ exports.addPhoto = async (req, res) => {
         req.params.id,
         {
           $push: { photos: req.body.photoID },
+          $set: { updatedAt: new Date(Date.now()) },
         },
         {
           new: true,
@@ -238,6 +239,63 @@ exports.addPhoto = async (req, res) => {
       });
     } else {
       throw new AppError('This Photo Already Exist !', 404);
+    }
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};
+
+// Delete A PHOTO
+exports.removePhoto = async (req, res) => {
+  try {
+    // check if album id exist or not
+    const album = await albumModel.findById(req.params.id);
+    if (!album) {
+      throw new AppError('No Album Found with This ID', 404);
+    }
+
+    // check if photo id exist or not
+    const photoFromModel = await photoModel.findById(req.params.photoid);
+    if (!photoFromModel) {
+      throw new AppError('No Photo Found with This ID', 404);
+    }
+
+    // check if the photo exists in the album
+    const isExist = album.photos.find(
+      (element) => element.toString() === req.params.photoid.toString()
+    );
+
+    // check if there's no other photos in the album
+    if (album.photos.length === 1)
+      throw new AppError('Album cannot be Empty!', 404);
+    if (isExist) {
+      // check if the removed photo is the primary photo
+      let primPhoto = album.primaryPhotoId;
+      if (album.primaryPhotoId.toString() === req.params.photoid.toString()) {
+        const index = album.photos.findIndex(
+          (element) => element.toString() === req.params.photoid.toString()
+        );
+        primPhoto = album.photos[(index + 1) / album.photos.length];
+      }
+
+      // update album
+      await albumModel.findByIdAndUpdate(
+        req.params.id,
+        {
+          $pull: { photos: photoFromModel._id },
+          $set: { primaryPhotoId: primPhoto, updatedAt: new Date(Date.now()) },
+        },
+        {
+          new: true,
+          runValidators: true,
+        }
+      );
+      res.status(204).json({
+        status: 'success',
+        data: 'ok',
+      });
+    } else {
+      throw new AppError('This Photo not in the album!', 404);
     }
   } catch (err) {
     errorController.sendError(err, req, res);

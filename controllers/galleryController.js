@@ -236,12 +236,8 @@ exports.addPhoto = async (req, res) => {
         const updatedGallery = await galleryModel.findByIdAndUpdate(
           req.params.id,
           {
-            $push: {
-              photos: {
-                photoId: req.body.photoID,
-                remark: '',
-              },
-            },
+            $push: { photos: { photoId: req.body.photoID, remark: '' } },
+            $set: { updatedAt: new Date(Date.now()) },
           },
           {
             new: true,
@@ -258,6 +254,60 @@ exports.addPhoto = async (req, res) => {
       }
     } else {
       throw new AppError('This Photo Already Exist !', 404);
+    }
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};
+
+// Delete A PHOTO
+exports.removePhoto = async (req, res) => {
+  try {
+    // check if gallery id exist or not
+    const gallery = await galleryModel.findById(req.params.id);
+    if (!gallery) {
+      throw new AppError('No Gallery Found with This ID', 404);
+    }
+
+    // check if photo id exist or not
+    const photoFromModel = await photoModel.findById(req.params.photoid);
+    if (!photoFromModel) {
+      throw new AppError('No Photo Found with This ID', 404);
+    }
+
+    // check if the photo exists in the gallery
+    const isExist = gallery.photos.find(
+      (element) => element.photoId.toString() === req.params.photoid.toString()
+    );
+    if (isExist) {
+      // check if the removed photo is the primary photo
+      let primPhoto = gallery.primaryPhotoId;
+      if (gallery.primaryPhotoId.toString() === req.params.photoid.toString()) {
+        // primary photo is always the first photo in the photos array
+        // when the first photo is removed -> assign the second one
+        if (gallery.photos.length > 1) {
+          primPhoto = gallery.photos[1].photoId;
+        } else if (gallery.photos.length === 1) primPhoto = null;
+      }
+
+      // update gallery
+      await galleryModel.findByIdAndUpdate(
+        req.params.id,
+        {
+          $pull: { photos: { photoId: photoFromModel._id } },
+          $set: { primaryPhotoId: primPhoto, updatedAt: new Date(Date.now()) },
+        },
+        {
+          new: true,
+          runValidators: true,
+        }
+      );
+      res.status(204).json({
+        status: 'success',
+        data: 'ok',
+      });
+    } else {
+      throw new AppError('This Photo not in the gallery!', 404);
     }
   } catch (err) {
     errorController.sendError(err, req, res);

@@ -162,3 +162,25 @@ describe('should add Photo to an album', () => {
     });
   });
 });
+
+// TESTING: removePhoto
+describe('should delete a photo from an album', () => {
+  test(`should delete a photo from an album with id 608f3c70197abc18509aec61`, async () => {
+    const mReq = {
+      params: {
+        id: '608f3c70197abc18509aec61',
+        photoid: '608d5450ec00005468607a0f',
+      },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await albumController.removePhoto(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(204);
+    expect(mRes.json).toBeCalledWith({
+      status: 'success',
+      data: 'ok',
+    });
+  });
+});

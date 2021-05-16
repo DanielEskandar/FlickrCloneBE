@@ -199,7 +199,7 @@ galleryRouter.delete('/:id');
  * @apiUse UnauthError
  */
 
-galleryRouter.delete('/:id/:photoid');
+galleryRouter.delete('/:id/:photoid', galleryController.removePhoto);
 
 /**
  * @api {delete} /gallery/comments/:id Delete Comment

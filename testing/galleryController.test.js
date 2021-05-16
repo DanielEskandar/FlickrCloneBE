@@ -161,3 +161,25 @@ describe('should add Photo to a gallery', () => {
     });
   });
 });
+
+// TESTING: removePhoto
+describe('should delete a photo from a gallery', () => {
+  test(`should delete a photo from a gallery with id 608f34a634413f11f020b124`, async () => {
+    const mReq = {
+      params: {
+        id: '608f34a634413f11f020b124',
+        photoid: '608d5450ec00005468607a0f',
+      },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await galleryController.removePhoto(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(204);
+    expect(mRes.json).toBeCalledWith({
+      status: 'success',
+      data: 'ok',
+    });
+  });
+});
