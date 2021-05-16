@@ -125,6 +125,7 @@ exports.deleteReply = async (req, res) => {
     errorController.sendError(err, req, res);
   }
 };
+
 // GET A DISCUSSION BY ID
 exports.getDiscussion = async (req, res) => {
   try {
@@ -256,6 +257,7 @@ exports.editDiscussion = async (req, res) => {
     errorController.sendError(err, req, res);
   }
 };
+
 // EDIT A REPLY
 exports.editReply = async (req, res) => {
   try {
@@ -332,6 +334,7 @@ exports.getPhotoPool = async (req, res) => {
   }
 };
 
+// GET A REPLY
 exports.getReply = async (req, res) => {
   try {
     const reply = await replyModel.findById(req.params.id).select({ _id: 0 });
@@ -349,6 +352,7 @@ exports.getReply = async (req, res) => {
   }
 };
 
+// GET ALL REPLIES
 exports.getAllReplies = async (req, res) => {
   try {
     if ((await discModel.findById(req.params.id)) === null) {
