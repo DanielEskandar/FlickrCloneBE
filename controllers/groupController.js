@@ -357,8 +357,14 @@ exports.getAllReplies = async (req, res) => {
 
     const replies = await discModel
       .findById(req.params.id)
-      .select({ _id: 0 })
-      .select('replies');
+      .select({ replies: 1, _id: 0 })
+      .populate([
+        {
+          path: 'replies',
+          model: 'replyModel',
+          select: 'content',
+        },
+      ]);
 
     if (replies === null) {
       throw new AppError('No Replies Found', 404);
