@@ -117,7 +117,17 @@ module.exports.getReplyData = {
 module.exports.getAllRepliesData = {
   status: 'success',
   data: {
-    replies: ['609fe93c38075024f8d3e6f5'],
+    replies: [
+      {
+        user: {
+          _id: '608d5450ec00005468607a0c',
+          displayName: 'AhmedAbdulkader99',
+        },
+        content: 'fastfood',
+        date: '2021-01-01T00:00:00.000Z',
+        __v: 0,
+      },
+    ],
   },
 };
 

@@ -95,9 +95,9 @@ describe('should retrieve reply with ID 609fe93c38075024f8d3e6f5', () => {
 });
 
 // TEST GET ALL REPLIES
-describe('should retrieve replies on discussion id 608d55c7e512b74ee00791dd', () => {
+describe('should retrieve replies on discussion id 608f6e7519953b27004f6dac', () => {
   test('should retrieve 1 reply ', async () => {
-    const mReq = { params: { id: '608d55c7e512b74ee00791dd' } };
+    const mReq = { params: { id: '608f6e7519953b27004f6dac' } };
     const mRes = {
       status: jest.fn().mockReturnThis(),
       json: jest.fn().mockReturnThis(),
