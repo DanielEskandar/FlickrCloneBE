@@ -24,6 +24,7 @@ const galleries = JSON.parse(fs.readFileSync('./data/Galleries.json', 'utf-8'));
 const albums = JSON.parse(fs.readFileSync('./data/Albums.json', 'utf-8'));
 const comments = JSON.parse(fs.readFileSync('./data/Comments.json', 'utf-8'));
 const replies = JSON.parse(fs.readFileSync('./data/Replies.json', 'utf-8'));
+
 // CONFIGURE SERVER
 dotenv.config({ path: './config.env' });
 

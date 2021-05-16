@@ -24,8 +24,7 @@ describe('should retrieve all groups info', () => {
   });
 });
 
-//TESTING: GetMembers
-
+// TESTING: GetMembers
 describe('should retrieve members in group with id 608f3d0fb5ba8b4f34890a5e', () => {
   test('should retrieve 2 users', async () => {
     const mReq = { params: { id: '608f3d0fb5ba8b4f34890a5e' } };
@@ -39,7 +38,7 @@ describe('should retrieve members in group with id 608f3d0fb5ba8b4f34890a5e', ()
   });
 });
 
-//TESTING GET PHOTO POOL
+// TESTING GET PHOTO POOL
 describe('should retrieve photos in group with id 608f3d0fb5ba8b4f34890a5e', () => {
   test('should retrieve 1 photo ', async () => {
     const mReq = { params: { id: '608f3d0fb5ba8b4f34890a5e' } };
@@ -53,7 +52,7 @@ describe('should retrieve photos in group with id 608f3d0fb5ba8b4f34890a5e', () 
   });
 });
 
-//TESTING GET ALL DISCUSSIONS
+// TESTING GET ALL DISCUSSIONS
 describe('should retrieve discussions in group with id 608f3d0fb5ba8b4f34890a5e', () => {
   test('should retrieve 2 discussions ', async () => {
     const mReq = { params: { id: '608f3d0fb5ba8b4f34890a5e' } };
@@ -67,7 +66,7 @@ describe('should retrieve discussions in group with id 608f3d0fb5ba8b4f34890a5e'
   });
 });
 
-//TESTING GET DISCUSSION
+// TESTING GET DISCUSSION
 describe('should retrieve discussion with ID 608f6e7519953b27004f6dac', () => {
   test(' ', async () => {
     const mReq = { params: { id: '608f6e7519953b27004f6dac' } };
@@ -81,7 +80,7 @@ describe('should retrieve discussion with ID 608f6e7519953b27004f6dac', () => {
   });
 });
 
-//TESTING GET REPLY
+// TESTING GET REPLY
 describe('should retrieve reply with ID 609fe93c38075024f8d3e6f5', () => {
   test(' ', async () => {
     const mReq = { params: { id: '609fe93c38075024f8d3e6f5' } };
@@ -95,7 +94,7 @@ describe('should retrieve reply with ID 609fe93c38075024f8d3e6f5', () => {
   });
 });
 
-//TEST GET ALL REPLIES
+// TEST GET ALL REPLIES
 describe('should retrieve replies on discussion id 608d55c7e512b74ee00791dd', () => {
   test('should retrieve 1 reply ', async () => {
     const mReq = { params: { id: '608d55c7e512b74ee00791dd' } };
@@ -108,7 +107,8 @@ describe('should retrieve replies on discussion id 608d55c7e512b74ee00791dd', ()
     expect(mRes.json).toBeCalledWith(groupTestData.getAllRepliesData);
   });
 });
-//TESTING CREATE DISCUSSION
+
+// TESTING CREATE DISCUSSION
 describe('should create new discussion with id 608d33c7e512b74ee00791df in group with id 608f3d0fb5ba8b4f34890a5e', () => {
   test('', async () => {
     const mReq = {
@@ -130,7 +130,7 @@ describe('should create new discussion with id 608d33c7e512b74ee00791df in group
   });
 });
 
-//TESTING ADD REPLY
+// TESTING ADD REPLY
 describe('should create new reply with id 610fe93c38075024f8d3e6f3 on discussion with id 608d55c7e512b74ee00791dd', () => {
   test('', async () => {
     const mReq = {
@@ -152,7 +152,7 @@ describe('should create new reply with id 610fe93c38075024f8d3e6f3 on discussion
   });
 });
 
-//TESTING EDIT DISCUSSION
+// TESTING EDIT DISCUSSION
 describe('should edit content field in discussion with id 608f6e7519953b27004f6dac', () => {
   test('', async () => {
     const mReq = {
@@ -171,7 +171,7 @@ describe('should edit content field in discussion with id 608f6e7519953b27004f6d
   });
 });
 
-//TESTING EDIT REPLY
+// TESTING EDIT REPLY
 describe('should edit content field in reply with id 609fe93c38075024f8d3e6f5', () => {
   test('', async () => {
     const mReq = {
@@ -189,7 +189,8 @@ describe('should edit content field in reply with id 609fe93c38075024f8d3e6f5', 
     expect(mRes.json).toBeCalledWith(groupTestData.editReplyData);
   });
 });
-//TESTING DELETE DICSUSSION
+
+// TESTING DELETE DICSUSSION
 describe('should delete discussion with id 608f6e7519953b27004f6dab ', () => {
   test('returns null data', async () => {
     const mReq = {
@@ -205,8 +206,8 @@ describe('should delete discussion with id 608f6e7519953b27004f6dab ', () => {
   });
 });
 
-//TESTING DELETE REPLY
-describe('should reply id 609fe93c38075024f8d3e6f5 ', () => {
+// TESTING DELETE REPLY
+describe('should delete reply with id 609fe93c38075024f8d3e6f5 ', () => {
   test('returns null data', async () => {
     const mReq = {
       params: { id: '609fe93c38075024f8d3e6f5' },
@@ -220,7 +221,8 @@ describe('should reply id 609fe93c38075024f8d3e6f5 ', () => {
     expect(mRes.json).toBeCalledWith(groupTestData.deleteReplyData);
   });
 });
-//TESTING CREATE GROUP
+
+// TESTING CREATE GROUP
 describe('userid in headers should create new group with content in body, add userid as member and set as admin', () => {
   test('', async () => {
     const mReq = {
