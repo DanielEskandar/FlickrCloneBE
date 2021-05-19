@@ -151,6 +151,24 @@ describe('should create new reply with id 610fe93c38075024f8d3e6f3 on discussion
     expect(mRes.json).toBeCalledWith(groupTestData.addReplyData);
   });
 });
+//TESTING ADD TO PHOTO POOL
+describe('should add photo with id 604d5450ec00005468617a0c to groups photopool with group id 608f3d0fb5ba8b4f34890a5e', () => {
+  test('', async () => {
+    const mReq = {
+      params: {
+        id: '608f3d0fb5ba8b4f34890a5e',
+        photoid: '604d5450ec00005468617a0c',
+      },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await groupController.addToPhotoPool(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(groupTestData.addToPhotoPoolData);
+  });
+});
 
 // TESTING EDIT DISCUSSION
 describe('should edit content field in discussion with id 608f6e7519953b27004f6dac', () => {
@@ -203,6 +221,25 @@ describe('should delete discussion with id 608f6e7519953b27004f6dab ', () => {
     await groupController.deleteDiscussion(mReq, mRes);
     expect(mRes.status).toBeCalledWith(200);
     expect(mRes.json).toBeCalledWith(groupTestData.deleteDiscussionData);
+  });
+});
+
+//TESTING REMOVE PHOTO FROM PHOTO POOL
+describe('should remove photo with id 604d5450ec00005468617a0c from group pool with id 608f3d0fb5ba8b4f34890a5e ', () => {
+  test('returns 1 photo only', async () => {
+    const mReq = {
+      params: {
+        id: '608f3d0fb5ba8b4f34890a5e',
+        photoid: '604d5450ec00005468617a0c',
+      },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await groupController.removePhotofromPool(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(groupTestData.removePhotofromPoolData);
   });
 });
 
