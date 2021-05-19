@@ -3,6 +3,7 @@ const express = require('express');
 
 // INCLUDE CONTROLLERS
 const userController = require('../controllers/userController.js');
+const authController = require('../controllers/authController.js');
 
 // CREATE ROUTER
 const userRouter = express.Router();
@@ -54,11 +55,12 @@ const userRouter = express.Router();
  * @apiName SignUp
  * @apiGroup User
  *
- * @apiParam (Request Body) {string} username The Username of the User
- * @apiParam (Request Body) {string} email The Email of the User
- * @apiParam (Request Body) {string} firstname The First Name of the User
- * @apiParam (Request Body) {string} lastname The Last Name of the User
+ * @apiParam (Request Body) {string} firstName The First Name of the User
+ * @apiParam (Request Body) {string} lastName The Last Name of the User
+ * @apiParam (Request Body) {string} displayName The Username of the User
  * @apiParam (Request Body) {string} age The Age of the User
+ * @apiParam (Request Body) {string} email The Email of the User
+ * @apiParam (Request Body) {string} password The Password of the User
  *
  * @apiSuccess {string} Status Status of API
  *
@@ -67,7 +69,7 @@ const userRouter = express.Router();
  * @apiUse UnauthError
  */
 
-userRouter.post('/sign-up');
+userRouter.post('/sign-up', authController.signUp);
 
 /**
  * @api {post} /user/confirm Confirm a Signed Up user account

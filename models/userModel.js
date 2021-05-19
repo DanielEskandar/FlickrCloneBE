@@ -13,6 +13,7 @@ const userSchema = new mongoose.Schema({
   },
   email: {
     type: String,
+    lowercase: true,
     required: [true, 'A user must have an email'],
     unique: [true, 'Email must be unique'],
     validate: [validator.isEmail, 'Invalid email address'],
@@ -24,20 +25,17 @@ const userSchema = new mongoose.Schema({
   },
   pro: {
     type: Boolean,
-    required: [true, 'A user must have a user type'],
     default: false,
   },
   firstName: {
     type: String,
     trim: true,
     required: [true, 'A user must have a first name'],
-    validate: [validator.isAlphanumeric, 'Invalid first name'],
   },
   lastName: {
     type: String,
     trim: true,
     required: [true, 'A user must have a last name'],
-    validate: [validator.isAlpha, 'Invalid last name'],
   },
   occupation: { type: String, trim: true },
   hometown: { type: String, trim: true },
@@ -46,7 +44,7 @@ const userSchema = new mongoose.Schema({
   age: {
     type: Number,
     required: [true, 'A user must have an age'],
-    min: 13,
+    min: [13, 'Minimum age is 13'],
   },
   aboutMe: { type: String, trim: true },
   joinDate: {
