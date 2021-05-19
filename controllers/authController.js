@@ -1,3 +1,6 @@
+// INCLUDE DEPENDENCIES
+const jwt = require('jsonwebtoken');
+
 // INCLUDE MODELS
 const userModel = require('../models/userModel.js');
 
@@ -7,10 +10,22 @@ const errorController = require('./errorController.js');
 
 exports.signUp = async (req, res) => {
   try {
-    const newUser = await userModel.create(req.body);
+    const newUser = await userModel.create({
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      displayName: req.body.displayName,
+      age: req.body.age,
+      email: req.body.email,
+      password: req.body.password,
+    });
+
+    const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET, {
+      expiresIn: process.env.JWT_EXPIRES_IN,
+    });
 
     res.status(201).json({
       stastus: 'success',
+      token,
       data: {
         user: JSON.parse(JSON.stringify(newUser)),
       },

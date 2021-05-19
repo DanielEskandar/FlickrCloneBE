@@ -1,6 +1,7 @@
 // INCLUDE DEPENDENCIES
 const mongoose = require('mongoose');
 const validator = require('validator');
+const bcrypt = require('bcryptjs');
 
 // CREATE SCHEMA
 const userSchema = new mongoose.Schema({
@@ -128,6 +129,14 @@ const userSchema = new mongoose.Schema({
       contacts: { type: Boolean, default: 1 },
     },
   },
+});
+
+userSchema.pre('save', async function (next) {
+  // Only run this function if password was actually modified
+  if (!this.isModified('password')) return next();
+
+  // Hash the password with cost of 12
+  this.password = await bcrypt.hash(this.password, 12);
 });
 
 // CREATE MODEL
