@@ -24,8 +24,7 @@ describe('should retrieve all groups info', () => {
   });
 });
 
-//TESTING: GetMembers
-
+// TESTING: GetMembers
 describe('should retrieve members in group with id 608f3d0fb5ba8b4f34890a5e', () => {
   test('should retrieve 2 users', async () => {
     const mReq = { params: { id: '608f3d0fb5ba8b4f34890a5e' } };
@@ -39,7 +38,7 @@ describe('should retrieve members in group with id 608f3d0fb5ba8b4f34890a5e', ()
   });
 });
 
-//TESTING GET PHOTO POOL
+// TESTING GET PHOTO POOL
 describe('should retrieve photos in group with id 608f3d0fb5ba8b4f34890a5e', () => {
   test('should retrieve 1 photo ', async () => {
     const mReq = { params: { id: '608f3d0fb5ba8b4f34890a5e' } };
@@ -53,7 +52,7 @@ describe('should retrieve photos in group with id 608f3d0fb5ba8b4f34890a5e', () 
   });
 });
 
-//TESTING GET ALL DISCUSSIONS
+// TESTING GET ALL DISCUSSIONS
 describe('should retrieve discussions in group with id 608f3d0fb5ba8b4f34890a5e', () => {
   test('should retrieve 2 discussions ', async () => {
     const mReq = { params: { id: '608f3d0fb5ba8b4f34890a5e' } };
@@ -67,7 +66,7 @@ describe('should retrieve discussions in group with id 608f3d0fb5ba8b4f34890a5e'
   });
 });
 
-//TESTING GET DISCUSSION
+// TESTING GET DISCUSSION
 describe('should retrieve discussion with ID 608f6e7519953b27004f6dac', () => {
   test(' ', async () => {
     const mReq = { params: { id: '608f6e7519953b27004f6dac' } };
@@ -81,17 +80,45 @@ describe('should retrieve discussion with ID 608f6e7519953b27004f6dac', () => {
   });
 });
 
-//TESTING CREATE DISCUSSION
-describe('should create new discussion with id 608f3d0fb5998b4f34890a5e in group with id 608f3d0fb5ba8b4f34890a5e', () => {
+// TESTING GET REPLY
+describe('should retrieve reply with ID 609fe93c38075024f8d3e6f5', () => {
+  test(' ', async () => {
+    const mReq = { params: { id: '609fe93c38075024f8d3e6f5' } };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await groupController.getReply(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(groupTestData.getReplyData);
+  });
+});
+
+// TEST GET ALL REPLIES
+describe('should retrieve replies on discussion id 608f6e7519953b27004f6dac', () => {
+  test('should retrieve 1 reply ', async () => {
+    const mReq = { params: { id: '608f6e7519953b27004f6dac' } };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await groupController.getAllReplies(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(groupTestData.getAllRepliesData);
+  });
+});
+
+// TESTING CREATE DISCUSSION
+describe('should create new discussion with id 608d33c7e512b74ee00791df in group with id 608f3d0fb5ba8b4f34890a5e', () => {
   test('', async () => {
     const mReq = {
       params: { id: '608f3d0fb5ba8b4f34890a5e' },
       body: {
-        _id: '608f3d0fb5998b4f34890a5e',
-        content: 'i want fresh mango',
-        date: '2020-02-02',
+        _id: '608d33c7e512b74ee00791df',
+        content: 'best pastaaa ever',
+        date: '2021-01-01',
       },
-      headers: { id: '608d5450ec00005468607a0c' },
+      headers: { userid: '608d55c7e512b74ee00791de' },
     };
     const mRes = {
       status: jest.fn().mockReturnThis(),
@@ -103,13 +130,35 @@ describe('should create new discussion with id 608f3d0fb5998b4f34890a5e in group
   });
 });
 
-//TESTING EDIT DISCUSSION
-describe('should edit content field in discussion with id 608f6e7519953b27004f6dab in group with id 608f3d0fb5ba8b4f34890a5e', () => {
+// TESTING ADD REPLY
+describe('should create new reply with id 610fe93c38075024f8d3e6f3 on discussion with id 608d55c7e512b74ee00791dd', () => {
   test('', async () => {
     const mReq = {
-      params: { id: '608f6e7519953b27004f6dab' },
+      params: { id: '608d55c7e512b74ee00791dd' },
       body: {
-        content: 'i want pasta',
+        _id: '610fe93c38075024f8d3e6f3',
+        content: 'mori sushi is the best',
+        date: '2021-01-01',
+      },
+      headers: { userid: '608d55c7e512b74ee00791de' },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await groupController.addReply(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(groupTestData.addReplyData);
+  });
+});
+
+// TESTING EDIT DISCUSSION
+describe('should edit content field in discussion with id 608f6e7519953b27004f6dac', () => {
+  test('', async () => {
+    const mReq = {
+      params: { id: '608f6e7519953b27004f6dac' },
+      body: {
+        content: 'edit 1',
       },
     };
     const mRes = {
@@ -122,7 +171,26 @@ describe('should edit content field in discussion with id 608f6e7519953b27004f6d
   });
 });
 
-//TESTING DELETE DICSUSSION
+// TESTING EDIT REPLY
+describe('should edit content field in reply with id 609fe93c38075024f8d3e6f5', () => {
+  test('', async () => {
+    const mReq = {
+      params: { id: '609fe93c38075024f8d3e6f5' },
+      body: {
+        content: 'try seoudi',
+      },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await groupController.editReply(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(groupTestData.editReplyData);
+  });
+});
+
+// TESTING DELETE DICSUSSION
 describe('should delete discussion with id 608f6e7519953b27004f6dab ', () => {
   test('returns null data', async () => {
     const mReq = {
@@ -138,20 +206,33 @@ describe('should delete discussion with id 608f6e7519953b27004f6dab ', () => {
   });
 });
 
-//TESTING CREATE GROUP
+// TESTING DELETE REPLY
+describe('should delete reply with id 609fe93c38075024f8d3e6f5 ', () => {
+  test('returns null data', async () => {
+    const mReq = {
+      params: { id: '609fe93c38075024f8d3e6f5' },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await groupController.deleteReply(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(groupTestData.deleteReplyData);
+  });
+});
+
+// TESTING CREATE GROUP
 describe('userid in headers should create new group with content in body, add userid as member and set as admin', () => {
   test('', async () => {
     const mReq = {
       params: {},
       body: {
-        _id: '608f3d0fb5b8184f34890a50',
-        public: true,
-        name: 'Backend Test1',
-        invitation: true,
-        description: 'this is create group api test.',
-        startDate: '2021-01-01',
+        _id: '609eed338a55978b34e2f061',
+        name: 'backend unit test',
+        startDate: '2021-01-02',
       },
-      headers: { userid: '608d5450ec00005468607a0c' },
+      headers: { userid: '608d55c7e512b74ee00791de' },
     };
     const mRes = {
       status: jest.fn().mockReturnThis(),
