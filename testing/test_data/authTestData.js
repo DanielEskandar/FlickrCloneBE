@@ -1,15 +1,15 @@
 module.exports.signupTestData1 = {
-  status: 'error',
+  status: 'fail',
   message: 'Invalid input data. Minimum age is 13',
 };
 
 module.exports.signupTestData2 = {
-  status: 'error',
+  status: 'fail',
   message: 'Invalid input data. Invalid email address',
 };
 
 module.exports.signupTestData3 = {
-  status: 'error',
+  status: 'fail',
   message: 'Invalid input data. Weak password',
 };
 
@@ -98,6 +98,6 @@ module.exports.signupTestData5 = {
 };
 
 module.exports.signupTestData6 = {
-  status: 'error',
+  status: 'fail',
   message: 'Duplicate field value "firstlast". Please use another value',
 };
