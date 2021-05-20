@@ -358,7 +358,7 @@ photoRouter.post('/:id/tags', photoController.addTag);
  * @apiUse PhotoNotFoundError
  *
  */
-photoRouter.delete('/:id/tags');
+photoRouter.delete('/:id/tags', photoController.removeTag);
 
 /**
  * @api {get} /photo/:id/galleries Gets all Galleries Photo Belongs to

@@ -231,7 +231,7 @@ exports.addTag = async (req, res) => {
     await photoModel.findByIdAndUpdate(
       req.params.id,
       {
-        $push: { tags: req.body },
+        $push: { tags: req.body.tags },
       },
       {
         runValidators: true,
@@ -240,7 +240,7 @@ exports.addTag = async (req, res) => {
 
     res.status(200).json({
       status: 'success',
-      data: JSON.parse(JSON.stringify(newComment)),
+      data: JSON.parse(JSON.stringify(req.body)),
     });
   } catch (err) {
     errorController.sendError(err, req, res);
@@ -248,9 +248,37 @@ exports.addTag = async (req, res) => {
 };
 
 // REMOVE PHOTO TAGS
+exports.removeTag = async (req, res) => {
+  try {
+    const photoWithTag = await photoModel
+      .findById(req.params.id)
+      .select({ tags: 1, _id: 0 });
 
-// GET TAGGED USERS
+    if (!photoWithTag) {
+      throw new AppError('No Photo Found with this ID', 404);
+    }
+    const tag = photoWithTag.tags.find(
+      (element) => element.toString() === req.body.tags.toString()
+    );
 
-// ADD/TAG USER
-
-// REMOVE TAGGED USER
+    if (tag) {
+      await photoModel.findByIdAndUpdate(
+        req.params.id,
+        {
+          $pull: { tags: tag },
+        },
+        {
+          runValidators: true,
+        }
+      );
+      res.status(204).json({
+        status: 'success',
+        data: 'deleted',
+      });
+    } else {
+      throw new AppError('No such Tag Exists', 404);
+    }
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};

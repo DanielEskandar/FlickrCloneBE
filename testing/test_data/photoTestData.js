@@ -412,3 +412,22 @@ module.exports.setTagData2 = {
     tags: 'MirrorlessCamera',
   },
 };
+
+module.exports.removeTag = {
+  status: 'success',
+  data: 'deleted',
+};
+
+module.exports.addTagData1 = {
+  status: 'success',
+  data: {
+    tags: 'Adding Tag',
+  },
+};
+
+module.exports.addTagData2 = {
+  status: 'success',
+  data: {
+    tags: 'Skyline',
+  },
+};

@@ -227,10 +227,10 @@ describe('should retrieve all sizes of a photo', () => {
 });
 
 // TESTING SET TAGS
-describe('shouldset a tag on a photo', () => {
+describe('should set a tag on a photo', () => {
   test('should set tag Unit Test Tag!', async () => {
     const mReq = {
-      params: { id: '604d5450ec00005468617a0c' },
+      params: { id: '608d5450ec00005468628b1d' },
       body: {
         tags: 'Unit test tag 1',
       },
@@ -245,10 +245,10 @@ describe('shouldset a tag on a photo', () => {
   });
 });
 
-describe('shouldset a tag on a photo', () => {
+describe('should set a tag on a photo', () => {
   test('should set tag MirrorlessCamera', async () => {
     const mReq = {
-      params: { id: '604d5450ec00005468617a0c' },
+      params: { id: '608d5450ec00005468628b1d' },
       body: {
         tags: 'MirrorlessCamera',
       },
@@ -260,5 +260,83 @@ describe('shouldset a tag on a photo', () => {
     await photoController.setTags(mReq, mRes);
     expect(mRes.status).toBeCalledWith(200);
     expect(mRes.json).toBeCalledWith(photoTestData.setTagData2);
+  });
+});
+
+// TESTING DELETE COMMENT
+describe('should delete a tags', () => {
+  test('should delete tags #Sakure on ', async () => {
+    const mReq = {
+      params: {
+        id: '608d5450ec00005468628b1d',
+      },
+      body: {
+        tags: '#Nihon',
+      },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await photoController.removeTag(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(204);
+    expect(mRes.json).toBeCalledWith(photoTestData.removeTag);
+  });
+});
+
+describe('should delete a tags', () => {
+  test('should delete tags #Nihon on ', async () => {
+    const mReq = {
+      params: {
+        id: '608d5450ec00005468628b1d',
+      },
+      body: {
+        tags: '#Sakure',
+      },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await photoController.removeTag(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(204);
+    expect(mRes.json).toBeCalledWith(photoTestData.removeTag);
+  });
+});
+
+// TESTING ADD TAG
+describe('should add a tag on a photo', () => {
+  test('should add tag Adding Tag!', async () => {
+    const mReq = {
+      params: { id: '604d5450ec00005468617a0c' },
+      body: {
+        tags: 'Adding Tag',
+      },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await photoController.addTag(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(photoTestData.addTagData1);
+  });
+});
+
+describe('should add a tag on a photo', () => {
+  test('should add tag Skyline', async () => {
+    const mReq = {
+      params: { id: '608d5450ec00005468628b1d' },
+      body: {
+        tags: 'Skyline',
+      },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await photoController.setTags(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(photoTestData.addTagData2);
   });
 });
