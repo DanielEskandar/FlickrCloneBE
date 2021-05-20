@@ -1,0 +1,26 @@
+[
+  {
+    "_id": "609fe93c38075024f8d3e6f3",
+    "user": "608d5450ec00005468607a0c",
+    "content": "supermarket",
+    "date": "2021-01-01"
+  },
+  {
+    "_id": "609fe93c38075024f8d3e6f4",
+    "user": "608d5450ec00005468607a0c",
+    "content": "kfc",
+    "date": "2021-01-01"
+  },
+  {
+    "_id": "609fe93c38075024f8d3e6f6",
+    "user": "608d5450ec00005468607a0c",
+    "content": "fastfood",
+    "date": "2021-01-01"
+  },
+  {
+    "_id": "609fe93c38075024f8d3e6f5",
+    "user": "608d5450ec00005468607a0c",
+    "content": "pet shops",
+    "date": "2021-01-01"
+  }
+]

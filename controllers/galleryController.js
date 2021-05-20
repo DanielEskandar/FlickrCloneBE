@@ -185,12 +185,130 @@ exports.deleteComment = async (req, res) => {
 // CREATE GALLERY
 exports.createGallery = async (req, res) => {
   try {
+    // create new gallery
     const gallery = await galleryModel.create(req.body);
+
+    // add gallery to current user's array of galleries
+    await userModel.findByIdAndUpdate(req.headers.userid, {
+      $push: { gallery: gallery._id },
+    });
 
     res.status(200).json({
       status: 'success',
       data: JSON.parse(JSON.stringify(gallery)),
     });
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};
+
+// ADD A PHOTO
+exports.addPhoto = async (req, res) => {
+  try {
+    // check if gallery id exist or not
+
+    const gallery = await galleryModel.findById(req.params.id);
+    if (!gallery) {
+      throw new AppError('No Gallery Found with This ID', 404);
+    }
+
+    // check if photo id exist or not
+    const photoFromModel = await photoModel.findById(req.body.photoID);
+    if (!photoFromModel) {
+      throw new AppError('No Photo Found with This ID', 404);
+    }
+    // check if the photo exist in user faves
+    const currentUser = await userModel.findById(req.headers.userid);
+    const existInFaves = currentUser.favourites.find(
+      (element) => element.toString() === req.body.photoID.toString()
+    );
+    if (!existInFaves) {
+      throw new AppError('This Photo not in User Faves', 404);
+    }
+    // check if the photo alread exist in the gallery
+    const isExist = gallery.photos.find(
+      (element) => element.photoId.toString() === req.body.photoID.toString()
+    );
+    if (!isExist) {
+      // check photos count in a gallery photos count <=500
+      if (gallery.photos.length <= 500) {
+        // add photo to photos array in gallery
+        const updatedGallery = await galleryModel.findByIdAndUpdate(
+          req.params.id,
+          {
+            $push: { photos: { photoId: req.body.photoID, remark: '' } },
+            $set: { updatedAt: new Date(Date.now()) },
+          },
+          {
+            new: true,
+            runValidators: false,
+          }
+        );
+
+        res.status(200).json({
+          status: 'success',
+          data: 'ok',
+        });
+      } else {
+        throw new AppError('Gallery is Full ! Cannot add a new photo', 404);
+      }
+    } else {
+      throw new AppError('This Photo Already Exist !', 404);
+    }
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};
+
+// Delete A PHOTO
+exports.removePhoto = async (req, res) => {
+  try {
+    // check if gallery id exist or not
+    const gallery = await galleryModel.findById(req.params.id);
+    if (!gallery) {
+      throw new AppError('No Gallery Found with This ID', 404);
+    }
+
+    // check if photo id exist or not
+    const photoFromModel = await photoModel.findById(req.params.photoid);
+    if (!photoFromModel) {
+      throw new AppError('No Photo Found with This ID', 404);
+    }
+
+    // check if the photo exists in the gallery
+    const isExist = gallery.photos.find(
+      (element) => element.photoId.toString() === req.params.photoid.toString()
+    );
+    if (isExist) {
+      // check if the removed photo is the primary photo
+      let primPhoto = gallery.primaryPhotoId;
+      if (gallery.primaryPhotoId.toString() === req.params.photoid.toString()) {
+        // primary photo is always the first photo in the photos array
+        // when the first photo is removed -> assign the second one
+        if (gallery.photos.length > 1) {
+          primPhoto = gallery.photos[1].photoId;
+        } else if (gallery.photos.length === 1) primPhoto = null;
+      }
+
+      // update gallery
+      await galleryModel.findByIdAndUpdate(
+        req.params.id,
+        {
+          $pull: { photos: { photoId: photoFromModel._id } },
+          $set: { primaryPhotoId: primPhoto, updatedAt: new Date(Date.now()) },
+        },
+        {
+          new: true,
+          runValidators: true,
+        }
+      );
+      res.status(204).json({
+        status: 'success',
+        data: 'ok',
+      });
+    } else {
+      throw new AppError('This Photo not in the gallery!', 404);
+    }
   } catch (err) {
     errorController.sendError(err, req, res);
   }

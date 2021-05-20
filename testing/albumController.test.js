@@ -121,6 +121,7 @@ describe('should Create an album', () => {
     // delete any album with 305f34a634413f11f020b130
     await albumModel.findByIdAndDelete('305f34a634413f11f020b130');
     const mReq = {
+      headers: { userid: '608d5450ec00005468607a11' },
       body: {
         _id: '305f34a634413f11f020b130',
         albumName: 'Egypt',
@@ -137,5 +138,73 @@ describe('should Create an album', () => {
     await albumController.createAlbum(mReq, mRes);
     expect(mRes.status).toBeCalledWith(200);
     expect(mRes.json).toBeCalledWith(albumTestData.createAlbumData);
+  });
+});
+
+// TESTING: addPhoto
+describe('should add Photo to an album', () => {
+  test(`should should add Photo to an album id 608f3c70197abc18509aec5f`, async () => {
+    const mReq = {
+      params: { id: '608f3c70197abc18509aec5f' },
+      body: {
+        photoID: '608d5560ec00005468607a0e',
+      },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await albumController.addPhoto(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith({
+      status: 'success',
+      data: 'ok',
+    });
+  });
+});
+
+// TESTING: removePhoto
+describe('should delete a photo from an album', () => {
+  test(`should delete a photo from an album with id 608f3c70197abc18509aec61`, async () => {
+    const mReq = {
+      params: {
+        id: '608f3c70197abc18509aec61',
+        photoid: '608d5450ec00005468607a0f',
+      },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await albumController.removePhoto(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(204);
+    expect(mRes.json).toBeCalledWith({
+      status: 'success',
+      data: 'ok',
+    });
+  });
+});
+
+// TESTING: removePhotos
+describe('should delete list of photos from an album', () => {
+  test(`should delete a photo from an album with id 608f3c70197abc18509aec60`, async () => {
+    const mReq = {
+      params: {
+        id: '608f3c70197abc18509aec60',
+      },
+      body: {
+        photos: ['608d5450ec00005468617a0c', '608d5450ec00005468607a0f'],
+      },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await albumController.removePhotos(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(204);
+    expect(mRes.json).toBeCalledWith({
+      status: 'success',
+      data: 'ok',
+    });
   });
 });

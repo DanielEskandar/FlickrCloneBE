@@ -2,8 +2,10 @@
 const groupModel = require('../models/groupModel.js');
 const discModel = require('../models/discussionModel.js');
 const userModel = require('../models/userModel.js');
-
+const replyModel = require('../models/replyModel.js');
+const photoModel = require('../models/photoModel.js');
 // INCLUDE ERROR CLASS AND ERROR CONTROLLER
+
 const AppError = require('../utils/appError.js');
 const errorController = require('./errorController.js');
 
@@ -107,6 +109,71 @@ exports.deleteDiscussion = async (req, res) => {
   }
 };
 
+// DELETE A REPLY BY ID
+exports.deleteReply = async (req, res) => {
+  try {
+    if ((await replyModel.findById(req.params.id)) === null) {
+      throw new AppError('No Reply Found with this ID', 404);
+    }
+
+    await replyModel.findByIdAndDelete(req.params.id);
+
+    res.status(200).json({
+      status: 'success',
+      data: null,
+    });
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};
+//REMOVE PHOTO FROM PHOTO POOL
+exports.removePhotofromPool = async (req, res) => {
+  try {
+    //group check
+    if ((await groupModel.findById(req.params.id)) === null) {
+      throw new AppError('No Group Found with this ID', 404);
+    }
+
+    //check if photo exists in DB
+    if ((await photoModel.findById(req.params.photoid)) === null) {
+      throw new AppError('Photo doesnt Exist', 404);
+    }
+
+    const group = await groupModel.findById(req.params.id);
+
+    //check if photo already exists in group pool
+    const exists = group.photos.find(
+      (photo) => photo.toString() === req.params.photoid.toString()
+    );
+    if (exists === undefined) {
+      throw new AppError('Photo Already isnt in group Pool', 404);
+    }
+
+    inPhoto = await photoModel.findById(req.params.photoid);
+    const updatedGroup = await groupModel
+      .findByIdAndUpdate(
+        req.params.id,
+        {
+          $pull: {
+            photos: inPhoto.id,
+          },
+        },
+        {
+          new: true,
+          runValidators: true,
+        }
+      )
+      .select({ _id: 0 })
+      .select('photos');
+    res.status(200).json({
+      status: 'success',
+      data: JSON.parse(JSON.stringify(updatedGroup)),
+    });
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};
+
 // GET A DISCUSSION BY ID
 exports.getDiscussion = async (req, res) => {
   try {
@@ -171,6 +238,50 @@ exports.createDiscussion = async (req, res) => {
   }
 };
 
+// ADD REPLY
+exports.addReply = async (req, res) => {
+  try {
+    //validations on discussion ID
+    if ((await discModel.findById(req.params.id)) === null) {
+      throw new AppError('No Discussion Found with this ID', 404);
+    }
+
+    const reply = await replyModel.create(req.body); //create new reply instance
+
+    await discModel.findByIdAndUpdate(
+      req.params.id,
+      {
+        $push: {
+          replies: {
+            _id: reply._id,
+          },
+        },
+      },
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
+    //  authoriztation
+    const newReply = await replyModel.findByIdAndUpdate(
+      reply,
+      {
+        user: req.headers.userid,
+      },
+      {
+        new: true,
+        runValidators: true,
+      }
+    ); //reply author
+    res.status(200).json({
+      status: 'success',
+      data: JSON.parse(JSON.stringify(newReply)),
+    });
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};
+
 // EDIT A DISCUSSION
 exports.editDiscussion = async (req, res) => {
   try {
@@ -195,6 +306,32 @@ exports.editDiscussion = async (req, res) => {
   }
 };
 
+// EDIT A REPLY
+exports.editReply = async (req, res) => {
+  try {
+    const reply = await replyModel.findById(req.params.id);
+
+    if (!reply) {
+      throw new AppError('No Reply Found with this ID', 404);
+    }
+
+    //else update
+    const newReply = await replyModel.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
+    res.status(200).json({
+      status: 'success',
+      data: JSON.parse(JSON.stringify(newReply)),
+    });
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};
 // GET MEMBERS
 exports.getMembers = async (req, res) => {
   try {
@@ -239,6 +376,107 @@ exports.getPhotoPool = async (req, res) => {
     res.status(200).json({
       status: 'success',
       data: JSON.parse(JSON.stringify(photos)),
+    });
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};
+
+// GET A REPLY
+exports.getReply = async (req, res) => {
+  try {
+    const reply = await replyModel.findById(req.params.id).select({ _id: 0 });
+
+    if (!reply) {
+      throw new AppError('No Reply Found with this ID', 404);
+    }
+
+    res.status(200).json({
+      status: 'success',
+      data: JSON.parse(JSON.stringify(reply)),
+    });
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};
+
+// GET ALL REPLIES
+exports.getAllReplies = async (req, res) => {
+  try {
+    if ((await discModel.findById(req.params.id)) === null) {
+      throw new AppError('No discussion Found with this ID', 404);
+    }
+
+    const replies = await discModel
+      .findById(req.params.id)
+      .select({ replies: 1, _id: 0 })
+      .populate([
+        {
+          path: 'replies',
+          model: 'replyModel',
+          select: 'content',
+          select: 'date',
+          select: { _id: 0 },
+          populate: {
+            path: 'user',
+            model: 'userModel',
+            select: 'displayName',
+          },
+        },
+      ]);
+
+    if (replies === null) {
+      throw new AppError('No Replies Found', 404);
+    }
+
+    res.status(200).json({
+      status: 'success',
+      data: JSON.parse(JSON.stringify(replies)),
+    });
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};
+
+exports.addToPhotoPool = async (req, res) => {
+  try {
+    //validations on group ID
+    if ((await groupModel.findById(req.params.id)) === null) {
+      throw new AppError('No GROUP Found with this ID', 404);
+    }
+
+    if ((await photoModel.findById(req.params.photoid)) === null) {
+      throw new AppError('No PHOTO Found with this ID', 404);
+    } //check if the photo is valid /exists
+
+    const photo = await photoModel.findById(req.params.photoid); //else get photo
+
+    //if photo is already in group pool
+    const exists = await groupModel.findOne({ photos: req.params.photoid });
+    if (exists) {
+      throw new AppError('Photo already exists', 404);
+    }
+    //else add photo
+    const updatedGroup = await groupModel
+      .findByIdAndUpdate(
+        req.params.id,
+        {
+          $push: {
+            photos: {
+              _id: photo._id,
+            }, //needs user authorization
+          },
+        },
+        {
+          new: true,
+          runValidators: true,
+        }
+      )
+      .select('photos')
+      .select({ _id: 0 });
+    res.status(200).json({
+      status: 'success',
+      data: JSON.parse(JSON.stringify(updatedGroup)),
     });
   } catch (err) {
     errorController.sendError(err, req, res);
