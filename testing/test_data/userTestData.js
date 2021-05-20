@@ -36,6 +36,14 @@ module.exports.getRealNameData2 = {
 module.exports.getUserInfoData1 = {
   status: 'success',
   data: {
+    privacySettings: {
+      global: {
+        infoVisibility: {
+          email: 2,
+          currentCity: 1,
+        },
+      },
+    },
     email: 'ahmedkader99@mailserver.com',
     occupation: 'Photographer',
     hometown: 'Beverly Hills',
@@ -48,6 +56,14 @@ module.exports.getUserInfoData1 = {
 module.exports.getUserInfoData2 = {
   status: 'success',
   data: {
+    privacySettings: {
+      global: {
+        infoVisibility: {
+          email: 2,
+          currentCity: 1,
+        },
+      },
+    },
     email: 'daniel_eskandar99@mailserver.com',
     occupation: 'Artist',
     hometown: 'Ile de France',
@@ -410,7 +426,7 @@ module.exports.getPrivacySettingsData1 = {
   data: {
     privacySettings: {
       global: {
-        infoVisiblity: {
+        infoVisibility: {
           email: 2,
           name: 1,
           currentCity: 1,
@@ -451,7 +467,7 @@ module.exports.getPrivacySettingsData2 = {
   data: {
     privacySettings: {
       global: {
-        infoVisiblity: {
+        infoVisibility: {
           email: 2,
           name: 1,
           currentCity: 1,
@@ -484,5 +500,24 @@ module.exports.getPrivacySettingsData2 = {
         },
       },
     },
+  },
+};
+
+module.exports.udpateUserInfoData = {
+  status: 'success',
+  data: {
+    privacySettings: {
+      global: {
+        infoVisibility: {
+          email: 1,
+          currentCity: 2,
+        },
+      },
+    },
+    _id: '608d55c7e512b74ee00791db',
+    occupation: 'Artist',
+    hometown: 'Ile de France',
+    currentCity: 'Berlin',
+    country: 'Germany',
   },
 };
