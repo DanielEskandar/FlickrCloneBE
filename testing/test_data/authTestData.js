@@ -1,19 +1,19 @@
-module.exports.signupTestData1 = {
+module.exports.signupData1 = {
   status: 'fail',
   message: 'Invalid input data. Minimum age is 13',
 };
 
-module.exports.signupTestData2 = {
+module.exports.signupData2 = {
   status: 'fail',
   message: 'Invalid input data. Invalid email address',
 };
 
-module.exports.signupTestData3 = {
+module.exports.signupData3 = {
   status: 'fail',
   message: 'Invalid input data. Weak password',
 };
 
-module.exports.signupTestData5 = {
+module.exports.signupData4 = {
   stastus: 'success',
   token: expect.any(String),
   data: {
@@ -97,27 +97,52 @@ module.exports.signupTestData5 = {
   },
 };
 
-module.exports.signupTestData6 = {
+module.exports.signupData5 = {
   status: 'fail',
   message: 'Duplicate field value "firstlast". Please use another value',
 };
 
-module.exports.signinTestData1 = {
+module.exports.signinData1 = {
   status: 'fail',
   message: 'Please provide email and password',
 };
 
-module.exports.signinTestData2 = {
+module.exports.signinData2 = {
   status: 'fail',
   message: 'Invalid Email',
 };
 
-module.exports.signinTestData3 = {
+module.exports.signinData3 = {
   status: 'fail',
   message: 'Invalid Password',
 };
 
-module.exports.signinTestData4 = {
+module.exports.signinData4 = {
   status: 'success',
   token: expect.any(String),
+};
+
+module.exports.protectData1 = {
+  status: 'fail',
+  message: 'You are not logged in. Please log in to get access.',
+};
+
+module.exports.protectData2 = {
+  status: 'fail',
+  message: 'Invalid token. Please log in again.',
+};
+
+module.exports.protectData3 = {
+  status: 'fail',
+  message: 'Your token has expired. Please log in again',
+};
+
+module.exports.protectData4 = {
+  status: 'fail',
+  message: 'User changed password recently. Please log in again.',
+};
+
+module.exports.protectData5 = {
+  status: 'fail',
+  message: 'The user belonging to this token does not exist',
 };
