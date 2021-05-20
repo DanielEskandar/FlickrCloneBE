@@ -175,13 +175,13 @@ exports.addFave = async (req, res) => {
       throw new AppError('No photo is found by that ID', 404);
     }
 
-    if ((await userModel.findById(req.headers.userid)) === null) {
+    if ((await userModel.findById(req.user.id)) === null) {
       throw new AppError('No user is found by that ID', 404);
     }
 
     if (
       (await userModel.findOne({
-        _id: req.headers.userid,
+        _id: req.user.id,
         favourites: { $elemMatch: { $eq: req.params.id } },
       })) !== null
     ) {
@@ -205,7 +205,7 @@ exports.addFave = async (req, res) => {
     // Add PhotoID to Faves array in User model
     const updatedFaves = await userModel
       .findByIdAndUpdate(
-        req.headers.userid,
+        req.user.id,
         {
           $addToSet: { favourites: req.params.id },
         },
@@ -234,7 +234,7 @@ exports.addFave = async (req, res) => {
 exports.removeFave = async (req, res) => {
   try {
     const faveList = await userModel
-      .findById(req.headers.userid)
+      .findById(req.user.id)
       .select({ favourites: 1 });
 
     if (!faveList) {
@@ -264,7 +264,7 @@ exports.removeFave = async (req, res) => {
       // Remove PhotoID from Faves array in User model
       const updatedFaves = await userModel
         .findByIdAndUpdate(
-          req.headers.userid,
+          req.user.id,
           {
             $pull: { favourites: req.params.id },
           },
