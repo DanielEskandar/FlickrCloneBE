@@ -398,3 +398,17 @@ module.exports.getSizesData2 = {
     },
   },
 };
+
+module.exports.setTagData1 = {
+  status: 'success',
+  data: {
+    tags: 'Unit test tag 1',
+  },
+};
+
+module.exports.setTagData2 = {
+  status: 'success',
+  data: {
+    tags: 'MirrorlessCamera',
+  },
+};

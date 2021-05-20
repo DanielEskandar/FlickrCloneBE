@@ -225,3 +225,40 @@ describe('should retrieve all sizes of a photo', () => {
     expect(mRes.json).toBeCalledWith(photoTestData.getSizesData1);
   });
 });
+
+// TESTING SET TAGS
+describe('shouldset a tag on a photo', () => {
+  test('should set tag Unit Test Tag!', async () => {
+    const mReq = {
+      params: { id: '604d5450ec00005468617a0c' },
+      body: {
+        tags: 'Unit test tag 1',
+      },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await photoController.setTags(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(photoTestData.setTagData1);
+  });
+});
+
+describe('shouldset a tag on a photo', () => {
+  test('should set tag MirrorlessCamera', async () => {
+    const mReq = {
+      params: { id: '604d5450ec00005468617a0c' },
+      body: {
+        tags: 'MirrorlessCamera',
+      },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await photoController.setTags(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(photoTestData.setTagData2);
+  });
+});

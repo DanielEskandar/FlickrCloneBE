@@ -54,7 +54,7 @@ exports.getFavourites = async (req, res) => {
   }
 };
 
-// ADD COMMENT TO PHOTO --
+// ADD COMMENT TO PHOTO
 exports.addComment = async (req, res) => {
   try {
     if (!(await photoModel.findById(req.params.id))) {
@@ -194,3 +194,63 @@ exports.getSizes = async (req, res) => {
     errorController.sendError(err, req, res);
   }
 };
+
+// SET PHOTO TAGS
+exports.setTags = async (req, res) => {
+  try {
+    if (!(await photoModel.findById(req.params.id))) {
+      throw new AppError('No Photo Found with this ID', 404);
+    }
+
+    await photoModel.findByIdAndUpdate(
+      req.params.id,
+      {
+        $push: { tags: req.body.tags },
+      },
+      {
+        runValidators: true,
+      }
+    );
+
+    res.status(200).json({
+      status: 'success',
+      data: JSON.parse(JSON.stringify(req.body)),
+    });
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};
+
+// ADD PHOTO TAGS
+exports.addTag = async (req, res) => {
+  try {
+    if (!(await photoModel.findById(req.params.id))) {
+      throw new AppError('No Photo Found with this ID', 404);
+    }
+
+    await photoModel.findByIdAndUpdate(
+      req.params.id,
+      {
+        $push: { tags: req.body },
+      },
+      {
+        runValidators: true,
+      }
+    );
+
+    res.status(200).json({
+      status: 'success',
+      data: JSON.parse(JSON.stringify(newComment)),
+    });
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};
+
+// REMOVE PHOTO TAGS
+
+// GET TAGGED USERS
+
+// ADD/TAG USER
+
+// REMOVE TAGGED USER
