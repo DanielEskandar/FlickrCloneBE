@@ -209,7 +209,7 @@ albumRouter.delete('/:id');
 /**
  * @api {delete} /photoset/:id/photos Delete multiple photos
  * @apiVersion 1.0.0
- * @apiName DeletePhotos
+ * @apiName RemovePhotos
  * @apiGroup Album
  *
  * @apiParam {String} id The Album's ID
@@ -223,12 +223,12 @@ albumRouter.delete('/:id');
  * @apiUse UnauthError
  */
 
-albumRouter.delete('/:id/photos');
+albumRouter.delete('/:id/photos', albumController.removePhotos);
 
 /**
  * @api {delete} /photoset/:id/:photoid Delete Photo
  * @apiVersion 1.0.0
- * @apiName DeletePhoto
+ * @apiName RemovePhoto
  * @apiGroup Album
  *
  * @apiParam {String} id The Album's ID
@@ -243,7 +243,7 @@ albumRouter.delete('/:id/photos');
  * @apiUse UnauthError
  */
 
-albumRouter.delete('/:id/:photoid');
+albumRouter.delete('/:id/:photoid', albumController.removePhoto);
 
 /**
  * @api {delete} /photoset/comments/:id Delete Comment
@@ -258,7 +258,7 @@ albumRouter.delete('/:id/:photoid');
  * @apiSuccess {String} data Success Message
  *
  * @apiSuccessExample Success-Response:
- *      HTTP/1.1 200 OK
+ *      HTTP/1.1 204 OK
  *      {
  *          "status": "success",
  *          "data":
@@ -348,7 +348,7 @@ albumRouter.post('/', albumController.createAlbum);
  *
  */
 
-albumRouter.post('/:id/photos');
+albumRouter.post('/:id/photos', albumController.addPhoto);
 
 /**
  * @api {post} /photoset/:id/comments Add a comment
