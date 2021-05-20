@@ -10,7 +10,6 @@ const userSchema = new mongoose.Schema({
     trim: true,
     unique: [true, 'Display name must be unique'],
     required: [true, 'A user must have a display name'],
-    validate: [validator.isAlphanumeric, 'Invalid username'],
   },
   email: {
     type: String,
