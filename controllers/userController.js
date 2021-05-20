@@ -10,7 +10,7 @@ const errorController = require('./errorController.js');
 exports.getRealName = async (req, res) => {
   try {
     const realName = await userModel
-      .findById(req.headers.userid)
+      .findById(req.user.id)
       .select({ firstName: 1, lastName: 1, _id: 0 });
 
     if (!realName) {
@@ -30,7 +30,7 @@ exports.getRealName = async (req, res) => {
 exports.getDispName = async (req, res) => {
   try {
     const dispName = await userModel
-      .findById(req.headers.userid)
+      .findById(req.user.id)
       .select({ displayName: 1, _id: 0 });
 
     if (!dispName) {
@@ -76,7 +76,7 @@ exports.getUserInfo = async (req, res) => {
 exports.getLimits = async (req, res) => {
   try {
     const limits = await userModel
-      .findById(req.headers.userid)
+      .findById(req.user.id)
       .select({ limits: 1, _id: 0 });
 
     if (!limits) {
@@ -118,7 +118,7 @@ exports.getFollowing = async (req, res) => {
 exports.getBlocked = async (req, res) => {
   try {
     const blocked = await userModel
-      .findById(req.headers.userid)
+      .findById(req.user.id)
       .select({ blocked: 1 })
       .populate('blocked', 'displayName firstName lastName');
 
@@ -296,7 +296,7 @@ exports.removeFave = async (req, res) => {
 exports.getNotificationSettings = async (req, res) => {
   try {
     const notificationSettings = await userModel
-      .findById(req.headers.userid)
+      .findById(req.user.id)
       .select({ notificationSettings: 1, _id: 0 });
 
     if (!notificationSettings) {
@@ -316,7 +316,7 @@ exports.getNotificationSettings = async (req, res) => {
 exports.getPrivacySettings = async (req, res) => {
   try {
     const privacySettings = await userModel
-      .findById(req.headers.userid)
+      .findById(req.user.id)
       .select({ privacySettings: 1, _id: 0 });
 
     if (!privacySettings) {

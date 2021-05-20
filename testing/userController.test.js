@@ -13,7 +13,7 @@ headers.initTesting();
 // TESTING: getDispName
 describe('should retrieve display name by id and send response correctly', () => {
   test('should retrieve display name DanielEskandar', async () => {
-    const mReq = { headers: { userid: '608d55c7e512b74ee00791db' } };
+    const mReq = { user: { id: '608d55c7e512b74ee00791db' } };
     const mRes = {
       status: jest.fn().mockReturnThis(),
       json: jest.fn().mockReturnThis(),
@@ -24,7 +24,7 @@ describe('should retrieve display name by id and send response correctly', () =>
   });
 
   test('should retrieve display name AliaaKhalifa', async () => {
-    const mReq = { headers: { userid: '608d55c7e512b74ee00791dc' } };
+    const mReq = { user: { id: '608d55c7e512b74ee00791dc' } };
     const mRes = {
       status: jest.fn().mockReturnThis(),
       json: jest.fn().mockReturnThis(),
@@ -38,11 +38,7 @@ describe('should retrieve display name by id and send response correctly', () =>
 // TESTING: getRealName
 describe('should retrieve real name by id and send response correctly', () => {
   test('should retrieve real name Ahmed Abdulkader', async () => {
-    const mReq = {
-      headers: {
-        userid: '608d5450ec00005468607a0c',
-      },
-    };
+    const mReq = { user: { id: '608d5450ec00005468607a0c' } };
     const mRes = {
       status: jest.fn().mockReturnThis(),
       json: jest.fn().mockReturnThis(),
@@ -53,11 +49,7 @@ describe('should retrieve real name by id and send response correctly', () => {
   });
 
   test('should retrieve real name Mariam Khashab', async () => {
-    const mReq = {
-      headers: {
-        userid: '608d55c7e512b74ee00791dd',
-      },
-    };
+    const mReq = { user: { id: '608d55c7e512b74ee00791dd' } };
     const mRes = {
       status: jest.fn().mockReturnThis(),
       json: jest.fn().mockReturnThis(),
@@ -71,11 +63,7 @@ describe('should retrieve real name by id and send response correctly', () => {
 // TESTING: getUserInfo
 describe('should retrieve user info by id and send response correctly', () => {
   test('should retrieve user info of Ahmed Abdulkader', async () => {
-    const mReq = {
-      params: {
-        id: '608d5450ec00005468607a0c',
-      },
-    };
+    const mReq = { params: { id: '608d5450ec00005468607a0c' } };
     const mRes = {
       status: jest.fn().mockReturnThis(),
       json: jest.fn().mockReturnThis(),
@@ -86,11 +74,7 @@ describe('should retrieve user info by id and send response correctly', () => {
   });
 
   test('should retrieve user info of Daniel Eskandar', async () => {
-    const mReq = {
-      params: {
-        id: '608d55c7e512b74ee00791db',
-      },
-    };
+    const mReq = { params: { id: '608d55c7e512b74ee00791db' } };
     const mRes = {
       status: jest.fn().mockReturnThis(),
       json: jest.fn().mockReturnThis(),
@@ -101,11 +85,7 @@ describe('should retrieve user info by id and send response correctly', () => {
   });
 
   test('should send user not found error', async () => {
-    const mReq = {
-      params: {
-        id: '608d55c7e512b74ee00791df',
-      },
-    };
+    const mReq = { params: { id: '608d55c7e512b74ee00791df' } };
     const mRes = {
       status: jest.fn().mockReturnThis(),
       json: jest.fn().mockReturnThis(),
@@ -119,7 +99,7 @@ describe('should retrieve user info by id and send response correctly', () => {
 // TESTING: getLimits
 describe('should retrieve limits by id and send response correctly', () => {
   test('should retrieve limits of DanielEskandar', async () => {
-    const mReq = { headers: { userid: '608d55c7e512b74ee00791db' } };
+    const mReq = { user: { id: '608d55c7e512b74ee00791db' } };
     const mRes = {
       status: jest.fn().mockReturnThis(),
       json: jest.fn().mockReturnThis(),
@@ -130,7 +110,7 @@ describe('should retrieve limits by id and send response correctly', () => {
   });
 
   test('should retrieve limits AliaaKhalifa', async () => {
-    const mReq = { headers: { userid: '608d55c7e512b74ee00791dc' } };
+    const mReq = { user: { id: '608d55c7e512b74ee00791dc' } };
     const mRes = {
       status: jest.fn().mockReturnThis(),
       json: jest.fn().mockReturnThis(),
@@ -180,7 +160,7 @@ describe('should retrieve following list of a user and send response correctly',
 // TESTING: getBlocked
 describe('should retrieve blocked list of a user and send response correctly', () => {
   test('should retrieve blocked list of DanielEskandar', async () => {
-    const mReq = { headers: { userid: '608d55c7e512b74ee00791db' } };
+    const mReq = { user: { id: '608d55c7e512b74ee00791db' } };
     const mRes = {
       status: jest.fn().mockReturnThis(),
       json: jest.fn().mockReturnThis(),
@@ -191,7 +171,7 @@ describe('should retrieve blocked list of a user and send response correctly', (
   });
 
   test('should retrieve blocked list of AliaaKhalifa', async () => {
-    const mReq = { headers: { userid: '608d55c7e512b74ee00791dc' } };
+    const mReq = { user: { id: '608d55c7e512b74ee00791dc' } };
     const mRes = {
       status: jest.fn().mockReturnThis(),
       json: jest.fn().mockReturnThis(),
@@ -320,7 +300,7 @@ describe('should remove image from faves by id and send response correctly', () 
 // TESTING: getNotificationSettings
 describe('should retrieve notification settings by id and send response correctly', () => {
   test('should retrieve notification settings of DanielEskandar', async () => {
-    const mReq = { headers: { userid: '608d55c7e512b74ee00791db' } };
+    const mReq = { user: { id: '608d55c7e512b74ee00791db' } };
     const mRes = {
       status: jest.fn().mockReturnThis(),
       json: jest.fn().mockReturnThis(),
@@ -331,7 +311,7 @@ describe('should retrieve notification settings by id and send response correctl
   });
 
   test('should retrieve notification settings of AliaaKhalifa', async () => {
-    const mReq = { headers: { userid: '608d55c7e512b74ee00791dc' } };
+    const mReq = { user: { id: '608d55c7e512b74ee00791dc' } };
     const mRes = {
       status: jest.fn().mockReturnThis(),
       json: jest.fn().mockReturnThis(),
@@ -345,7 +325,7 @@ describe('should retrieve notification settings by id and send response correctl
 // TESTING: getPrivacySettings
 describe('should retrieve privacy settings by id and send response correctly', () => {
   test('should retrieve privacy settings of DanielEskandar', async () => {
-    const mReq = { headers: { userid: '608d55c7e512b74ee00791db' } };
+    const mReq = { user: { id: '608d55c7e512b74ee00791db' } };
     const mRes = {
       status: jest.fn().mockReturnThis(),
       json: jest.fn().mockReturnThis(),
@@ -356,7 +336,7 @@ describe('should retrieve privacy settings by id and send response correctly', (
   });
 
   test('should retrieve privacy settings of AliaaKhalifa', async () => {
-    const mReq = { headers: { userid: '608d55c7e512b74ee00791dc' } };
+    const mReq = { user: { id: '608d55c7e512b74ee00791dc' } };
     const mRes = {
       status: jest.fn().mockReturnThis(),
       json: jest.fn().mockReturnThis(),
