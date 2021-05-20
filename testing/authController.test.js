@@ -3,6 +3,7 @@ const authController = require('../controllers/authController.js');
 
 // INCLUDE TEST DATA
 const authTestData = require('./test_data/authTestData.js');
+const tokens = require('./test_data/tokens.js');
 
 // INCLUDE COMMON TEST HEADERS
 const headers = require('./testCommon.js');

@@ -94,7 +94,7 @@ userRouter.post('/confirm');
  * @apiName SignUpConfirm
  * @apiGroup User
  *
- * @apiParam (Request Body) {string} email Eamil entered by user
+ * @apiParam (Request Body) {string} email Email entered by user
  * @apiParam (Request Body) (string) password Password entered by user
  *
  * @apiSuccess {string} Token Authenticaton Token
@@ -663,7 +663,7 @@ userRouter.get('/:id/faves', userController.getFaves);
  * @apiUse UnauthError
  */
 
-userRouter.get('/limits', userController.getLimits);
+userRouter.get('/limits', authController.protect, userController.getLimits);
 
 /**
  * @api {delete} /user/testimonials/:id Delete a testimonial
@@ -705,7 +705,11 @@ userRouter.delete('/testimonials/:id');
  * @apiUse UnauthError
  */
 
-userRouter.get('/real-name', userController.getRealName);
+userRouter.get(
+  '/real-name',
+  authController.protect,
+  userController.getRealName
+);
 
 /**
  * @api {get} /user/disp-name Return the display name of User
@@ -730,7 +734,11 @@ userRouter.get('/real-name', userController.getRealName);
  * @apiUse UnauthError
  */
 
-userRouter.get('/disp-name', userController.getDispName);
+userRouter.get(
+  '/disp-name',
+  authController.protect,
+  userController.getDispName
+);
 
 /**
  * @api {patch} /user/disp-name Update the display name of User
@@ -865,7 +873,11 @@ userRouter.post('/confirm-password');
  * @apiUse UnauthError
  */
 
-userRouter.get('/perm');
+userRouter.get(
+  '/perm',
+  authController.protect,
+  userController.getPrivacySettings
+);
 
 /**
  * @api {patch} /user/perm Update the User Permission Settings
@@ -919,7 +931,11 @@ userRouter.patch('/perm');
  * @apiUse UnauthError
  */
 
-userRouter.get('/notif');
+userRouter.get(
+  '/notif',
+  authController.protect,
+  userController.getNotificationSettings
+);
 
 /**
  * @api {patch} /user/notif Update the User Notification Settings
@@ -1082,7 +1098,11 @@ userRouter.get('/camera-roll');
  * @apiUse UserNotFoundError
  */
 
-userRouter.get('/:id/following', userController.getFollowing);
+userRouter.get(
+  '/:id/following',
+  authController.protect,
+  userController.getFollowing
+);
 
 /**
  * @api {get} /user/follower Gets a list of User's followers
@@ -1169,7 +1189,7 @@ userRouter.get('/follower-not-followed');
  * @apiUse UnauthError
  */
 
-userRouter.get('/block', userController.getBlocked);
+userRouter.get('/block', authController.protect, userController.getBlocked);
 
 /**
  * @api {post} /user/follow/:id Follow a User
@@ -1471,7 +1491,7 @@ userRouter.get('/notif/follow');
  * @apiUse UserNotFoundError
  */
 
-userRouter.get('/:id', userController.getUserInfo);
+userRouter.get('/:id', authController.protect, userController.getUserInfo);
 
 /**
  * @api {get} /user/:id Get the User's Information

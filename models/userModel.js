@@ -128,6 +128,7 @@ const userSchema = new mongoose.Schema({
       contacts: { type: Boolean, default: 1 },
     },
   },
+  passwordChangedAt: Date,
 });
 
 // encrypt password
@@ -145,6 +146,21 @@ userSchema.methods.correctPassword = async function (
   userPassword
 ) {
   return await bcrypt.compareSync(candidatePassword, userPassword);
+};
+
+// check if password was changed afer a token timestamp
+userSchema.methods.changedPasswordAfter = function (JWTTimestamp) {
+  if (this.passwordChangedAt) {
+    const changedTimestamp = parseInt(
+      this.passwordChangedAt.getTime() / 1000,
+      10
+    );
+
+    return JWTTimestamp < changedTimestamp;
+  }
+
+  // False means the password was not changed
+  return false;
 };
 
 // CREATE MODEL
