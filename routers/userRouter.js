@@ -94,7 +94,7 @@ userRouter.post('/confirm');
  * @apiName SignUpConfirm
  * @apiGroup User
  *
- * @apiParam (Request Body) {string} username Username entered by user
+ * @apiParam (Request Body) {string} email Eamil entered by user
  * @apiParam (Request Body) (string) password Password entered by user
  *
  * @apiSuccess {string} Token Authenticaton Token
@@ -104,7 +104,7 @@ userRouter.post('/confirm');
  * @apiUse UnauthError
  */
 
-userRouter.post('/sign-in');
+userRouter.post('/sign-in', authController.signIn);
 
 /**
  * @api {post} /user/sign-out Sign In a Confirmed User

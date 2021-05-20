@@ -112,3 +112,83 @@ describe('should perform signup operation for a new user', () => {
     expect(mRes.json).toBeCalledWith(authTestData.signupTestData6);
   });
 });
+
+describe('should perform login operation successfully', () => {
+  test('should not login user because body does not contain email', async () => {
+    const mReq = {
+      body: {
+        password: 'ViveLaFrance&45',
+      },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await authController.signIn(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(400);
+    expect(mRes.json).toBeCalledWith(authTestData.signinTestData1);
+  });
+
+  test('should not login user because body does not contain password', async () => {
+    const mReq = {
+      body: {
+        email: 'daniel_eskandar99@mailserver.com',
+      },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await authController.signIn(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(400);
+    expect(mRes.json).toBeCalledWith(authTestData.signinTestData1);
+  });
+
+  test('should not login user because of invalid email', async () => {
+    const mReq = {
+      body: {
+        email: 'ddaniel_eskandar99@mailserver.com',
+        password: 'ViveLaFrance&45',
+      },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await authController.signIn(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(401);
+    expect(mRes.json).toBeCalledWith(authTestData.signinTestData2);
+  });
+
+  test('should not login user because of invalid password', async () => {
+    const mReq = {
+      body: {
+        email: 'daniel_eskandar99@mailserver.com',
+        password: 'vViveLaFrance&45',
+      },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await authController.signIn(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(401);
+    expect(mRes.json).toBeCalledWith(authTestData.signinTestData3);
+  });
+
+  test('should login user successfully', async () => {
+    const mReq = {
+      body: {
+        email: 'daniel_eskandar99@mailserver.com',
+        password: 'ViveLaFrance&45',
+      },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await authController.signIn(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(authTestData.signinTestData4);
+  });
+});

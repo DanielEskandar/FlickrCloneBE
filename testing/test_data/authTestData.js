@@ -15,7 +15,7 @@ module.exports.signupTestData3 = {
 
 module.exports.signupTestData5 = {
   stastus: 'success',
-  token: expect.anything(),
+  token: expect.any(String),
   data: {
     user: {
       limits: {
@@ -83,14 +83,14 @@ module.exports.signupTestData5 = {
       albums: [],
       gallery: [],
       blocked: [],
-      _id: expect.anything(),
+      _id: expect.any(String),
       firstName: 'First Name Test',
       lastName: 'Last Name Test',
       displayName: 'firstlast',
       age: 21,
       email: 'first.last@email.com',
-      password: expect.anything(),
-      joinDate: expect.anything(),
+      password: expect.any(String),
+      joinDate: expect.any(String),
       following: [],
       __v: 0,
     },
@@ -100,4 +100,24 @@ module.exports.signupTestData5 = {
 module.exports.signupTestData6 = {
   status: 'fail',
   message: 'Duplicate field value "firstlast". Please use another value',
+};
+
+module.exports.signinTestData1 = {
+  status: 'fail',
+  message: 'Please provide email and password',
+};
+
+module.exports.signinTestData2 = {
+  status: 'fail',
+  message: 'Invalid Email',
+};
+
+module.exports.signinTestData3 = {
+  status: 'fail',
+  message: 'Invalid Password',
+};
+
+module.exports.signinTestData4 = {
+  status: 'success',
+  token: expect.any(String),
 };
