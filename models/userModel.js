@@ -1,6 +1,7 @@
 // INCLUDE DEPENDENCIES
 const mongoose = require('mongoose');
 const validator = require('validator');
+const bcrypt = require('bcryptjs');
 
 // CREATE SCHEMA
 const userSchema = new mongoose.Schema({
@@ -9,10 +10,10 @@ const userSchema = new mongoose.Schema({
     trim: true,
     unique: [true, 'Display name must be unique'],
     required: [true, 'A user must have a display name'],
-    validate: [validator.isAlphanumeric, 'Invalid username'],
   },
   email: {
     type: String,
+    lowercase: true,
     required: [true, 'A user must have an email'],
     unique: [true, 'Email must be unique'],
     validate: [validator.isEmail, 'Invalid email address'],
@@ -24,20 +25,17 @@ const userSchema = new mongoose.Schema({
   },
   pro: {
     type: Boolean,
-    required: [true, 'A user must have a user type'],
     default: false,
   },
   firstName: {
     type: String,
     trim: true,
     required: [true, 'A user must have a first name'],
-    validate: [validator.isAlphanumeric, 'Invalid first name'],
   },
   lastName: {
     type: String,
     trim: true,
     required: [true, 'A user must have a last name'],
-    validate: [validator.isAlpha, 'Invalid last name'],
   },
   occupation: { type: String, trim: true },
   hometown: { type: String, trim: true },
@@ -46,7 +44,7 @@ const userSchema = new mongoose.Schema({
   age: {
     type: Number,
     required: [true, 'A user must have an age'],
-    min: 13,
+    min: [13, 'Minimum age is 13'],
   },
   aboutMe: { type: String, trim: true },
   joinDate: {
@@ -130,7 +128,40 @@ const userSchema = new mongoose.Schema({
       contacts: { type: Boolean, default: 1 },
     },
   },
+  passwordChangedAt: Date,
 });
+
+// encrypt password
+userSchema.pre('save', async function (next) {
+  // Only run this function if password was actually modified
+  if (!this.isModified('password')) return next();
+
+  // Hash the password with cost of 12
+  this.password = await bcrypt.hash(this.password, 12);
+});
+
+// check if the password is correct
+userSchema.methods.correctPassword = async function (
+  candidatePassword,
+  userPassword
+) {
+  return await bcrypt.compareSync(candidatePassword, userPassword);
+};
+
+// check if password was changed afer a token timestamp
+userSchema.methods.changedPasswordAfter = function (JWTTimestamp) {
+  if (this.passwordChangedAt) {
+    const changedTimestamp = parseInt(
+      this.passwordChangedAt.getTime() / 1000,
+      10
+    );
+
+    return JWTTimestamp < changedTimestamp;
+  }
+
+  // False means the password was not changed
+  return false;
+};
 
 // CREATE MODEL
 const userModel = mongoose.model('userModel', userSchema);
