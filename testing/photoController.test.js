@@ -335,7 +335,7 @@ describe('should add a tag on a photo', () => {
       status: jest.fn().mockReturnThis(),
       json: jest.fn().mockReturnThis(),
     };
-    await photoController.setTags(mReq, mRes);
+    await photoController.addTag(mReq, mRes);
     expect(mRes.status).toBeCalledWith(200);
     expect(mRes.json).toBeCalledWith(photoTestData.addTagData2);
   });
