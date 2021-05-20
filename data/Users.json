@@ -416,5 +416,80 @@
     "password": "Abdcdef$2",
     "joinDate": "2021-05-20T11:31:22.232+00:00",
     "passwordChangedAt": "2021-05-20T11:55:00.782Z"
+  },
+  {
+    "_id": "608d5450ec00005468607a11",
+    "displayName": "GalleryAlbumTest",
+    "email": "AGtest@mailserver.com",
+    "password": "AG5AG5TestCases_",
+    "pro": false,
+    "firstName": "Test",
+    "lastName": "GalleryAlbum",
+    "occupation": "Photographer",
+    "hometown": "Beverly Hills",
+    "currentCity": "California",
+    "country": "United States",
+    "age": 22,
+    "aboutMe": "Hello! I take nice photos.. follow me \":)",
+    "showcase": [],
+    "favourites": [
+      "608d5450ec00005468607a0f",
+      "608d5450ec00005468617a0c",
+      "608d5560ec00005468607a0e"
+    ],
+    "photos": [],
+    "testimonials": [],
+    "albums": [],
+    "gallery": ["608f34a634413f11f020b12a"],
+    "following": [],
+    "blocked": [],
+    "privacySettings": {
+      "global": {
+        "downloadPerm": 1,
+        "largestImgSize": 0,
+        "allowShare": 1,
+        "allowTag": 1,
+        "allowGalleryAdd": 1,
+        "hideEXIF": 0,
+        "hidePhotoSearch": 0,
+        "hideProfileSearch": 0,
+        "infoVisiblity": {
+          "email": 2,
+          "name": 1,
+          "currentCity": 1
+        }
+      },
+      "defaults": {
+        "perms": {
+          "see": 1,
+          "comment": 1,
+          "addNotes": 2
+        },
+        "license": 0,
+        "mapVisible": 1,
+        "importEXIF": 1,
+        "safetyLevel": 1,
+        "contentType": 1
+      },
+      "filters": {
+        "search": {
+          "safeSearch": 1,
+          "content": 1
+        }
+      }
+    },
+    "notificationSettings": {
+      "notifMail": {
+        "invites": 1,
+        "contact": 1,
+        "messages": 1,
+        "reminders": 1
+      },
+      "activityMail": {
+        "you": 1,
+        "contacts": 1
+      }
+    },
+    "joinDate": "2015-10-07T06:09:54+00:00"
   }
 ]

@@ -154,6 +154,12 @@ module.exports.addReplyData = {
   },
 };
 
+module.exports.addToPhotoPoolData = {
+  status: 'success',
+  data: {
+    photos: ['608d5450ec00005468607a0f', '604d5450ec00005468617a0c'],
+  },
+};
 module.exports.editDiscussionData = {
   status: 'success',
   data: {
@@ -184,6 +190,13 @@ module.exports.deleteDiscussionData = {
 module.exports.deleteReplyData = {
   status: 'success',
   data: null,
+};
+
+module.exports.removePhotofromPoolData = {
+  status: 'success',
+  data: {
+    photos: ['608d5450ec00005468607a0f'],
+  },
 };
 
 module.exports.createGroupData = {
