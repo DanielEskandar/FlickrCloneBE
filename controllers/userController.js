@@ -46,6 +46,30 @@ exports.getDispName = async (req, res) => {
   }
 };
 
+// UPDATE DISPLAY NAME
+exports.updateDispName = async (req, res) => {
+  try {
+    const dispName = await userModel
+      .findByIdAndUpdate(
+        req.user.id,
+        { displayName: req.body.displayName },
+        { new: true, runValidators: true }
+      )
+      .select({ displayName: 1, _id: 0 });
+
+    if (!dispName) {
+      throw new AppError('No user is found by that ID', 404);
+    }
+
+    res.status(200).json({
+      status: 'success',
+      data: JSON.parse(JSON.stringify(dispName)),
+    });
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};
+
 // GET USER INFO
 exports.getUserInfo = async (req, res) => {
   try {

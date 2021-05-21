@@ -650,3 +650,15 @@ module.exports.updateShowcaseData = {
     ],
   },
 };
+
+module.exports.updateDispNameData1 = {
+  status: 'success',
+  data: {
+    displayName: 'displayname2',
+  },
+};
+
+module.exports.updateDispNameData2 = {
+  status: 'fail',
+  message: 'Duplicate field value "DanielEskandar". Please use another value',
+};

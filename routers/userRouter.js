@@ -787,7 +787,11 @@ userRouter.get(
  * @apiUse UnauthError
  */
 
-userRouter.patch('/disp-name');
+userRouter.patch(
+  '/disp-name',
+  authController.protect,
+  userController.updateDispName
+);
 
 /**
  * @api {patch} /user/password Update the Password of User

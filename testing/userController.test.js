@@ -35,6 +35,37 @@ describe('should retrieve display name by id and send response correctly', () =>
   });
 });
 
+// TESTING: updateDispName
+describe('should update display name by id and send response correctly', () => {
+  test('should update display name displayname1 to be displayname2', async () => {
+    const mReq = {
+      user: { id: '60a7fc534e35b60c9c13df79' },
+      body: { displayName: 'displayname2' },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await userController.updateDispName(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(userTestData.updateDispNameData1);
+  });
+
+  test('should update display name displayname1 to be DanielEskandar because the name already exists', async () => {
+    const mReq = {
+      user: { id: '60a7fc534e35b60c9c13df79' },
+      body: { displayName: 'DanielEskandar' },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await userController.updateDispName(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(400);
+    expect(mRes.json).toBeCalledWith(userTestData.updateDispNameData2);
+  });
+});
+
 // TESTING: getRealName
 describe('should retrieve real name by id and send response correctly', () => {
   test('should retrieve real name Ahmed Abdulkader', async () => {
