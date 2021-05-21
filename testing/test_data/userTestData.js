@@ -513,3 +513,14 @@ module.exports.getTestimonialsData = {
     _id: '60a787449065c85bac893ab3',
   },
 };
+
+module.exports.addTestimonialData = {
+  status: 'success',
+  data: {
+    _id: expect.any(String),
+    by: '608d55c7e512b74ee00791dc',
+    about: '60a787449065c85bac893ab3',
+    content: 'A testimonial from Alia',
+    __v: 0,
+  },
+};

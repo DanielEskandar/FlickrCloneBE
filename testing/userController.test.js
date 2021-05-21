@@ -360,3 +360,40 @@ describe('should retrieve testimonials of a user and send response correctly', (
     expect(mRes.json).toBeCalledWith(userTestData.getTestimonialsData);
   });
 });
+
+// TESTING: addTestimonial
+describe('should add a testimonial to a user and send response correctly', () => {
+  test('should add a testimonial from Alia to testimonial test user', async () => {
+    const mReq = {
+      params: { id: '60a787449065c85bac893ab3' },
+      body: {
+        message: 'A testimonial from Alia',
+      },
+      user: { id: '608d55c7e512b74ee00791dc' },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await userController.addTestimonial(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(userTestData.addTestimonialData);
+  });
+
+  test('should not add a testimonial because user does not exist', async () => {
+    const mReq = {
+      params: { id: '60a787449065c85bac893ab2' },
+      body: {
+        message: 'A testimonial from Alia',
+      },
+      user: { id: '608d55c7e512b74ee00791dc' },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await userController.addTestimonial(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(404);
+    expect(mRes.json).toBeCalledWith(userTestData.userNotFound);
+  });
+});

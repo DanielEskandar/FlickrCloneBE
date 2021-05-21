@@ -445,7 +445,11 @@ userRouter.get('/:id/testimonials', userController.getTestimonials);
  * @apiUse UnauthError
  */
 
-userRouter.post('/:id/testimonials');
+userRouter.post(
+  '/:id/testimonials',
+  authController.protect,
+  userController.addTestimonial
+);
 
 /**
  * @api {get} /user/:id/recent-update Return a List of User testimonials

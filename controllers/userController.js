@@ -362,3 +362,39 @@ exports.getTestimonials = async (req, res) => {
     errorController.sendError(err, req, res);
   }
 };
+
+// ADD TESTIMONIAL
+exports.addTestimonial = async (req, res) => {
+  try {
+    const user = await userModel.findById(req.params.id);
+
+    if (!user) {
+      throw new AppError('No user is found by that ID', 404);
+    }
+
+    // Create a new testimonial
+    const testimonial = await testimonialModel.create({
+      by: req.user.id,
+      about: req.params.id,
+      content: req.body.message,
+    });
+
+    console.log(testimonial);
+
+    // Add testimonial id to the user who wrote the testimonial
+    await userModel.findByIdAndUpdate(
+      req.params.id,
+      {
+        $push: { testimonials: testimonial._id },
+      },
+      { new: true, runValidators: true }
+    );
+
+    res.status(200).json({
+      status: 'success',
+      data: JSON.parse(JSON.stringify(testimonial)),
+    });
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};
