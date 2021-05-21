@@ -346,3 +346,17 @@ describe('should retrieve privacy settings by id and send response correctly', (
     expect(mRes.json).toBeCalledWith(userTestData.getPrivacySettingsData2);
   });
 });
+
+// TESTING: getShowcase
+describe('should retrieve user showcase by id and send response correctly', () => {
+  test('should retrieve user showcase of AhmedAbdulkader99', async () => {
+    const mReq = { params: { id: '608d5450ec00005468607a0c' } };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await userController.getShowcase(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(userTestData.getShowcaseData);
+  });
+});

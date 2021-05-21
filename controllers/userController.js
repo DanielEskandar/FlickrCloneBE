@@ -331,3 +331,28 @@ exports.getPrivacySettings = async (req, res) => {
     errorController.sendError(err, req, res);
   }
 };
+
+// GET SHOWCASE
+exports.getShowcase = async (req, res) => {
+  try {
+    const showcase = await userModel
+      .findById(req.params.id)
+      .select({ showcase: 1 })
+      .populate({
+        path: 'showcase',
+        model: 'photoModel',
+        select: 'sizes',
+      });
+
+    if (!showcase) {
+      throw new AppError('No user is found by that ID', 404);
+    }
+
+    res.status(200).json({
+      status: 'success',
+      data: JSON.parse(JSON.stringify(showcase)),
+    });
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};

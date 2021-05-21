@@ -597,7 +597,7 @@ userRouter.get('/:id/albums');
  * @apiUse UserNotFoundError
  */
 
-userRouter.get('/:id/showcase');
+userRouter.get('/:id/showcase', userController.getShowcase);
 
 /**
  * @api {get} /user/:id/faves Return a List of all user faves
