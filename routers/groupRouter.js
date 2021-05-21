@@ -3,6 +3,7 @@ const express = require('express');
 
 // INCLUDE CONTROLLERS
 const groupController = require('../controllers/groupController.js');
+const authController = require('../controllers/authController.js');
 
 // CREATE ROUTER
 const groupRouter = express.Router();
@@ -77,6 +78,8 @@ const groupRouter = express.Router();
  * @apiName createGroup
  * @apiGroup Group
  *
+ *  @apiHeader {String} Token Authenticaton Token
+ *
  * @apiParam (Request Body) {string} name Group Name
  * @apiParam (Request Body) {string} description About the group
  * @apiParam (Request Body) {date} startDate Creation date
@@ -109,7 +112,7 @@ const groupRouter = express.Router();
  *}
  * @apiUse UnauthError
  */
-groupRouter.post('/', groupController.createGroup);
+groupRouter.post('/', authController.protect, groupController.createGroup);
 
 /**
  * @api {delete} /group/:id Admin deletes a group
@@ -289,6 +292,8 @@ groupRouter.get('/search');
  * @apiName createDiscussion
  * @apiGroup Group
  *
+ * @apiHeader {String} user Authenticaton Token
+ *
  * @apiParam {String} id The Group's ID
  *
  * @apiParam (Request Body) {Object} user Author
@@ -316,7 +321,11 @@ groupRouter.get('/search');
  * @apiUse ForbiddenAccss
  * @apiUse GroupNotFoundError
  */
-groupRouter.post('/:id/discussion', groupController.createDiscussion);
+groupRouter.post(
+  '/:id/discussion',
+  authController.protect,
+  groupController.createDiscussion
+);
 
 /**
  * @api {patch} /group/discussion/:id  Editting a discussion topic
@@ -357,7 +366,11 @@ groupRouter.post('/:id/discussion', groupController.createDiscussion);
  * @apiUse UnauthError
  * @apiUse ForbiddenAccss
  */
-groupRouter.patch('/discussion/:id', groupController.editDiscussion);
+groupRouter.patch(
+  '/discussion/:id',
+  authController.protect,
+  groupController.editDiscussion
+);
 
 /**
  * @api {get} /group/discussion/:id Get information about a group discussion topic.
@@ -435,7 +448,7 @@ groupRouter.get('/:id/discussion', groupController.getAllDiscussions);
  *
  * @apiParam {String} id The discussion's ID
  *
- * @apiHeader {String} Token Authenticaton Token
+ * @apiHeader {String} user Authenticaton Token
  *
  * @apiUse SuccessRes
  *
@@ -455,7 +468,11 @@ groupRouter.get('/:id/discussion', groupController.getAllDiscussions);
  * @apiUse UnauthError
  * @apiUse ForbiddenAccss
  */
-groupRouter.delete('/discussion/:id', groupController.deleteDiscussion);
+groupRouter.delete(
+  '/discussion/:id',
+  authController.protect,
+  groupController.deleteDiscussion
+);
 
 /**
  * @api {patch} /group/:id/pinned/:topicId Setting a new pinned thread
@@ -494,6 +511,8 @@ groupRouter.patch('/:id/pinned/:topicId');
  * @apiName addReply
  * @apiGroup Group
  *
+ * @apiHeader {String} user Authenticaton Token
+ *
  * @apiParam {String} id The discussion's ID
  *
  * @apiParam (Request Body) {Object} user Author
@@ -526,7 +545,11 @@ groupRouter.patch('/:id/pinned/:topicId');
  * @apiUse ForbiddenAccss
  */
 
-groupRouter.post('/discussion/:id/replies', groupController.addReply);
+groupRouter.post(
+  '/discussion/:id/replies',
+  authController.protect,
+  groupController.addReply
+);
 
 /**
  * @api {delete} /group/discussion/replies/:id Deleting a reply on a discussion topic
@@ -536,7 +559,7 @@ groupRouter.post('/discussion/:id/replies', groupController.addReply);
  *
  * @apiParam {String} id The reply's ID
  *
- * @apiHeader {String} Token Authenticaton Token
+ * @apiHeader {String} user Authenticaton Token
  *
  * @apiUse SuccessRes
  *@apiSuccessExample Success-Response:
@@ -556,7 +579,11 @@ groupRouter.post('/discussion/:id/replies', groupController.addReply);
  * @apiUse ForbiddenAccss
  */
 
-groupRouter.delete('/discussion/replies/:id', groupController.deleteReply);
+groupRouter.delete(
+  '/discussion/replies/:id',
+  authController.protect,
+  groupController.deleteReply
+);
 
 /**
  * @api {patch} /group/discussion/replies/:id Edit a post reply
@@ -566,7 +593,7 @@ groupRouter.delete('/discussion/replies/:id', groupController.deleteReply);
  *
  * @apiParam {String} id The new reply's ID
  *
- * @apiHeader {string} Token Authenticaton Token
+ * @apiHeader {string} user Authenticaton Token
  *
  * @apiParam (Request Body) {Object} reply old reply
  * @apiParam (Request Body) {Object} reply new reply
@@ -597,7 +624,11 @@ groupRouter.delete('/discussion/replies/:id', groupController.deleteReply);
  * @apiUse ForbiddenAccss
  */
 
-groupRouter.patch('/discussion/replies/:id', groupController.editReply);
+groupRouter.patch(
+  '/discussion/replies/:id',
+  authController.protect,
+  groupController.editReply
+);
 
 /**
  * @api {get} /group/discussion/replies/:id Get info about a discussion topic reply
@@ -831,7 +862,11 @@ groupRouter.get('/:id/pool', groupController.getPhotoPool);
  * @apiUse ForbiddenAccss
  * @apiUse GroupNotFoundError
  */
-groupRouter.delete('/:id/pool/:photoid', groupController.removePhotofromPool);
+groupRouter.delete(
+  '/:id/pool/:photoid',
+  authController.protect,
+  groupController.removePhotofromPool
+);
 
 // EXPORT ROUTER
 module.exports = groupRouter;
