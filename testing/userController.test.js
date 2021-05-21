@@ -397,3 +397,48 @@ describe('should add a testimonial to a user and send response correctly', () =>
     expect(mRes.json).toBeCalledWith(userTestData.userNotFound);
   });
 });
+
+// TESTING: removeTestimonial
+describe('should remove a testimonial and send response correctly', () => {
+  test('should not remove the testimonial because user does not have permission', async () => {
+    const mReq = {
+      params: { testimonialId: '60a7b24a66d38d5e20966334' },
+      user: { id: '608d55c7e512b74ee00791db' },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await userController.removeTestimonial(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(401);
+    expect(mRes.json).toBeCalledWith(userTestData.presmissionDenied);
+  });
+
+  test('should remove a testimonial from Mariam to Nadine', async () => {
+    const mReq = {
+      params: { testimonialId: '60a7b24a66d38d5e20966334' },
+      user: { id: '608d55c7e512b74ee00791dd' },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await userController.removeTestimonial(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(userTestData.dataDeleted);
+  });
+
+  test('should remove a testimonial from Nadine to Mariam', async () => {
+    const mReq = {
+      params: { testimonialId: '60a7b1a07d1e335b00cfbcf9' },
+      user: { id: '608d55c7e512b74ee00791dd' },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await userController.removeTestimonial(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(userTestData.dataDeleted);
+  });
+});

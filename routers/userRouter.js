@@ -670,9 +670,9 @@ userRouter.get('/:id/faves', authController.protect, userController.getFaves);
 userRouter.get('/limits', authController.protect, userController.getLimits);
 
 /**
- * @api {delete} /user/testimonials/:id Delete a testimonial
+ * @api {delete} /user/testimonials/:testimonialId Delete a testimonial
  * @apiVersion 1.0.0
- * @apiName DeleteTestimonial
+ * @apiName removeTestimonial
  * @apiGroup User
  *
  * @apiHeader {string} Token Authenticaton Token
@@ -682,7 +682,11 @@ userRouter.get('/limits', authController.protect, userController.getLimits);
  * @apiUse UnauthError
  */
 
-userRouter.delete('/testimonials/:id');
+userRouter.delete(
+  '/testimonials/:testimonialId',
+  authController.protect,
+  userController.removeTestimonial
+);
 
 /**
  * @api {get} /user/real-name Return the real name of User

@@ -3,6 +3,13 @@ module.exports.userNotFound = {
   message: 'No user is found by that ID',
 };
 
+module.exports.presmissionDenied = {
+  status: 'fail',
+  message: 'Permission Denied',
+};
+
+module.exports.dataDeleted = { status: 'success', data: null };
+
 module.exports.getDispNameData1 = {
   status: 'success',
   data: {

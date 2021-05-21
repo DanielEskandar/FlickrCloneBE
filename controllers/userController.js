@@ -379,8 +379,6 @@ exports.addTestimonial = async (req, res) => {
       content: req.body.message,
     });
 
-    console.log(testimonial);
-
     // Add testimonial id to the user who wrote the testimonial
     await userModel.findByIdAndUpdate(
       req.params.id,
@@ -393,6 +391,46 @@ exports.addTestimonial = async (req, res) => {
     res.status(200).json({
       status: 'success',
       data: JSON.parse(JSON.stringify(testimonial)),
+    });
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};
+
+// REMOVE TESTIMONIAL
+exports.removeTestimonial = async (req, res) => {
+  try {
+    const testimonial = await testimonialModel.findById(
+      req.params.testimonialId
+    );
+
+    if (!testimonial) {
+      throw new AppError('No testimonial is found by that ID', 404);
+    }
+
+    // The user who is trying the delete the testimonial is not the user who wrote it or received it
+    if (
+      !(
+        req.user.id.toString() === testimonial.by.toString() ||
+        req.user.id.toString() === testimonial.about.toString()
+      )
+    ) {
+      throw new AppError('Permission Denied', 401);
+    }
+
+    // Remove the testimonial from the testimonials array of the user who had the testimonial
+    await userModel.findByIdAndUpdate(
+      testimonial.about,
+      { $pull: { testimonials: testimonial._id } },
+      { new: true, runValidators: true }
+    );
+
+    // Remove the testimonial itself
+    await testimonialModel.findOneAndDelete({ _id: req.params.testimonialId });
+
+    res.status(200).json({
+      status: 'success',
+      data: null,
     });
   } catch (err) {
     errorController.sendError(err, req, res);
