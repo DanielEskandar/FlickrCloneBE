@@ -360,3 +360,20 @@ describe('should retrieve user showcase by id and send response correctly', () =
     expect(mRes.json).toBeCalledWith(userTestData.getShowcaseData);
   });
 });
+
+// TESTING: updateShowcase
+describe('should update user showcase by id and send response correctly', () => {
+  test('should udpate user showcase of AhmedAbdulkader99', async () => {
+    const mReq = {
+      user: { id: '608d5450ec00005468607a0c' },
+      body: userTestData.updateShowcaseBody,
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await userController.updateShowcase(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(userTestData.updateShowcaseData);
+  });
+});

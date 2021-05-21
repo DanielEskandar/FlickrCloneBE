@@ -13,11 +13,7 @@
     "country": "United States",
     "age": 22,
     "aboutMe": "Hello! I take nice photos.. follow me \":)",
-    "showcase": [
-      "608d5450ec00005468607a0f",
-      "608d5450ec00005468617a0c",
-      "604d5450ec00005468617a0c"
-    ],
+    "showcase": ["608d5450ec00005468607a0f", "608d5450ec00005468617a0c"],
     "favourites": ["608d5450ec00005468607a0f", "608d5450ec00005468617a0c"],
     "photos": [],
     "testimonials": [],

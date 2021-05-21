@@ -356,3 +356,29 @@ exports.getShowcase = async (req, res) => {
     errorController.sendError(err, req, res);
   }
 };
+
+// UPDATE SHOWCASE
+exports.updateShowcase = async (req, res) => {
+  try {
+    const showcase = await userModel
+      .findByIdAndUpdate(
+        req.user.id,
+        {
+          showcase: req.body.showcase,
+        },
+        { new: true, runValidators: true }
+      )
+      .select({ showcase: 1, _id: 0 });
+
+    if (!showcase) {
+      throw new AppError('No user is found by that ID', 404);
+    }
+
+    res.status(200).json({
+      status: 'success',
+      data: JSON.parse(JSON.stringify(showcase)),
+    });
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};
