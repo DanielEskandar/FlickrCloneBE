@@ -426,7 +426,7 @@ userRouter.get('/:id/no-geo');
  * @apiUse UserNotFoundError
  */
 
-userRouter.get('/:id/testimonials');
+userRouter.get('/:id/testimonials', userController.getTestimonials);
 
 /**
  * @api {post} /user/:id/testimonials Add a User testimonial

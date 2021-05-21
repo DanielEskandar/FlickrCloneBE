@@ -346,3 +346,17 @@ describe('should retrieve privacy settings by id and send response correctly', (
     expect(mRes.json).toBeCalledWith(userTestData.getPrivacySettingsData2);
   });
 });
+
+// TESTING: getTestimonials
+describe('should retrieve testimonials of a user and send response correctly', () => {
+  test('should retrieve following list of the testimonial test user', async () => {
+    const mReq = { params: { id: '60a787449065c85bac893ab3' } };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await userController.getTestimonials(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(userTestData.getTestimonialsData);
+  });
+});

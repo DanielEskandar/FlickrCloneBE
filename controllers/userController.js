@@ -1,6 +1,7 @@
 // INCLUDE MODELS
 const userModel = require('../models/userModel.js');
-const photoModel = require('../models/photoModel');
+const photoModel = require('../models/photoModel.js');
+const testimonialModel = require('../models/testimonialModel.js');
 
 // INCLUDE ERROR CLASS AND ERROR CONTROLLER
 const AppError = require('../utils/appError.js');
@@ -326,6 +327,36 @@ exports.getPrivacySettings = async (req, res) => {
     res.status(200).json({
       status: 'success',
       data: JSON.parse(JSON.stringify(privacySettings)),
+    });
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};
+
+// GET TESTIMONIALS
+exports.getTestimonials = async (req, res) => {
+  try {
+    const testimonials = await userModel
+      .findById(req.params.id)
+      .select({ testimonials: 1 })
+      .populate({
+        path: 'testimonials',
+        model: 'testimonialModel',
+        select: 'by content',
+        populate: {
+          path: 'by',
+          model: 'userModel',
+          select: 'firstName lastName',
+        },
+      });
+
+    if (!testimonials) {
+      throw new AppError('No user is found by that ID', 404);
+    }
+
+    res.status(200).json({
+      status: 'success',
+      data: JSON.parse(JSON.stringify(testimonials)),
     });
   } catch (err) {
     errorController.sendError(err, req, res);
