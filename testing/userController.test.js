@@ -346,3 +346,39 @@ describe('should retrieve privacy settings by id and send response correctly', (
     expect(mRes.json).toBeCalledWith(userTestData.getPrivacySettingsData2);
   });
 });
+
+// TESTING: updatePrivacySettings
+describe('should update privacy settings by id and send response correctly', () => {
+  test('should update privacy settings of DanielEskandar', async () => {
+    const mReq = {
+      user: { id: '608d55c7e512b74ee00791db' },
+      body: userTestData.updatePrivacySettingsBody,
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await userController.updatePrivacySettings(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(userTestData.updatePrivacySettingsData);
+  });
+});
+
+// TESTING: updateNotificationSettings
+describe('should update notification settings by id and send response correctly', () => {
+  test('should update notification settings of DanielEskandar', async () => {
+    const mReq = {
+      user: { id: '608d55c7e512b74ee00791db' },
+      body: userTestData.updateNotificationSettingsBody,
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await userController.updateNotificationSettings(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(
+      userTestData.updateNotificationSettingsData
+    );
+  });
+});
