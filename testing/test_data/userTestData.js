@@ -1,5 +1,5 @@
 module.exports.userNotFound = {
-  status: 'error',
+  status: 'fail',
   message: 'No user is found by that ID',
 };
 
@@ -314,7 +314,7 @@ module.exports.addFavesData1 = {
 };
 
 module.exports.addFavesData2 = {
-  status: 'error',
+  status: 'fail',
   message: 'Photo is already in Faves',
 };
 
@@ -351,7 +351,7 @@ module.exports.removeFavesData1 = {
 };
 
 module.exports.removeFavesData2 = {
-  status: 'error',
+  status: 'fail',
   message: 'No photo is found by that ID in User faves',
 };
 

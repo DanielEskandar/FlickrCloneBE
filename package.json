@@ -8,7 +8,7 @@
     "start:prod": "NODE_ENV=production nodemon server.js",
     "apidoc": "apidoc -i routers/ -o apidoc/",
     "pretest": "node devData --delete && node devData --import",
-    "test": "jest testing/ --detectOpenHandles --forceExit"
+    "test": "jest testing/ --detectOpenHandles --forceExit --verbose"
   },
   "repository": {
     "type": "git",
@@ -21,9 +21,11 @@
   },
   "homepage": "https://github.com/DanielEskandar/FlickrCloneBE#readme",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.12.5",
     "validator": "^13.6.0"
   },

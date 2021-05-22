@@ -3,6 +3,7 @@ const express = require('express');
 
 // INCLUDE CONTROLLERS
 const userController = require('../controllers/userController.js');
+const authController = require('../controllers/authController.js');
 
 // CREATE ROUTER
 const userRouter = express.Router();
@@ -54,11 +55,12 @@ const userRouter = express.Router();
  * @apiName SignUp
  * @apiGroup User
  *
- * @apiParam (Request Body) {string} username The Username of the User
- * @apiParam (Request Body) {string} email The Email of the User
- * @apiParam (Request Body) {string} firstname The First Name of the User
- * @apiParam (Request Body) {string} lastname The Last Name of the User
+ * @apiParam (Request Body) {string} firstName The First Name of the User
+ * @apiParam (Request Body) {string} lastName The Last Name of the User
+ * @apiParam (Request Body) {string} displayName The Username of the User
  * @apiParam (Request Body) {string} age The Age of the User
+ * @apiParam (Request Body) {string} email The Email of the User
+ * @apiParam (Request Body) {string} password The Password of the User
  *
  * @apiSuccess {string} Status Status of API
  *
@@ -67,7 +69,7 @@ const userRouter = express.Router();
  * @apiUse UnauthError
  */
 
-userRouter.post('/sign-up');
+userRouter.post('/sign-up', authController.signUp);
 
 /**
  * @api {post} /user/confirm Confirm a Signed Up user account
@@ -92,7 +94,7 @@ userRouter.post('/confirm');
  * @apiName SignUpConfirm
  * @apiGroup User
  *
- * @apiParam (Request Body) {string} username Username entered by user
+ * @apiParam (Request Body) {string} email Email entered by user
  * @apiParam (Request Body) (string) password Password entered by user
  *
  * @apiSuccess {string} Token Authenticaton Token
@@ -102,7 +104,7 @@ userRouter.post('/confirm');
  * @apiUse UnauthError
  */
 
-userRouter.post('/sign-in');
+userRouter.post('/sign-in', authController.signIn);
 
 /**
  * @api {post} /user/sign-out Sign In a Confirmed User
@@ -624,7 +626,7 @@ userRouter.get('/:id/showcase');
  * @apiUse UserNotFoundError
  */
 
-userRouter.get('/:id/faves', userController.getFaves);
+userRouter.get('/:id/faves', authController.protect, userController.getFaves);
 
 /**
  * @api {get} /user/limits Return a List of User Upload and Size Limits
@@ -661,7 +663,7 @@ userRouter.get('/:id/faves', userController.getFaves);
  * @apiUse UnauthError
  */
 
-userRouter.get('/limits', userController.getLimits);
+userRouter.get('/limits', authController.protect, userController.getLimits);
 
 /**
  * @api {delete} /user/testimonials/:id Delete a testimonial
@@ -703,7 +705,11 @@ userRouter.delete('/testimonials/:id');
  * @apiUse UnauthError
  */
 
-userRouter.get('/real-name', userController.getRealName);
+userRouter.get(
+  '/real-name',
+  authController.protect,
+  userController.getRealName
+);
 
 /**
  * @api {get} /user/disp-name Return the display name of User
@@ -728,7 +734,11 @@ userRouter.get('/real-name', userController.getRealName);
  * @apiUse UnauthError
  */
 
-userRouter.get('/disp-name', userController.getDispName);
+userRouter.get(
+  '/disp-name',
+  authController.protect,
+  userController.getDispName
+);
 
 /**
  * @api {patch} /user/disp-name Update the display name of User
@@ -863,7 +873,11 @@ userRouter.post('/confirm-password');
  * @apiUse UnauthError
  */
 
-userRouter.get('/perm');
+userRouter.get(
+  '/perm',
+  authController.protect,
+  userController.getPrivacySettings
+);
 
 /**
  * @api {patch} /user/perm Update the User Permission Settings
@@ -917,7 +931,11 @@ userRouter.patch('/perm');
  * @apiUse UnauthError
  */
 
-userRouter.get('/notif');
+userRouter.get(
+  '/notif',
+  authController.protect,
+  userController.getNotificationSettings
+);
 
 /**
  * @api {patch} /user/notif Update the User Notification Settings
@@ -951,7 +969,7 @@ userRouter.patch('/notif');
  * @apiUse UnauthError
  */
 
-userRouter.post('/faves/:id', userController.addFave);
+userRouter.post('/faves/:id', authController.protect, userController.addFave);
 
 /**
  * @api {delete} /user/faves/:id Remove a Photo from User Faves
@@ -968,7 +986,11 @@ userRouter.post('/faves/:id', userController.addFave);
  * @apiUse UnauthError
  */
 
-userRouter.delete('/faves/:id', userController.removeFave);
+userRouter.delete(
+  '/faves/:id',
+  authController.protect,
+  userController.removeFave
+);
 
 /**
  * @api {get} /user/faves-context Get the context for a photo in Faves
@@ -1080,7 +1102,11 @@ userRouter.get('/camera-roll');
  * @apiUse UserNotFoundError
  */
 
-userRouter.get('/:id/following', userController.getFollowing);
+userRouter.get(
+  '/:id/following',
+  authController.protect,
+  userController.getFollowing
+);
 
 /**
  * @api {get} /user/follower Gets a list of User's followers
@@ -1167,7 +1193,7 @@ userRouter.get('/follower-not-followed');
  * @apiUse UnauthError
  */
 
-userRouter.get('/block', userController.getBlocked);
+userRouter.get('/block', authController.protect, userController.getBlocked);
 
 /**
  * @api {post} /user/follow/:id Follow a User
@@ -1469,7 +1495,7 @@ userRouter.get('/notif/follow');
  * @apiUse UserNotFoundError
  */
 
-userRouter.get('/:id', userController.getUserInfo);
+userRouter.get('/:id', authController.protect, userController.getUserInfo);
 
 /**
  * @api {get} /user/:id Get the User's Information
