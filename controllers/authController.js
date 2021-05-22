@@ -4,6 +4,7 @@ const { promisify } = require('util');
 
 // INCLUDE MODELS
 const userModel = require('../models/userModel.js');
+const groupModel = require('../models/groupModel.js');
 
 // INCLUDE ERROR CLASS AND ERROR CONTROLLER
 const AppError = require('../utils/appError.js');
