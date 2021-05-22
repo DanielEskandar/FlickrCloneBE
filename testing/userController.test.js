@@ -51,7 +51,7 @@ describe('should update display name by id and send response correctly', () => {
     expect(mRes.json).toBeCalledWith(userTestData.updateDispNameData1);
   });
 
-  test('should update display name displayname1 to be DanielEskandar because the name already exists', async () => {
+  test('should fail to update display name displayname2 to be DanielEskandar because the name already exists', async () => {
     const mReq = {
       user: { id: '60a7fc534e35b60c9c13df79' },
       body: { displayName: 'DanielEskandar' },
