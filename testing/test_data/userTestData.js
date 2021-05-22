@@ -564,11 +564,6 @@ module.exports.updatePrivacySettingsBody = {
       hideEXIF: false,
       hidePhotoSearch: false,
       hideProfileSearch: false,
-      infoVisibility: {
-        email: 2,
-        name: 1,
-        currentCity: 1,
-      },
     },
     defaults: {
       perms: {
