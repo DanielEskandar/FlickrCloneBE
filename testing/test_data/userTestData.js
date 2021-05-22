@@ -3,6 +3,13 @@ module.exports.userNotFound = {
   message: 'No user is found by that ID',
 };
 
+module.exports.presmissionDenied = {
+  status: 'fail',
+  message: 'Permission Denied',
+};
+
+module.exports.dataDeleted = { status: 'success', data: null };
+
 module.exports.getDispNameData1 = {
   status: 'success',
   data: {
@@ -484,5 +491,43 @@ module.exports.getPrivacySettingsData2 = {
         },
       },
     },
+  },
+};
+
+module.exports.getTestimonialsData = {
+  status: 'success',
+  data: {
+    testimonials: [
+      {
+        _id: '60a78931879c9b4f08aec669',
+        by: {
+          _id: '608d5450ec00005468607a0c',
+          firstName: 'Ahmed',
+          lastName: 'Abdulkader',
+        },
+        content: 'Testimonial about tetimonial test user from Ahmed',
+      },
+      {
+        _id: '60a78931879c9b4f08aec66a',
+        by: {
+          _id: '608d55c7e512b74ee00791db',
+          firstName: 'Daniel',
+          lastName: 'Eskandar',
+        },
+        content: 'Testimonial about testimonial test user from Daniel',
+      },
+    ],
+    _id: '60a787449065c85bac893ab3',
+  },
+};
+
+module.exports.addTestimonialData = {
+  status: 'success',
+  data: {
+    _id: expect.any(String),
+    by: '608d55c7e512b74ee00791dc',
+    about: '60a787449065c85bac893ab3',
+    content: 'A testimonial from Alia',
+    __v: 0,
   },
 };
