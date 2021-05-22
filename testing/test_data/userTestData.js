@@ -551,7 +551,7 @@ module.exports.addTestimonialData = {
 module.exports.updatePrivacySettingsBody = {
   privacySettings: {
     global: {
-      infoVisiblity: {
+      infoVisibility: {
         email: 2,
         name: 1,
         currentCity: 1,
@@ -596,7 +596,7 @@ module.exports.updatePrivacySettingsData = {
   data: {
     privacySettings: {
       global: {
-        infoVisiblity: {
+        infoVisibility: {
           email: 2,
           name: 1,
           currentCity: 1,
