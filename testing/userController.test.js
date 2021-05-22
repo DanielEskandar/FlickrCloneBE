@@ -378,6 +378,138 @@ describe('should retrieve privacy settings by id and send response correctly', (
   });
 });
 
+// TESTING: getTestimonials
+describe('should retrieve testimonials of a user and send response correctly', () => {
+  test('should retrieve following list of the testimonial test user', async () => {
+    const mReq = { params: { id: '60a787449065c85bac893ab3' } };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await userController.getTestimonials(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(userTestData.getTestimonialsData);
+  });
+});
+
+// TESTING: addTestimonial
+describe('should add a testimonial to a user and send response correctly', () => {
+  test('should add a testimonial from Alia to testimonial test user', async () => {
+    const mReq = {
+      params: { id: '60a787449065c85bac893ab3' },
+      body: {
+        message: 'A testimonial from Alia',
+      },
+      user: { id: '608d55c7e512b74ee00791dc' },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await userController.addTestimonial(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(userTestData.addTestimonialData);
+  });
+
+  test('should not add a testimonial because user does not exist', async () => {
+    const mReq = {
+      params: { id: '60a787449065c85bac893ab2' },
+      body: {
+        message: 'A testimonial from Alia',
+      },
+      user: { id: '608d55c7e512b74ee00791dc' },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await userController.addTestimonial(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(404);
+    expect(mRes.json).toBeCalledWith(userTestData.userNotFound);
+  });
+});
+
+// TESTING: removeTestimonial
+describe('should remove a testimonial and send response correctly', () => {
+  test('should not remove the testimonial because user does not have permission', async () => {
+    const mReq = {
+      params: { testimonialId: '60a7b24a66d38d5e20966334' },
+      user: { id: '608d55c7e512b74ee00791db' },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await userController.removeTestimonial(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(401);
+    expect(mRes.json).toBeCalledWith(userTestData.presmissionDenied);
+  });
+
+  test('should remove a testimonial from Mariam to Nadine', async () => {
+    const mReq = {
+      params: { testimonialId: '60a7b24a66d38d5e20966334' },
+      user: { id: '608d55c7e512b74ee00791dd' },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await userController.removeTestimonial(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(userTestData.dataDeleted);
+  });
+
+  test('should remove a testimonial from Nadine to Mariam', async () => {
+    const mReq = {
+      params: { testimonialId: '60a7b1a07d1e335b00cfbcf9' },
+      user: { id: '608d55c7e512b74ee00791dd' },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await userController.removeTestimonial(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(userTestData.dataDeleted);
+  });
+});
+
+// TESTING: updatePrivacySettings
+describe('should update privacy settings by id and send response correctly', () => {
+  test('should update privacy settings of DanielEskandar', async () => {
+    const mReq = {
+      user: { id: '608d55c7e512b74ee00791db' },
+      body: userTestData.updatePrivacySettingsBody,
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await userController.updatePrivacySettings(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(userTestData.updatePrivacySettingsData);
+  });
+});
+
+// TESTING: updateNotificationSettings
+describe('should update notification settings by id and send response correctly', () => {
+  test('should update notification settings of DanielEskandar', async () => {
+    const mReq = {
+      user: { id: '608d55c7e512b74ee00791db' },
+      body: userTestData.updateNotificationSettingsBody,
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await userController.updateNotificationSettings(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(
+      userTestData.updateNotificationSettingsData
+    );
+  });
+});
+
 // TESTING: getShowcase
 describe('should retrieve user showcase by id and send response correctly', () => {
   test('should retrieve user showcase of AhmedAbdulkader99', async () => {
