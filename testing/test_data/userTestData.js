@@ -531,3 +531,120 @@ module.exports.addTestimonialData = {
     __v: 0,
   },
 };
+
+module.exports.updatePrivacySettingsBody = {
+  privacySettings: {
+    global: {
+      infoVisiblity: {
+        email: 2,
+        name: 1,
+        currentCity: 1,
+      },
+      downloadPerm: 1,
+      largestImgSize: 0,
+      allowShare: 2,
+      allowTag: 2,
+      allowGalleryAdd: true,
+      hideEXIF: false,
+      hidePhotoSearch: false,
+      hideProfileSearch: false,
+      infoVisibility: {
+        email: 2,
+        name: 1,
+        currentCity: 1,
+      },
+    },
+    defaults: {
+      perms: {
+        see: 1,
+        comment: 1,
+        addNotes: 2,
+      },
+      license: 0,
+      mapVisible: 1,
+      importEXIF: true,
+      safetyLevel: 1,
+      contentType: 1,
+    },
+    filters: {
+      search: {
+        safeSearch: true,
+        content: 1,
+      },
+    },
+  },
+};
+
+module.exports.updatePrivacySettingsData = {
+  status: 'success',
+  data: {
+    privacySettings: {
+      global: {
+        infoVisiblity: {
+          email: 2,
+          name: 1,
+          currentCity: 1,
+        },
+        downloadPerm: 1,
+        largestImgSize: 0,
+        allowShare: 2,
+        allowTag: 2,
+        allowGalleryAdd: true,
+        hideEXIF: false,
+        hidePhotoSearch: false,
+        hideProfileSearch: false,
+      },
+      defaults: {
+        perms: {
+          see: 1,
+          comment: 1,
+          addNotes: 2,
+        },
+        license: 0,
+        mapVisible: 1,
+        importEXIF: true,
+        safetyLevel: 1,
+        contentType: 1,
+      },
+      filters: {
+        search: {
+          safeSearch: true,
+          content: 1,
+        },
+      },
+    },
+  },
+};
+
+module.exports.updateNotificationSettingsBody = {
+  notificationSettings: {
+    notifMail: {
+      invites: false,
+      contact: false,
+      messages: true,
+      reminders: true,
+    },
+    activityMail: {
+      you: true,
+      contacts: true,
+    },
+  },
+};
+
+module.exports.updateNotificationSettingsData = {
+  status: 'success',
+  data: {
+    notificationSettings: {
+      notifMail: {
+        invites: false,
+        contact: false,
+        messages: true,
+        reminders: true,
+      },
+      activityMail: {
+        you: true,
+        contacts: true,
+      },
+    },
+  },
+};

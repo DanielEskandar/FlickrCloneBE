@@ -436,3 +436,43 @@ exports.removeTestimonial = async (req, res) => {
     errorController.sendError(err, req, res);
   }
 };
+
+// UPDATE PRIVACY SETTINGS
+exports.updatePrivacySettings = async (req, res) => {
+  try {
+    const privacySettings = await userModel
+      .findByIdAndUpdate(
+        req.user.id,
+        { privacySettings: req.body.privacySettings },
+        { new: true, runValidators: true }
+      )
+      .select({ privacySettings: 1, _id: 0 });
+
+    res.status(200).json({
+      status: 'success',
+      data: JSON.parse(JSON.stringify(privacySettings)),
+    });
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};
+
+// UPDATE NOTIFICATION SETTINGS
+exports.updateNotificationSettings = async (req, res) => {
+  try {
+    const notificationSettings = await userModel
+      .findByIdAndUpdate(
+        req.user.id,
+        { notificationSettings: req.body.notificationSettings },
+        { new: true, runValidators: true }
+      )
+      .select({ notificationSettings: 1, _id: 0 });
+
+    res.status(200).json({
+      status: 'success',
+      data: JSON.parse(JSON.stringify(notificationSettings)),
+    });
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};

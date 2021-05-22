@@ -902,7 +902,11 @@ userRouter.get(
  * @apiUse UnauthError
  */
 
-userRouter.patch('/perm');
+userRouter.patch(
+  '/perm',
+  authController.protect,
+  userController.updatePrivacySettings
+);
 
 /**
  * @api {get} /user/notif Get User Notification Settings
@@ -960,7 +964,11 @@ userRouter.get(
  * @apiUse UnauthError
  */
 
-userRouter.patch('/notif');
+userRouter.patch(
+  '/notif',
+  authController.protect,
+  userController.updateNotificationSettings
+);
 
 /**
  * @api {post} /user/faves/:id Add a Photo to User Faves
