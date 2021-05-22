@@ -3,6 +3,13 @@ module.exports.userNotFound = {
   message: 'No user is found by that ID',
 };
 
+module.exports.presmissionDenied = {
+  status: 'fail',
+  message: 'Permission Denied',
+};
+
+module.exports.dataDeleted = { status: 'success', data: null };
+
 module.exports.getDispNameData1 = {
   status: 'success',
   data: {
@@ -501,6 +508,337 @@ module.exports.getPrivacySettingsData2 = {
       },
     },
   },
+};
+
+module.exports.getTestimonialsData = {
+  status: 'success',
+  data: {
+    testimonials: [
+      {
+        _id: '60a78931879c9b4f08aec669',
+        by: {
+          _id: '608d5450ec00005468607a0c',
+          firstName: 'Ahmed',
+          lastName: 'Abdulkader',
+        },
+        content: 'Testimonial about tetimonial test user from Ahmed',
+      },
+      {
+        _id: '60a78931879c9b4f08aec66a',
+        by: {
+          _id: '608d55c7e512b74ee00791db',
+          firstName: 'Daniel',
+          lastName: 'Eskandar',
+        },
+        content: 'Testimonial about testimonial test user from Daniel',
+      },
+    ],
+    _id: '60a787449065c85bac893ab3',
+  },
+};
+
+module.exports.addTestimonialData = {
+  status: 'success',
+  data: {
+    _id: expect.any(String),
+    by: '608d55c7e512b74ee00791dc',
+    about: '60a787449065c85bac893ab3',
+    content: 'A testimonial from Alia',
+    __v: 0,
+  },
+};
+
+module.exports.updatePrivacySettingsBody = {
+  privacySettings: {
+    global: {
+      infoVisiblity: {
+        email: 2,
+        name: 1,
+        currentCity: 1,
+      },
+      downloadPerm: 1,
+      largestImgSize: 0,
+      allowShare: 2,
+      allowTag: 2,
+      allowGalleryAdd: true,
+      hideEXIF: false,
+      hidePhotoSearch: false,
+      hideProfileSearch: false,
+      infoVisibility: {
+        email: 2,
+        name: 1,
+        currentCity: 1,
+      },
+    },
+    defaults: {
+      perms: {
+        see: 1,
+        comment: 1,
+        addNotes: 2,
+      },
+      license: 0,
+      mapVisible: 1,
+      importEXIF: true,
+      safetyLevel: 1,
+      contentType: 1,
+    },
+    filters: {
+      search: {
+        safeSearch: true,
+        content: 1,
+      },
+    },
+  },
+};
+
+module.exports.updatePrivacySettingsData = {
+  status: 'success',
+  data: {
+    privacySettings: {
+      global: {
+        infoVisiblity: {
+          email: 2,
+          name: 1,
+          currentCity: 1,
+        },
+        downloadPerm: 1,
+        largestImgSize: 0,
+        allowShare: 2,
+        allowTag: 2,
+        allowGalleryAdd: true,
+        hideEXIF: false,
+        hidePhotoSearch: false,
+        hideProfileSearch: false,
+      },
+      defaults: {
+        perms: {
+          see: 1,
+          comment: 1,
+          addNotes: 2,
+        },
+        license: 0,
+        mapVisible: 1,
+        importEXIF: true,
+        safetyLevel: 1,
+        contentType: 1,
+      },
+      filters: {
+        search: {
+          safeSearch: true,
+          content: 1,
+        },
+      },
+    },
+  },
+};
+
+module.exports.updateNotificationSettingsBody = {
+  notificationSettings: {
+    notifMail: {
+      invites: false,
+      contact: false,
+      messages: true,
+      reminders: true,
+    },
+    activityMail: {
+      you: true,
+      contacts: true,
+    },
+  },
+};
+
+module.exports.updateNotificationSettingsData = {
+  status: 'success',
+  data: {
+    notificationSettings: {
+      notifMail: {
+        invites: false,
+        contact: false,
+        messages: true,
+        reminders: true,
+      },
+      activityMail: {
+        you: true,
+        contacts: true,
+      },
+    },
+  },
+};
+
+module.exports.getShowcaseData = {
+  status: 'success',
+  data: {
+    showcase: [
+      {
+        sizes: {
+          size: {
+            original: {
+              height: 120,
+              width: 60,
+              source: 'https://www.google.com/',
+              url: 'https://www.google.com/',
+            },
+            large: {
+              height: 190,
+              width: 20,
+              source: 'https://www.google.com/',
+              url: 'https://www.google.com/',
+            },
+            medium800: {
+              height: 200,
+              width: 60,
+              source: 'https://www.google.com/',
+              url: 'https://www.google.com/',
+            },
+            medium640: {
+              height: 1200,
+              width: 60,
+              source: 'https://www.google.com/',
+              url: 'https://www.google.com/',
+            },
+            medium: {
+              height: 120,
+              width: 600,
+              source: 'https://www.google.com/',
+              url: 'https://www.google.com/',
+            },
+            small320: {
+              height: 12,
+              width: 60,
+              source: 'https://www.google.com/',
+              url: 'https://www.google.com/',
+            },
+            small: {
+              height: 1000,
+              width: 60,
+              source: 'https://www.google.com/',
+              url: 'https://www.google.com/',
+            },
+            thumbnail: {
+              height: 50,
+              width: 50,
+              source: 'https://www.google.com/',
+              url: 'https://www.google.com/',
+            },
+            largeSquare: {
+              height: 120,
+              width: 120,
+              source: 'https://www.google.com/',
+              url: 'https://www.google.com/',
+            },
+            square: {
+              height: 60,
+              width: 60,
+              source: 'https://www.google.com/',
+              url: 'https://www.google.com/',
+            },
+          },
+          canDownload: false,
+        },
+        _id: '608d5450ec00005468607a0f',
+      },
+      {
+        sizes: {
+          size: {
+            original: {
+              height: 120,
+              width: 60,
+              source: 'https://www.google.com/',
+              url: 'https://www.google.com/',
+            },
+            large: {
+              height: 190,
+              width: 20,
+              source: 'https://www.google.com/',
+              url: 'https://www.google.com/',
+            },
+            medium800: {
+              height: 200,
+              width: 60,
+              source: 'https://www.google.com/',
+              url: 'https://www.google.com/',
+            },
+            medium640: {
+              height: 1200,
+              width: 60,
+              source: 'https://www.google.com/',
+              url: 'https://www.google.com/',
+            },
+            medium: {
+              height: 120,
+              width: 600,
+              source: 'https://www.google.com/',
+              url: 'https://www.google.com/',
+            },
+            small320: {
+              height: 12,
+              width: 60,
+              source: 'https://www.google.com/',
+              url: 'https://www.google.com/',
+            },
+            small: {
+              height: 1000,
+              width: 60,
+              source: 'https://www.google.com/',
+              url: 'https://www.google.com/',
+            },
+            thumbnail: {
+              height: 50,
+              width: 50,
+              source: 'https://www.google.com/',
+              url: 'https://www.google.com/',
+            },
+            largeSquare: {
+              height: 120,
+              width: 120,
+              source: 'https://www.google.com/',
+              url: 'https://www.google.com/',
+            },
+            square: {
+              height: 60,
+              width: 60,
+              source: 'https://www.google.com/',
+              url: 'https://www.google.com/',
+            },
+          },
+          canDownload: true,
+        },
+        _id: '608d5450ec00005468617a0c',
+      },
+    ],
+    _id: '608d5450ec00005468607a0c',
+  },
+};
+
+module.exports.updateShowcaseBody = {
+  showcase: [
+    '608d5450ec00005468607a0f',
+    '608d5450ec00005468617a0c',
+    '608d5450ec00005468628a0d',
+  ],
+};
+
+module.exports.updateShowcaseData = {
+  status: 'success',
+  data: {
+    showcase: [
+      '608d5450ec00005468607a0f',
+      '608d5450ec00005468617a0c',
+      '608d5450ec00005468628a0d',
+    ],
+  },
+};
+
+module.exports.updateDispNameData1 = {
+  status: 'success',
+  data: {
+    displayName: 'displayname2',
+  },
+};
+
+module.exports.updateDispNameData2 = {
+  status: 'fail',
+  message: 'Duplicate field value "DanielEskandar". Please use another value',
 };
 
 module.exports.udpateUserInfoData = {
