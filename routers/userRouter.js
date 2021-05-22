@@ -601,7 +601,37 @@ userRouter.get('/:id/albums');
  * @apiUse UserNotFoundError
  */
 
-userRouter.get('/:id/showcase');
+userRouter.get('/:id/showcase', userController.getShowcase);
+
+/**
+ * @api {put} /user/showcase Update User defined image showcase
+ * @apiVersion 1.0.0
+ * @apiName UpdateShowcase
+ * @apiGroup User
+ *
+ *
+ * @apiSuccess {Object[]} Showcase array of the user
+ *
+ * @apiSuccessExample Success-Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *          "status": "success",
+ *          "data":
+ *          {
+ *              "showcase": [
+ *
+ *              ]
+ *          }
+ *      }
+ *
+ * @apiUse UserNotFoundError
+ */
+
+userRouter.put(
+  '/showcase',
+  authController.protect,
+  userController.updateShowcase
+);
 
 /**
  * @api {get} /user/:id/faves Return a List of all user faves
@@ -765,7 +795,11 @@ userRouter.get(
  * @apiUse UnauthError
  */
 
-userRouter.patch('/disp-name');
+userRouter.patch(
+  '/disp-name',
+  authController.protect,
+  userController.updateDispName
+);
 
 /**
  * @api {patch} /user/password Update the Password of User

@@ -13,7 +13,7 @@
     "country": "United States",
     "age": 22,
     "aboutMe": "Hello! I take nice photos.. follow me \":)",
-    "showcase": [],
+    "showcase": ["608d5450ec00005468607a0f", "608d5450ec00005468617a0c"],
     "favourites": ["608d5450ec00005468607a0f", "608d5450ec00005468617a0c"],
     "photos": [],
     "testimonials": [],
@@ -491,6 +491,15 @@
       }
     },
     "joinDate": "2015-10-07T06:09:54+00:00"
+  },
+  {
+    "_id": "60a7fc534e35b60c9c13df79",
+    "firstName": "DisplayFirstName",
+    "lastName": "DisplayLastName",
+    "displayName": "displayname1",
+    "email": "displayname1@gmail.com",
+    "age": 20,
+    "password": "Abdcdef%4"
   },
   {
     "_id": "60a787449065c85bac893ab3",
