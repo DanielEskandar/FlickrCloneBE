@@ -30,7 +30,7 @@ module.exports.signupData4 = {
       },
       privacySettings: {
         global: {
-          infoVisiblity: {
+          infoVisibility: {
             email: 2,
             name: 1,
             currentCity: 1,

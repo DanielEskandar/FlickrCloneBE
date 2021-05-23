@@ -540,3 +540,27 @@ describe('should update user showcase by id and send response correctly', () => 
     expect(mRes.json).toBeCalledWith(userTestData.updateShowcaseData);
   });
 });
+
+// TESTING: updateUserInfo
+describe('should update user info and send response correctly', () => {
+  test('should update user info of DanielEskandar', async () => {
+    const mReq = {
+      user: { id: '608d55c7e512b74ee00791db' },
+      body: {
+        occupation: 'Artist',
+        hometown: 'Ile de France',
+        currentCity: 'Berlin',
+        country: 'Germany',
+        emailVisibility: 1,
+        currentCityVisibility: 2,
+      },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await userController.updateUserInfo(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(userTestData.udpateUserInfoData);
+  });
+});
