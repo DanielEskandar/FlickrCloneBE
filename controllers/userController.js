@@ -551,3 +551,23 @@ exports.updateShowcase = async (req, res) => {
     errorController.sendError(err, req, res);
   }
 };
+
+// GET ABOUT ME
+exports.getAboutMe = async (req, res) => {
+  try {
+    const aboutMe = await userModel
+      .findById(req.params.id)
+      .select({ aboutMe: 1, _id: 0 });
+
+    if (!aboutMe) {
+      throw new AppError('No user is found by that ID', 404);
+    }
+
+    res.status(200).json({
+      status: 'success',
+      data: JSON.parse(JSON.stringify(aboutMe)),
+    });
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};

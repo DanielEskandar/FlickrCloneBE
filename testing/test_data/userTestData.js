@@ -824,3 +824,10 @@ module.exports.updateDispNameData2 = {
   status: 'fail',
   message: 'Duplicate field value "DanielEskandar". Please use another value',
 };
+
+module.exports.getAboutMeData = {
+  status: 'success',
+  data: {
+    aboutMe: 'Hello! I take nice photos.. follow me ":)',
+  },
+};

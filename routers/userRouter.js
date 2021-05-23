@@ -738,7 +738,7 @@ userRouter.delete(
  *          }
  *      }
  *
- * @apiUse UnauthError
+ * @apiUse UserNotFoundError
  */
 
 userRouter.get('/:id/real-name', userController.getRealName);
@@ -761,10 +761,33 @@ userRouter.get('/:id/real-name', userController.getRealName);
  *          }
  *      }
  *
- * @apiUse UnauthError
+ * @apiUse UserNotFoundError
  */
 
 userRouter.get('/:id/disp-name', userController.getDispName);
+
+/**
+ * @api {get} /user/:id/about-me Return the about me section of User
+ * @apiVersion 1.0.0
+ * @apiName GetAboutMe
+ * @apiGroup User
+ *
+ * @apiSuccess {string} aboutMe The about me section of the calling User
+ *
+ * @apiSuccessExample Success-Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *          "status": "success",
+ *          "data":
+ *          {
+ *              "aboutMe": "Hello! I take nice photos.. follow me \":)"
+ *          }
+ *      }
+ *
+ * @apiUse UserNotFoundError
+ */
+
+userRouter.get('/:id/about-me', userController.getAboutMe);
 
 /**
  * @api {patch} /user/disp-name Update the display name of User

@@ -540,3 +540,28 @@ describe('should update user showcase by id and send response correctly', () => 
     expect(mRes.json).toBeCalledWith(userTestData.updateShowcaseData);
   });
 });
+
+// TESTING: getAboutMe
+describe('should retrieve about me section by id and send response correctly', () => {
+  test('should about me section of Ahmed Abdulkader', async () => {
+    const mReq = { params: { id: '608d5450ec00005468607a0c' } };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await userController.getAboutMe(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(userTestData.getAboutMeData);
+  });
+
+  test('should send user not found error', async () => {
+    const mReq = { params: { id: '608d55c7e512b74ee00791df' } };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await userController.getAboutMe(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(404);
+    expect(mRes.json).toBeCalledWith(userTestData.userNotFound);
+  });
+});
