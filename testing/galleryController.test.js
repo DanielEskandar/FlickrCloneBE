@@ -186,3 +186,26 @@ describe('should delete a photo from a gallery', () => {
     });
   });
 });
+
+// TESTING: editMeta
+describe('should edit meta of a gallery', () => {
+  test(`should delete a photo from a gallery with id 608f34a634413f11f020b12a`, async () => {
+    const mReq = {
+      user: { id: '608d5450ec00005468607a11' },
+      params: {
+        id: '608f34a634413f11f020b124',
+      },
+      body: { galleryName: 'TEST edit Meta' },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await galleryController.editMeta(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith({
+      status: 'success',
+      data: 'ok',
+    });
+  });
+});

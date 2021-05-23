@@ -409,3 +409,42 @@ exports.removePhotos = async (req, res) => {
     errorController.sendError(err, req, res);
   }
 };
+
+// EDIT META
+exports.editMeta = async (req, res) => {
+  // auth
+  try {
+    // check if gallery exists
+    const album = await albumModel.findById(req.params.id);
+    if (!album) {
+      throw new AppError('No Album Found with This ID', 404);
+    }
+
+    const currentUser = await userModel.findById(req.user.id);
+    const userAlbums = currentUser.albums.find(
+      (element) => element.toString() === req.params.id.toString()
+    );
+    if (!userAlbums)
+      throw new AppError(
+        'You are not logged in. Please log in to get access.',
+        401
+      );
+    req.body.updatedAt = new Date(Date.now());
+    await albumModel.findByIdAndUpdate(
+      req.params.id,
+      {
+        $set: req.body,
+      },
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
+    res.status(200).json({
+      status: 'success',
+      data: 'ok',
+    });
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};

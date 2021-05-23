@@ -213,3 +213,26 @@ describe('should delete list of photos from an album', () => {
     });
   });
 });
+
+// TESTING: editMeta
+describe('should edit meta of a album', () => {
+  test(`should delete a photo from a album with id 608f3c70197abc18509aec5f`, async () => {
+    const mReq = {
+      user: { id: '608d5450ec00005468607a11' },
+      params: {
+        id: '608f3c70197abc18509aec5f',
+      },
+      body: { albumName: 'TEST edit Meta' },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await albumController.editMeta(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith({
+      status: 'success',
+      data: 'ok',
+    });
+  });
+});

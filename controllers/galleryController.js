@@ -353,3 +353,43 @@ exports.removePhoto = async (req, res) => {
     errorController.sendError(err, req, res);
   }
 };
+
+// EDIT META
+
+exports.editMeta = async (req, res) => {
+  // auth
+  try {
+    // check if gallery exists
+    const gallery = await galleryModel.findById(req.params.id);
+    if (!gallery) {
+      throw new AppError('No Gallery Found with This ID', 404);
+    }
+
+    const currentUser = await userModel.findById(req.user.id);
+    const userGalleries = currentUser.gallery.find(
+      (element) => element.toString() === req.params.id.toString()
+    );
+    if (!userGalleries)
+      throw new AppError(
+        'You are not logged in. Please log in to get access.',
+        401
+      );
+    req.body.updatedAt = new Date(Date.now());
+    await galleryModel.findByIdAndUpdate(
+      req.params.id,
+      {
+        $set: req.body,
+      },
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
+    res.status(200).json({
+      status: 'success',
+      data: 'ok',
+    });
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};

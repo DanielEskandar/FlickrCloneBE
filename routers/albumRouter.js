@@ -429,7 +429,7 @@ albumRouter.patch('/:id/photos');
  *
  * @apiParam {String} id The album's ID
  *
- * @apiParam (Request Body) {String} title The title of the album
+ * @apiParam (Request Body) {String} albumName The title of the album
  * @apiParam (Request Body) {String} description The new description for the album
  *
  * @apiUse SuccessRes
@@ -439,7 +439,11 @@ albumRouter.patch('/:id/photos');
  * @apiUse AlbumNotFoundError
  */
 
-albumRouter.patch('/:id/meta');
+albumRouter.patch(
+  '/:id/meta',
+  authController.protect,
+  albumController.editMeta
+);
 
 /**
  * @api {patch} /photoset/comments/:id Edit the body of a comment
