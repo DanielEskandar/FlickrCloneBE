@@ -3,6 +3,7 @@ const express = require('express');
 
 // INCLUDE CONTROLLERS
 const galleryController = require('../controllers/galleryController.js');
+const authController = require('../controllers/authController.js');
 
 // CREATE ROUTER
 const galleryRouter = express.Router();
@@ -199,7 +200,11 @@ galleryRouter.delete('/:id');
  * @apiUse UnauthError
  */
 
-galleryRouter.delete('/:id/:photoid', galleryController.removePhoto);
+galleryRouter.delete(
+  '/:id/:photoid',
+  authController.protect,
+  galleryController.removePhoto
+);
 
 /**
  * @api {delete} /gallery/comments/:id Delete Comment
@@ -225,6 +230,7 @@ galleryRouter.delete('/:id/:photoid', galleryController.removePhoto);
 
 galleryRouter.delete(
   '/:id/comments/:commentid',
+  authController.protect,
   galleryController.deleteComment
 );
 
@@ -278,7 +284,11 @@ galleryRouter.delete(
  * @apiUse UnauthError
  */
 
-galleryRouter.post('/', galleryController.createGallery);
+galleryRouter.post(
+  '/',
+  authController.protect,
+  galleryController.createGallery
+);
 
 /**
  * @api {post} /gallery/:id/photos Add a photo
@@ -297,7 +307,11 @@ galleryRouter.post('/', galleryController.createGallery);
  * @apiUse GalleryNotFoundError
  */
 
-galleryRouter.post('/:id/photos', galleryController.addPhoto);
+galleryRouter.post(
+  '/:id/photos',
+  authController.protect,
+  galleryController.addPhoto
+);
 
 /**
  * @api {post} /gallery/:id/comments Add a comment
@@ -332,7 +346,11 @@ galleryRouter.post('/:id/photos', galleryController.addPhoto);
  *
  */
 
-galleryRouter.post('/:id/comments', galleryController.addComment);
+galleryRouter.post(
+  '/:id/comments',
+  authController.protect,
+  galleryController.addComment
+);
 
 /**
  * @api {patch} /gallery/:id/photos Add, Remove and Reorder photos
@@ -363,7 +381,7 @@ galleryRouter.patch('/:id/photos');
  *
  * @apiParam {String} id The gallery's ID
  *
- * @apiParam (Request Body) {String} title The title of the Gallery
+ * @apiParam (Request Body) {String} galleryName The title of the Gallery
  * @apiParam (Request Body) {String} description The new description for the gallery
  *
  * @apiUse SuccessRes
@@ -414,7 +432,11 @@ galleryRouter.patch('/:id/meta');
  *      }
  */
 
-galleryRouter.patch('/comments/:id', galleryController.editComment);
+galleryRouter.patch(
+  '/comments/:id',
+  authController.protect,
+  galleryController.editComment
+);
 
 /**
  * @api {patch} /gallery/:id/primary/:photoid Set gallery's primary photo

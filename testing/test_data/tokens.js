@@ -10,6 +10,9 @@ module.exports.AliaaValidToken =
 module.exports.MariamValidToken =
   'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwOGQ1NWM3ZTUxMmI3NGVlMDA3OTFkZCIsImlhdCI6MTYyMTUxMDAxOCwiZXhwIjoxNjI5Mjg2MDE4fQ.oHBdKYVeA1FemsfaFILLykFuw_vCJBEH24QVEC-FUiU';
 
+module.exports.TestGalleryValidToken =
+  'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwOGQ1NDUwZWMwMDAwNTQ2ODYwN2ExMSIsImlhdCI6MTYyMTc5MjI5NywiZXhwIjoxNjI5NTY4Mjk3fQ.DxcFqly2ZvTNTFEczbaVEwYI1yy6l6wvb8BC5M5Lq00';
+
 module.exports.NadineValidToken =
   'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwOGQ1NWM3ZTUxMmI3NGVlMDA3OTFkZSIsImlhdCI6MTYyMTUxMDA0MCwiZXhwIjoxNjI5Mjg2MDQwfQ.JwdX-p84-OcIur49F3IWht2q_h9UYe1_7xXUXw_dk9o';
 
