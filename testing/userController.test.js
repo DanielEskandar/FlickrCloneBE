@@ -13,7 +13,7 @@ headers.initTesting();
 // TESTING: getDispName
 describe('should retrieve display name by id and send response correctly', () => {
   test('should retrieve display name DanielEskandar', async () => {
-    const mReq = { user: { id: '608d55c7e512b74ee00791db' } };
+    const mReq = { params: { id: '608d55c7e512b74ee00791db' } };
     const mRes = {
       status: jest.fn().mockReturnThis(),
       json: jest.fn().mockReturnThis(),
@@ -24,7 +24,7 @@ describe('should retrieve display name by id and send response correctly', () =>
   });
 
   test('should retrieve display name AliaaKhalifa', async () => {
-    const mReq = { user: { id: '608d55c7e512b74ee00791dc' } };
+    const mReq = { params: { id: '608d55c7e512b74ee00791dc' } };
     const mRes = {
       status: jest.fn().mockReturnThis(),
       json: jest.fn().mockReturnThis(),
@@ -69,7 +69,7 @@ describe('should update display name by id and send response correctly', () => {
 // TESTING: getRealName
 describe('should retrieve real name by id and send response correctly', () => {
   test('should retrieve real name Ahmed Abdulkader', async () => {
-    const mReq = { user: { id: '608d5450ec00005468607a0c' } };
+    const mReq = { params: { id: '608d5450ec00005468607a0c' } };
     const mRes = {
       status: jest.fn().mockReturnThis(),
       json: jest.fn().mockReturnThis(),
@@ -80,7 +80,7 @@ describe('should retrieve real name by id and send response correctly', () => {
   });
 
   test('should retrieve real name Mariam Khashab', async () => {
-    const mReq = { user: { id: '608d55c7e512b74ee00791dd' } };
+    const mReq = { params: { id: '608d55c7e512b74ee00791dd' } };
     const mRes = {
       status: jest.fn().mockReturnThis(),
       json: jest.fn().mockReturnThis(),
@@ -140,7 +140,7 @@ describe('should retrieve limits by id and send response correctly', () => {
     expect(mRes.json).toBeCalledWith(userTestData.getLimitsData1);
   });
 
-  test('should retrieve limits AliaaKhalifa', async () => {
+  test('should retrieve limits of AliaaKhalifa', async () => {
     const mReq = { user: { id: '608d55c7e512b74ee00791dc' } };
     const mRes = {
       status: jest.fn().mockReturnThis(),

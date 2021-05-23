@@ -11,7 +11,7 @@ const errorController = require('./errorController.js');
 exports.getRealName = async (req, res) => {
   try {
     const realName = await userModel
-      .findById(req.user.id)
+      .findById(req.params.id)
       .select({ firstName: 1, lastName: 1, _id: 0 });
 
     if (!realName) {
@@ -31,7 +31,7 @@ exports.getRealName = async (req, res) => {
 exports.getDispName = async (req, res) => {
   try {
     const dispName = await userModel
-      .findById(req.user.id)
+      .findById(req.params.id)
       .select({ displayName: 1, _id: 0 });
 
     if (!dispName) {

@@ -719,12 +719,10 @@ userRouter.delete(
 );
 
 /**
- * @api {get} /user/real-name Return the real name of User
+ * @api {get} /:id/user/real-name Return the real name of User
  * @apiVersion 1.0.0
  * @apiName GetRealName
  * @apiGroup User
- *
- * @apiHeader {string} Token Authenticaton Token
  *
  * @apiSuccess {string} firstName The First Name of the calling User
  * @apiSuccess {string} lastName The Last Name of the calling User
@@ -743,19 +741,13 @@ userRouter.delete(
  * @apiUse UnauthError
  */
 
-userRouter.get(
-  '/real-name',
-  authController.protect,
-  userController.getRealName
-);
+userRouter.get('/:id/real-name', userController.getRealName);
 
 /**
- * @api {get} /user/disp-name Return the display name of User
+ * @api {get} /user/:id/disp-name Return the display name of User
  * @apiVersion 1.0.0
  * @apiName GetDispName
  * @apiGroup User
- *
- * @apiHeader {string} Token Authenticaton Token
  *
  * @apiSuccess {string} displayName The Display name of the calling User
  *
@@ -772,11 +764,7 @@ userRouter.get(
  * @apiUse UnauthError
  */
 
-userRouter.get(
-  '/disp-name',
-  authController.protect,
-  userController.getDispName
-);
+userRouter.get('/:id/disp-name', userController.getDispName);
 
 /**
  * @api {patch} /user/disp-name Update the display name of User
