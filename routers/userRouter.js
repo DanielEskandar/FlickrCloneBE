@@ -813,6 +813,29 @@ userRouter.patch(
 );
 
 /**
+ * @api {patch} /user/about-me Update the about me section of User
+ * @apiVersion 1.0.0
+ * @apiName UpdateAboutMe
+ * @apiGroup User
+ *
+ * @apiHeader {string} Token Authenticaton Token
+ *
+ * @apiParam (Request Body) {string} about me The New about me section of the calling User
+ *
+ * @apiSuccess {string} Status Status of API
+ *
+ * @apiUse SuccessRes
+ *
+ * @apiUse UnauthError
+ */
+
+userRouter.patch(
+  '/about-me',
+  authController.protect,
+  userController.updateAboutMe
+);
+
+/**
  * @api {patch} /user/password Update the Password of User
  * @apiVersion 1.0.0
  * @apiName ChamgePassword

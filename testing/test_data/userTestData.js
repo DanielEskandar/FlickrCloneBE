@@ -831,3 +831,10 @@ module.exports.getAboutMeData = {
     aboutMe: 'Hello! I take nice photos.. follow me ":)',
   },
 };
+
+module.exports.updateAboutMeData = {
+  status: 'success',
+  data: {
+    aboutMe: 'new about me content',
+  },
+};

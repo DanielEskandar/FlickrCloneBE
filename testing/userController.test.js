@@ -565,3 +565,20 @@ describe('should retrieve about me section by id and send response correctly', (
     expect(mRes.json).toBeCalledWith(userTestData.userNotFound);
   });
 });
+
+// TESTING: updateAboutMe
+describe('should update about me section by id and send response correctly', () => {
+  test('should update about me section of aboutMeTestUser', async () => {
+    const mReq = {
+      user: { id: '60aa4e716d75141ac811cf2e' },
+      body: { aboutMe: 'new about me content' },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await userController.updateAboutMe(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(userTestData.updateAboutMeData);
+  });
+});
