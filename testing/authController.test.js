@@ -269,7 +269,7 @@ describe('should protect routes successfully by verifyin tokens', () => {
       json: jest.fn().mockReturnThis(),
     };
     const mNext = jest.fn().mockReturnThis();
-    await userModel.findOneAndRemove({ _id: '60a6488ac7a8605758f0476a' });
+    await userModel.findByIdAndDelete({ _id: '60a6488ac7a8605758f0476a' });
     await authController.protect(mReq, mRes, mNext);
     expect(mRes.status).toBeCalledWith(401);
     expect(mRes.json).toBeCalledWith(authTestData.protectData5);
