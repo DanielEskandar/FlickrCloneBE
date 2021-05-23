@@ -381,7 +381,7 @@ galleryRouter.patch('/:id/photos');
  *
  * @apiParam {String} id The gallery's ID
  *
- * @apiParam (Request Body) {String} title The title of the Gallery
+ * @apiParam (Request Body) {String} galleryName The title of the Gallery
  * @apiParam (Request Body) {String} description The new description for the gallery
  *
  * @apiUse SuccessRes

@@ -121,8 +121,8 @@ exports.editComment = async (req, res) => {
     const checkComment = await commentModel.findById(req.params.id);
     if (checkComment.userId.toString() !== req.user.id.toString())
       throw new AppError(
-        `This comment doesn't belong to the authenticated user`,
-        404
+        'You are not logged in. Please log in to get access.',
+        401
       );
 
     const newComment = await commentModel.findByIdAndUpdate(
@@ -153,8 +153,8 @@ exports.deleteComment = async (req, res) => {
     const checkComment = await commentModel.findById(req.params.commentid);
     if (checkComment.userId.toString() !== req.user.id.toString())
       throw new AppError(
-        `This comment doesn't belong to the authenticated user`,
-        404
+        'You are not logged in. Please log in to get access.',
+        401
       );
 
     const album = await albumModel /// get array of comments in album
@@ -170,7 +170,7 @@ exports.deleteComment = async (req, res) => {
       (element) => element.toString() === req.params.commentid.toString()
     );
 
-    if (comment !== undefined) {
+    if (comment) {
       // if the comment exits in album's comments
       await albumModel.findByIdAndUpdate(
         req.params.id,
@@ -223,7 +223,7 @@ exports.addPhoto = async (req, res) => {
     const userAlbums = currentUser.albums.find(
       (element) => element.toString() === req.params.id.toString()
     );
-    if (userAlbums === undefined)
+    if (!userAlbums)
       throw new AppError(
         'You are not logged in. Please log in to get access.',
         401
@@ -284,7 +284,7 @@ exports.removePhoto = async (req, res) => {
     const userAlbums = currentUser.albums.find(
       (element) => element.toString() === req.params.id.toString()
     );
-    if (userAlbums === undefined)
+    if (!userAlbums)
       throw new AppError(
         'You are not logged in. Please log in to get access.',
         401
@@ -346,7 +346,7 @@ exports.removePhotos = async (req, res) => {
     const userAlbums = currentUser.albums.find(
       (element) => element.toString() === req.params.id.toString()
     );
-    if (userAlbums === undefined)
+    if (!userAlbums)
       throw new AppError(
         'You are not logged in. Please log in to get access.',
         401

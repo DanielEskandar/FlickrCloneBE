@@ -173,7 +173,7 @@ exports.deleteComment = async (req, res) => {
       (element) => element.toString() === req.params.commentid.toString()
     );
 
-    if (comment !== undefined) {
+    if (comment) {
       // if the comment exits in gallery's comments
       await galleryModel.findByIdAndUpdate(
         req.params.id,
@@ -228,7 +228,7 @@ exports.addPhoto = async (req, res) => {
     const userGalleries = currentUser.gallery.find(
       (element) => element.toString() === req.params.id.toString()
     );
-    if (userGalleries === undefined)
+    if (!userGalleries)
       throw new AppError(
         'You are not logged in. Please log in to get access.',
         401
@@ -296,7 +296,7 @@ exports.removePhoto = async (req, res) => {
     const userGalleries = currentUser.gallery.find(
       (element) => element.toString() === req.params.id.toString()
     );
-    if (userGalleries === undefined)
+    if (!userGalleries)
       throw new AppError(
         'You are not logged in. Please log in to get access.',
         401
