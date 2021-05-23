@@ -81,6 +81,8 @@ exports.getUserInfo = async (req, res) => {
       currentCity: 1,
       country: 1,
       email: 1,
+      'privacySettings.global.infoVisibility.email': 1,
+      'privacySettings.global.infoVisibility.currentCity': 1,
       _id: 0,
     });
 
@@ -572,7 +574,46 @@ exports.getAboutMe = async (req, res) => {
   }
 };
 
-// UPDATE ABOUT  ME
+// UPDATE USER INFO
+exports.updateUserInfo = async (req, res) => {
+  try {
+    const userInfo = await userModel
+      .findByIdAndUpdate(
+        req.user.id,
+        {
+          occupation: req.body.occupation,
+          hometown: req.body.hometown,
+          currentCity: req.body.currentCity,
+          country: req.body.country,
+          'privacySettings.global.infoVisibility.email':
+            req.body.emailVisibility,
+          'privacySettings.global.infoVisibility.currentCity':
+            req.body.currentCityVisibility,
+        },
+        {
+          new: true,
+          runValidators: true,
+        }
+      )
+      .select({
+        occupation: 1,
+        hometown: 1,
+        currentCity: 1,
+        country: 1,
+        'privacySettings.global.infoVisibility.email': 1,
+        'privacySettings.global.infoVisibility.currentCity': 1,
+      });
+
+    res.status(200).json({
+      status: 'success',
+      data: JSON.parse(JSON.stringify(userInfo)),
+    });
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};
+
+// UPDATE ABOUT ME
 exports.updateAboutMe = async (req, res) => {
   try {
     const aboutMe = await userModel
