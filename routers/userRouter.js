@@ -134,7 +134,7 @@ userRouter.post('/sign-out');
  * @apiUse UnauthError
  */
 
-userRouter.patch('/');
+userRouter.patch('/', authController.protect, userController.updateUserInfo);
 
 /**
  * @api {delete} /user/ Delete the User's Account
@@ -426,7 +426,7 @@ userRouter.get('/:id/no-geo');
  * @apiUse UserNotFoundError
  */
 
-userRouter.get('/:id/testimonials');
+userRouter.get('/:id/testimonials', userController.getTestimonials);
 
 /**
  * @api {post} /user/:id/testimonials Add a User testimonial
@@ -445,7 +445,11 @@ userRouter.get('/:id/testimonials');
  * @apiUse UnauthError
  */
 
-userRouter.post('/:id/testimonials');
+userRouter.post(
+  '/:id/testimonials',
+  authController.protect,
+  userController.addTestimonial
+);
 
 /**
  * @api {get} /user/:id/recent-update Return a List of User testimonials
@@ -597,7 +601,37 @@ userRouter.get('/:id/albums');
  * @apiUse UserNotFoundError
  */
 
-userRouter.get('/:id/showcase');
+userRouter.get('/:id/showcase', userController.getShowcase);
+
+/**
+ * @api {put} /user/showcase Update User defined image showcase
+ * @apiVersion 1.0.0
+ * @apiName UpdateShowcase
+ * @apiGroup User
+ *
+ *
+ * @apiSuccess {Object[]} Showcase array of the user
+ *
+ * @apiSuccessExample Success-Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *          "status": "success",
+ *          "data":
+ *          {
+ *              "showcase": [
+ *
+ *              ]
+ *          }
+ *      }
+ *
+ * @apiUse UserNotFoundError
+ */
+
+userRouter.put(
+  '/showcase',
+  authController.protect,
+  userController.updateShowcase
+);
 
 /**
  * @api {get} /user/:id/faves Return a List of all user faves
@@ -666,9 +700,9 @@ userRouter.get('/:id/faves', authController.protect, userController.getFaves);
 userRouter.get('/limits', authController.protect, userController.getLimits);
 
 /**
- * @api {delete} /user/testimonials/:id Delete a testimonial
+ * @api {delete} /user/testimonials/:testimonialId Delete a testimonial
  * @apiVersion 1.0.0
- * @apiName DeleteTestimonial
+ * @apiName removeTestimonial
  * @apiGroup User
  *
  * @apiHeader {string} Token Authenticaton Token
@@ -678,15 +712,17 @@ userRouter.get('/limits', authController.protect, userController.getLimits);
  * @apiUse UnauthError
  */
 
-userRouter.delete('/testimonials/:id');
+userRouter.delete(
+  '/testimonials/:testimonialId',
+  authController.protect,
+  userController.removeTestimonial
+);
 
 /**
- * @api {get} /user/real-name Return the real name of User
+ * @api {get} /:id/user/real-name Return the real name of User
  * @apiVersion 1.0.0
  * @apiName GetRealName
  * @apiGroup User
- *
- * @apiHeader {string} Token Authenticaton Token
  *
  * @apiSuccess {string} firstName The First Name of the calling User
  * @apiSuccess {string} lastName The Last Name of the calling User
@@ -702,22 +738,16 @@ userRouter.delete('/testimonials/:id');
  *          }
  *      }
  *
- * @apiUse UnauthError
+ * @apiUse UserNotFoundError
  */
 
-userRouter.get(
-  '/real-name',
-  authController.protect,
-  userController.getRealName
-);
+userRouter.get('/:id/real-name', userController.getRealName);
 
 /**
- * @api {get} /user/disp-name Return the display name of User
+ * @api {get} /user/:id/disp-name Return the display name of User
  * @apiVersion 1.0.0
  * @apiName GetDispName
  * @apiGroup User
- *
- * @apiHeader {string} Token Authenticaton Token
  *
  * @apiSuccess {string} displayName The Display name of the calling User
  *
@@ -731,14 +761,33 @@ userRouter.get(
  *          }
  *      }
  *
- * @apiUse UnauthError
+ * @apiUse UserNotFoundError
  */
 
-userRouter.get(
-  '/disp-name',
-  authController.protect,
-  userController.getDispName
-);
+userRouter.get('/:id/disp-name', userController.getDispName);
+
+/**
+ * @api {get} /user/:id/about-me Return the about me section of User
+ * @apiVersion 1.0.0
+ * @apiName GetAboutMe
+ * @apiGroup User
+ *
+ * @apiSuccess {string} aboutMe The about me section of the calling User
+ *
+ * @apiSuccessExample Success-Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *          "status": "success",
+ *          "data":
+ *          {
+ *              "aboutMe": "Hello! I take nice photos.. follow me \":)"
+ *          }
+ *      }
+ *
+ * @apiUse UserNotFoundError
+ */
+
+userRouter.get('/:id/about-me', userController.getAboutMe);
 
 /**
  * @api {patch} /user/disp-name Update the display name of User
@@ -757,7 +806,34 @@ userRouter.get(
  * @apiUse UnauthError
  */
 
-userRouter.patch('/disp-name');
+userRouter.patch(
+  '/disp-name',
+  authController.protect,
+  userController.updateDispName
+);
+
+/**
+ * @api {patch} /user/about-me Update the about me section of User
+ * @apiVersion 1.0.0
+ * @apiName UpdateAboutMe
+ * @apiGroup User
+ *
+ * @apiHeader {string} Token Authenticaton Token
+ *
+ * @apiParam (Request Body) {string} about me The New about me section of the calling User
+ *
+ * @apiSuccess {string} Status Status of API
+ *
+ * @apiUse SuccessRes
+ *
+ * @apiUse UnauthError
+ */
+
+userRouter.patch(
+  '/about-me',
+  authController.protect,
+  userController.updateAboutMe
+);
 
 /**
  * @api {patch} /user/password Update the Password of User
@@ -894,7 +970,11 @@ userRouter.get(
  * @apiUse UnauthError
  */
 
-userRouter.patch('/perm');
+userRouter.patch(
+  '/perm',
+  authController.protect,
+  userController.updatePrivacySettings
+);
 
 /**
  * @api {get} /user/notif Get User Notification Settings
@@ -952,7 +1032,11 @@ userRouter.get(
  * @apiUse UnauthError
  */
 
-userRouter.patch('/notif');
+userRouter.patch(
+  '/notif',
+  authController.protect,
+  userController.updateNotificationSettings
+);
 
 /**
  * @api {post} /user/faves/:id Add a Photo to User Faves
