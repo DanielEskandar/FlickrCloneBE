@@ -511,5 +511,15 @@
     "password": "Abdcdef#3",
     "joinDate": "2021-05-21T10:11:16.876+00:00",
     "testimonials": ["60a78931879c9b4f08aec669", "60a78931879c9b4f08aec66a"]
+  },
+  {
+    "_id": "60aa4e716d75141ac811cf2e",
+    "firstName": "aboutMeTestFirstName",
+    "lastName": "aboutMeTestLastName",
+    "displayName": "aboutMeTestUser",
+    "email": "aboutmetestuser@gmail.com",
+    "age": 25,
+    "password": "Abdcdef#3",
+    "joinDate": "2021-05-21T10:11:16.876+00:00"
   }
 ]

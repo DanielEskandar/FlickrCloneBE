@@ -719,12 +719,10 @@ userRouter.delete(
 );
 
 /**
- * @api {get} /user/real-name Return the real name of User
+ * @api {get} /:id/user/real-name Return the real name of User
  * @apiVersion 1.0.0
  * @apiName GetRealName
  * @apiGroup User
- *
- * @apiHeader {string} Token Authenticaton Token
  *
  * @apiSuccess {string} firstName The First Name of the calling User
  * @apiSuccess {string} lastName The Last Name of the calling User
@@ -740,22 +738,16 @@ userRouter.delete(
  *          }
  *      }
  *
- * @apiUse UnauthError
+ * @apiUse UserNotFoundError
  */
 
-userRouter.get(
-  '/real-name',
-  authController.protect,
-  userController.getRealName
-);
+userRouter.get('/:id/real-name', userController.getRealName);
 
 /**
- * @api {get} /user/disp-name Return the display name of User
+ * @api {get} /user/:id/disp-name Return the display name of User
  * @apiVersion 1.0.0
  * @apiName GetDispName
  * @apiGroup User
- *
- * @apiHeader {string} Token Authenticaton Token
  *
  * @apiSuccess {string} displayName The Display name of the calling User
  *
@@ -769,14 +761,33 @@ userRouter.get(
  *          }
  *      }
  *
- * @apiUse UnauthError
+ * @apiUse UserNotFoundError
  */
 
-userRouter.get(
-  '/disp-name',
-  authController.protect,
-  userController.getDispName
-);
+userRouter.get('/:id/disp-name', userController.getDispName);
+
+/**
+ * @api {get} /user/:id/about-me Return the about me section of User
+ * @apiVersion 1.0.0
+ * @apiName GetAboutMe
+ * @apiGroup User
+ *
+ * @apiSuccess {string} aboutMe The about me section of the calling User
+ *
+ * @apiSuccessExample Success-Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *          "status": "success",
+ *          "data":
+ *          {
+ *              "aboutMe": "Hello! I take nice photos.. follow me \":)"
+ *          }
+ *      }
+ *
+ * @apiUse UserNotFoundError
+ */
+
+userRouter.get('/:id/about-me', userController.getAboutMe);
 
 /**
  * @api {patch} /user/disp-name Update the display name of User
@@ -799,6 +810,29 @@ userRouter.patch(
   '/disp-name',
   authController.protect,
   userController.updateDispName
+);
+
+/**
+ * @api {patch} /user/about-me Update the about me section of User
+ * @apiVersion 1.0.0
+ * @apiName UpdateAboutMe
+ * @apiGroup User
+ *
+ * @apiHeader {string} Token Authenticaton Token
+ *
+ * @apiParam (Request Body) {string} about me The New about me section of the calling User
+ *
+ * @apiSuccess {string} Status Status of API
+ *
+ * @apiUse SuccessRes
+ *
+ * @apiUse UnauthError
+ */
+
+userRouter.patch(
+  '/about-me',
+  authController.protect,
+  userController.updateAboutMe
 );
 
 /**
