@@ -62,6 +62,7 @@ exports.addComment = async (req, res) => {
       throw new AppError('No Album Found with This ID', 404);
     }
     // add comment to comment model
+    req.body.userId = req.user.id;
     const comment = await commentModel.create(req.body);
     // add commentID to comments array in album model
     const updatedAlbum = await albumModel.findByIdAndUpdate(
@@ -117,6 +118,13 @@ exports.getComments = async (req, res) => {
 // EDIT COMMENT
 exports.editComment = async (req, res) => {
   try {
+    const checkComment = await commentModel.findById(req.params.id);
+    if (checkComment.userId.toString() !== req.user.id.toString())
+      throw new AppError(
+        'You are not logged in. Please log in to get access.',
+        401
+      );
+
     const newComment = await commentModel.findByIdAndUpdate(
       req.params.id,
       req.body,
@@ -142,6 +150,13 @@ exports.editComment = async (req, res) => {
 // DELETE COMMENT
 exports.deleteComment = async (req, res) => {
   try {
+    const checkComment = await commentModel.findById(req.params.commentid);
+    if (checkComment.userId.toString() !== req.user.id.toString())
+      throw new AppError(
+        'You are not logged in. Please log in to get access.',
+        401
+      );
+
     const album = await albumModel /// get array of comments in album
       .findById(req.params.id)
       .select({ comments: 1, _id: 0 });
@@ -155,7 +170,7 @@ exports.deleteComment = async (req, res) => {
       (element) => element.toString() === req.params.commentid.toString()
     );
 
-    if (comment !== undefined) {
+    if (comment) {
       // if the comment exits in album's comments
       await albumModel.findByIdAndUpdate(
         req.params.id,
@@ -188,7 +203,7 @@ exports.createAlbum = async (req, res) => {
     const album = await albumModel.create(req.body);
 
     // add album to current user's array of albums
-    await userModel.findByIdAndUpdate(req.headers.userid, {
+    await userModel.findByIdAndUpdate(req.user.id, {
       $push: { albums: album._id },
     });
     res.status(200).json({
@@ -203,8 +218,17 @@ exports.createAlbum = async (req, res) => {
 // ADD A PHOTO
 exports.addPhoto = async (req, res) => {
   try {
+    // auth
+    const currentUser = await userModel.findById(req.user.id);
+    const userAlbums = currentUser.albums.find(
+      (element) => element.toString() === req.params.id.toString()
+    );
+    if (!userAlbums)
+      throw new AppError(
+        'You are not logged in. Please log in to get access.',
+        401
+      );
     // check if album id exist or not
-
     const album = await albumModel.findById(req.params.id);
     if (!album) {
       throw new AppError('No Album Found with This ID', 404);
@@ -215,6 +239,7 @@ exports.addPhoto = async (req, res) => {
     if (!photoFromModel) {
       throw new AppError('No Photo Found with This ID', 404);
     }
+
     // check if the photo alread exist in the album
     const isExist = album.photos.find(
       (element) => element.toString() === req.body.photoID.toString()
@@ -253,6 +278,17 @@ exports.removePhoto = async (req, res) => {
     if (!album) {
       throw new AppError('No Album Found with This ID', 404);
     }
+
+    // auth
+    const currentUser = await userModel.findById(req.user.id);
+    const userAlbums = currentUser.albums.find(
+      (element) => element.toString() === req.params.id.toString()
+    );
+    if (!userAlbums)
+      throw new AppError(
+        'You are not logged in. Please log in to get access.',
+        401
+      );
 
     // check if photo id exist or not
     const photoFromModel = await photoModel.findById(req.params.photoid);
@@ -305,6 +341,17 @@ exports.removePhoto = async (req, res) => {
 // Delete PHOTOS
 exports.removePhotos = async (req, res) => {
   try {
+    // auth
+    const currentUser = await userModel.findById(req.user.id);
+    const userAlbums = currentUser.albums.find(
+      (element) => element.toString() === req.params.id.toString()
+    );
+    if (!userAlbums)
+      throw new AppError(
+        'You are not logged in. Please log in to get access.',
+        401
+      );
+
     // check if album id exist or not
     const album = await albumModel.findById(req.params.id);
     if (!album) {

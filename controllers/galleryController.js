@@ -62,6 +62,7 @@ exports.addComment = async (req, res) => {
       throw new AppError('No Gallery Found with This ID', 404);
     }
     // add comment to comment model
+    req.body.userId = req.user.id;
     const comment = await commentModel.create(req.body);
     // add commentID to comments array in gallery model
     const updatedGallery = await galleryModel.findByIdAndUpdate(
@@ -117,6 +118,15 @@ exports.getComments = async (req, res) => {
 // EDIT COMMENT
 exports.editComment = async (req, res) => {
   try {
+    // check if userID same as current user !
+
+    const checkComment = await commentModel.findById(req.params.id);
+    if (checkComment.userId.toString() !== req.user.id.toString())
+      throw new AppError(
+        `You are not logged in. Please log in to get access.`,
+        401
+      );
+
     const newComment = await commentModel.findByIdAndUpdate(
       req.params.id,
       req.body,
@@ -142,6 +152,14 @@ exports.editComment = async (req, res) => {
 // DELETE COMMENT
 exports.deleteComment = async (req, res) => {
   try {
+    // check if userID same as current user !
+    const checkComment = await commentModel.findById(req.params.commentid);
+    if (checkComment.userId.toString() !== req.user.id.toString())
+      throw new AppError(
+        `You are not logged in. Please log in to get access.`,
+        401
+      );
+
     const gallery = await galleryModel /// get array of comments in gallery
       .findById(req.params.id)
       .select({ comments: 1, _id: 0 });
@@ -155,7 +173,7 @@ exports.deleteComment = async (req, res) => {
       (element) => element.toString() === req.params.commentid.toString()
     );
 
-    if (comment !== undefined) {
+    if (comment) {
       // if the comment exits in gallery's comments
       await galleryModel.findByIdAndUpdate(
         req.params.id,
@@ -189,7 +207,7 @@ exports.createGallery = async (req, res) => {
     const gallery = await galleryModel.create(req.body);
 
     // add gallery to current user's array of galleries
-    await userModel.findByIdAndUpdate(req.headers.userid, {
+    await userModel.findByIdAndUpdate(req.user.id, {
       $push: { gallery: gallery._id },
     });
 
@@ -205,6 +223,16 @@ exports.createGallery = async (req, res) => {
 // ADD A PHOTO
 exports.addPhoto = async (req, res) => {
   try {
+    // auth
+    const currentUser = await userModel.findById(req.user.id);
+    const userGalleries = currentUser.gallery.find(
+      (element) => element.toString() === req.params.id.toString()
+    );
+    if (!userGalleries)
+      throw new AppError(
+        'You are not logged in. Please log in to get access.',
+        401
+      );
     // check if gallery id exist or not
 
     const gallery = await galleryModel.findById(req.params.id);
@@ -217,8 +245,8 @@ exports.addPhoto = async (req, res) => {
     if (!photoFromModel) {
       throw new AppError('No Photo Found with This ID', 404);
     }
+
     // check if the photo exist in user faves
-    const currentUser = await userModel.findById(req.headers.userid);
     const existInFaves = currentUser.favourites.find(
       (element) => element.toString() === req.body.photoID.toString()
     );
@@ -263,7 +291,19 @@ exports.addPhoto = async (req, res) => {
 // Delete A PHOTO
 exports.removePhoto = async (req, res) => {
   try {
+    // auth
+    const currentUser = await userModel.findById(req.user.id);
+    const userGalleries = currentUser.gallery.find(
+      (element) => element.toString() === req.params.id.toString()
+    );
+    if (!userGalleries)
+      throw new AppError(
+        'You are not logged in. Please log in to get access.',
+        401
+      );
+
     // check if gallery id exist or not
+
     const gallery = await galleryModel.findById(req.params.id);
     if (!gallery) {
       throw new AppError('No Gallery Found with This ID', 404);
@@ -274,8 +314,8 @@ exports.removePhoto = async (req, res) => {
     if (!photoFromModel) {
       throw new AppError('No Photo Found with This ID', 404);
     }
-
     // check if the photo exists in the gallery
+
     const isExist = gallery.photos.find(
       (element) => element.photoId.toString() === req.params.photoid.toString()
     );
