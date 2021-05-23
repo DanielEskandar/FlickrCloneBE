@@ -6,7 +6,6 @@ const testimonialModel = require('../models/testimonialModel.js');
 // INCLUDE ERROR CLASS AND ERROR CONTROLLER
 const AppError = require('../utils/appError.js');
 const errorController = require('./errorController.js');
-const { findByIdAndUpdate } = require('../models/userModel.js');
 
 // GET REAL NAME
 exports.getRealName = async (req, res) => {
