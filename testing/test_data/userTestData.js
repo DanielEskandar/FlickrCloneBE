@@ -836,6 +836,13 @@ module.exports.updateDispNameData2 = {
   message: 'Duplicate field value "DanielEskandar". Please use another value',
 };
 
+module.exports.getAboutMeData = {
+  status: 'success',
+  data: {
+    aboutMe: 'Hello! I take nice photos.. follow me ":)',
+  },
+};
+
 module.exports.udpateUserInfoData = {
   status: 'success',
   data: {
@@ -852,5 +859,12 @@ module.exports.udpateUserInfoData = {
     hometown: 'Ile de France',
     currentCity: 'Berlin',
     country: 'Germany',
+  },
+};
+
+module.exports.updateAboutMeData = {
+  status: 'success',
+  data: {
+    aboutMe: 'new about me content',
   },
 };

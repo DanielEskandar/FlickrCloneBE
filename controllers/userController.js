@@ -11,7 +11,7 @@ const errorController = require('./errorController.js');
 exports.getRealName = async (req, res) => {
   try {
     const realName = await userModel
-      .findById(req.user.id)
+      .findById(req.params.id)
       .select({ firstName: 1, lastName: 1, _id: 0 });
 
     if (!realName) {
@@ -31,7 +31,7 @@ exports.getRealName = async (req, res) => {
 exports.getDispName = async (req, res) => {
   try {
     const dispName = await userModel
-      .findById(req.user.id)
+      .findById(req.params.id)
       .select({ displayName: 1, _id: 0 });
 
     if (!dispName) {
@@ -554,6 +554,26 @@ exports.updateShowcase = async (req, res) => {
   }
 };
 
+// GET ABOUT ME
+exports.getAboutMe = async (req, res) => {
+  try {
+    const aboutMe = await userModel
+      .findById(req.params.id)
+      .select({ aboutMe: 1, _id: 0 });
+
+    if (!aboutMe) {
+      throw new AppError('No user is found by that ID', 404);
+    }
+
+    res.status(200).json({
+      status: 'success',
+      data: JSON.parse(JSON.stringify(aboutMe)),
+    });
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};
+
 // UPDATE USER INFO
 exports.updateUserInfo = async (req, res) => {
   try {
@@ -587,6 +607,30 @@ exports.updateUserInfo = async (req, res) => {
     res.status(200).json({
       status: 'success',
       data: JSON.parse(JSON.stringify(userInfo)),
+    });
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};
+
+// UPDATE ABOUT ME
+exports.updateAboutMe = async (req, res) => {
+  try {
+    const aboutMe = await userModel
+      .findByIdAndUpdate(
+        req.user.id,
+        { aboutMe: req.body.aboutMe },
+        { new: true, runValidators: true }
+      )
+      .select({ aboutMe: 1, _id: 0 });
+
+    if (!aboutMe) {
+      throw new AppError('No user is found by that ID', 404);
+    }
+
+    res.status(200).json({
+      status: 'success',
+      data: JSON.parse(JSON.stringify(aboutMe)),
     });
   } catch (err) {
     errorController.sendError(err, req, res);
