@@ -134,7 +134,7 @@ userRouter.post('/sign-out');
  * @apiUse UnauthError
  */
 
-userRouter.patch('/');
+userRouter.patch('/', authController.protect, userController.updateUserInfo);
 
 /**
  * @api {delete} /user/ Delete the User's Account
