@@ -24,3 +24,6 @@ module.exports.ProtectUserExpiredToken =
 
 module.exports.ProtectUserValidTokenBeforePasswordChanged =
   'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwYTY0ODhhYzdhODYwNTc1OGYwNDc2YSIsImlhdCI6MTYyMTUxMTYwOCwiZXhwIjoxNjI5Mjg3NjA4fQ.xEYLK0jj08HynU_TSb9qNrrKWxuXXsbjeN1-3AGOzXY';
+
+module.exports.DisplayNameUserValidToken =
+  'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwYTdmYzUzNGUzNWI2MGM5YzEzZGY3OSIsImlhdCI6MTYyMTYyMjEzOSwiZXhwIjoxNjI5Mzk4MTM5fQ._fMSdi6849DR9RNP8j_ppR4MUBvH7va0qU_K4VIZSUE';
