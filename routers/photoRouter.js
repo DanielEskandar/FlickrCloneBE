@@ -3,6 +3,7 @@ const express = require('express');
 
 // INCLUDE CONTROLLERS
 const photoController = require('../controllers/photoController.js');
+const authController = require('../controllers/authController.js');
 
 // CREATE ROUTER
 const photoRouter = express.Router();
@@ -337,7 +338,7 @@ photoRouter.patch('/:id/tags');
  * @apiUse PhotoNotFoundError
  *
  */
-photoRouter.post('/:id/tags');
+photoRouter.post('/:id/tags', photoController.protect);
 
 /**
  * @api {delete} /photo/:id Remove a Tag
@@ -358,7 +359,7 @@ photoRouter.post('/:id/tags');
  * @apiUse PhotoNotFoundError
  *
  */
-photoRouter.delete('/:id/tags');
+photoRouter.delete('/:id/tags', authController.protect);
 
 /**
  * @api {get} /photo/:id/galleries Gets all Galleries Photo Belongs to
@@ -549,7 +550,11 @@ photoRouter.get('/:id/exif');
  * @apiUse PhotoNotFoundError
  *
  */
-photoRouter.get('/:id/faves', photoController.getFavourites);
+photoRouter.get(
+  '/:id/faves',
+  authController.protect,
+  photoController.getFavourites
+);
 
 /**
  * @api {get} /photo/:id/perm Gets Permissions and Visibility for a Photo
@@ -584,7 +589,7 @@ photoRouter.get('/:id/faves', photoController.getFavourites);
  * @apiUse PhotoNotFoundError
  *
  */
-photoRouter.get('/:id/perm');
+photoRouter.get('/:id/perm', authController.protect);
 
 /**
  * @api {get} /photo/:id/sizes Get All Available Sizes for Photo
@@ -812,7 +817,11 @@ photoRouter.post('/:id/comments', photoController.addComment);
  * @apiUse PhotoNotFoundError
  *
  */
-photoRouter.delete('/:id/comments/:commentid', photoController.deleteComment);
+photoRouter.delete(
+  '/:id/comments/:commentid',
+  authController.protect,
+  photoController.deleteComment
+);
 
 /**
  * @api {patch} /photo/comments/:id Edit a Text of a Comment as the Commenting User
@@ -967,7 +976,7 @@ photoRouter.patch('/:id/location');
  * @apiUse PhotoNotFoundError
  *
  */
-photoRouter.delete('/:id/location');
+photoRouter.delete('/:id/location', authController.protect);
 
 /**
  * @api {get} /photo/:id/licenses Get Licenses of a Photo
@@ -1043,7 +1052,7 @@ photoRouter.patch('/:id/licenses');
  * @apiUse PhotoNotFoundError
  *
  */
-photoRouter.post('/:id/tags/:userId');
+photoRouter.post('/:id/tags/:userId', photoController.protect);
 
 /**
  * @api {delete} /photo/:id/tags/:userId Remove a User from a Photo
