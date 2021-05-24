@@ -429,7 +429,7 @@ module.exports.addCommentData = {
   },
 };
 
-module.exports.deleteCommentData = {
+module.exports.successResponse = {
   status: 'success',
   data: 'ok',
 };
@@ -445,5 +445,36 @@ module.exports.createAlbumData = {
     updatedAt: '2021-05-03T00:07:30.005Z',
     photos: [],
     __v: 0,
+  },
+};
+
+module.exports.addPhoto = {
+  status: 'success',
+  data: {
+    photos: [
+      {
+        _id: '608d5560ec0000546860000e',
+        photoId: '608d5560ec00005468607a0e',
+        remark: '',
+      },
+    ],
+  },
+};
+
+module.exports.editMeta = {
+  status: 'success',
+  data: {
+    galleryID: '608f34a634413f11f020b124',
+    galleryName: 'TEST edit Meta',
+    description:
+      'Cities from around the world beautifully captured and shared.',
+  },
+};
+
+module.exports.setPrimaryPhoto = {
+  status: 'success',
+  data: {
+    galleryID: '608f34a634413f11f020b127',
+    primaryPhotoId: '608d5450ec00005468607a0f',
   },
 };
