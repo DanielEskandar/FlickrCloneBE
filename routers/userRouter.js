@@ -35,6 +35,18 @@ const userRouter = express.Router();
  */
 
 /**
+ * @apiDefine ServerError
+ * @apiError Failure Internal Server Error
+ *
+ * @apiErrorExample Error-Response:
+ *      HTTP/1.1 500 Server Error
+ *      {
+ *          "status": "error",
+ *          "message": "Internal Server Error"
+ *      }
+ */
+
+/**
  * @apiDefine SuccessRes
  * @apiSuccess {String} status Status of the Operation
  * @apiSuccess {String} data Success Message
@@ -52,7 +64,7 @@ const userRouter = express.Router();
 /**
  * @api {post} /user/sign-up Send a Sign-Up Request
  * @apiVersion 1.0.0
- * @apiName SignUp
+ * @apiName signUp
  * @apiGroup User
  *
  * @apiParam (Request Body) {string} firstName The First Name of the User
@@ -62,11 +74,107 @@ const userRouter = express.Router();
  * @apiParam (Request Body) {string} email The Email of the User
  * @apiParam (Request Body) {string} password The Password of the User
  *
- * @apiSuccess {string} Status Status of API
+ * @apiParamExample {json} Request-Example:
+ *    {
+ *        "firstName": "First Name Test",
+ *        "lastName": "Last Name Test",
+ *        "displayName": "firstlast",
+ *        "age": 21,
+ *        "email": "first.last@email.com",
+ *        "password": "Abcdef@1"
+ *    }
  *
- * @apiUse SuccessRes
  *
- * @apiUse UnauthError
+ * @apiSuccess {string} Token Authentication Token for the User
+ * @apiSuccess {string} UserInfo Object Containing Full Details of User
+ *
+ * @apiSuccessExample {json}  Success-Response:
+ *      HTTP/1.1 200 OK
+ *    {
+ *      "status": "success",
+ *      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwYWFmZWRkMjQyMWUzMzgzMDU2MGJlZSIsImlhdCI6MTYyMTgxOTEwMiwiZXhwIjoxNjI5NTk1MTAyfQ.02Mq52MI0IiKqNrDVWqIxwdPzzUqGrY5CkH_b9wWeNs",
+ *      "data": {
+ *        "user": {
+ *          "limits": {
+ *            "photos": {
+ *              "maxdisplaypx": 1024,
+ *              "maxupload": 15728640
+ *            },
+ *            "videos": {
+ *              "maxduration": 90,
+ *              "maxupload": 15728640
+ *            }
+ *          },
+ *          "privacySettings": {
+ *            "global": {
+ *              "infoVisibility": {
+ *                "email": 2,
+ *                "name": 1,
+ *                "currentCity": 1
+ *              },
+ *              "downloadPerm": 1,
+ *              "largestImgSize": 0,
+ *              "allowShare": 1,
+ *              "allowTag": 1,
+ *              "allowGalleryAdd": true,
+ *              "hideEXIF": false,
+ *              "hidePhotoSearch": false,
+ *              "hideProfileSearch": false
+ *            },
+ *            "defaults": {
+ *              "perms": {
+ *                "see": 1,
+ *                "comment": 1,
+ *                "addNotes": 2
+ *              },
+ *              "license": 0,
+ *              "mapVisible": 1,
+ *              "importEXIF": true,
+ *              "safetyLevel": 1,
+ *              "contentType": 1
+ *            },
+ *            "filters": {
+ *              "search": {
+ *                "safeSearch": true,
+ *                "content": 1
+ *              }
+ *            }
+ *          },
+ *          "notificationSettings": {
+ *            "notifMail": {
+ *              "invites": true,
+ *              "contact": true,
+ *              "messages": true,
+ *              "reminders": true
+ *            },
+ *            "activityMail": {
+ *              "you": true,
+ *              "contacts": true
+ *            }
+ *          },
+ *          "pro": false,
+ *          "showcase": [],
+ *          "favourites": [],
+ *          "photos": [],
+ *          "testimonials": [],
+ *          "albums": [],
+ *          "gallery": [],
+ *          "blocked": [],
+ *          "_id": "60aafedd2421e33830560bee",
+ *          "firstName": "First Name Test",
+ *          "lastName": "Last Name Test",
+ *          "displayName": "firstlast",
+ *          "age": 21,
+ *          "email": "first.last@email.com",
+ *          "password": "$2a$12$7B0oeSkT6JVEQvJnI2AHlOF5b6WmgafoD/pDEzOwgAoqCvywELEIW",
+ *          "joinDate": "2021-05-24T01:18:21.652Z",
+ *          "following": [],
+ *          "__v": 0
+ *        }
+ *      }
+ *    }
+ *
+ * @apiUse ServerError
  */
 
 userRouter.post('/sign-up', authController.signUp);
@@ -97,11 +205,22 @@ userRouter.post('/confirm');
  * @apiParam (Request Body) {string} email Email entered by user
  * @apiParam (Request Body) (string) password Password entered by user
  *
+ * @apiParamExample {json} Request-Example:
+ *    {
+ *      "email": "AGtest@mailserver.com",
+ *      "password": "AG5AG5TestCases_"
+ *    }
+ *
  * @apiSuccess {string} Token Authenticaton Token
  *
- * @apiUse SuccessRes
+ * @apiSuccessExample {json} Success-Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *        "status": "success",
+ *        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwOGQ1NDUwZWMwMDAwNTQ2ODYwN2ExMSIsImlhdCI6MTYyMTgyMDE4OSwiZXhwIjoxNjI5NTk2MTg5fQ.-8-NmMiw3kK4QfBOYMHiphZj-np_s9TqkwPeYc-bgYM"
+ *      }
  *
- * @apiUse UnauthError
+ * @apiUse ServerError
  */
 
 userRouter.post('/sign-in', authController.signIn);
@@ -129,7 +248,50 @@ userRouter.post('/sign-out');
  *
  * @apiHeader {string} Token Authenticaton Token
  *
- * @apiUse SuccessRes
+ * @apiHeaderExample {json} Header-Example:
+ *     {
+ *          authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwOGQ1NWM3ZTUxMmI3NGVlMDA3OTFkYiIsImlhdCI6MTYyMTUwOTY5NywiZXhwIjoxNjI5Mjg1Njk3fQ.3WLVIdzDgIGpru3ybIxqWj9A9ROvtLG90dFuzHowuk0',
+ *     }
+ *
+ * @apiParam (Request Body) {string} occupation Occupation of the user
+ * @apiParam (Request Body) (string) hometown Hometown of the user
+ * @apiParam (Request Body) (string) currentCity Current City of Residence
+ * @apiParam (Request Body) (string) country Current Country of Residence
+ * @apiParam (Request Body) (string) emailVisibility Privacy Setting for the Email
+ * @apiParam (Request Body) (string) currentCityVisibility Privacy Setting for the Current City Data
+ *
+ * @apiParamExample {json} Request-Example:
+ *    {
+ *        "occupation": "Artist",
+ *        "hometown": "Ile de France",
+ *        "currentCity": "Berlin",
+ *        "country": "Germany",
+ *        "emailVisibility": 1,
+ *        "currentCityVisibility": 2
+ *    }
+ *
+ * @apiSuccess {string} UserInfo Updated User Information
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *        "status": "success",
+ *        "data": {
+ *          "privacySettings": {
+ *            "global": {
+ *              "infoVisibility": {
+ *                "email": 1,
+ *                "currentCity": 2
+ *              }
+ *            }
+ *          },
+ *          "_id": "608d55c7e512b74ee00791db",
+ *          "occupation": "Artist",
+ *          "hometown": "Ile de France",
+ *          "currentCity": "Berlin",
+ *          "country": "Germany"
+ *        }
+ *      }
  *
  * @apiUse UnauthError
  */
@@ -414,14 +576,31 @@ userRouter.get('/:id/no-geo');
  * @apiSuccessExample Success-Response:
  *      HTTP/1.1 200 OK
  *      {
- *          "status": "success",
- *          "data":
+ *        "status": "success",
+ *        "data": {
+ *        "testimonials": [
  *          {
- *              "testimonials": [
- *
- *              ]
+ *            "_id": "60a78931879c9b4f08aec669",
+ *            "by": {
+ *              "_id": "608d5450ec00005468607a0c",
+ *              "firstName": "Ahmed",
+ *              "lastName": "Abdulkader"
+ *            },
+ *            "content": "Testimonial about tetimonial test user from Ahmed"
+ *          },
+ *          {
+ *            "_id": "60a78931879c9b4f08aec66a",
+ *            "by": {
+ *              "_id": "608d55c7e512b74ee00791db",
+ *              "firstName": "Daniel",
+ *              "lastName": "Eskandar"
+ *            },
+ *            "content": "Testimonial about testimonial test user from Daniel"
  *          }
+ *        ],
+ *        "_id": "60a787449065c85bac893ab3"
  *      }
+ *    }
  *
  * @apiUse UserNotFoundError
  */
@@ -436,9 +615,16 @@ userRouter.get('/:id/testimonials', userController.getTestimonials);
  *
  * @apiParam {String} id The User's ID
  *
- * @apiSuccess {Object[]} testimonials Array of the user's account
- *
  * @apiHeader {string} Token Authenticaton Token
+ *
+ * @apiHeaderExample {json} Header-Example:
+ *     {
+ *          authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwOGQ1NWM3ZTUxMmI3NGVlMDA3OTFkYiIsImlhdCI6MTYyMTUwOTY5NywiZXhwIjoxNjI5Mjg1Njk3fQ.3WLVIdzDgIGpru3ybIxqWj9A9ROvtLG90dFuzHowuk0',
+ *     }
+ *
+ * @apiParam (Request Body) {string} message Main Content of Testimonial
+ *
+ * @apiSuccess {Object[]} testimonials Array of the user's account
  *
  * @apiUse SuccessRes
  *
@@ -584,19 +770,154 @@ userRouter.get('/:id/albums');
  *
  * @apiParam {String} id The User's ID
  *
- * @apiSuccess {Object[]} Showcase array of the user
+ * @apiSuccess {Object[]} showcase array of the user
  *
  * @apiSuccessExample Success-Response:
  *      HTTP/1.1 200 OK
  *      {
- *          "status": "success",
- *          "data":
+ *        "status": "success",
+ *        "data": {
+ *        "showcase": [
  *          {
- *              "showcase": [
- *
- *              ]
+ *            "sizes": {
+ *              "size": {
+ *                  "original": {
+ *                  "height": 120,
+ *                  "width": 60,
+ *                  "source": "https://www.google.com/",
+ *                  "url": "https://www.google.com/"
+ *                },
+ *                "large": {
+ *                  "height": 190,
+ *                  "width": 20,
+ *                  "source": "https://www.google.com/",
+ *                  "url": "https://www.google.com/"
+ *                },
+ *                "medium800": {
+ *                  "height": 200,
+ *                  "width": 60,
+ *                  "source": "https://www.google.com/",
+ *                  "url": "https://www.google.com/"
+ *                },
+ *                "medium640": {
+ *                  "height": 1200,
+ *                  "width": 60,
+ *                  "source": "https://www.google.com/",
+ *                  "url": "https://www.google.com/"
+ *                },
+ *                "medium": {
+ *                  "height": 120,
+ *                  "width": 600,
+ *                  "source": "https://www.google.com/",
+ *                  "url": "https://www.google.com/"
+ *                },
+ *                "small320": {
+ *                  "height": 12,
+ *                  "width": 60,
+ *                  "source": "https://www.google.com/",
+ *                  "url": "https://www.google.com/"
+ *                },
+ *                "small": {
+ *                  "height": 1000,
+ *                  "width": 60,
+ *                  "source": "https://www.google.com/",
+ *                  "url": "https://www.google.com/"
+ *                },
+ *                "thumbnail": {
+ *                  "height": 50,
+ *                  "width": 50,
+ *                  "source": "https://www.google.com/",
+ *                  "url": "https://www.google.com/"
+ *                },
+ *                "largeSquare": {
+ *                  "height": 120,
+ *                   "width": 120,
+ *                  "source": "https://www.google.com/",
+ *                  "url": "https://www.google.com/"
+ *                },
+ *                "square": {
+ *                  "height": 60,
+ *                  "width": 60,
+ *                  "source": "https://www.google.com/",
+ *                  "url": "https://www.google.com/"
+ *                }
+ *              },
+ *              "canDownload": false
+ *            },
+ *            "_id": "608d5450ec00005468607a0f"
+ *          },
+ *          {
+ *            "sizes": {
+ *              "size": {
+ *                "original": {
+ *                  "height": 120,
+ *                  "width": 60,
+ *                  "source": "https://www.google.com/",
+ *                  "url": "https://www.google.com/"
+ *                },
+ *                "large": {
+ *                  "height": 190,
+ *                  "width": 20,
+ *                  "source": "https://www.google.com/",
+ *                  "url": "https://www.google.com/"
+ *                },
+ *                "medium800": {
+ *                  "height": 200,
+ *                  "width": 60,
+ *                  "source": "https://www.google.com/",
+ *                  "url": "https://www.google.com/"
+ *                },
+ *                "medium640": {
+ *                  "height": 1200,
+ *                  "width": 60,
+ *                  "source": "https://www.google.com/",
+ *                  "url": "https://www.google.com/"
+ *                },
+ *                "medium": {
+ *                  "height": 120,
+ *                  "width": 600,
+ *                  "source": "https://www.google.com/",
+ *                  "url": "https://www.google.com/"
+ *                },
+ *                "small320": {
+ *                  "height": 12,
+ *                  "width": 60,
+ *                  "source": "https://www.google.com/",
+ *                  "url": "https://www.google.com/"
+ *                },
+ *                "small": {
+ *                  "height": 1000,
+ *                  "width": 60,
+ *                  "source": "https://www.google.com/",
+ *                  "url": "https://www.google.com/"
+ *                },
+ *                "thumbnail": {
+ *                  "height": 50,
+ *                  "width": 50,
+ *                  "source": "https://www.google.com/",
+ *                  "url": "https://www.google.com/"
+ *                },
+ *                "largeSquare": {
+ *                  "height": 120,
+ *                  "width": 120,
+ *                  "source": "https://www.google.com/",
+ *                  "url": "https://www.google.com/"
+ *                },
+ *                "square": {
+ *                  "height": 60,
+ *                  "width": 60,
+ *                  "source": "https://www.google.com/",
+ *                  "url": "https://www.google.com/"
+ *                }
+ *              },
+ *              "canDownload": true
+ *            },
+ *            "_id": "608d5450ec00005468617a0c"
  *          }
+ *        ],
+ *        "_id": "608d5450ec00005468607a0c"
  *      }
+ *    }
  *
  * @apiUse UserNotFoundError
  */
@@ -609,22 +930,39 @@ userRouter.get('/:id/showcase', userController.getShowcase);
  * @apiName UpdateShowcase
  * @apiGroup User
  *
+ * @apiHeader {string} Token Authenticaton Token
  *
- * @apiSuccess {Object[]} Showcase array of the user
+ * @apiHeaderExample {json} Header-Example:
+ *     {
+ *          authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwOGQ1NWM3ZTUxMmI3NGVlMDA3OTFkYiIsImlhdCI6MTYyMTUwOTY5NywiZXhwIjoxNjI5Mjg1Njk3fQ.3WLVIdzDgIGpru3ybIxqWj9A9ROvtLG90dFuzHowuk0',
+ *     }
+ *
+ * @apiParam (Request Body) {string} showcase The New Showcase List
+ * @apiParamExample {json} Request-Example:
+ *      {
+ *          "showcase": [
+ *            "608d5450ec00005468607a0f",
+ *            "608d5450ec00005468617a0c",
+ *            "608d5450ec00005468628a0d"
+ *          ]
+ *      }
+ *
+ * @apiSuccess {Object[]} showcase Updated List in Showcase
  *
  * @apiSuccessExample Success-Response:
  *      HTTP/1.1 200 OK
  *      {
- *          "status": "success",
- *          "data":
- *          {
- *              "showcase": [
- *
- *              ]
- *          }
+ *        "status": "success",
+ *        "data": {
+ *          "showcase": [
+ *            "608d5450ec00005468607a0f",
+ *            "608d5450ec00005468617a0c",
+ *            "608d5450ec00005468628a0d"
+ *          ]
+ *        }
  *      }
  *
- * @apiUse UserNotFoundError
+ * @apiUse UnauthError
  */
 
 userRouter.put(
@@ -670,6 +1008,11 @@ userRouter.get('/:id/faves', authController.protect, userController.getFaves);
  *
  * @apiHeader {string} Token Authenticaton Token
  *
+ * @apiHeaderExample {json} Header-Example:
+ *     {
+ *          authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwOGQ1NWM3ZTUxMmI3NGVlMDA3OTFkYiIsImlhdCI6MTYyMTUwOTY5NywiZXhwIjoxNjI5Mjg1Njk3fQ.3WLVIdzDgIGpru3ybIxqWj9A9ROvtLG90dFuzHowuk0',
+ *     }
+ *
  * @apiSuccess {string} photos/maxdisplaypx Maximum size in pixels for photos displayed on the site (0 means that no limit is in place).
  * @apiSuccess {string} photos/maxupload Maximum file size in bytes for photo uploads.
  * @apiSuccess {string} videos/maxduration Maximum duration in seconds of a video.
@@ -677,22 +1020,21 @@ userRouter.get('/:id/faves', authController.protect, userController.getFaves);
  *
  * @apiSuccessExample Success-Response:
  *      HTTP/1.1 200 OK
- *      {
+ *        {
  *          "status": "success",
- *          "data":
- *          {
- *              "photos":
- *              {
- *                  "maxdisplaypx": 1024
- *                  "maxupload": 15728640
- *              },
- *              "videos" :
- *              {
- *                  "maxduration": 90
- *                  "maxupload": 157286400
- *              ]
+ *          "data": {
+ *            "limits": {
+ *              "photos": {
+ *                "maxdisplaypx": 1024,
+ *                "maxupload": 15728640
+ *               },
+ *              "videos": {
+ *                "maxduration": 90,
+ *                "maxupload": 15728640
+ *              }
+ *            }
  *          }
- *      }
+ *        }
  *
  * @apiUse UnauthError
  */
@@ -706,6 +1048,11 @@ userRouter.get('/limits', authController.protect, userController.getLimits);
  * @apiGroup User
  *
  * @apiHeader {string} Token Authenticaton Token
+ *
+ * @apiHeaderExample {json} Header-Example:
+ *     {
+ *          authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwOGQ1NWM3ZTUxMmI3NGVlMDA3OTFkYiIsImlhdCI6MTYyMTUwOTY5NywiZXhwIjoxNjI5Mjg1Njk3fQ.3WLVIdzDgIGpru3ybIxqWj9A9ROvtLG90dFuzHowuk0',
+ *     }
  *
  * @apiUse SuccessRes
  *
@@ -723,6 +1070,8 @@ userRouter.delete(
  * @apiVersion 1.0.0
  * @apiName GetRealName
  * @apiGroup User
+ *
+ * @apiParam {String} id The User's ID
  *
  * @apiSuccess {string} firstName The First Name of the calling User
  * @apiSuccess {string} lastName The Last Name of the calling User
@@ -748,6 +1097,8 @@ userRouter.get('/:id/real-name', userController.getRealName);
  * @apiVersion 1.0.0
  * @apiName GetDispName
  * @apiGroup User
+ *
+ * @apiParam {String} id The User's ID
  *
  * @apiSuccess {string} displayName The Display name of the calling User
  *
