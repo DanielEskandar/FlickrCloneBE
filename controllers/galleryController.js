@@ -8,6 +8,8 @@ const commentModel = require('../models/commentModel.js');
 // INCLUDE ERROR CLASS AND ERROR CONTROLLER
 const AppError = require('../utils/appError.js');
 const errorController = require('./errorController.js');
+const albumModel = require('../models/albumModel.js');
+const { update } = require('../models/galleryModel.js');
 
 // GET GALLERY INFORMATION
 exports.getInfo = async (req, res) => {
@@ -123,8 +125,8 @@ exports.editComment = async (req, res) => {
     const checkComment = await commentModel.findById(req.params.id);
     if (checkComment.userId.toString() !== req.user.id.toString())
       throw new AppError(
-        `You are not logged in. Please log in to get access.`,
-        401
+        'Permission Denied. You are not allowed to do this action.',
+        403
       );
 
     const newComment = await commentModel.findByIdAndUpdate(
@@ -156,8 +158,8 @@ exports.deleteComment = async (req, res) => {
     const checkComment = await commentModel.findById(req.params.commentid);
     if (checkComment.userId.toString() !== req.user.id.toString())
       throw new AppError(
-        `You are not logged in. Please log in to get access.`,
-        401
+        'Permission Denied. You are not allowed to do this action.',
+        403
       );
 
     const gallery = await galleryModel /// get array of comments in gallery
@@ -230,9 +232,10 @@ exports.addPhoto = async (req, res) => {
     );
     if (!userGalleries)
       throw new AppError(
-        'You are not logged in. Please log in to get access.',
-        401
+        'Permission Denied. You are not allowed to do this action.',
+        403
       );
+
     // check if gallery id exist or not
 
     const gallery = await galleryModel.findById(req.params.id);
@@ -264,7 +267,13 @@ exports.addPhoto = async (req, res) => {
         const updatedGallery = await galleryModel.findByIdAndUpdate(
           req.params.id,
           {
-            $push: { photos: { photoId: req.body.photoID, remark: '' } },
+            $push: {
+              photos: {
+                _id: req.body._id,
+                photoId: req.body.photoID,
+                remark: '',
+              },
+            },
             $set: { updatedAt: new Date(Date.now()) },
           },
           {
@@ -275,7 +284,7 @@ exports.addPhoto = async (req, res) => {
 
         res.status(200).json({
           status: 'success',
-          data: 'ok',
+          data: JSON.parse(JSON.stringify({ photos: updatedGallery.photos })),
         });
       } else {
         throw new AppError('Gallery is Full ! Cannot add a new photo', 404);
@@ -298,8 +307,8 @@ exports.removePhoto = async (req, res) => {
     );
     if (!userGalleries)
       throw new AppError(
-        'You are not logged in. Please log in to get access.',
-        401
+        'Permission Denied. You are not allowed to do this action.',
+        403
       );
 
     // check if gallery id exist or not
@@ -370,11 +379,12 @@ exports.editMeta = async (req, res) => {
     );
     if (!userGalleries)
       throw new AppError(
-        'You are not logged in. Please log in to get access.',
-        401
+        'Permission Denied. You are not allowed to do this action.',
+        403
       );
+
     req.body.updatedAt = new Date(Date.now());
-    await galleryModel.findByIdAndUpdate(
+    const updatedGallery = await galleryModel.findByIdAndUpdate(
       req.params.id,
       {
         $set: req.body,
@@ -386,7 +396,13 @@ exports.editMeta = async (req, res) => {
     );
     res.status(200).json({
       status: 'success',
-      data: 'ok',
+      data: JSON.parse(
+        JSON.stringify({
+          galleryID: updatedGallery._id,
+          galleryName: updatedGallery.galleryName,
+          description: updatedGallery.description,
+        })
+      ),
     });
   } catch (err) {
     errorController.sendError(err, req, res);
@@ -409,25 +425,24 @@ exports.setPrimaryPhoto = async (req, res) => {
     }
 
     // auth
+
     const currentUser = await userModel.findById(req.user.id);
     const userGalleries = currentUser.gallery.find(
       (element) => element.toString() === req.params.id.toString()
     );
     if (!userGalleries)
       throw new AppError(
-        'You are not logged in. Please log in to get access.',
-        401
+        'Permission Denied. You are not allowed to do this action.',
+        403
       );
 
     // check if photo exists in gallery
-    console.log(gallery.photos);
-    console.log(req.params.photoid);
     const isExist = gallery.photos.find(
       (element) => element.photoId.toString() === req.params.photoid.toString()
     );
 
     if (isExist) {
-      await galleryModel.findByIdAndUpdate(
+      const updatedGallery = await galleryModel.findByIdAndUpdate(
         req.params.id,
         {
           $set: {
@@ -442,7 +457,12 @@ exports.setPrimaryPhoto = async (req, res) => {
       );
       res.status(200).json({
         status: 'success',
-        data: 'ok',
+        data: JSON.parse(
+          JSON.stringify({
+            galleryID: updatedGallery._id,
+            primaryPhotoId: updatedGallery.primaryPhotoId,
+          })
+        ),
       });
     } else {
       throw new AppError('This Photo does not exist in the gallery !', 404);

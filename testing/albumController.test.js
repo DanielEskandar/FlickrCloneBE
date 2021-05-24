@@ -113,7 +113,7 @@ describe('should delete a comment from an album', () => {
     };
     await albumController.deleteComment(mReq, mRes);
     expect(mRes.status).toBeCalledWith(204);
-    expect(mRes.json).toBeCalledWith(albumTestData.deleteCommentData);
+    expect(mRes.json).toBeCalledWith(albumTestData.successResponse);
   });
 });
 
@@ -159,10 +159,7 @@ describe('should add Photo to an album', () => {
     };
     await albumController.addPhoto(mReq, mRes);
     expect(mRes.status).toBeCalledWith(200);
-    expect(mRes.json).toBeCalledWith({
-      status: 'success',
-      data: 'ok',
-    });
+    expect(mRes.json).toBeCalledWith(albumTestData.addPhoto);
   });
 });
 
@@ -182,10 +179,7 @@ describe('should delete a photo from an album', () => {
     };
     await albumController.removePhoto(mReq, mRes);
     expect(mRes.status).toBeCalledWith(204);
-    expect(mRes.json).toBeCalledWith({
-      status: 'success',
-      data: 'ok',
-    });
+    expect(mRes.json).toBeCalledWith(albumTestData.successResponse);
   });
 });
 
@@ -207,10 +201,7 @@ describe('should delete list of photos from an album', () => {
     };
     await albumController.removePhotos(mReq, mRes);
     expect(mRes.status).toBeCalledWith(204);
-    expect(mRes.json).toBeCalledWith({
-      status: 'success',
-      data: 'ok',
-    });
+    expect(mRes.json).toBeCalledWith(albumTestData.successResponse);
   });
 });
 
@@ -230,10 +221,7 @@ describe('should edit meta of a album', () => {
     };
     await albumController.editMeta(mReq, mRes);
     expect(mRes.status).toBeCalledWith(200);
-    expect(mRes.json).toBeCalledWith({
-      status: 'success',
-      data: 'ok',
-    });
+    expect(mRes.json).toBeCalledWith(albumTestData.editMeta);
   });
 });
 
@@ -253,9 +241,6 @@ describe('should set Primary Photo of an album', () => {
     };
     await albumController.setPrimaryPhoto(mReq, mRes);
     expect(mRes.status).toBeCalledWith(200);
-    expect(mRes.json).toBeCalledWith({
-      status: 'success',
-      data: 'ok',
-    });
+    expect(mRes.json).toBeCalledWith(albumTestData.setPrimaryPhoto);
   });
 });

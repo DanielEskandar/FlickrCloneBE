@@ -113,7 +113,7 @@ describe('should delete a comment from a gallery', () => {
     };
     await galleryController.deleteComment(mReq, mRes);
     expect(mRes.status).toBeCalledWith(204);
-    expect(mRes.json).toBeCalledWith(galleryTestData.deleteCommentData);
+    expect(mRes.json).toBeCalledWith(galleryTestData.successResponse);
   });
 });
 
@@ -148,6 +148,7 @@ describe('should add Photo to a gallery', () => {
       params: { id: '608f34a634413f11f020b12a' },
       user: { id: '608d5450ec00005468607a11' },
       body: {
+        _id: '608d5560ec0000546860000e',
         photoID: '608d5560ec00005468607a0e',
       },
     };
@@ -157,10 +158,7 @@ describe('should add Photo to a gallery', () => {
     };
     await galleryController.addPhoto(mReq, mRes);
     expect(mRes.status).toBeCalledWith(200);
-    expect(mRes.json).toBeCalledWith({
-      status: 'success',
-      data: 'ok',
-    });
+    expect(mRes.json).toBeCalledWith(galleryTestData.addPhoto);
   });
 });
 
@@ -180,16 +178,13 @@ describe('should delete a photo from a gallery', () => {
     };
     await galleryController.removePhoto(mReq, mRes);
     expect(mRes.status).toBeCalledWith(204);
-    expect(mRes.json).toBeCalledWith({
-      status: 'success',
-      data: 'ok',
-    });
+    expect(mRes.json).toBeCalledWith(galleryTestData.successResponse);
   });
 });
 
 // TESTING: editMeta
 describe('should edit meta of a gallery', () => {
-  test(`should delete a photo from a gallery with id 608f34a634413f11f020b12a`, async () => {
+  test(`should delete a photo from a gallery with id 608f34a634413f11f020b124`, async () => {
     const mReq = {
       user: { id: '608d5450ec00005468607a11' },
       params: {
@@ -203,10 +198,7 @@ describe('should edit meta of a gallery', () => {
     };
     await galleryController.editMeta(mReq, mRes);
     expect(mRes.status).toBeCalledWith(200);
-    expect(mRes.json).toBeCalledWith({
-      status: 'success',
-      data: 'ok',
-    });
+    expect(mRes.json).toBeCalledWith(galleryTestData.editMeta);
   });
 });
 
@@ -226,9 +218,6 @@ describe('should set Primary Photo of a gallery', () => {
     };
     await galleryController.setPrimaryPhoto(mReq, mRes);
     expect(mRes.status).toBeCalledWith(200);
-    expect(mRes.json).toBeCalledWith({
-      status: 'success',
-      data: 'ok',
-    });
+    expect(mRes.json).toBeCalledWith(galleryTestData.setPrimaryPhoto);
   });
 });
