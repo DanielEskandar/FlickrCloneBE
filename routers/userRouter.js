@@ -180,18 +180,7 @@ const userRouter = express.Router();
 userRouter.post('/sign-up', authController.signUp);
 
 /**
- * @api {post} /user/confirm Confirm a Signed Up user account
- * @apiVersion 1.0.0
- * @apiName SignUpConfirm
- * @apiGroup User
- *
- * @apiHeader {string} Token Authenticaton Token
- *
- * @apiSuccess {string} Status Status of API
- *
- * @apiUse SuccessRes
- *
- * @apiUse UnauthError
+ * Deprecated
  */
 
 userRouter.post('/confirm');
@@ -226,16 +215,7 @@ userRouter.post('/confirm');
 userRouter.post('/sign-in', authController.signIn);
 
 /**
- * @api {post} /user/sign-out Sign In a Confirmed User
- * @apiVersion 1.0.0
- * @apiName SignUpConfirm
- * @apiGroup User
- *
- * @apiHeader {string} Token Authenticaton Token
- *
- * @apiUse SuccessRes
- *
- * @apiUse UnauthError
+ * Deprecated
  */
 
 userRouter.post('/sign-out');
@@ -305,6 +285,11 @@ userRouter.patch('/', authController.protect, userController.updateUserInfo);
  * @apiGroup User
  *
  * @apiHeader {string} Token Authenticaton Token
+ *
+ * @apiHeaderExample {json} Header-Example:
+ *     {
+ *          authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwOGQ1NWM3ZTUxMmI3NGVlMDA3OTFkYiIsImlhdCI6MTYyMTUwOTY5NywiZXhwIjoxNjI5Mjg1Njk3fQ.3WLVIdzDgIGpru3ybIxqWj9A9ROvtLG90dFuzHowuk0',
+ *     }
  *
  * @apiUse SuccessRes
  *
@@ -772,7 +757,7 @@ userRouter.get('/:id/albums');
  *
  * @apiSuccess {Object[]} showcase array of the user
  *
- * @apiSuccessExample Success-Response:
+ * @apiSuccessExample {json} Success-Response:
  *      HTTP/1.1 200 OK
  *      {
  *        "status": "success",
@@ -948,8 +933,7 @@ userRouter.get('/:id/showcase', userController.getShowcase);
  *      }
  *
  * @apiSuccess {Object[]} showcase Updated List in Showcase
- *
- * @apiSuccessExample Success-Response:
+ * @apiSuccessExample {json} Success-Response:
  *      HTTP/1.1 200 OK
  *      {
  *        "status": "success",
@@ -1123,6 +1107,8 @@ userRouter.get('/:id/disp-name', userController.getDispName);
  * @apiName GetAboutMe
  * @apiGroup User
  *
+ * @apiParam {String} id The User's ID
+ *
  * @apiSuccess {string} aboutMe The about me section of the calling User
  *
  * @apiSuccessExample Success-Response:
@@ -1148,6 +1134,11 @@ userRouter.get('/:id/about-me', userController.getAboutMe);
  *
  * @apiHeader {string} Token Authenticaton Token
  *
+ * @apiHeaderExample {json} Header-Example:
+ *     {
+ *          authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwOGQ1NWM3ZTUxMmI3NGVlMDA3OTFkYiIsImlhdCI6MTYyMTUwOTY5NywiZXhwIjoxNjI5Mjg1Njk3fQ.3WLVIdzDgIGpru3ybIxqWj9A9ROvtLG90dFuzHowuk0',
+ *     }
+ *
  * @apiParam (Request Body) {string} displayname The New Display name of the calling User
  *
  * @apiParamExample {json} Request-Example:
@@ -1157,7 +1148,7 @@ userRouter.get('/:id/about-me', userController.getAboutMe);
  *
  * @apiSuccess {string} displayName New Display Name for the User
  *
- * @apiSuccessExample Success_Response:
+ * @apiSuccessExample {json} Success_Response:
  *      HTTP/1.1 200 OK
  *      {
  *        "status": "success",
@@ -1183,6 +1174,11 @@ userRouter.patch(
  *
  * @apiHeader {string} Token Authenticaton Token
  *
+ * @apiHeaderExample {json} Header-Example:
+ *     {
+ *          authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwOGQ1NWM3ZTUxMmI3NGVlMDA3OTFkYiIsImlhdCI6MTYyMTUwOTY5NywiZXhwIjoxNjI5Mjg1Njk3fQ.3WLVIdzDgIGpru3ybIxqWj9A9ROvtLG90dFuzHowuk0',
+ *     }
+ *
  * @apiParam (Request Body) {string} aboutMe The New about me section of the calling User
  *
  * @apiParamExample {json} Request-Example:
@@ -1192,7 +1188,7 @@ userRouter.patch(
  *
  * @apiSuccess {string} aboutMe Updated About Me Section
  *
- * @apiSuccessExample Success_Response:
+ * @apiSuccessExample {json} Success_Response:
  *      HTTP/1.1 200 OK
  *      {
  *        "status": "success",
@@ -1277,9 +1273,14 @@ userRouter.post('/confirm-password');
  *
  * @apiHeader {string} Token Authenticaton Token
  *
+ * @apiHeaderExample {json} Header-Example:
+ *     {
+ *          authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwOGQ1NWM3ZTUxMmI3NGVlMDA3OTFkYiIsImlhdCI6MTYyMTUwOTY5NywiZXhwIjoxNjI5Mjg1Njk3fQ.3WLVIdzDgIGpru3ybIxqWj9A9ROvtLG90dFuzHowuk0',
+ *     }
+ *
  * @apiSuccess {string} privacySettings User's Privacy Settings
  *
- * @apiSuccessExample Success-Response:
+ * @apiSuccessExample {json} Success-Response:
  *      HTTP/1.1 200 OK
  *      {
  *        "status": "success",
@@ -1340,6 +1341,11 @@ userRouter.get(
  *
  * @apiHeader {string} Token Authenticaton Token
  *
+ * @apiHeaderExample {json} Header-Example:
+ *     {
+ *          authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwOGQ1NWM3ZTUxMmI3NGVlMDA3OTFkYiIsImlhdCI6MTYyMTUwOTY5NywiZXhwIjoxNjI5Mjg1Njk3fQ.3WLVIdzDgIGpru3ybIxqWj9A9ROvtLG90dFuzHowuk0',
+ *     }
+ *
  * @apiParam (Request Body) {string} privacySettings User's New Privacy Settings
  *
  * @apiParamExample {json} Request-Example:
@@ -1388,7 +1394,7 @@ userRouter.get(
  *
  * @apiSuccess {string} privacySettings User's Updated Privacy Settings
  *
- * @apiSuccessExample Success-Response:
+ * @apiSuccessExample {json} Success-Response:
  *      HTTP/1.1 200 OK
  *      {
  *        "status": "success",
@@ -1448,9 +1454,14 @@ userRouter.patch(
  *
  * @apiHeader {string} Token Authenticaton Token
  *
- * @apiSuccess {string} notificationSettings The User's Notificaation Settings
+ * @apiHeaderExample {json} Header-Example:
+ *     {
+ *          authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwOGQ1NWM3ZTUxMmI3NGVlMDA3OTFkYiIsImlhdCI6MTYyMTUwOTY5NywiZXhwIjoxNjI5Mjg1Njk3fQ.3WLVIdzDgIGpru3ybIxqWj9A9ROvtLG90dFuzHowuk0',
+ *     }
  *
- * @apiSuccessExample Success-Response:
+ * @apiSuccess {string} notificationSettings The User's Notification Settings
+ *
+ * @apiSuccessExample {json} Success-Response:
  *      HTTP/1.1 200 OK
  *      {
  *        "status": "success",
@@ -1488,6 +1499,11 @@ userRouter.get(
  *
  * @apiHeader {string} Token Authenticaton Token
  *
+ * @apiHeaderExample {json} Header-Example:
+ *     {
+ *          authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwOGQ1NWM3ZTUxMmI3NGVlMDA3OTFkYiIsImlhdCI6MTYyMTUwOTY5NywiZXhwIjoxNjI5Mjg1Njk3fQ.3WLVIdzDgIGpru3ybIxqWj9A9ROvtLG90dFuzHowuk0',
+ *     }
+ *
  * @apiParam (Request Body) {string} privacySettings User's New Privacy Settings
  *
  * @apiParamExample {json} Request-Example:
@@ -1508,7 +1524,7 @@ userRouter.get(
  *
  * @apiSuccess {string} notificationSettings The User's Updated Notificaation Settings
  *
- * @apiSuccessExample Success-Response:
+ * @apiSuccessExample {json} Success-Response:
  *      HTTP/1.1 200 OK
  *      {
  *        "status": "success",
@@ -1800,12 +1816,17 @@ userRouter.get('/follower-not-followed');
  * @apiName GetBlocked
  * @apiGroup User
  *
- * @apiHeader {String} Token Authenticaton Token
+ * @apiHeader {string} Token Authenticaton Token
+ *
+ * @apiHeaderExample {json} Header-Example:
+ *     {
+ *          authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwOGQ1NWM3ZTUxMmI3NGVlMDA3OTFkYiIsImlhdCI6MTYyMTUwOTY5NywiZXhwIjoxNjI5Mjg1Njk3fQ.3WLVIdzDgIGpru3ybIxqWj9A9ROvtLG90dFuzHowuk0',
+ *     }
  *
  * @apiSuccess {Number} count User's Blocked Count
  * @apiSuccess {Object[]} blocked Array of User ID's of the User's Blocked users
  *
- * @apiSuccessExample Success-Response:
+ * @apiSuccessExample {json} Success-Response:
  *      HTTP/1.1 200 OK
  *      {
  *        "status": "success",
@@ -2075,39 +2096,19 @@ userRouter.get('/notif/contact');
 userRouter.get('/notif/follow');
 
 /**
- * @api {get} /user/notif/interact Gets a list of User's Interact Notifications
- * @apiVersion 1.0.0
- * @apiName InteractNotification
- * @apiGroup User
- *
- * @apiHeader {String} Token Authenticaton Token
- *
- * @apiSuccess {Number} count User's Recieved Messages
- * @apiSuccess {Object[]} notiflist Array of Notifications
- *
- * @apiSuccessExample Success-Response:
- *      HTTP/1.1 200 OK
- *      {
- *          "status": "success",
- *          "data":
- *          {
- *              "count": 30
- *              "notiflist": [
- *
- *              ]
- *          }
- *      }
- *
- * @apiUse UnauthError
- */
-
-/**
  * @api {get} /user/:id Get the User's Information
  * @apiVersion 1.0.0
  * @apiName GetUserInfo
  * @apiGroup User
  *
  * @apiParam {String} id The User's ID
+ *
+ * @apiHeader {string} Token Authenticaton Token
+ *
+ * @apiHeaderExample {json} Header-Example:
+ *     {
+ *          authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwOGQ1NWM3ZTUxMmI3NGVlMDA3OTFkYiIsImlhdCI6MTYyMTUwOTY5NywiZXhwIjoxNjI5Mjg1Njk3fQ.3WLVIdzDgIGpru3ybIxqWj9A9ROvtLG90dFuzHowuk0',
+ *     }
  *
  * @apiSuccess {String} joinDate Date when the user joined flickr
  * @apiSuccess {String} occupation Occupation of the user
@@ -2116,7 +2117,7 @@ userRouter.get('/notif/follow');
  * @apiSuccess {string} country Country of the user
  * @apiSuccess {string} email Email of the user
  *
- * @apiSuccessExample Success-Response:
+ * @apiSuccessExample {json} Success-Response:
  *      HTTP/1.1 200 OK
  *      {
  *          "status": "success",
@@ -2151,7 +2152,7 @@ userRouter.get('/:id', authController.protect, userController.getUserInfo);
  * @apiSuccess {string} country Country of the user
  * @apiSuccess {string} email Email of the user
  *
- * @apiSuccessExample Success-Response:
+ * @apiSuccessExample {json} Success-Response:
  *      HTTP/1.1 200 OK
  *      {
  *          "status": "success",
@@ -2171,6 +2172,7 @@ userRouter.get('/:id', authController.protect, userController.getUserInfo);
 
 userRouter.get('/:id', userController.getUserInfo);
 
+// Deprecated Routes
 userRouter.get('/notif/interact');
 
 userRouter.get('/recent-activity/comments');
