@@ -184,7 +184,7 @@ describe('should delete a photo from a gallery', () => {
 
 // TESTING: editMeta
 describe('should edit meta of a gallery', () => {
-  test(`should delete a photo from a gallery with id 608f34a634413f11f020b124`, async () => {
+  test(`should edit meta of a gallery with id 608f34a634413f11f020b124`, async () => {
     const mReq = {
       user: { id: '608d5450ec00005468607a11' },
       params: {
@@ -204,7 +204,7 @@ describe('should edit meta of a gallery', () => {
 
 // TESTING: setPrimaryPhoto
 describe('should set Primary Photo of a gallery', () => {
-  test(`should delete set Primary Photo of a gallery with id 608f34a634413f11f020b127`, async () => {
+  test(`should set Primary Photo of a gallery with id 608f34a634413f11f020b127`, async () => {
     const mReq = {
       user: { id: '608d5450ec00005468607a11' },
       params: {

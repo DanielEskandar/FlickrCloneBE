@@ -206,8 +206,8 @@ describe('should delete list of photos from an album', () => {
 });
 
 // TESTING: editMeta
-describe('should edit meta of a album', () => {
-  test(`should delete a photo from a album with id 608f3c70197abc18509aec5f`, async () => {
+describe('should edit meta of an album', () => {
+  test(`should edit meta of an album with id 608f3c70197abc18509aec5f`, async () => {
     const mReq = {
       user: { id: '608d5450ec00005468607a11' },
       params: {
@@ -227,7 +227,7 @@ describe('should edit meta of a album', () => {
 
 // TESTING: setPrimaryPhoto
 describe('should set Primary Photo of an album', () => {
-  test(`should delete set Primary Photo of an album with id 608f3c70197abc18509aec60`, async () => {
+  test(`should set Primary Photo of an album with id 608f3c70197abc18509aec60`, async () => {
     const mReq = {
       user: { id: '608d5450ec00005468607a11' },
       params: {
