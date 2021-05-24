@@ -1150,9 +1150,21 @@ userRouter.get('/:id/about-me', userController.getAboutMe);
  *
  * @apiParam (Request Body) {string} displayname The New Display name of the calling User
  *
- * @apiSuccess {string} Status Status of API
+ * @apiParamExample {json} Request-Example:
+ *        {
+ *          "displayName": "DanielEskandar99"
+ *        }
  *
- * @apiUse SuccessRes
+ * @apiSuccess {string} displayName New Display Name for the User
+ *
+ * @apiSuccessExample Success_Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *        "status": "success",
+ *        "data": {
+ *          "displayName": "DanielEskandar99"
+ *        }
+ *    }
  *
  * @apiUse UnauthError
  */
@@ -1171,11 +1183,23 @@ userRouter.patch(
  *
  * @apiHeader {string} Token Authenticaton Token
  *
- * @apiParam (Request Body) {string} about me The New about me section of the calling User
+ * @apiParam (Request Body) {string} aboutMe The New about me section of the calling User
  *
- * @apiSuccess {string} Status Status of API
+ * @apiParamExample {json} Request-Example:
+ *        {
+ *          "aboutMe": "new about me content"
+ *        }
  *
- * @apiUse SuccessRes
+ * @apiSuccess {string} aboutMe Updated About Me Section
+ *
+ * @apiSuccessExample Success_Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *        "status": "success",
+ *        "data": {
+ *          "aboutMe": "new about me content"
+ *        }
+ *    }
  *
  * @apiUse UnauthError
  */
@@ -1253,47 +1277,49 @@ userRouter.post('/confirm-password');
  *
  * @apiHeader {string} Token Authenticaton Token
  *
- * @apiSuccess {string} Status Status of API
+ * @apiSuccess {string} privacySettings User's Privacy Settings
  *
  * @apiSuccessExample Success-Response:
  *      HTTP/1.1 200 OK
  *      {
- *          "status": "success",
- *          "data": {
- *              "global": {
- *                  "whocandownload": "Anyone",
- *                  "largestimgsize": "Best",
- *                  "allowshare": 1,
- *                  "allowtag": "any",
- *                  "allowgallery": 1,
- *                  "hideexif": 0,
- *                  "hidephotopublicsearch": 0,
- *                  "hideprofilepublicsearch": 0,
- *                  "whocansee": {
- *                      "email": "followed",
- *                      "name": "anyone",
- *                      "currentcity": "anyone"
- *                  }
+ *        "status": "success",
+ *        "data": {
+ *          "privacySettings": {
+ *            "global": {
+ *              "infoVisibility": {
+ *                "email": 2,
+ *                "name": 1,
+ *                "currentCity": 1
  *              },
- *              "defaults": {
- *                  "perms": {
- *                      "see": "anyone",
- *                      "comment": "anyone",
- *                      "addnotes": "followed"
- *                  },
- *                  "license": "All Rights Reserved (c)",
- *                  "mapvisible": "Anyone",
- *                  "importexif": 1,
- *                  "safetylevel": "safe",
- *                  "contenttype": "photos"
+ *              "downloadPerm": 1,
+ *              "largestImgSize": 0,
+ *              "allowShare": 1,
+ *              "allowTag": 1,
+ *              "allowGalleryAdd": true,
+ *              "hideEXIF": false,
+ *              "hidePhotoSearch": false,
+ *              "hideProfileSearch": false
+ *            },
+ *            "defaults": {
+ *              "perms": {
+ *                "see": 1,
+ *                "comment": 1,
+ *                "addNotes": 2
  *              },
- *              "filters": {
- *                  "search": {
- *                      "safesearch": 1,
- *                      "content": "photovideo"
- *                  }
+ *              "license": 0,
+ *              "mapVisible": 1,
+ *              "importEXIF": true,
+ *              "safetyLevel": 1,
+ *              "contentType": 1
+ *            },
+ *            "filters": {
+ *              "search": {
+ *                "safeSearch": true,
+ *                "content": 1
  *              }
+ *            }
  *          }
+ *        }
  *      }
  *
  *
@@ -1314,9 +1340,96 @@ userRouter.get(
  *
  * @apiHeader {string} Token Authenticaton Token
  *
- * @apiSuccess {string} Status Status of API
+ * @apiParam (Request Body) {string} privacySettings User's New Privacy Settings
  *
- * @apiUse SuccessRes
+ * @apiParamExample {json} Request-Example:
+ *        {
+ *          "privacySettings": {
+ *            "global": {
+ *              "infoVisiblity": {
+ *                "email": 2,
+ *                "name": 1,
+ *                "currentCity": 1
+ *              },
+ *              "downloadPerm": 1,
+ *              "largestImgSize": 0,
+ *              "allowShare": 2,
+ *              "allowTag": 2,
+ *              "allowGalleryAdd": true,
+ *              "hideEXIF": false,
+ *              "hidePhotoSearch": false,
+ *              "hideProfileSearch": false,
+ *              "infoVisibility": {
+ *                "email": 2,
+ *                "name": 1,
+ *                "currentCity": 1
+ *              }
+ *            },
+ *            "defaults": {
+ *              "perms": {
+ *                "see": 1,
+ *                "comment": 1,
+ *                "addNotes": 2
+ *              },
+ *              "license": 0,
+ *              "mapVisible": 1,
+ *              "importEXIF": true,
+ *              "safetyLevel": 1,
+ *              "contentType": 1
+ *            },
+ *            "filters": {
+ *              "search": {
+ *                "safeSearch": true,
+ *                "content": 1
+ *              }
+ *            }
+ *          }
+ *        }
+ *
+ * @apiSuccess {string} privacySettings User's Updated Privacy Settings
+ *
+ * @apiSuccessExample Success-Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *        "status": "success",
+ *        "data": {
+ *          "privacySettings": {
+ *            "global": {
+ *              "infoVisibility": {
+ *                "email": 2,
+ *                "name": 1,
+ *                "currentCity": 1
+ *              },
+ *              "downloadPerm": 1,
+ *              "largestImgSize": 0,
+ *              "allowShare": 1,
+ *              "allowTag": 1,
+ *              "allowGalleryAdd": true,
+ *              "hideEXIF": false,
+ *              "hidePhotoSearch": false,
+ *              "hideProfileSearch": false
+ *            },
+ *            "defaults": {
+ *              "perms": {
+ *                "see": 1,
+ *                "comment": 1,
+ *                "addNotes": 2
+ *              },
+ *              "license": 0,
+ *              "mapVisible": 1,
+ *              "importEXIF": true,
+ *              "safetyLevel": 1,
+ *              "contentType": 1
+ *            },
+ *            "filters": {
+ *              "search": {
+ *                "safeSearch": true,
+ *                "content": 1
+ *              }
+ *            }
+ *          }
+ *        }
+ *      }
  *
  * @apiUse UnauthError
  */
@@ -1335,27 +1448,26 @@ userRouter.patch(
  *
  * @apiHeader {string} Token Authenticaton Token
  *
- * @apiSuccess {string} Status Status of API
+ * @apiSuccess {string} notificationSettings The User's Notificaation Settings
  *
  * @apiSuccessExample Success-Response:
  *      HTTP/1.1 200 OK
  *      {
- *          "status": "success",
- *          "data":
- *          {
- *              "notifmail":
- *              {
- *                  "invites": 1,
- *                  "contact": 1,
- *                 "messages": 1,
- *                 "reminders": 1
- *              },
- *              "activitymail":
- *              {
- *                  "you": 1,
- *                 "contacts": 1
- *              }
+ *        "status": "success",
+ *        "data": {
+ *          "notificationSettings": {
+ *            "notifMail": {
+ *              "invites": false,
+ *              "contact": false,
+ *              "messages": true,
+ *              "reminders": true
+ *            },
+ *            "activityMail": {
+ *              "you": true,
+ *              "contacts": true
+ *            }
  *          }
+ *        }
  *      }
  *
  *
@@ -1376,7 +1488,45 @@ userRouter.get(
  *
  * @apiHeader {string} Token Authenticaton Token
  *
- * @apiSuccess {string} Status Status of API
+ * @apiParam (Request Body) {string} privacySettings User's New Privacy Settings
+ *
+ * @apiParamExample {json} Request-Example:
+ *        {
+ *          "notificationSettings": {
+ *            "notifMail": {
+ *              "invites": false,
+ *              "contact": false,
+ *              "messages": true,
+ *              "reminders": true
+ *            },
+ *            "activityMail": {
+ *              "you": true,
+ *              "contacts": true
+ *            }
+ *          }
+ *        }
+ *
+ * @apiSuccess {string} notificationSettings The User's Updated Notificaation Settings
+ *
+ * @apiSuccessExample Success-Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *        "status": "success",
+ *        "data": {
+ *          "notificationSettings": {
+ *            "notifMail": {
+ *              "invites": false,
+ *              "contact": false,
+ *              "messages": true,
+ *              "reminders": true
+ *            },
+ *            "activityMail": {
+ *              "you": true,
+ *              "contacts": true
+ *            }
+ *          }
+ *        }
+ *      }
  *
  * @apiUse SuccessRes
  *
@@ -1521,17 +1671,60 @@ userRouter.get('/camera-roll');
  * @apiSuccess {Number} count Following list length
  * @apiSuccess {Object[]} Follwing list Array of User ID's of the Followed Users
  *
- * @apiSuccessExample Success-Response:
+ * @apiSuccessExample  {json} Success-Response:
  *      HTTP/1.1 200 OK
  *      {
- *          "status": "success",
- *          "data":
- *          {
- *              "count": 30
- *              "following": [
- *
- *              ]
- *          }
+ *        "status": "success",
+ *        "count": 4,
+ *        "data": {
+ *          "_id": "608d55c7e512b74ee00791de",
+ *          "following": [
+ *            {
+ *              "_id": "60914e1ba87d736f3c382ed6",
+ *              "user": {
+ *                "_id": "608d55c7e512b74ee00791db",
+ *                "displayName": "DanielEskandar",
+ *                "firstName": "Daniel",
+ *                "lastName": "Eskandar"
+ *              },
+ *              "relation": "undetermined",
+ *              "followDate": "2021-05-04T12:16:24.255Z"
+ *            },
+ *            {
+ *              "_id": "60914e1ba87d736f3c382ed7",
+ *              "user": {
+ *                "_id": "608d5450ec00005468607a0c",
+ *                "displayName": "AhmedAbdulkader99",
+ *                "firstName": "Ahmed",
+ *                "lastName": "Abdulkader"
+ *              },
+ *              "relation": "undetermined",
+ *              "followDate": "2021-05-04T12:17:24.255Z"
+ *            },
+ *            {
+ *              "_id": "60914e1ba87d736f3c382ed8",
+ *              "user": {
+ *                "_id": "608d55c7e512b74ee00791dc",
+ *                "displayName": "AliaaKhalifa",
+ *                "firstName": "Aliaa",
+ *                "lastName": "Khalifa"
+ *              },
+ *              "relation": "undetermined",
+ *              "followDate": "2021-05-04T12:18:24.255Z"
+ *            },
+ *            {
+ *              "_id": "60914e1ba87d736f3c382ed9",
+ *              "user": {
+ *                "_id": "608d55c7e512b74ee00791dd",
+ *                "displayName": "MariamKhashab",
+ *                "firstName": "Mariam",
+ *                "lastName": "Khashab"
+ *              },
+ *              "relation": "undetermined",
+ *              "followDate": "2021-05-04T12:19:24.255Z"
+ *            }
+ *          ]
+ *        }
  *      }
  *
  * @apiUse UserNotFoundError
@@ -1615,14 +1808,25 @@ userRouter.get('/follower-not-followed');
  * @apiSuccessExample Success-Response:
  *      HTTP/1.1 200 OK
  *      {
- *          "status": "success",
- *          "data":
- *          {
- *              "count": 30
- *              "blocked": [
- *
- *              ]
- *          }
+ *        "status": "success",
+ *        "count": 2,
+ *        "data": {
+ *          "blocked": [
+ *            {
+ *              "_id": "608d5450ec00005468607a0c",
+ *              "displayName": "AhmedAbdulkader99",
+ *              "firstName": "Ahmed",
+ *              "lastName": "Abdulkader"
+ *            },
+ *            {
+ *              "_id": "608d55c7e512b74ee00791dc",
+ *              "displayName": "AliaaKhalifa",
+ *              "firstName": "Aliaa",
+ *              "lastName": "Khalifa"
+ *            }
+ *          ],
+ *          "_id": "608d55c7e512b74ee00791db"
+ *        }
  *      }
  *
  * @apiUse UnauthError
