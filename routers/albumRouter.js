@@ -508,7 +508,11 @@ albumRouter.patch(
  * @apiUse PhotoNotFoundError
  */
 
-albumRouter.patch('/:id/primary/:photoid');
+albumRouter.patch(
+  '/:id/primary/:photoid',
+  authController.protect,
+  albumController.setPrimaryPhoto
+);
 
 /**
  * @api {patch} /photoset/setorder Set the order of albums

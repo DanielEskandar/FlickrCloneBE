@@ -355,9 +355,7 @@ exports.removePhoto = async (req, res) => {
 };
 
 // EDIT META
-
 exports.editMeta = async (req, res) => {
-  // auth
   try {
     // check if gallery exists
     const gallery = await galleryModel.findById(req.params.id);
@@ -365,6 +363,7 @@ exports.editMeta = async (req, res) => {
       throw new AppError('No Gallery Found with This ID', 404);
     }
 
+    // auth
     const currentUser = await userModel.findById(req.user.id);
     const userGalleries = currentUser.gallery.find(
       (element) => element.toString() === req.params.id.toString()
@@ -389,6 +388,65 @@ exports.editMeta = async (req, res) => {
       status: 'success',
       data: 'ok',
     });
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};
+
+// SET PRIMARY PHOTO
+exports.setPrimaryPhoto = async (req, res) => {
+  try {
+    // check if gallery exists
+    const gallery = await galleryModel.findById(req.params.id);
+    if (!gallery) {
+      throw new AppError('No Gallery Found with This ID', 404);
+    }
+
+    // check if photo id exist or not
+    const photoFromModel = await photoModel.findById(req.params.photoid);
+    if (!photoFromModel) {
+      throw new AppError('No Photo Found with This ID', 404);
+    }
+
+    // auth
+    const currentUser = await userModel.findById(req.user.id);
+    const userGalleries = currentUser.gallery.find(
+      (element) => element.toString() === req.params.id.toString()
+    );
+    if (!userGalleries)
+      throw new AppError(
+        'You are not logged in. Please log in to get access.',
+        401
+      );
+
+    // check if photo exists in gallery
+    console.log(gallery.photos);
+    console.log(req.params.photoid);
+    const isExist = gallery.photos.find(
+      (element) => element.photoId.toString() === req.params.photoid.toString()
+    );
+
+    if (isExist) {
+      await galleryModel.findByIdAndUpdate(
+        req.params.id,
+        {
+          $set: {
+            primaryPhotoId: req.params.photoid,
+            updatedAt: new Date(Date.now()),
+          },
+        },
+        {
+          new: true,
+          runValidators: true,
+        }
+      );
+      res.status(200).json({
+        status: 'success',
+        data: 'ok',
+      });
+    } else {
+      throw new AppError('This Photo does not exist in the gallery !', 404);
+    }
   } catch (err) {
     errorController.sendError(err, req, res);
   }

@@ -209,3 +209,26 @@ describe('should edit meta of a gallery', () => {
     });
   });
 });
+
+// TESTING: setPrimaryPhoto
+describe('should set Primary Photo of a gallery', () => {
+  test(`should delete set Primary Photo of a gallery with id 608f34a634413f11f020b127`, async () => {
+    const mReq = {
+      user: { id: '608d5450ec00005468607a11' },
+      params: {
+        id: '608f34a634413f11f020b127',
+        photoid: '608d5450ec00005468607a0f',
+      },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await galleryController.setPrimaryPhoto(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith({
+      status: 'success',
+      data: 'ok',
+    });
+  });
+});

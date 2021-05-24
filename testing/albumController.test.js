@@ -236,3 +236,26 @@ describe('should edit meta of a album', () => {
     });
   });
 });
+
+// TESTING: setPrimaryPhoto
+describe('should set Primary Photo of an album', () => {
+  test(`should delete set Primary Photo of an album with id 608f3c70197abc18509aec60`, async () => {
+    const mReq = {
+      user: { id: '608d5450ec00005468607a11' },
+      params: {
+        id: '608f3c70197abc18509aec60',
+        photoid: '608d5450ec00005468628a0d',
+      },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await albumController.setPrimaryPhoto(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith({
+      status: 'success',
+      data: 'ok',
+    });
+  });
+});

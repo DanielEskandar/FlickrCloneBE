@@ -414,7 +414,7 @@ exports.removePhotos = async (req, res) => {
 exports.editMeta = async (req, res) => {
   // auth
   try {
-    // check if gallery exists
+    // check if album exists
     const album = await albumModel.findById(req.params.id);
     if (!album) {
       throw new AppError('No Album Found with This ID', 404);
@@ -444,6 +444,63 @@ exports.editMeta = async (req, res) => {
       status: 'success',
       data: 'ok',
     });
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};
+
+// SET PRIMARY PHOTO
+exports.setPrimaryPhoto = async (req, res) => {
+  try {
+    // check if album exists
+    const album = await albumModel.findById(req.params.id);
+    if (!album) {
+      throw new AppError('No Album Found with This ID', 404);
+    }
+
+    // check if photo id exist or not
+    const photoFromModel = await photoModel.findById(req.params.photoid);
+    if (!photoFromModel) {
+      throw new AppError('No Photo Found with This ID', 404);
+    }
+
+    // auth;
+    const currentUser = await userModel.findById(req.user.id);
+    const useralbums = currentUser.albums.find(
+      (element) => element.toString() === req.params.id.toString()
+    );
+    if (!useralbums)
+      throw new AppError(
+        'You are not logged in. Please log in to get access.',
+        401
+      );
+
+    // check if photo exists in album
+    const isExist = album.photos.find(
+      (element) => element.toString() === req.params.photoid.toString()
+    );
+
+    if (isExist) {
+      await albumModel.findByIdAndUpdate(
+        req.params.id,
+        {
+          $set: {
+            primaryPhotoId: req.params.photoid,
+            updatedAt: new Date(Date.now()),
+          },
+        },
+        {
+          new: true,
+          runValidators: true,
+        }
+      );
+      res.status(200).json({
+        status: 'success',
+        data: 'ok',
+      });
+    } else {
+      throw new AppError('This Photo does not exist in the album !', 404);
+    }
   } catch (err) {
     errorController.sendError(err, req, res);
   }
