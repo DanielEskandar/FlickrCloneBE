@@ -180,7 +180,7 @@ const userRouter = express.Router();
 userRouter.post('/sign-up', authController.signUp);
 
 /**
- * Deprecated
+ *
  */
 
 userRouter.post('/confirm');
@@ -215,7 +215,7 @@ userRouter.post('/confirm');
 userRouter.post('/sign-in', authController.signIn);
 
 /**
- * Deprecated
+ *
  */
 
 userRouter.post('/sign-out');
@@ -279,27 +279,13 @@ userRouter.post('/sign-out');
 userRouter.patch('/', authController.protect, userController.updateUserInfo);
 
 /**
- * @api {delete} /user/ Delete the User's Account
- * @apiVersion 1.0.0
- * @apiName DeleteUser
- * @apiGroup User
  *
- * @apiHeader {string} Token Authenticaton Token
- *
- * @apiHeaderExample {json} Header-Example:
- *     {
- *          authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwOGQ1NWM3ZTUxMmI3NGVlMDA3OTFkYiIsImlhdCI6MTYyMTUwOTY5NywiZXhwIjoxNjI5Mjg1Njk3fQ.3WLVIdzDgIGpru3ybIxqWj9A9ROvtLG90dFuzHowuk0',
- *     }
- *
- * @apiUse SuccessRes
- *
- * @apiUse UnauthError
  */
 
 userRouter.delete('/');
 
 /**
- * @api {get} /user/:id/stats Get the User's Statistics
+ * @api {get} /user/:id/stats [WIP] Get the User's Statistics
  * @apiVersion 1.0.0
  * @apiName GetUserStats
  * @apiGroup User
@@ -332,218 +318,49 @@ userRouter.delete('/');
 userRouter.get('/:id/stats');
 
 /**
- * @api {get} /user/:id/popular Get the User's Most Popular Photos
- * @apiVersion 1.0.0
- * @apiName GetUserPopular
- * @apiGroup User
  *
- * @apiParam {String} id The User's ID
- *
- * @apiSuccess {Object[]} photos Array of the user's most popular photos (Fave Count)
- *
- * @apiSuccessExample Success-Response:
- *      HTTP/1.1 200 OK
- *      {
- *          "status": "success",
- *          "data":
- *          {
- *              "photos": [
- *
- *              ]
- *          }
- *      }
- *
- * @apiUse UserNotFoundError
  */
 
 userRouter.get('/:id/popular');
 
 /**
- * @api {get} /user/:id/recent Get the User's Most Recent Photos
- * @apiVersion 1.0.0
- * @apiName GetUserRecent
- * @apiGroup User
  *
- * @apiParam {String} id The User's ID
- *
- * @apiSuccess {Object[]} photos Array of the user's most recent photos
- *
- * @apiSuccessExample Success-Response:
- *      HTTP/1.1 200 OK
- *      {
- *          "status": "success",
- *          "data":
- *          {
- *              "photos": [
- *
- *              ]
- *          }
- *      }
- *
- * @apiUse UserNotFoundError
  */
 
 userRouter.get('/:id/recent');
 
 /**
- * @api {get} /user/:id/recent-update Get the User's Most Recently Modified Photos
- * @apiVersion 1.0.0
- * @apiName GetUserRecentModified
- * @apiGroup User
  *
- * @apiHeader {string} Token Authenticaton Token
- *
- * @apiSuccess {Object[]} photos Array of the user's most recently modified photos
- *
- * @apiSuccessExample Success-Response:
- *      HTTP/1.1 200 OK
- *      {
- *          "status": "success",
- *          "data":
- *          {
- *              "photos": [
- *
- *              ]
- *          }
- *      }
- *
- * @apiUse UserNotFoundError
  */
 
 userRouter.get('/recent-update');
 
 /**
- * @api {get} /user/:id/:locationId Get the User's Photos taken in a certain location
- * @apiVersion 1.0.0
- * @apiName GetPhotoLocation
- * @apiGroup User
  *
- * @apiParam {String} id The User's ID
- * @apiParam (string) loacationId The ID of the location
- *
- * @apiSuccess {Object[]} photos Array of the user's photos taken in the specified location
- *
- * @apiSuccessExample Success-Response:
- *      HTTP/1.1 200 OK
- *      {
- *          "status": "success",
- *          "data":
- *          {
- *              "photos": [
- *
- *              ]
- *          }
- *      }
- *
- * @apiUse UserNotFoundError
  */
 
 userRouter.get('/:id/:locationId');
 
 /**
- * @api {get} /user/:id/not-set Return Photos not in any sets (Galleries or Albums)
- * @apiVersion 1.0.0
- * @apiName GetNotInSet
- * @apiGroup User
  *
- * @apiParam {String} id The User's ID
- *
- * @apiSuccess {Object[]} photos Array of the user's photos not in any sets (Galleries or Albums)
- *
- * @apiSuccessExample Success-Response:
- *      HTTP/1.1 200 OK
- *      {
- *          "status": "success",
- *          "data":
- *          {
- *              "photos": [
- *
- *              ]
- *          }
- *      }
- *
- * @apiUse UserNotFoundError
  */
 
 userRouter.get('/:id/not-set');
 
 /**
- * @api {get} /user/:id/untagged Return a List of photos with no tags
- * @apiVersion 1.0.0
- * @apiName GetUntagged
- * @apiGroup User
  *
- * @apiParam {String} id The User's ID
- *
- * @apiSuccess {Object[]} photos Array of the user's photos with no tags
- *
- * @apiSuccessExample Success-Response:
- *      HTTP/1.1 200 OK
- *      {
- *          "status": "success",
- *          "data":
- *          {
- *              "photos": [
- *
- *              ]
- *          }
- *      }
- *
- * @apiUse UserNotFoundError
  */
 
 userRouter.get('/:id/untagged');
 
 /**
- * @api {get} /user/:id/geo Return a List of photos with location info
- * @apiVersion 1.0.0
- * @apiName GetGeo
- * @apiGroup User
  *
- * @apiParam {String} id The User's ID
- *
- * @apiSuccess {Object[]} photos Array of the user's photos with location info
- *
- * @apiSuccessExample Success-Response:
- *      HTTP/1.1 200 OK
- *      {
- *          "status": "success",
- *          "data":
- *          {
- *              "photos": [
- *
- *              ]
- *          }
- *      }
- *
- * @apiUse UserNotFoundError
  */
 
 userRouter.get('/:id/geo');
 
 /**
- * @api {get} /user/:id/no-geo Return a List of photos without location info
- * @apiVersion 1.0.0
- * @apiName GetNoGeo
- * @apiGroup User
  *
- * @apiParam {String} id The User's ID
- *
- * @apiSuccess {Object[]} photos Array of the user's photos without location info
- *
- * @apiSuccessExample Success-Response:
- *      HTTP/1.1 200 OK
- *      {
- *          "status": "success",
- *          "data":
- *          {
- *              "photos": [
- *
- *              ]
- *          }
- *      }
- *
- * @apiUse UserNotFoundError
  */
 
 userRouter.get('/:id/no-geo');
@@ -593,27 +410,7 @@ userRouter.get('/:id/no-geo');
 userRouter.get('/:id/testimonials', userController.getTestimonials);
 
 /**
- * @api {post} /user/:id/testimonials Add a User testimonial
- * @apiVersion 1.0.0
- * @apiName AddTestimonial
- * @apiGroup User
  *
- * @apiParam {String} id The User's ID
- *
- * @apiHeader {string} Token Authenticaton Token
- *
- * @apiHeaderExample {json} Header-Example:
- *     {
- *          authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwOGQ1NWM3ZTUxMmI3NGVlMDA3OTFkYiIsImlhdCI6MTYyMTUwOTY5NywiZXhwIjoxNjI5Mjg1Njk3fQ.3WLVIdzDgIGpru3ybIxqWj9A9ROvtLG90dFuzHowuk0',
- *     }
- *
- * @apiParam (Request Body) {string} message Main Content of Testimonial
- *
- * @apiSuccess {Object[]} testimonials Array of the user's account
- *
- * @apiUse SuccessRes
- *
- * @apiUse UnauthError
  */
 
 userRouter.post(
@@ -623,126 +420,31 @@ userRouter.post(
 );
 
 /**
- * @api {get} /user/:id/recent-update Return a List of User testimonials
- * @apiVersion 1.0.0
- * @apiName GetRecentUpdate
- * @apiGroup User
  *
- * @apiHeader {string} Token Authenticaton Token
- *
- * @apiSuccess {Object[]} testimonials Array of the user's account
- *
- * @apiUse SuccessRes
- *
- * @apiUse UnauthError
  */
 
 userRouter.get('/recent-update');
 
 /**
- * @api {get} /user/:id/galleries Return a List of User galleries
- * @apiVersion 1.0.0
- * @apiName GetGallery
- * @apiGroup User
  *
- * @apiParam {String} id The User's ID
- *
- * @apiSuccess {Object[]} galleries Array of the user's account
- *
- * @apiSuccessExample Success-Response:
- *      HTTP/1.1 200 OK
- *      {
- *          "status": "success",
- *          "data":
- *          {
- *              "galleries": [
- *
- *              ]
- *          }
- *      }
- *
- * @apiUse UserNotFoundError
  */
 
 userRouter.get('/:id/galleries');
 
 /**
- * @api {get} /user/:id/group Return a List of User groups
- * @apiVersion 1.0.0
- * @apiName GetGroup
- * @apiGroup User
  *
- * @apiParam {String} id The User's ID
- *
- * @apiSuccess {Object[]} groups Array of the user's account
- *
- * @apiSuccessExample Success-Response:
- *      HTTP/1.1 200 OK
- *      {
- *          "status": "success",
- *          "data":
- *          {
- *              "groups": [
- *
- *              ]
- *          }
- *      }
- *
- * @apiUse UserNotFoundError
  */
 
 userRouter.get('/:id/groups');
 
 /**
- * @api {get} /user/:id/gallery Return a user's photo stream of non-private photos from the camera roll
- * @apiVersion 1.0.0
- * @apiName GetStream
- * @apiGroup User
  *
- * @apiParam {String} id The User's ID
- *
- * @apiSuccess {Object[]} photo stream Array of non-private photos from the user's camera roll
- *
- * @apiSuccessExample Success-Response:
- *      HTTP/1.1 200 OK
- *      {
- *          "status": "success",
- *          "data":
- *          {
- *              "photos": [
- *
- *              ]
- *          }
- *      }
- *
- * @apiUse UserNotFoundError
  */
 
 userRouter.get('/:id/stream');
 
 /**
- * @api {get} /user/:id/albums Return a List of User albums
- * @apiVersion 1.0.0
- * @apiName GetAlbum
- * @apiGroup User
  *
- * @apiParam {String} id The User's ID
- *
- * @apiSuccess {Object[]} albums Array of the user's account
- *
- * @apiSuccessExample Success-Response:
- *      HTTP/1.1 200 OK
- *      {
- *          "status": "success",
- *          "data":
- *          {
- *              "albums": [
- *
- *              ]
- *          }
- *      }
- *
- * @apiUse UserNotFoundError
  */
 
 userRouter.get('/:id/albums');
@@ -963,26 +665,64 @@ userRouter.put(
  *
  * @apiParam {String} id The User's ID
  *
- * @apiHeader {string} Token Authenticaton Token
- *
  * @apiSuccess {Object[]} List of all user faves
  *
- * @apiSuccessExample Success-Response:
+ * @apiSuccessExample {json} Success-Response:
  *      HTTP/1.1 200 OK
  *      {
- *          "status": "success",
- *          "data":
- *          {
- *              "faves": [
- *
- *              ]
- *          }
+ *        "status": "success",
+ *        "count": 2,
+ *        "data": {
+ *          "favourites": [
+ *            {
+ *              "sizes": {
+ *                "size": {
+ *                  "small": {
+ *                    "height": 1000,
+ *                    "width": 60,
+ *                    "source": "https://www.google.com/",
+ *                    "url": "https://www.google.com/"
+ *                  }
+ *                }
+ *              },
+ *              "favourites": 7,
+ *              "_id": "608d5450ec00005468607a0f",
+ *              "userId": {
+ *                "_id": "608d55c7e512b74ee00791db",
+ *                "firstName": "Daniel",
+ *                "lastName": "Eskandar"
+ *              },
+ *              "title": "Sunset in Bora Bora"
+ *            },
+ *            {
+ *              "sizes": {
+ *                "size": {
+ *                  "small": {
+ *                    "height": 1000,
+ *                    "width": 60,
+ *                    "source": "https://www.google.com/",
+ *                    "url": "https://www.google.com/"
+ *                  }
+ *                }
+ *              },
+ *              "favourites": 51,
+ *              "_id": "608d5450ec00005468617a0c",
+ *              "userId": {
+ *                "_id": "608d55c7e512b74ee00791dc",
+ *                "firstName": "Aliaa",
+ *                "lastName": "Khalifa"
+ *              },
+ *              "title": "Sakura Season in Nihon"
+ *            }
+ *          ],
+ *          "_id": "608d5450ec00005468607a0c"
+ *        }
  *      }
  *
  * @apiUse UserNotFoundError
  */
 
-userRouter.get('/:id/faves', authController.protect, userController.getFaves);
+userRouter.get('/:id/faves', userController.getFaves);
 
 /**
  * @api {get} /user/limits Return a List of User Upload and Size Limits
@@ -1026,21 +766,7 @@ userRouter.get('/:id/faves', authController.protect, userController.getFaves);
 userRouter.get('/limits', authController.protect, userController.getLimits);
 
 /**
- * @api {delete} /user/testimonials/:testimonialId Delete a testimonial
- * @apiVersion 1.0.0
- * @apiName removeTestimonial
- * @apiGroup User
  *
- * @apiHeader {string} Token Authenticaton Token
- *
- * @apiHeaderExample {json} Header-Example:
- *     {
- *          authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwOGQ1NWM3ZTUxMmI3NGVlMDA3OTFkYiIsImlhdCI6MTYyMTUwOTY5NywiZXhwIjoxNjI5Mjg1Njk3fQ.3WLVIdzDgIGpru3ybIxqWj9A9ROvtLG90dFuzHowuk0',
- *     }
- *
- * @apiUse SuccessRes
- *
- * @apiUse UnauthError
  */
 
 userRouter.delete(
@@ -1207,60 +933,19 @@ userRouter.patch(
 );
 
 /**
- * @api {patch} /user/password Update the Password of User
- * @apiVersion 1.0.0
- * @apiName ChamgePassword
- * @apiGroup User
  *
- * @apiHeader {string} Token Authenticaton Token
- *
- * @apiParam (Request Body) {string} oldpassword The Pervious Password of the calling User
- * @apiParam (Request Body) {string} newpassword The New Password of the calling User
- * @apiParam (Request Body) {string} confirmpassword Confirming the New Password of the calling User
- *
- * @apiSuccess {string} Status Status of API
- *
- * @apiUse SuccessRes
- *
- * @apiUse UnauthError
  */
 
 userRouter.patch('/password');
 
 /**
- * @api {post} /user/forget-password Send a Forget Password Request
- * @apiVersion 1.0.0
- * @apiName ForgetPassword
- * @apiGroup User
  *
- * @apiParam (Request Body) {string} username The Username of the User
- * @apiParam (Request Body) {string} email The Email of the User
- *
- * @apiSuccess {string} Status Status of API
- *
- * @apiUse SuccessRes
- *
- * @apiUse UnauthError
  */
 
 userRouter.post('/forget-password');
 
 /**
- * @api {post} /user/confirm-password Send a Confirm Forgotten Password Request
- * @apiVersion 1.0.0
- * @apiName ConfirmForgetPassword
- * @apiGroup User
  *
- * @apiHeader {string} Token Authenticaton Token
- *
- * @apiParam (Request Body) {string} newpassword The New Password of the calling User
- * @apiParam (Request Body) {string} confirmpassword Confirming the New Password of the calling User
- *
- * @apiSuccess {string} Status Status of API
- *
- * @apiUse SuccessRes
- *
- * @apiUse UnauthError
  */
 
 userRouter.post('/confirm-password');
@@ -1544,8 +1229,6 @@ userRouter.get(
  *        }
  *      }
  *
- * @apiUse SuccessRes
- *
  * @apiUse UnauthError
  */
 
@@ -1565,7 +1248,28 @@ userRouter.patch(
  *
  * @apiHeader {string} Token Authenticaton Token
  *
- * @apiUse SuccessRes
+ * @apiHeaderExample {json} Header-Example:
+ *     {
+ *          authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwOGQ1NWM3ZTUxMmI3NGVlMDA3OTFkYiIsImlhdCI6MTYyMTUwOTY5NywiZXhwIjoxNjI5Mjg1Njk3fQ.3WLVIdzDgIGpru3ybIxqWj9A9ROvtLG90dFuzHowuk0',
+ *     }
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *        "status": "success",
+ *        "data": {
+ *          "newPhotoFaveCount": {
+ *            "favourites": 6,
+ *            "_id": "608d5450ec00005468607a0f"
+ *          },
+ *          "newUserFaveList": {
+ *            "favourites": [
+ *              "608d5450ec00005468617a0c"
+ *            ],
+ *            "_id": "608d5450ec00005468607a0c"
+ *          }
+ *        }
+ *      }
  *
  * @apiUse UnauthError
  */
@@ -1580,9 +1284,32 @@ userRouter.post('/faves/:id', authController.protect, userController.addFave);
  *
  * @apiParam {String} id The Photo's ID
  *
- * @apiHeader {String} Token Authenticaton Token
+ * @apiHeader {string} Token Authenticaton Token
  *
- * @apiUse SuccessRes
+ * @apiHeaderExample {json} Header-Example:
+ *     {
+ *          authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwOGQ1NWM3ZTUxMmI3NGVlMDA3OTFkYiIsImlhdCI6MTYyMTUwOTY5NywiZXhwIjoxNjI5Mjg1Njk3fQ.3WLVIdzDgIGpru3ybIxqWj9A9ROvtLG90dFuzHowuk0',
+ *     }
+ *
+ * @apiSuccess {string} notificationSettings The User's Updated Notificaation Settings
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *        "status": "success",
+ *        "data": {
+ *          "newPhotoFaveCount": {
+ *            "favourites": 6,
+ *            "_id": "608d5450ec00005468607a0f"
+ *          },
+ *          "newUserFaveList": {
+ *            "favourites": [
+ *              "608d5450ec00005468617a0c"
+ *            ],
+ *            "_id": "608d5450ec00005468607a0c"
+ *          }
+ *        }
+ *      }
  *
  * @apiUse UnauthError
  */
@@ -1594,84 +1321,19 @@ userRouter.delete(
 );
 
 /**
- * @api {get} /user/faves-context Get the context for a photo in Faves
- * @apiVersion 1.0.0
- * @apiName GetFavesContext
- * @apiGroup User
  *
- * @apiHeader {String} Token Authenticaton Token
- *
- * @apiSuccess {String} nextphoto Photo ID of the next photo
- * @apiSuccess {String} prevphoto Photo ID of the previous photo
- *
- *
- * @apiSuccessExample Success-Response:
- *      HTTP/1.1 200 OK
- *      {
- *          "status": "success",
- *          "data":
- *          {
- *              "nextphoto": "483490175892497",
- *              "prevphoto": "483490175892451"
- *          }
- *      }
- *
- * @apiUse UnauthError
  */
 
 userRouter.get('/fave-context');
 
 /**
- * @api {get} /user/addable-pool Gets a list of groups the user can add photos to
- * @apiVersion 1.0.0
- * @apiName GetAddablePool
- * @apiGroup User
  *
- * @apiHeader {String} Token Authenticaton Token
- *
- * @apiSuccess {Object[]} addablegroups ID's of all Groups the Photo can be added to
- *
- * @apiSuccessExample Success-Response:
- *      HTTP/1.1 200 OK
- *      {
- *          "status": "success",
- *          "data":
- *          {
- *              "addablegroups": [
- *
- *              ]
- *
- *          }
- *      }
- *
- * @apiUse UnauthError
  */
 
 userRouter.get('/addable-pool');
 
 /**
- * @api {get} /user/camera-roll Return a user's camera roll
- * @apiVersion 1.0.0
- * @apiName GetCameraRoll
- * @apiGroup User
  *
- * @apiHeader {String} Token Authenticaton Token
- *
- * @apiSuccess {Object[]} photos Array of photos from the user's camera roll
- *
- * @apiSuccessExample Success-Response:
- *      HTTP/1.1 200 OK
- *      {
- *          "status": "success",
- *          "data":
- *          {
- *              "photos": [
- *
- *              ]
- *          }
- *      }
- *
- * @apiUse UnauthError
  */
 
 userRouter.get('/camera-roll');
@@ -1753,59 +1415,13 @@ userRouter.get(
 );
 
 /**
- * @api {get} /user/follower Gets a list of User's followers
- * @apiVersion 1.0.0
- * @apiName GetFollowers
- * @apiGroup User
  *
- * @apiHeader {String} Token Authenticaton Token
- *
- * @apiSuccess {Number} count User's Follower Count
- * @apiSuccess {Object[]} follwerlist Array of User ID's of the User's Follower
- *
- * @apiSuccessExample Success-Response:
- *      HTTP/1.1 200 OK
- *      {
- *          "status": "success",
- *          "data":
- *          {
- *              "count": 30
- *              "follwerlist": [
- *
- *              ]
- *          }
- *      }
- *
- * @apiUse UnauthError
  */
 
 userRouter.get('/follower');
 
 /**
- * @api {get} /user/follower-not-followed Gets a list of User's followers not followed by the User
- * @apiVersion 1.0.0
- * @apiName GetFollowersNotFollowed
- * @apiGroup User
  *
- * @apiHeader {String} Token Authenticaton Token
- *
- * @apiSuccess {Number} count User's Followers Not Followed Count
- * @apiSuccess {Object[]} list Array of User ID's of the User's Followers Not Followed
- *
- * @apiSuccessExample Success-Response:
- *      HTTP/1.1 200 OK
- *      {
- *          "status": "success",
- *          "data":
- *          {
- *              "count": 30
- *              "list": [
- *
- *              ]
- *          }
- *      }
- *
- * @apiUse UnauthError
  */
 
 userRouter.get('/follower-not-followed');
@@ -1856,241 +1472,67 @@ userRouter.get('/follower-not-followed');
 userRouter.get('/block', authController.protect, userController.getBlocked);
 
 /**
- * @api {post} /user/follow/:id Follow a User
- * @apiVersion 1.0.0
- * @apiName Follow
- * @apiGroup User
  *
- * @apiParam {String} id The Followed User's ID
- *
- * @apiHeader {string} Token Authenticaton Token
- *
- * @apiUse SuccessRes
- *
- * @apiUse UnauthError
  */
 
 userRouter.post('/follow/:id');
 
 /**
- * @api {post} /user/follow/:id Change the Relation to a Followed User
- * @apiVersion 1.0.0
- * @apiName UpdateFollowState
- * @apiGroup User
  *
- * @apiParam {String} id The Followed User's ID
- *
- * @apiParam (Request Body) {String} relation New Relation Setting (Friend, Family, none)
- *
- * @apiHeader {string} Token Authenticaton Token
- *
- * @apiUse SuccessRes
- *
- * @apiUse UnauthError
  */
 
 userRouter.patch('/follow/:id');
 
 /**
- * @api {delete} /user/follow/:id Unfollow a User
- * @apiVersion 1.0.0
- * @apiName Unfollow
- * @apiGroup User
  *
- * @apiParam {String} id The Unfollowed User's ID
- *
- * @apiHeader {string} Token Authenticaton Token
- *
- * @apiUse SuccessRes
- *
- * @apiUse UnauthError
  */
 
 userRouter.delete('/follow/:id');
 
 /**
- * @api {post} /user/block/:id Block a User
- * @apiVersion 1.0.0
- * @apiName Block
- * @apiGroup User
  *
- * @apiParam {String} id The Blocked User's ID
- *
- * @apiHeader {string} Token Authenticaton Token
- *
- * @apiUse SuccessRes
- *
- * @apiUse UnauthError
  */
 
 userRouter.post('/block/:id');
 
 /**
- * @api {delete} /user/block/:id Unblock a User
- * @apiVersion 1.0.0
- * @apiName Unblock
- * @apiGroup User
  *
- * @apiParam {String} id The Unblocked User's ID
- *
- * @apiHeader {string} Token Authenticaton Token
- *
- * @apiUse SuccessRes
- *
- * @apiUse UnauthError
  */
 
 userRouter.delete('/block/:id');
 
 /**
- * @api {get} /user/messages/sent Gets a list of User's Sent Messages
- * @apiVersion 1.0.0
- * @apiName GetSentMsg
- * @apiGroup User
  *
- * @apiHeader {String} Token Authenticaton Token
- *
- * @apiSuccess {Number} count User's Sent Messages
- * @apiSuccess {Object[]} msglist Array of Message ID's of the User's sent messages
- *
- * @apiSuccessExample Success-Response:
- *      HTTP/1.1 200 OK
- *      {
- *          "status": "success",
- *          "data":
- *          {
- *              "count": 30
- *              "msglist": [
- *
- *              ]
- *          }
- *      }
- *
- * @apiUse UnauthError
  */
 
 userRouter.get('/messages/sent');
 
 /**
- * @api {get} /user/messages/inbox Gets a list of User's Recieved Messages
- * @apiVersion 1.0.0
- * @apiName GetInbox
- * @apiGroup User
  *
- * @apiHeader {String} Token Authenticaton Token
- *
- * @apiSuccess {Number} count User's Recieved Messages
- * @apiSuccess {Object[]} msglist Array of Message ID's of the User's Recieved Messages
- *
- * @apiSuccessExample Success-Response:
- *      HTTP/1.1 200 OK
- *      {
- *          "status": "success",
- *          "data":
- *          {
- *              "count": 30
- *              "msglist": [
- *
- *              ]
- *          }
- *      }
- *
- * @apiUse UnauthError
  */
 
 userRouter.get('/messages/inbox');
 
 /**
- * @api {post} /user/messages/ Sends a New Message
- * @apiVersion 1.0.0
- * @apiName SendMessage
- * @apiGroup User
  *
- * @apiHeader {String} Token Authenticaton Token
- *
- * @apiParam (Request Body) {ObjectID} recieverid User ID of the User recieving the Message
- * @apiParam (Request Body) {String} subject Subject Line of the Message
- * @apiParam (Request Body) {String} body Main Content of the Message
- * @apiParam (Request Body) {ObjectID} replymsg Message being replied to (null if none)
- *
- * @apiUse SuccessRes
- *
- * @apiUse UnauthError
  */
 
 userRouter.post('/messages');
 
 /**
- * @api {delete} /user/messages/:id Delete a Message
- * @apiVersion 1.0.0
- * @apiName DeleteMsg
- * @apiGroup User
  *
- * @apiParam {String} id The Deleted Message's ID
- *
- * @apiHeader {string} Token Authenticaton Token
- *
- * @apiUse SuccessRes
- *
- * @apiUse UnauthError
  */
 
 userRouter.delete('/messages/:id');
 
 /**
- * @api {get} /user/notif/contact Gets a list of User's Contact Notifications
- * @apiVersion 1.0.0
- * @apiName ContactNotification
- * @apiGroup User
  *
- * @apiHeader {String} Token Authenticaton Token
- *
- * @apiSuccess {Number} count User's Recieved Messages
- * @apiSuccess {Object[]} notiflist Array of Notifications
- *
- * @apiSuccessExample Success-Response:
- *      HTTP/1.1 200 OK
- *      {
- *          "status": "success",
- *          "data":
- *          {
- *              "count": 30
- *              "notiflist": [
- *
- *              ]
- *          }
- *      }
- *
- * @apiUse UnauthError
  */
 
 userRouter.get('/notif/contact');
 
 /**
- * @api {get} /user/notif/follow Gets a list of User's Follow Notifications
- * @apiVersion 1.0.0
- * @apiName FollowtNotification
- * @apiGroup User
  *
- * @apiHeader {String} Token Authenticaton Token
- *
- * @apiSuccess {Number} count User's Recieved Messages
- * @apiSuccess {Object[]} notiflist Array of Notifications
- *
- * @apiSuccessExample Success-Response:
- *      HTTP/1.1 200 OK
- *      {
- *          "status": "success",
- *          "data":
- *          {
- *              "count": 30
- *              "notiflist": [
- *
- *              ]
- *          }
- *      }
- *
- * @apiUse UnauthError
  */
 
 userRouter.get('/notif/follow');
