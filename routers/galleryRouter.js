@@ -391,7 +391,11 @@ galleryRouter.patch('/:id/photos');
  * @apiUse GalleryNotFoundError
  */
 
-galleryRouter.patch('/:id/meta');
+galleryRouter.patch(
+  '/:id/meta',
+  authController.protect,
+  galleryController.editMeta
+);
 
 /**
  * @api {patch} /gallery/comments/:id Edit the body of a comment
@@ -456,7 +460,11 @@ galleryRouter.patch(
  * @apiUse PhotoNotFoundError
  */
 
-galleryRouter.patch('/:id/primary/:photoid');
+galleryRouter.patch(
+  '/:id/primary/:photoid',
+  authController.protect,
+  galleryController.setPrimaryPhoto
+);
 
 /**
  * @api {patch} /gallery/:id/:photoid Edit the comment for a gallery photo
