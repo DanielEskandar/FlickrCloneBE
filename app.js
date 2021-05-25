@@ -1,6 +1,7 @@
 // INCLUDE DEPENDENCIES
 const express = require('express');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 
 // INCLUDE ERROR CLASS
 const AppError = require('./utils/appError.js');
@@ -17,6 +18,12 @@ const groupRouter = require('./routers/groupRouter.js');
 
 // CREATE EXPRESS APP
 const app = express();
+
+// ATTACH PARSERS
+app.use(cors());
+
+// CONFIGURE CORS
+app.options('*', cors());
 
 // ATTACH PARSERS
 app.use(bodyParser.json());
