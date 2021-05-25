@@ -70,7 +70,7 @@ app.get('/testMail', async (req, res) => {
           <p>The Flickr team.</p>`,
       },
     });
-    res.json({ message: 'Sent successfully!!' });
+    res.json({ message: 'Email Sent to User!' });
   } catch (error) {
     res.json({ message: error.message });
   }
