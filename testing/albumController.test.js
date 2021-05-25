@@ -113,7 +113,7 @@ describe('should delete a comment from an album', () => {
     };
     await albumController.deleteComment(mReq, mRes);
     expect(mRes.status).toBeCalledWith(204);
-    expect(mRes.json).toBeCalledWith(albumTestData.deleteCommentData);
+    expect(mRes.json).toBeCalledWith(albumTestData.successResponse);
   });
 });
 
@@ -159,10 +159,7 @@ describe('should add Photo to an album', () => {
     };
     await albumController.addPhoto(mReq, mRes);
     expect(mRes.status).toBeCalledWith(200);
-    expect(mRes.json).toBeCalledWith({
-      status: 'success',
-      data: 'ok',
-    });
+    expect(mRes.json).toBeCalledWith(albumTestData.addPhoto);
   });
 });
 
@@ -182,10 +179,7 @@ describe('should delete a photo from an album', () => {
     };
     await albumController.removePhoto(mReq, mRes);
     expect(mRes.status).toBeCalledWith(204);
-    expect(mRes.json).toBeCalledWith({
-      status: 'success',
-      data: 'ok',
-    });
+    expect(mRes.json).toBeCalledWith(albumTestData.successResponse);
   });
 });
 
@@ -207,9 +201,46 @@ describe('should delete list of photos from an album', () => {
     };
     await albumController.removePhotos(mReq, mRes);
     expect(mRes.status).toBeCalledWith(204);
-    expect(mRes.json).toBeCalledWith({
-      status: 'success',
-      data: 'ok',
-    });
+    expect(mRes.json).toBeCalledWith(albumTestData.successResponse);
+  });
+});
+
+// TESTING: editMeta
+describe('should edit meta of an album', () => {
+  test(`should edit meta of an album with id 608f3c70197abc18509aec5f`, async () => {
+    const mReq = {
+      user: { id: '608d5450ec00005468607a11' },
+      params: {
+        id: '608f3c70197abc18509aec5f',
+      },
+      body: { albumName: 'TEST edit Meta' },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await albumController.editMeta(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(albumTestData.editMeta);
+  });
+});
+
+// TESTING: setPrimaryPhoto
+describe('should set Primary Photo of an album', () => {
+  test(`should set Primary Photo of an album with id 608f3c70197abc18509aec60`, async () => {
+    const mReq = {
+      user: { id: '608d5450ec00005468607a11' },
+      params: {
+        id: '608f3c70197abc18509aec60',
+        photoid: '608d5450ec00005468628a0d',
+      },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await albumController.setPrimaryPhoto(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(albumTestData.setPrimaryPhoto);
   });
 });

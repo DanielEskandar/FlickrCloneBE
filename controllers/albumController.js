@@ -121,8 +121,8 @@ exports.editComment = async (req, res) => {
     const checkComment = await commentModel.findById(req.params.id);
     if (checkComment.userId.toString() !== req.user.id.toString())
       throw new AppError(
-        'You are not logged in. Please log in to get access.',
-        401
+        'Permission Denied. You are not allowed to do this action.',
+        403
       );
 
     const newComment = await commentModel.findByIdAndUpdate(
@@ -153,8 +153,8 @@ exports.deleteComment = async (req, res) => {
     const checkComment = await commentModel.findById(req.params.commentid);
     if (checkComment.userId.toString() !== req.user.id.toString())
       throw new AppError(
-        'You are not logged in. Please log in to get access.',
-        401
+        'Permission Denied. You are not allowed to do this action.',
+        403
       );
 
     const album = await albumModel /// get array of comments in album
@@ -225,9 +225,10 @@ exports.addPhoto = async (req, res) => {
     );
     if (!userAlbums)
       throw new AppError(
-        'You are not logged in. Please log in to get access.',
-        401
+        'Permission Denied. You are not allowed to do this action.',
+        403
       );
+
     // check if album id exist or not
     const album = await albumModel.findById(req.params.id);
     if (!album) {
@@ -260,7 +261,7 @@ exports.addPhoto = async (req, res) => {
 
       res.status(200).json({
         status: 'success',
-        data: 'ok',
+        data: JSON.parse(JSON.stringify({ photos: updatedAlbum.photos })),
       });
     } else {
       throw new AppError('This Photo Already Exist !', 404);
@@ -286,8 +287,8 @@ exports.removePhoto = async (req, res) => {
     );
     if (!userAlbums)
       throw new AppError(
-        'You are not logged in. Please log in to get access.',
-        401
+        'Permission Denied. You are not allowed to do this action.',
+        403
       );
 
     // check if photo id exist or not
@@ -348,8 +349,8 @@ exports.removePhotos = async (req, res) => {
     );
     if (!userAlbums)
       throw new AppError(
-        'You are not logged in. Please log in to get access.',
-        401
+        'Permission Denied. You are not allowed to do this action.',
+        403
       );
 
     // check if album id exist or not
@@ -405,6 +406,114 @@ exports.removePhotos = async (req, res) => {
       status: 'success',
       data: 'ok',
     });
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};
+
+// EDIT META
+exports.editMeta = async (req, res) => {
+  // auth
+  try {
+    // check if album exists
+    const album = await albumModel.findById(req.params.id);
+    if (!album) {
+      throw new AppError('No Album Found with This ID', 404);
+    }
+
+    const currentUser = await userModel.findById(req.user.id);
+    const userAlbums = currentUser.albums.find(
+      (element) => element.toString() === req.params.id.toString()
+    );
+    if (!userAlbums)
+      throw new AppError(
+        'Permission Denied. You are not allowed to do this action.',
+        403
+      );
+
+    req.body.updatedAt = new Date(Date.now());
+    const updatedAlbum = await albumModel.findByIdAndUpdate(
+      req.params.id,
+      {
+        $set: req.body,
+      },
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
+    res.status(200).json({
+      status: 'success',
+      data: JSON.parse(
+        JSON.stringify({
+          albumID: updatedAlbum._id,
+          albumName: updatedAlbum.albumName,
+          description: updatedAlbum.description,
+        })
+      ),
+    });
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};
+
+// SET PRIMARY PHOTO
+exports.setPrimaryPhoto = async (req, res) => {
+  try {
+    // check if album exists
+    const album = await albumModel.findById(req.params.id);
+    if (!album) {
+      throw new AppError('No Album Found with This ID', 404);
+    }
+
+    // check if photo id exist or not
+    const photoFromModel = await photoModel.findById(req.params.photoid);
+    if (!photoFromModel) {
+      throw new AppError('No Photo Found with This ID', 404);
+    }
+
+    // auth;
+    const currentUser = await userModel.findById(req.user.id);
+    const useralbums = currentUser.albums.find(
+      (element) => element.toString() === req.params.id.toString()
+    );
+    if (!useralbums)
+      throw new AppError(
+        'Permission Denied. You are not allowed to do this action.',
+        403
+      );
+
+    // check if photo exists in album
+    const isExist = album.photos.find(
+      (element) => element.toString() === req.params.photoid.toString()
+    );
+
+    if (isExist) {
+      const updatedAlbum = await albumModel.findByIdAndUpdate(
+        req.params.id,
+        {
+          $set: {
+            primaryPhotoId: req.params.photoid,
+            updatedAt: new Date(Date.now()),
+          },
+        },
+        {
+          new: true,
+          runValidators: true,
+        }
+      );
+      res.status(200).json({
+        status: 'success',
+        data: JSON.parse(
+          JSON.stringify({
+            albumID: updatedAlbum._id,
+            primaryPhotoId: updatedAlbum.primaryPhotoId,
+          })
+        ),
+      });
+    } else {
+      throw new AppError('This Photo does not exist in the album !', 404);
+    }
   } catch (err) {
     errorController.sendError(err, req, res);
   }

@@ -30,7 +30,7 @@ exports.signUp = async (req, res) => {
     const token = signToken(newUser._id);
 
     res.status(201).json({
-      stastus: 'success',
+      status: 'success',
       token,
       data: {
         user: JSON.parse(JSON.stringify(newUser)),
