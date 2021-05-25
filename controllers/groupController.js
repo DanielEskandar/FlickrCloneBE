@@ -149,7 +149,7 @@ exports.removePhotofromPool = async (req, res) => {
       throw new AppError('Photo Already isnt in group Pool', 404);
     }
 
-    inPhoto = await photoModel.findById(req.params.photoid);
+    const inPhoto = await photoModel.findById(req.params.photoid);
     const updatedGroup = await groupModel
       .findByIdAndUpdate(
         req.params.id,
