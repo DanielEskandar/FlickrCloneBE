@@ -194,3 +194,59 @@ exports.getSizes = async (req, res) => {
     errorController.sendError(err, req, res);
   }
 };
+
+exports.editPhotoInformation = async (req, res) => {
+  try {
+    // check if photo id exist or not
+    const photo = await photoModel.findById(req.params.id);
+    if (!photo) {
+      throw new AppError('No Photo Found with This ID', 404);
+    }
+    // auth
+    if (photo.userId.toString() !== req.user.id.toString())
+      throw new AppError(
+        'Permission Denied. You are not allowed to do this action',
+        403
+      );
+    // Update details in Photo Object
+    const updatedPhoto = await photoModel.findByIdAndUpdate(
+      req.params.id,
+      {
+        $set: {
+          title: req.body.title,
+          description: req.body.description,
+          tags: req.body.tags,
+          dateUploaded: req.body.dateUploaded,
+          dateTaken: req.body.dateTaken,
+          permissions: req.body.permissions,
+          license: req.body.license,
+          safetyLevel: req.body.safetyLevel,
+          contentType: req.body.contentType,
+        },
+      },
+      {
+        new: true,
+        runValidators: false,
+      }
+    );
+    res.status(200).json({
+      status: 'success',
+      data: JSON.parse(
+        JSON.stringify({
+          _id: updatedPhoto._id,
+          title: updatedPhoto.title,
+          description: updatedPhoto.description,
+          tags: updatedPhoto.tags,
+          dateUploaded: updatedPhoto.dateUploaded,
+          dateTaken: updatedPhoto.dateTaken,
+          permissions: updatedPhoto.permissions,
+          license: updatedPhoto.license,
+          safetyLevel: updatedPhoto.safetyLevel,
+          contentType: updatedPhoto.contentType,
+        })
+      ),
+    });
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};
