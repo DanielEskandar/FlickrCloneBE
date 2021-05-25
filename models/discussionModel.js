@@ -9,7 +9,7 @@ const discussionSchema = new mongoose.Schema({
     default: Date.now,
   },
   content: String,
-  replies: [mongoose.Schema.ObjectId],
+  replies: { type: [mongoose.Schema.ObjectId], ref: 'replyModel' },
 });
 
 // CREATE MODEL

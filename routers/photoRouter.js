@@ -3,7 +3,6 @@ const express = require('express');
 
 // INCLUDE CONTROLLERS
 const photoController = require('../controllers/photoController.js');
-const photoModel = require('../models/photoModel.js');
 
 // CREATE ROUTER
 const photoRouter = express.Router();
@@ -77,7 +76,7 @@ const photoRouter = express.Router();
  * @apiName UploadPhoto
  * @apiGroup Photo
  *
- * @apiBody {Number} ticket The Ticket of the Upload
+ * @apiParam (Request Body) {Number} ticket The Ticket of the Upload
  *
  * @apiUse SuccessRes
  *
@@ -96,11 +95,11 @@ photoRouter.post('/');
  *
  * @apiParam {String} id The Photo's ID
  *
- * @apiBody {boolean} isfriend The Photo is Visible to Friends when Private or not
- * @apiBody {boolean} ispublic The Photo is Visible to the Public when Private or not
- * @apiBody {boolean} isfamily The Photo is Visible to Family when Private or not
- * @apiBody {Number} permcomment Who is Allowed to Comment on the Photo
- * @apiBody {Number} permaddmeta Who can Add Notes and Tags to the Photo
+ * @apiParam (Request Body) {boolean} isfriend The Photo is Visible to Friends when Private or not
+ * @apiParam (Request Body) {boolean} ispublic The Photo is Visible to the Public when Private or not
+ * @apiParam (Request Body) {boolean} isfamily The Photo is Visible to Family when Private or not
+ * @apiParam (Request Body) {Number} permcomment Who is Allowed to Comment on the Photo
+ * @apiParam (Request Body) {Number} permaddmeta Who can Add Notes and Tags to the Photo
  *
  * @apiSuccess {string} Status Status of API
  *
@@ -168,11 +167,93 @@ photoRouter.delete('/:id/');
  *          "status": "success",
  *          "data":
  *          {
- *              "permissions": {
- *                0, 1, 1
- *              }
- *              "isfavourite : " 0,
- *              "rotationAngle: " 90
+ *            "sizes": {
+ *             "size": {
+ *             "original": {
+ *                "height": 120,
+ *                "width": 60,
+ *                "source": "https://www.google.com/",
+ *                "url": "https://www.google.com/"
+ *              },
+ *             "large": {
+ *               "height": 190,
+ *                "width": 20,
+ *                "source": "https://www.google.com/",
+ *                "url": "https://www.google.com/"
+ *               },
+ *             "medium800": {
+ *               "height": 200,
+ *               "width": 60,
+ *               "source": "https://www.google.com/",
+ *               "url": "https://www.google.com/"
+ *               },
+ *             "medium640": {
+ *               "height": 1200,
+ *               "width": 60,
+ *               "source": "https://www.google.com/",
+ *               "url": "https://www.google.com/"
+ *               },
+ *             "medium": {
+ *               "height": 120,
+ *               "width": 600,
+ *               "source": "https://www.google.com/",
+ *               "url": "https://www.google.com/"
+ *               },
+ *             "small320": {
+ *               "height": 12,
+ *               "width": 60,
+ *               "source": "https://www.google.com/",
+ *               "url": "https://www.google.com/"
+ *               },
+ *             "small": {
+ *               "height": 1000,
+ *               "width": 60,
+ *               "source": "https://www.google.com/",
+ *               "url": "https://www.google.com/"
+ *               },
+ *             "thumbnail": {
+ *               "height": 50,
+ *               "width": 50,
+ *               "source": "https://www.google.com/",
+ *               "url": "https://www.google.com/"
+ *               },
+ *             "largeSquare": {
+ *               "height": 120,
+ *               "width": 120,
+ *               "source": "https://www.google.com/",
+ *               "url": "https://www.google.com/"
+ *               },
+ *             "square": {
+ *               "height": 60,
+ *               "width": 60,
+ *               "source": "https://www.google.com/",
+ *               "url": "https://www.google.com/"
+ *               }
+ *           },
+ *           "canDownload": false
+ *           },
+ *       "comments": [],
+ *       "favourites": 7,
+ *       "views": 21,
+ *       "tags": [
+ *       "#sunset"
+ *       ],
+ *       "userId": "608d55c7e512b74ee00791db",
+ *       "title": "Some Title",
+ *       "description": "Amazing shot",
+ *       "dateUploaded": "2012-04-23T18:25:43.511Z",
+ *      "dateTaken": "2013-04-23T18:25:43.511Z",
+ *       "location": "608d5450ec00005468604a0c",
+ *       "EXIF": "123erf",
+ *       "contentType": "Screenshot",
+ *       "peopleTagged": [
+ *       {
+ *           "_id": "609093af84b808271488fafd",
+ *          "userId": "608d5450ec00005468604a0c",
+ *           "tagDate": "2012-04-13T18:25:43.511Z"
+ *       }
+ *       ],
+ *       "__v": 0
  *          }
  *      }
  *
@@ -193,7 +274,7 @@ photoRouter.get('/:id', photoController.getInformation);
  *
  * @apiParam {String} id The Photo's ID
  * 
- * @apiBody {String} size All The Current Photo Size
+ * @apiParam (Request Body) {String} size All The Current Photo Size
  * 
  * @apiSuccess {string} photourl The Photo's URL for the Chosen Size
  * 
@@ -224,7 +305,7 @@ photoRouter.get('/:id/url');
  *
  * @apiParam {String} id The Photo's ID
  *
- * @apiBody {String} tags All Tags for the Photo
+ * @apiParam (Request Body) {String} tags All Tags for the Photo
  *
  * @apiSuccess {string} Status Status of API
  *
@@ -247,7 +328,7 @@ photoRouter.patch('/:id/tags');
  *
  * @apiParam {String} id The Photo's ID
  *
- * @apiBody {String} tags All Tags for the Photo
+ * @apiParam (Request Body) {String} tags All Tags for the Photo
  *
  * @apiUse SuccessRes
  *
@@ -268,7 +349,7 @@ photoRouter.post('/:id/tags');
  *
  * @apiHeader {String} Token Authenticaton Token
  *
- * @apiBody {String} tags All Tags to Delete
+ * @apiParam (Request Body) {String} tags All Tags to Delete
  *
  * @apiUse SuccessRes
  *
@@ -287,10 +368,10 @@ photoRouter.delete('/:id/tags');
  *
  * @apiParam {String} id The Photo's ID 
  * 
- * @apiBody {Number} galleriesperpage Number of Galleries to return Per Page
- * @apiBody {Number} page The Page of Results to Return
- * @apiBody {Number} perpage Number of Comments Per Page to Return
- * @apiBody {Number} page The Page Number to Return
+ * @apiParam (Request Body) {Number} galleriesperpage Number of Galleries to return Per Page
+ * @apiParam (Request Body) {Number} page The Page of Results to Return
+ * @apiParam (Request Body) {Number} perpage Number of Comments Per Page to Return
+ * @apiParam (Request Body) {Number} page The Page Number to Return
  * 
  * @apiSuccess {Object[]} gallerylist Array of Gallery ID's Photo Belong to
  * 
@@ -513,11 +594,7 @@ photoRouter.get('/:id/perm');
  *
  * @apiParam {String} id The Photo's ID
  *
- * @apiSuccess {String[]} nameofsize Array of The Labels for the Size
- * @apiSuccess {Number[]} widths Array of the Widths of the Photo in Each Size
- * @apiSuccess {Number[]} heigths Array of the Heights of the Photo in Each Size
- * @apiSuccess {String[]} sizeurl Array of the URLs of the Photo in each Size
- * @apiSuccess {String[]} sourceurl Array of the Source URLs
+ * @apiSuccess {String[]} sizes Array of the Size
  *
  * @apiSuccessExample Success-Response:
  *      HTTP/1.1 200 OK
@@ -525,21 +602,71 @@ photoRouter.get('/:id/perm');
  *          "status": "success",
  *          "data":
  *          {
- *             "nameofsize": [
- *
- *              ]
- *             "widths": [
- *
- *              ]
- *             "heights": [
- *
- *              ]
- *             "sizeurl": [
- *
- *              ]
- *             "sourceurl": [
- *
- *              ]
+ *              "sizes": {
+ *                  "size": {
+ *                  "original": {
+ *                   "height": 120,
+ *                   "width": 60,
+ *                   "source": "https://www.google.com/",
+ *                   "url": "https://www.google.com/"
+ *                  },
+ *                 "large": {
+ *                   "height": 190,
+ *                   "width": 20,
+ *                  "source": "https://www.google.com/",
+ *                  "url": "https://www.google.com/"
+ *                  },
+ *                  "medium800": {
+ *                  "height": 200,
+ *                  "width": 60,
+ *                  "source": "https://www.google.com/",
+ *                  "url": "https://www.google.com/"
+ *                  },
+ *                  "medium640": {
+ *                  "height": 1200,
+ *                  "width": 60,
+ *                  "source": "https://www.google.com/",
+ *                   "url": "https://www.google.com/"
+ *                   },
+ *                   "medium": {
+ *                   "height": 120,
+ *                   "width": 600,
+ *                  "source": "https://www.google.com/",
+ *                   "url": "https://www.google.com/"
+ *                   },
+ *                   "small320": {
+ *                   "height": 12,
+ *                   "width": 60,
+ *                   "source": "https://www.google.com/",
+ *                   "url": "https://www.google.com/"
+ *                   },
+ *                   "small": {
+ *                   "height": 1000,
+ *                   "width": 60,
+ *                   "source": "https://www.google.com/",
+ *                   "url": "https://www.google.com/"
+ *                   },
+ *                   "thumbnail": {
+ *                   "height": 50,
+ *                   "width": 50,
+ *                   "source": "https://www.google.com/",
+ *                   "url": "https://www.google.com/"
+ *                   },
+ *                   "largeSquare": {
+ *                   "height": 120,
+ *                   "width": 120,
+ *                   "source": "https://www.google.com/",
+ *                   "url": "https://www.google.com/"
+ *                   },
+ *                   "square": {
+ *                   "height": 60,
+ *                   "width": 60,
+ *                   "source": "https://www.google.com/",
+ *                   "url": "https://www.google.com/"
+ *                   }
+ *               },
+ *               "canDownload": false
+ *               }
  *          }
  *      }
  *
@@ -548,7 +675,7 @@ photoRouter.get('/:id/perm');
  * @apiUse PhotoNotFoundError
  *
  */
-photoRouter.get('/:id/sizes');
+photoRouter.get('/:id/sizes', photoController.getSizes);
 
 /**
  * @api {patch} /photo/:id/content Set a Photo's Content Type
@@ -560,7 +687,7 @@ photoRouter.get('/:id/sizes');
  *
  * @apiHeader {string} Token Authenticaton Token
  *
- * @apiBody {Number} contenttype The Content Type to be Set
+ * @apiParam (Request Body) {Number} contenttype The Content Type to be Set
  *
  * @apiSuccess {string} Status Status of API
  *
@@ -584,7 +711,7 @@ photoRouter.patch('/:id/content');
  *
  * @apiHeader {string} Token Authenticaton Token
  *
- * @apiBody {Date} datetaken The Date the Photo was Taken
+ * @apiParam (Request Body) {Date} datetaken The Date the Photo was Taken
  *
  * @apiSuccess {string} Status Status of API
  *
@@ -607,8 +734,8 @@ photoRouter.patch('/:id/date');
  *
  * @apiHeader {string} Token Authenticaton Token
  *
- * @apiBody {String} title The New Title to be Set
- * @apiBody {String} desc The New Description to be Set
+ * @apiParam (Request Body) {String} title The New Title to be Set
+ * @apiParam (Request Body) {String} desc The New Description to be Set
  *
  * @apiSuccess {string} Status Status of API
  *
@@ -631,8 +758,8 @@ photoRouter.patch('/:id/meta-data');
  *
  * @apiHeader {string} Token Authenticaton Token
  *
- * @apiBody {Number} safetylevel The Safety Level to be set
- * @apiBody {Boolean} hidden Whether the Photo is to be Hidden from Public Searches or Not
+ * @apiParam (Request Body) {Number} safetylevel The Safety Level to be set
+ * @apiParam (Request Body) {Boolean} hidden Whether the Photo is to be Hidden from Public Searches or Not
  *
  * @apiSuccess {string} Status Status of API
  *
@@ -655,7 +782,8 @@ photoRouter.patch('/:id/safety-level');
  *
  * @apiHeader {string} Token Authenticaton Token
  *
- * @apiBody {String} commenttext The Text in the Comment
+ * @apiParam (Request Body) {String} body The Text in the Comment
+ * @apiParam (Request Body) {String} userId The ID of the Commenting User
  *
  * @apiUse SuccessRes
  *
@@ -696,7 +824,7 @@ photoRouter.delete('/:id/comments/:commentid', photoController.deleteComment);
  *
  * @apiHeader {string} Token Authenticaton Token
  *
- * @apiBody {String} id The New Comment Text
+ * @apiParam (Request Body) {String} body The New Comment Text
  *
  * @apiSuccess {string} Status Status of API
  *
@@ -745,10 +873,10 @@ photoRouter.get('/:id/comments', photoController.getComments);
  *
  * @apiHeader {String} Token Authenticaton Token
  *
- * @apiBody {Date} latestdate Latest Date to Get Comments
- * @apiBody {Object[]} userids User IDs to Get Comments of
- * @apiBody {Number} perpage Number of Comments Per Page to Return
- * @apiBody {Number} page The Page Number to Return
+ * @apiParam (Request Body) {Date} latestdate Latest Date to Get Comments
+ * @apiParam (Request Body) {Object[]} userids User IDs to Get Comments of
+ * @apiParam (Request Body) {Number} perpage Number of Comments Per Page to Return
+ * @apiParam (Request Body) {Number} page The Page Number to Return
  *
  * @apiSuccess {Object[]} commentlist Array of Comments on
  *
@@ -808,8 +936,8 @@ photoRouter.get('/:id/location');
  *
  * @apiHeader {string} Token Authenticaton Token
  *
- * @apiBody {String} latitude The Latitude to be Set
- * @apiBody {String} longtitude The Longtitude to be Set
+ * @apiParam (Request Body) {String} latitude The Latitude to be Set
+ * @apiParam (Request Body) {String} longtitude The Longtitude to be Set
  *
  * @apiSuccess {string} Status Status of API
  *
@@ -878,7 +1006,7 @@ photoRouter.get('/:id/licenses');
  *
  * @apiHeader {string} Token Authenticaton Token
  *
- * @apiBody {Number} licenses The License to be Set
+ * @apiParam (Request Body) {Number} licenses The License to be Set
  *
  * @apiSuccess {string} Status Status of API
  *
@@ -903,10 +1031,10 @@ photoRouter.patch('/:id/licenses');
  *
  * @apiHeader {string} Token Authenticaton Token
  *
- * @apiBody {Number} xcoordinate The Left Most Pixel Coordinate Around the Tagged Person
- * @apiBody {Number} ycoordinate The Top Most Pixel Coordinate Around the Tagged Person
- * @apiBody {Number} width The Width of the Box Around the Person
- * @apiBody {Number} heigth The Height of the Box Around the Person
+ * @apiParam (Request Body) {Number} xcoordinate The Left Most Pixel Coordinate Around the Tagged Person
+ * @apiParam (Request Body) {Number} ycoordinate The Top Most Pixel Coordinate Around the Tagged Person
+ * @apiParam (Request Body) {Number} width The Width of the Box Around the Person
+ * @apiParam (Request Body) {Number} heigth The Height of the Box Around the Person
  *
  * @apiUse SuccessRes
  *
@@ -1005,7 +1133,7 @@ photoRouter.get('/:id/tags');
  *
  * @apiHeader {string} Token Authenticaton Token
  *
- * @apiBody {Number} degrees Degrees by which you Rotate a Photo Clockwise
+ * @apiParam (Request Body) {Number} degrees Degrees by which you Rotate a Photo Clockwise
  *
  * @apiSuccess {string} Status Status of API
  *

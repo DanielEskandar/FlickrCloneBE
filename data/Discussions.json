@@ -3,21 +3,24 @@
     "_id": "608f6e7519953b27004f6dab",
     "user": "608d5450ec00005468607a0c",
     "content": "Where to eat best ribeye?",
-    "replies": [],
+    "replies": [
+      { "_id": "609fe93c38075024f8d3e6f3" },
+      { "_id": "609fe93c38075024f8d3e6f4" }
+    ],
     "date": "2021-01-01"
   },
   {
     "_id": "608d55c7e512b74ee00791dd",
     "user": "608d55c7e512b74ee00791dc",
     "content": "Where to get dryfood for my pet?",
-    "replies": [],
+    "replies": [{ "_id": "609fe93c38075024f8d3e6f5" }],
     "date": "2021-01-01"
   },
   {
     "_id": "608f6e7519953b27004f6dac",
     "user": "608f3e678209d433946b946d",
     "content": "La casa de papel is overrated",
-    "replies": [],
+    "replies": [{ "_id": "609fe93c38075024f8d3e6f6" }],
     "date": "2021-01-01"
   }
 ]
