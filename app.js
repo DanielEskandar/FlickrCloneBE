@@ -20,10 +20,10 @@ const groupRouter = require('./routers/groupRouter.js');
 // CREATE EXPRESS APP
 const app = express();
 
-// ATTACH PARSERS
+// ATTACH CORS
 app.use(cors());
 
-// CONFIGURE CORS
+// CONFIGURE CORS POLICY
 app.options('*', cors());
 
 // ATTACH PARSERS
