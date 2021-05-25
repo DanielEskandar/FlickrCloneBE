@@ -39,7 +39,7 @@ app.use('/group', groupRouter);
 
 // FUNCTION FOR TESTING EMAIL SENDER
 app.get('/forget', async (req, res) => {
-  const trialMail = 'moaazzaki1999@gmail.com';
+  const trialMail = 'a_tarek1999@yahoo.com';
   try {
     await sendEmail({
       email: trialMail,
