@@ -1,7 +1,6 @@
 // INCLUDE MODELS
 const photoModel = require('../models/photoModel.js');
 const commentModel = require('../models/commentModel.js');
-// const userModel = require('../models/userModel.js');
 
 // INCLUDE ERROR CLASS AND ERROR CONTROLLER
 const AppError = require('../utils/appError.js');
@@ -209,7 +208,7 @@ exports.editPhotoInformation = async (req, res) => {
         'Permission Denied. You are not allowed to do this action',
         403
       );
-    // add photo to photos array in gallery
+    // Update details in Photo Object
     const updatedPhoto = await photoModel.findByIdAndUpdate(
       req.params.id,
       {
@@ -230,7 +229,6 @@ exports.editPhotoInformation = async (req, res) => {
         runValidators: false,
       }
     );
-    //  $push: { photos: { photoId: req.body.photoID, remark: '' } },
     res.status(200).json({
       status: 'success',
       data: JSON.parse(
