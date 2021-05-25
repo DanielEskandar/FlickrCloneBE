@@ -383,12 +383,10 @@ photoRouter.delete('/:id/tags');
  *
  * @apiParam {String} id The Photo's ID 
  * 
- * @apiParam (Request Body) {Number} galleriesperpage Number of Galleries to return Per Page
- * @apiParam (Request Body) {Number} page The Page of Results to Return
- * @apiParam (Request Body) {Number} perpage Number of Comments Per Page to Return
+ * @apiParam (Request Body) {Number} per_page Number of Galleries to return Per Page
  * @apiParam (Request Body) {Number} page The Page Number to Return
  * 
- * @apiSuccess {Object[]} gallerylist Array of Gallery ID's Photo Belong to
+ * @apiSuccess {Object[]} galleries Array of Gallery ID's Photo Belong to
  * 
  * @apiSuccessExample Success-Response:
  *      HTTP/1.1 200 OK
@@ -396,7 +394,7 @@ photoRouter.delete('/:id/tags');
  *          "status": "success",
  *          "data":
  *          {
-               "gallerylist": [
+               "galleries": [
  *
  *              ] 
  *          }
@@ -407,7 +405,7 @@ photoRouter.delete('/:id/tags');
  * @apiUse PhotoNotFoundError
  * 
  */
-photoRouter.get('/:id/galleries');
+photoRouter.get('/:id/galleries', photoController.getGalleriesforPhoto);
 
 /**
  * @api {get} /photo/:id/contexts/all Gets all Visible Sets and Pools Photo Belongs to
