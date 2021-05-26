@@ -9,6 +9,9 @@ const userModel = require('../models/userModel.js');
 const AppError = require('../utils/appError.js');
 const errorController = require('./errorController.js');
 
+// INCLUDE EMAIL SENDER
+const sendEmail = require('../utils/emailSender.js');
+
 // SIGN TOKEN
 const signToken = (id) =>
   jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -123,3 +126,54 @@ exports.protect = async (req, res, next) => {
     errorController.sendError(err, req, res);
   }
 };
+
+// FORGOT PASSWORD
+exports.forgotPassword = async (req, res) => {
+  try {
+    // Get user based on email
+    const user = await userModel.findOne({ email: req.body.email });
+    if (!user) {
+      throw new AppError('No user is found by that email', 404);
+    }
+
+    // Generate the random reset token
+    const resetToken = user.createPasswordResetToken();
+    await user.save({ validateBeforeSave: false });
+
+    // Send it to the users's email
+    const resetURL = `${req.protocol}://${req.get(
+      'host'
+    )}/user/reset-password/${resetToken}`;
+
+    const message = `To reset the password on your account, simply use the link below and follow the steps.\n
+    ${resetURL}\n
+    If you did not request a password reset, please disregard this email. Nothing will change to your account.`;
+
+    try {
+      await sendEmail({
+        email: user.email,
+        subject: 'Flickr - Reset your password',
+        message,
+      });
+
+      res.status(200).json({
+        status: 'success',
+        message: 'Token sent to email',
+      });
+    } catch (err) {
+      user.passwordResetToken = undefined;
+      user.passwordResetExpires = undefined;
+      await user.save({ validateBeforeSave: false });
+
+      throw new AppError(
+        'There was an error sending the email. Please try again later.',
+        500
+      );
+    }
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};
+
+// RESET PASSWORD
+exports.resetPassword = async (req, res) => {};

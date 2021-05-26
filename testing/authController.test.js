@@ -275,3 +275,36 @@ describe('should protect routes successfully by verifyin tokens', () => {
     expect(mRes.json).toBeCalledWith(authTestData.protectData5);
   });
 });
+
+describe('should send password reset email to user', () => {
+  test('should not send email because the user does not exist', async () => {
+    const mReq = {
+      body: {
+        email: 'agf@gmail.com',
+      },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await authController.forgotPassword(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(404);
+    expect(mRes.json).toBeCalledWith(authTestData.userNotFound);
+  });
+
+  test('should reset email to danielbassem@gmail.com', async () => {
+    const mReq = {
+      body: {
+        email: 'danielbassem@gmail.com',
+      },
+      get: jest.fn().mockReturnThis(),
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await authController.forgotPassword(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(authTestData.forgotPasswordData);
+  });
+});

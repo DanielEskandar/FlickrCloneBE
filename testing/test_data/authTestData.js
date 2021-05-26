@@ -1,3 +1,8 @@
+module.exports.userNotFound = {
+  status: 'fail',
+  message: 'No user is found by that email',
+};
+
 module.exports.signupData1 = {
   status: 'fail',
   message: 'Invalid input data. Minimum age is 13',
@@ -145,4 +150,9 @@ module.exports.protectData4 = {
 module.exports.protectData5 = {
   status: 'fail',
   message: 'The user belonging to this token does not exist',
+};
+
+module.exports.forgotPasswordData = {
+  status: 'success',
+  message: 'Token sent to email',
 };

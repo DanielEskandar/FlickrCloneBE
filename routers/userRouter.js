@@ -942,13 +942,13 @@ userRouter.patch('/password');
  *
  */
 
-userRouter.post('/forget-password');
+userRouter.post('/forgot-password', authController.forgotPassword);
 
 /**
  *
  */
 
-userRouter.post('/confirm-password');
+userRouter.patch('/reset-password/:token', authController.resetPassword);
 
 /**
  * @api {get} /user/perm Get User Permission Settings

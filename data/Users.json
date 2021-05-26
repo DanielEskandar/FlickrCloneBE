@@ -529,5 +529,15 @@
     "age": 25,
     "password": "Abdcdef#3",
     "joinDate": "2021-05-21T10:11:16.876+00:00"
+  },
+  {
+    "_id": "60ae8e27520fd85714fd7ce5",
+    "firstName": "forgotPasswordFirstName",
+    "lastName": "forgotPasswordLastName",
+    "displayName": "forgotPasswordTestUser",
+    "email": "danielbassem@gmail.com",
+    "age": 21,
+    "password": "Abdcdef!1",
+    "joinDate": "2021-05-22T10:11:16.876+00:00"
   }
 ]
