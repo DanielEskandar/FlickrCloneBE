@@ -252,7 +252,7 @@ module.exports.editCommentData2 = {
   },
 };
 
-module.exports.deleteCommentData = {
+module.exports.deleteData = {
   status: 'success',
   data: 'deleted',
 };
@@ -396,6 +396,48 @@ module.exports.getSizesData2 = {
       },
       canDownload: false,
     },
+  },
+};
+
+module.exports.setTagData1 = {
+  status: 'success',
+  data: {
+    updatedTags: ['Unittesttag1', 'Unit', 'Test', 'Tag'],
+  },
+};
+
+module.exports.setTagData2 = {
+  status: 'success',
+  data: {
+    updatedTags: ['MirrorlessCamera', 'LowExposure'],
+  },
+};
+
+module.exports.removeTag1 = {
+  status: 'success',
+  data: {
+    updatedTags: ['Fireflies', 'light'],
+  },
+};
+
+module.exports.removeTag2 = {
+  status: 'success',
+  data: {
+    updatedTags: ['Fireflies'],
+  },
+};
+
+module.exports.addTagData1 = {
+  status: 'success',
+  data: {
+    updatedTags: ['AddingTag'],
+  },
+};
+
+module.exports.addTagData2 = {
+  status: 'success',
+  data: {
+    updatedTags: ['AddingTag', 'Skyline'],
   },
 };
 

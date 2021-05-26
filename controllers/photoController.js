@@ -55,7 +55,7 @@ exports.getFavourites = async (req, res) => {
   }
 };
 
-// ADD COMMENT TO PHOTO --
+// ADD COMMENT TO PHOTO
 exports.addComment = async (req, res) => {
   try {
     if (!(await photoModel.findById(req.params.id))) {
@@ -196,6 +196,119 @@ exports.getSizes = async (req, res) => {
   }
 };
 
+// SET PHOTO TAGS
+exports.setTags = async (req, res) => {
+  try {
+    if (!(await photoModel.findById(req.params.id))) {
+      throw new AppError('No Photo Found with this ID', 404);
+    }
+
+    req.body.tags.forEach((element) => {
+      if (element.includes(' ')) {
+        throw new AppError('Cannot Set Tag With Spaces', 409);
+      }
+    });
+
+    await photoModel.findByIdAndUpdate(
+      req.params.id,
+      {
+        $set: { tags: req.body.tags },
+      },
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
+
+    const photoTags = await photoModel
+      .findById(req.params.id)
+      .select({ tags: 1, _id: 0 });
+
+    res.status(200).json({
+      status: 'success',
+      data: { updatedTags: JSON.parse(JSON.stringify(photoTags.tags)) },
+    });
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};
+
+// ADD PHOTO TAGS
+exports.addTag = async (req, res) => {
+  try {
+    if (!(await photoModel.findById(req.params.id))) {
+      throw new AppError('No Photo Found with this ID', 404);
+    }
+
+    if (req.body.tags.includes(' ')) {
+      throw new AppError('Cannot Set Tag With Spaces', 409);
+    }
+
+    await photoModel.findByIdAndUpdate(
+      req.params.id,
+      {
+        $addToSet: { tags: req.body.tags },
+      },
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
+
+    const photoTags = await photoModel
+      .findById(req.params.id)
+      .select({ tags: 1, _id: 0 });
+
+    res.status(200).json({
+      status: 'success',
+      data: { updatedTags: JSON.parse(JSON.stringify(photoTags.tags)) },
+    });
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};
+
+// REMOVE PHOTO TAGS
+exports.removeTag = async (req, res) => {
+  try {
+    const photoWithTag = await photoModel
+      .findById(req.params.id)
+      .select({ tags: 1, _id: 0 });
+
+    if (!photoWithTag) {
+      throw new AppError('No Photo Found with this ID', 404);
+    }
+    const tag = photoWithTag.tags.find(
+      (element) => element.toString() === req.body.tags.toString()
+    );
+
+    if (tag) {
+      const updatedPhoto = await photoModel.findByIdAndUpdate(
+        req.params.id,
+        {
+          $pull: { tags: tag },
+        },
+        {
+          new: true,
+          runValidators: true,
+        }
+      );
+
+      res.status(200).json({
+        status: 'success',
+        data: {
+          updatedTags: JSON.parse(JSON.stringify(updatedPhoto.tags)),
+        },
+      });
+    } else {
+      throw new AppError('No such Tag Exists', 404);
+    }
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};
+
+// EDIT PHOTO INFORMATION
 exports.editPhotoInformation = async (req, res) => {
   try {
     // check if photo id exist or not
