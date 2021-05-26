@@ -1,8 +1,8 @@
 // INCLUDE DEPENDENCIES
-const crypto = require('crypto');
 const mongoose = require('mongoose');
 const validator = require('validator');
 const bcrypt = require('bcryptjs');
+const crypto = require('crypto');
 
 // CREATE SCHEMA
 const userSchema = new mongoose.Schema({
@@ -141,6 +141,15 @@ userSchema.pre('save', async function (next) {
 
   // Hash the password with cost of 12
   this.password = await bcrypt.hash(this.password, 12);
+  next();
+});
+
+// update changedPasswordAt property
+userSchema.pre('save', function (next) {
+  if (!this.isModified('password') || this.isNew) return next();
+
+  this.passwordChangedAt = Date.now() - 1000;
+  next();
 });
 
 // check if the password is correct
@@ -175,7 +184,7 @@ userSchema.methods.createPasswordResetToken = function () {
     .update(resetToken)
     .digest('hex');
 
-  this.passwordResetExpires = Date.now() + 10 * 60 * 1000;
+  this.passwordResetExpires = Date.now() + 1 * 60 * 1000;
 
   return resetToken;
 };

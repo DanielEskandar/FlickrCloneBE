@@ -1,6 +1,7 @@
 // INCLUDE DEPENDENCIES
 const jwt = require('jsonwebtoken');
 const { promisify } = require('util');
+const crypto = require('crypto');
 
 // INCLUDE MODELS
 const userModel = require('../models/userModel.js');
@@ -153,7 +154,9 @@ exports.forgotPassword = async (req, res) => {
       await sendEmail({
         email: user.email,
         subject: 'Flickr - Reset your password',
-        message,
+        message: {
+          html: message,
+        },
       });
 
       res.status(200).json({
@@ -176,4 +179,37 @@ exports.forgotPassword = async (req, res) => {
 };
 
 // RESET PASSWORD
-exports.resetPassword = async (req, res) => {};
+exports.resetPassword = async (req, res) => {
+  try {
+    // Get user based on the token
+    const hashedToken = crypto
+      .createHash('sha256')
+      .update(req.params.token)
+      .digest('hex');
+
+    const user = await userModel.findOne({
+      passwordResetToken: hashedToken,
+      passwordResetExpires: { $gt: Date.now() },
+    });
+
+    // If token has not expired, user exists, set the new password
+    if (!user) {
+      throw new AppError('Token is invalid or has expired', 400);
+    }
+
+    // udpate password property
+    user.password = req.body.password;
+    user.passwordResetToken = undefined;
+    user.passwordResetExpires = undefined;
+    await user.save();
+
+    // Log the user in and send JWT
+    const token = signToken(user._id);
+    res.status(200).json({
+      status: 'success',
+      token,
+    });
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};

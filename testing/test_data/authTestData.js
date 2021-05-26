@@ -156,3 +156,31 @@ module.exports.forgotPasswordData = {
   status: 'success',
   message: 'Token sent to email',
 };
+
+module.exports.resetPasswordReq1 = {
+  body: {
+    password: 'Abcdef@1',
+  },
+  params: {
+    token: 'c20171c2aa2a4530e21cb15fe56d336a236879fa478197b1492303369c364a2d',
+  },
+};
+
+module.exports.resetPasswordData1 = {
+  status: 'fail',
+  message: 'Token is invalid or has expired',
+};
+
+module.exports.resetPasswordReq2 = {
+  body: {
+    password: 'Abcdef@1',
+  },
+  params: {
+    token: '1c0104400229d67cc760a4f951715507d805b1d58267c0f6a57a2e10dcd2d02d',
+  },
+};
+
+module.exports.resetPasswordData2 = {
+  status: 'success',
+  token: expect.any(String),
+};

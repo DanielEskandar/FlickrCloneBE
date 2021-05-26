@@ -117,6 +117,7 @@ describe('should perform signup operation for a new user', () => {
   });
 });
 
+// TESTING: signIn
 describe('should perform login operation successfully', () => {
   test('should not login user because body does not contain email', async () => {
     const mReq = {
@@ -276,6 +277,7 @@ describe('should protect routes successfully by verifyin tokens', () => {
   });
 });
 
+// TESTING: forgotPassword
 describe('should send password reset email to user', () => {
   test('should not send email because the user does not exist', async () => {
     const mReq = {
@@ -306,5 +308,30 @@ describe('should send password reset email to user', () => {
     await authController.forgotPassword(mReq, mRes);
     expect(mRes.status).toBeCalledWith(200);
     expect(mRes.json).toBeCalledWith(authTestData.forgotPasswordData);
+  });
+});
+
+// TESTING: resetPassword
+describe('should reset user password', () => {
+  test('should not reset user password because token has expired', async () => {
+    const mReq = authTestData.resetPasswordReq1;
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await authController.resetPassword(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(400);
+    expect(mRes.json).toBeCalledWith(authTestData.resetPasswordData1);
+  });
+
+  test('should reset reset user password of resetPasswordValidUser', async () => {
+    const mReq = authTestData.resetPasswordReq2;
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await authController.resetPassword(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(authTestData.resetPasswordData2);
   });
 });
