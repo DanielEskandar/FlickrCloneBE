@@ -1121,7 +1121,7 @@ photoRouter.delete('/:id/tags/:userId');
  * @apiUse PhotoNotFoundError
  *
  */
-photoRouter.get('/:id/tags');
+photoRouter.get('/:id/tags', photoController.getTagged);
 
 /**
  * @api {patch} /photo/:id/rotate Rotate a Photo

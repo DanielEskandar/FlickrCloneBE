@@ -225,3 +225,17 @@ describe('should retrieve all sizes of a photo', () => {
     expect(mRes.json).toBeCalledWith(photoTestData.getSizesData1);
   });
 });
+
+// TESTING: getTagged
+describe('should retrieve tagged people in a photo', () => {
+  test('should retrieve 1 tagged user', async () => {
+    const mReq = { params: { id: '608d5450ec00005468607a0f' } };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await photoController.getTagged(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(photoTestData.getTaggedData);
+  });
+});

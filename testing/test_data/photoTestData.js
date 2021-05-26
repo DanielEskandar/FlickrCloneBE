@@ -398,3 +398,16 @@ module.exports.getSizesData2 = {
     },
   },
 };
+
+module.exports.getTaggedData = {
+  status: 'success',
+  data: {
+    peopleTagged: [
+      {
+        _id: '609093af84b808271488fafd',
+        userId: '608d5450ec00005468604a0c',
+        tagDate: '2012-04-13T18:25:43.511Z',
+      },
+    ],
+  },
+};

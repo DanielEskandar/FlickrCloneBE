@@ -194,3 +194,28 @@ exports.getSizes = async (req, res) => {
     errorController.sendError(err, req, res);
   }
 };
+
+// GET TAGGED PEOPLE
+exports.getTagged = async (req, res) => {
+  try {
+    if ((await photoModel.findById(req.params.id)) === null) {
+      throw new AppError('No photo Found with this ID', 404);
+    }
+
+    const tags = await photoModel
+      .findById(req.params.id)
+      .select({ _id: 0 })
+      .select('peopleTagged');
+
+    if (!tags) {
+      throw new AppError('No tags found for this photo', 404);
+    }
+
+    res.status(200).json({
+      status: 'success',
+      data: JSON.parse(JSON.stringify(tags)),
+    });
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};
