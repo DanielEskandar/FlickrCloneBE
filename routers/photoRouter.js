@@ -1,12 +1,40 @@
 // INCLUDE DEPENDENCIES
 const express = require('express');
+const multer = require('multer');
 
 // INCLUDE CONTROLLERS
 const photoController = require('../controllers/photoController.js');
-const authController = require('../controllers/authController.js');
 
 // CREATE ROUTER
 const photoRouter = express.Router();
+
+// MULTER STORAGE
+const multerStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, '/uploads');
+  },
+  filename: (req, file, cb) => {
+    const ext = file.mimetype.split('/')[1];
+    // Saving format: user-UserId-DateStamp.ext
+    //e.g user-608d55c7e512b74ee00791de-1621992912638.jpeg
+    cb(null, `user-${req.body.userId}-${Date.now()}.${ext}`);
+  },
+});
+
+//MULTER FILTER
+const multerFilter = (req, file, cb) => {
+  //mimetype always starts with image/ then png or jpeg or..
+  if (file.mimetype.startsWith('image')) {
+    cb(null, true);
+  } else {
+    cb(new AppError('You are only allowed to upload image files.', 400), false);
+  }
+};
+
+const uploadDirectory = multer({
+  storage: multerStorage,
+  fileFilter: multerFilter,
+});
 
 // ROUTE URLs
 
@@ -84,7 +112,11 @@ const photoRouter = express.Router();
  * @apiUse UnauthError
  *
  */
-photoRouter.post('/');
+photoRouter.post(
+  '/',
+  uploadDirectory.single('photo'),
+  photoController.uploadPhoto
+);
 
 /**
  * @api {patch} /photo/:id/perm Change a Photo's Privacy and Visibility
@@ -119,16 +151,6 @@ photoRouter.patch('/:id/perm');
  * @apiGroup Photo
  *
  * @apiParam {String} id The Photo's ID
- * @apiParam (Request Body) {String} title Photo's Name
- * @apiParam (Request Body) {String} description Photo's Description
- * @apiParam (Request Body) {[String]} tags Photo's Tags
- * @apiParam (Request Body) {Date}  dateUploaded Date Uploaded
- * @apiParam (Request Body) {Date} dateTaken   Date Taken
- * @apiParam (Request Body) {Object{}} permissions  The Photo's Viewing Permisions
- * @apiParam (Request Body) {Number}  license License Number (From 0 to 10)  
- * @apiParam (Request Body) {Number} safetyLevel Safety Level 
- * @apiParam (Request Body) {String} contentType Content Type 
-
  *
  * @apiSuccess {string} Status Status of API
  *
@@ -139,11 +161,7 @@ photoRouter.patch('/:id/perm');
  * @apiUse PhotoNotFoundError
  *
  */
-photoRouter.patch(
-  '/:id/',
-  authController.protect,
-  photoController.editPhotoInformation
-);
+photoRouter.patch('/:id/');
 
 /**
  * @api {delete} /photo/:id Delete a User's Photo
@@ -182,93 +200,11 @@ photoRouter.delete('/:id/');
  *          "status": "success",
  *          "data":
  *          {
- *            "sizes": {
- *             "size": {
- *             "original": {
- *                "height": 120,
- *                "width": 60,
- *                "source": "https://www.google.com/",
- *                "url": "https://www.google.com/"
- *              },
- *             "large": {
- *               "height": 190,
- *                "width": 20,
- *                "source": "https://www.google.com/",
- *                "url": "https://www.google.com/"
- *               },
- *             "medium800": {
- *               "height": 200,
- *               "width": 60,
- *               "source": "https://www.google.com/",
- *               "url": "https://www.google.com/"
- *               },
- *             "medium640": {
- *               "height": 1200,
- *               "width": 60,
- *               "source": "https://www.google.com/",
- *               "url": "https://www.google.com/"
- *               },
- *             "medium": {
- *               "height": 120,
- *               "width": 600,
- *               "source": "https://www.google.com/",
- *               "url": "https://www.google.com/"
- *               },
- *             "small320": {
- *               "height": 12,
- *               "width": 60,
- *               "source": "https://www.google.com/",
- *               "url": "https://www.google.com/"
- *               },
- *             "small": {
- *               "height": 1000,
- *               "width": 60,
- *               "source": "https://www.google.com/",
- *               "url": "https://www.google.com/"
- *               },
- *             "thumbnail": {
- *               "height": 50,
- *               "width": 50,
- *               "source": "https://www.google.com/",
- *               "url": "https://www.google.com/"
- *               },
- *             "largeSquare": {
- *               "height": 120,
- *               "width": 120,
- *               "source": "https://www.google.com/",
- *               "url": "https://www.google.com/"
- *               },
- *             "square": {
- *               "height": 60,
- *               "width": 60,
- *               "source": "https://www.google.com/",
- *               "url": "https://www.google.com/"
- *               }
- *           },
- *           "canDownload": false
- *           },
- *       "comments": [],
- *       "favourites": 7,
- *       "views": 21,
- *       "tags": [
- *       "#sunset"
- *       ],
- *       "userId": "608d55c7e512b74ee00791db",
- *       "title": "Some Title",
- *       "description": "Amazing shot",
- *       "dateUploaded": "2012-04-23T18:25:43.511Z",
- *      "dateTaken": "2013-04-23T18:25:43.511Z",
- *       "location": "608d5450ec00005468604a0c",
- *       "EXIF": "123erf",
- *       "contentType": "Screenshot",
- *       "peopleTagged": [
- *       {
- *           "_id": "609093af84b808271488fafd",
- *          "userId": "608d5450ec00005468604a0c",
- *           "tagDate": "2012-04-13T18:25:43.511Z"
- *       }
- *       ],
- *       "__v": 0
+ *              "permissions": {
+ *                0, 1, 1
+ *              }
+ *              "isfavourite : " 0,
+ *              "rotationAngle: " 90
  *          }
  *      }
  *
@@ -320,7 +256,7 @@ photoRouter.get('/:id/url');
  *
  * @apiParam {String} id The Photo's ID
  *
- * @apiParam (Request Body) {String} tag The New Tag Text to Add
+ * @apiParam (Request Body) {String} tags All Tags for the Photo
  *
  * @apiSuccess {string} Status Status of API
  *
@@ -331,7 +267,7 @@ photoRouter.get('/:id/url');
  * @apiUse PhotoNotFoundError
  *
  */
-photoRouter.patch('/:id/tags', photoController.setTags);
+photoRouter.patch('/:id/tags');
 
 /**
  * @api {post} /photo/ Add a Set of Tags to a Photo
@@ -343,7 +279,7 @@ photoRouter.patch('/:id/tags', photoController.setTags);
  *
  * @apiParam {String} id The Photo's ID
  *
- * @apiParam (Request Body) {String} tags The Tag Text to Add
+ * @apiParam (Request Body) {String} tags All Tags for the Photo
  *
  * @apiUse SuccessRes
  *
@@ -352,7 +288,7 @@ photoRouter.patch('/:id/tags', photoController.setTags);
  * @apiUse PhotoNotFoundError
  *
  */
-photoRouter.post('/:id/tags', photoController.addTag);
+photoRouter.post('/:id/tags');
 
 /**
  * @api {delete} /photo/:id Remove a Tag
@@ -373,7 +309,7 @@ photoRouter.post('/:id/tags', photoController.addTag);
  * @apiUse PhotoNotFoundError
  *
  */
-photoRouter.delete('/:id/tags', photoController.removeTag);
+photoRouter.delete('/:id/tags');
 
 /**
  * @api {get} /photo/:id/galleries Gets all Galleries Photo Belongs to
@@ -383,10 +319,12 @@ photoRouter.delete('/:id/tags', photoController.removeTag);
  *
  * @apiParam {String} id The Photo's ID 
  * 
- * @apiParam (Request Body) {Number} per_page Number of Galleries to return Per Page
+ * @apiParam (Request Body) {Number} galleriesperpage Number of Galleries to return Per Page
+ * @apiParam (Request Body) {Number} page The Page of Results to Return
+ * @apiParam (Request Body) {Number} perpage Number of Comments Per Page to Return
  * @apiParam (Request Body) {Number} page The Page Number to Return
  * 
- * @apiSuccess {Object[]} galleries Array of Gallery ID's Photo Belong to
+ * @apiSuccess {Object[]} gallerylist Array of Gallery ID's Photo Belong to
  * 
  * @apiSuccessExample Success-Response:
  *      HTTP/1.1 200 OK
@@ -394,7 +332,7 @@ photoRouter.delete('/:id/tags', photoController.removeTag);
  *          "status": "success",
  *          "data":
  *          {
-               "galleries": [
+               "gallerylist": [
  *
  *              ] 
  *          }
@@ -405,7 +343,7 @@ photoRouter.delete('/:id/tags', photoController.removeTag);
  * @apiUse PhotoNotFoundError
  * 
  */
-photoRouter.get('/:id/galleries', photoController.getGalleriesforPhoto);
+photoRouter.get('/:id/galleries');
 
 /**
  * @api {get} /photo/:id/contexts/all Gets all Visible Sets and Pools Photo Belongs to
@@ -607,7 +545,11 @@ photoRouter.get('/:id/perm');
  *
  * @apiParam {String} id The Photo's ID
  *
- * @apiSuccess {String[]} sizes Array of the Size
+ * @apiSuccess {String[]} nameofsize Array of The Labels for the Size
+ * @apiSuccess {Number[]} widths Array of the Widths of the Photo in Each Size
+ * @apiSuccess {Number[]} heigths Array of the Heights of the Photo in Each Size
+ * @apiSuccess {String[]} sizeurl Array of the URLs of the Photo in each Size
+ * @apiSuccess {String[]} sourceurl Array of the Source URLs
  *
  * @apiSuccessExample Success-Response:
  *      HTTP/1.1 200 OK
@@ -615,71 +557,7 @@ photoRouter.get('/:id/perm');
  *          "status": "success",
  *          "data":
  *          {
- *              "sizes": {
- *                  "size": {
- *                  "original": {
- *                   "height": 120,
- *                   "width": 60,
- *                   "source": "https://www.google.com/",
- *                   "url": "https://www.google.com/"
- *                  },
- *                 "large": {
- *                   "height": 190,
- *                   "width": 20,
- *                  "source": "https://www.google.com/",
- *                  "url": "https://www.google.com/"
- *                  },
- *                  "medium800": {
- *                  "height": 200,
- *                  "width": 60,
- *                  "source": "https://www.google.com/",
- *                  "url": "https://www.google.com/"
- *                  },
- *                  "medium640": {
- *                  "height": 1200,
- *                  "width": 60,
- *                  "source": "https://www.google.com/",
- *                   "url": "https://www.google.com/"
- *                   },
- *                   "medium": {
- *                   "height": 120,
- *                   "width": 600,
- *                  "source": "https://www.google.com/",
- *                   "url": "https://www.google.com/"
- *                   },
- *                   "small320": {
- *                   "height": 12,
- *                   "width": 60,
- *                   "source": "https://www.google.com/",
- *                   "url": "https://www.google.com/"
- *                   },
- *                   "small": {
- *                   "height": 1000,
- *                   "width": 60,
- *                   "source": "https://www.google.com/",
- *                   "url": "https://www.google.com/"
- *                   },
- *                   "thumbnail": {
- *                   "height": 50,
- *                   "width": 50,
- *                   "source": "https://www.google.com/",
- *                   "url": "https://www.google.com/"
- *                   },
- *                   "largeSquare": {
- *                   "height": 120,
- *                   "width": 120,
- *                   "source": "https://www.google.com/",
- *                   "url": "https://www.google.com/"
- *                   },
- *                   "square": {
- *                   "height": 60,
- *                   "width": 60,
- *                   "source": "https://www.google.com/",
- *                   "url": "https://www.google.com/"
- *                   }
- *               },
- *               "canDownload": false
- *               }
+ *
  *          }
  *      }
  *
@@ -795,8 +673,7 @@ photoRouter.patch('/:id/safety-level');
  *
  * @apiHeader {string} Token Authenticaton Token
  *
- * @apiParam (Request Body) {String} body The Text in the Comment
- * @apiParam (Request Body) {String} userId The ID of the Commenting User
+ * @apiParam (Request Body) {String} commenttext The Text in the Comment
  *
  * @apiUse SuccessRes
  *
@@ -837,7 +714,7 @@ photoRouter.delete('/:id/comments/:commentid', photoController.deleteComment);
  *
  * @apiHeader {string} Token Authenticaton Token
  *
- * @apiParam (Request Body) {String} body The New Comment Text
+ * @apiParam (Request Body) {String} id The New Comment Text
  *
  * @apiSuccess {string} Status Status of API
  *
