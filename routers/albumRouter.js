@@ -3,6 +3,7 @@ const express = require('express');
 
 // INCLUDE CONTROLLERS
 const albumController = require('../controllers/albumController.js');
+const authController = require('../controllers/authController.js');
 
 // CREATE ROUTER
 const albumRouter = express.Router();
@@ -223,7 +224,11 @@ albumRouter.delete('/:id');
  * @apiUse UnauthError
  */
 
-albumRouter.delete('/:id/photos', albumController.removePhotos);
+albumRouter.delete(
+  '/:id/photos',
+  authController.protect,
+  albumController.removePhotos
+);
 
 /**
  * @api {delete} /photoset/:id/:photoid Delete Photo
@@ -282,7 +287,11 @@ albumRouter.delete('/:id/:photoid', albumController.removePhoto);
  *      }
  */
 
-albumRouter.delete('/:id/comments/:commentid', albumController.deleteComment);
+albumRouter.delete(
+  '/:id/comments/:commentid',
+  authController.protect,
+  albumController.deleteComment
+);
 
 /**
  * @api {post} /photoset/ Create a new album
@@ -348,7 +357,11 @@ albumRouter.post('/', albumController.createAlbum);
  *
  */
 
-albumRouter.post('/:id/photos', albumController.addPhoto);
+albumRouter.post(
+  '/:id/photos',
+  authController.protect,
+  albumController.addPhoto
+);
 
 /**
  * @api {post} /photoset/:id/comments Add a comment
@@ -382,7 +395,11 @@ albumRouter.post('/:id/photos', albumController.addPhoto);
  * @apiUse AlbumNotFoundError
  */
 
-albumRouter.post('/:id/comments', albumController.addComment);
+albumRouter.post(
+  '/:id/comments',
+  authController.protect,
+  albumController.addComment
+);
 
 /**
  * @api {patch} /photoset/:id/photos Add, Remove and Reorder photos
@@ -412,7 +429,7 @@ albumRouter.patch('/:id/photos');
  *
  * @apiParam {String} id The album's ID
  *
- * @apiParam (Request Body) {String} title The title of the album
+ * @apiParam (Request Body) {String} albumName The title of the album
  * @apiParam (Request Body) {String} description The new description for the album
  *
  * @apiUse SuccessRes
@@ -422,7 +439,11 @@ albumRouter.patch('/:id/photos');
  * @apiUse AlbumNotFoundError
  */
 
-albumRouter.patch('/:id/meta');
+albumRouter.patch(
+  '/:id/meta',
+  authController.protect,
+  albumController.editMeta
+);
 
 /**
  * @api {patch} /photoset/comments/:id Edit the body of a comment
@@ -463,7 +484,11 @@ albumRouter.patch('/:id/meta');
  *      }
  */
 
-albumRouter.patch('/comments/:id', albumController.editComment);
+albumRouter.patch(
+  '/comments/:id',
+  authController.protect,
+  albumController.editComment
+);
 
 /**
  * @api {patch} /photoset/:id/primary/:photoid Set album's primary photo
@@ -483,7 +508,11 @@ albumRouter.patch('/comments/:id', albumController.editComment);
  * @apiUse PhotoNotFoundError
  */
 
-albumRouter.patch('/:id/primary/:photoid');
+albumRouter.patch(
+  '/:id/primary/:photoid',
+  authController.protect,
+  albumController.setPrimaryPhoto
+);
 
 /**
  * @api {patch} /photoset/setorder Set the order of albums

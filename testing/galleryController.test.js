@@ -59,6 +59,7 @@ describe('should get Comments in a gallery', () => {
 describe('should edit a comment in a gallery', () => {
   test(`should edit a Comments with id 6090beb07237ad1fb4458fae`, async () => {
     const mReq = {
+      user: { id: '608d5450ec00005468607a0c' },
       params: { id: '6090beb07237ad1fb4458fae' },
       body: { body: 'I like it' },
     };
@@ -78,10 +79,10 @@ describe('should Add a comment to a gallery', () => {
     // delete any comment with 5590beb07237ad1fb4458fae
     await commentModel.findByIdAndDelete('5590beb07237ad1fb4458fae');
     const mReq = {
+      user: { id: '608d5450ec00005468607a0c' },
       params: { id: '608f34a634413f11f020b121' },
       body: {
         _id: '5590beb07237ad1fb4458fae',
-        userId: '608d5450ec00005468607a0c',
         date: '2021-05-04T18:21:34.924Z',
         body: 'good one',
       },
@@ -100,6 +101,7 @@ describe('should Add a comment to a gallery', () => {
 describe('should delete a comment from a gallery', () => {
   test(`should delete a comment from a gallery with id 608f34a634413f11f020b121`, async () => {
     const mReq = {
+      user: { id: '608d5450ec00005468607a0c' },
       params: {
         id: '608f34a634413f11f020b121',
         commentid: '4590be955537ad1fb4458f11',
@@ -111,7 +113,7 @@ describe('should delete a comment from a gallery', () => {
     };
     await galleryController.deleteComment(mReq, mRes);
     expect(mRes.status).toBeCalledWith(204);
-    expect(mRes.json).toBeCalledWith(galleryTestData.deleteCommentData);
+    expect(mRes.json).toBeCalledWith(galleryTestData.successResponse);
   });
 });
 
@@ -121,7 +123,7 @@ describe('should Create a gallery', () => {
     // delete any gallery with 708f34a634413f11f020b139
     await galleryModel.findByIdAndDelete('708f34a634413f11f020b139');
     const mReq = {
-      headers: { userid: '608d5450ec00005468607a11' },
+      user: { id: '608d5450ec00005468607a11' },
       body: {
         _id: '708f34a634413f11f020b139',
         galleryName: 'Egypt',
@@ -144,8 +146,9 @@ describe('should add Photo to a gallery', () => {
   test(`should should add Photo to a gallery id 608f34a634413f11f020b12a`, async () => {
     const mReq = {
       params: { id: '608f34a634413f11f020b12a' },
-      headers: { userid: '608d5450ec00005468607a11' },
+      user: { id: '608d5450ec00005468607a11' },
       body: {
+        _id: '608d5560ec0000546860000e',
         photoID: '608d5560ec00005468607a0e',
       },
     };
@@ -155,10 +158,7 @@ describe('should add Photo to a gallery', () => {
     };
     await galleryController.addPhoto(mReq, mRes);
     expect(mRes.status).toBeCalledWith(200);
-    expect(mRes.json).toBeCalledWith({
-      status: 'success',
-      data: 'ok',
-    });
+    expect(mRes.json).toBeCalledWith(galleryTestData.addPhoto);
   });
 });
 
@@ -166,6 +166,7 @@ describe('should add Photo to a gallery', () => {
 describe('should delete a photo from a gallery', () => {
   test(`should delete a photo from a gallery with id 608f34a634413f11f020b124`, async () => {
     const mReq = {
+      user: { id: '608d5450ec00005468607a11' },
       params: {
         id: '608f34a634413f11f020b124',
         photoid: '608d5450ec00005468607a0f',
@@ -177,9 +178,46 @@ describe('should delete a photo from a gallery', () => {
     };
     await galleryController.removePhoto(mReq, mRes);
     expect(mRes.status).toBeCalledWith(204);
-    expect(mRes.json).toBeCalledWith({
-      status: 'success',
-      data: 'ok',
-    });
+    expect(mRes.json).toBeCalledWith(galleryTestData.successResponse);
+  });
+});
+
+// TESTING: editMeta
+describe('should edit meta of a gallery', () => {
+  test(`should edit meta of a gallery with id 608f34a634413f11f020b124`, async () => {
+    const mReq = {
+      user: { id: '608d5450ec00005468607a11' },
+      params: {
+        id: '608f34a634413f11f020b124',
+      },
+      body: { galleryName: 'TEST edit Meta' },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await galleryController.editMeta(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(galleryTestData.editMeta);
+  });
+});
+
+// TESTING: setPrimaryPhoto
+describe('should set Primary Photo of a gallery', () => {
+  test(`should set Primary Photo of a gallery with id 608f34a634413f11f020b127`, async () => {
+    const mReq = {
+      user: { id: '608d5450ec00005468607a11' },
+      params: {
+        id: '608f34a634413f11f020b127',
+        photoid: '608d5450ec00005468607a0f',
+      },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await galleryController.setPrimaryPhoto(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(galleryTestData.setPrimaryPhoto);
   });
 });

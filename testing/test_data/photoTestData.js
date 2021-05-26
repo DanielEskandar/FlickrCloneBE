@@ -252,7 +252,7 @@ module.exports.editCommentData2 = {
   },
 };
 
-module.exports.deleteCommentData = {
+module.exports.deleteData = {
   status: 'success',
   data: 'deleted',
 };
@@ -396,5 +396,76 @@ module.exports.getSizesData2 = {
       },
       canDownload: false,
     },
+  },
+};
+
+module.exports.setTagData1 = {
+  status: 'success',
+  data: {
+    updatedTags: ['Unittesttag1', 'Unit', 'Test', 'Tag'],
+  },
+};
+
+module.exports.setTagData2 = {
+  status: 'success',
+  data: {
+    updatedTags: ['MirrorlessCamera', 'LowExposure'],
+  },
+};
+
+module.exports.removeTag1 = {
+  status: 'success',
+  data: {
+    updatedTags: ['Fireflies', 'light'],
+  },
+};
+
+module.exports.removeTag2 = {
+  status: 'success',
+  data: {
+    updatedTags: ['Fireflies'],
+  },
+};
+
+module.exports.addTagData1 = {
+  status: 'success',
+  data: {
+    updatedTags: ['AddingTag'],
+  },
+};
+
+module.exports.addTagData2 = {
+  status: 'success',
+  data: {
+    updatedTags: ['AddingTag', 'Skyline'],
+  },
+};
+
+module.exports.editPhotoInfo = {
+  status: 'success',
+  data: {
+    _id: '608d5450ec00005468628a0d',
+    title: 'Test Edit Info',
+    description: 'New description for testing',
+    tags: ['#Test', '#FlickrClonoe'],
+    dateUploaded: '2020-11-03T06:10:45.000Z',
+    dateTaken: '2019-11-03T06:10:45.000Z',
+    permissions: {
+      public: false,
+      friend: true,
+      family: true,
+      comment: 2,
+      addMeta: 2,
+    },
+    license: 2,
+    safetyLevel: 1,
+    contentType: 'Photo',
+  },
+};
+
+module.exports.getGalleriesforPhoto = {
+  status: 'success',
+  data: {
+    galleries: ['608f34a634413f11f020b121', '608f34a634413f11f020b124'],
   },
 };
