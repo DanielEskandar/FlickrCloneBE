@@ -320,7 +320,7 @@ photoRouter.get('/:id/url');
  *
  * @apiParam {String} id The Photo's ID
  *
- * @apiParam (Request Body) {String} tags All Tags for the Photo
+ * @apiParam (Request Body) {String} tag The New Tag Text to Add
  *
  * @apiSuccess {string} Status Status of API
  *
@@ -331,7 +331,7 @@ photoRouter.get('/:id/url');
  * @apiUse PhotoNotFoundError
  *
  */
-photoRouter.patch('/:id/tags');
+photoRouter.patch('/:id/tags', photoController.setTags);
 
 /**
  * @api {post} /photo/ Add a Set of Tags to a Photo
@@ -343,7 +343,7 @@ photoRouter.patch('/:id/tags');
  *
  * @apiParam {String} id The Photo's ID
  *
- * @apiParam (Request Body) {String} tags All Tags for the Photo
+ * @apiParam (Request Body) {String} tags The Tag Text to Add
  *
  * @apiUse SuccessRes
  *
@@ -352,7 +352,7 @@ photoRouter.patch('/:id/tags');
  * @apiUse PhotoNotFoundError
  *
  */
-photoRouter.post('/:id/tags');
+photoRouter.post('/:id/tags', photoController.addTag);
 
 /**
  * @api {delete} /photo/:id Remove a Tag
@@ -373,7 +373,7 @@ photoRouter.post('/:id/tags');
  * @apiUse PhotoNotFoundError
  *
  */
-photoRouter.delete('/:id/tags');
+photoRouter.delete('/:id/tags', photoController.removeTag);
 
 /**
  * @api {get} /photo/:id/galleries Gets all Galleries Photo Belongs to
