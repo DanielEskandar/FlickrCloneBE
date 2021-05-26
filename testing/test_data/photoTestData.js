@@ -401,36 +401,44 @@ module.exports.getSizesData2 = {
 
 module.exports.setTagData1 = {
   status: 'success',
-  data: ['Unittesttag1'],
+  data: {
+    updatedTags: ['Unittesttag1', 'Unit', 'Test', 'Tag'],
+  },
 };
 
 module.exports.setTagData2 = {
   status: 'success',
-  data: ['MirrorlessCamera'],
+  data: {
+    updatedTags: ['MirrorlessCamera', 'LowExposure'],
+  },
 };
 
 module.exports.removeTag1 = {
   status: 'success',
   data: {
-    tags: ['Fireflies', 'light'],
+    updatedTags: ['Fireflies', 'light'],
   },
 };
 
 module.exports.removeTag2 = {
   status: 'success',
   data: {
-    tags: ['Fireflies'],
+    updatedTags: ['Fireflies'],
   },
 };
 
 module.exports.addTagData1 = {
   status: 'success',
-  data: ['AddingTag'],
+  data: {
+    updatedTags: ['AddingTag'],
+  },
 };
 
 module.exports.addTagData2 = {
   status: 'success',
-  data: ['Skyline'],
+  data: {
+    updatedTags: ['AddingTag', 'Skyline'],
+  },
 };
 
 module.exports.editPhotoInfo = {

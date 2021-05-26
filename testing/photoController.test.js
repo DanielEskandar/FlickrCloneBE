@@ -232,7 +232,7 @@ describe('should set a tag on a photo', () => {
     const mReq = {
       params: { id: '608d5450ec00005468628b5d' },
       body: {
-        tags: 'Unittesttag1',
+        tags: ['Unittesttag1', 'Unit', 'Test', 'Tag'],
       },
     };
     const mRes = {
@@ -250,7 +250,7 @@ describe('should set a tag on a photo', () => {
     const mReq = {
       params: { id: '608d5450ec00005468628b4d' },
       body: {
-        tags: 'MirrorlessCamera',
+        tags: ['MirrorlessCamera', 'LowExposure'],
       },
     };
     const mRes = {
@@ -279,8 +279,8 @@ describe('should delete a tag', () => {
       json: jest.fn().mockReturnThis(),
     };
     await photoController.removeTag(mReq, mRes);
-    expect(mRes.status).toBeCalledWith(204);
-    expect(mRes.json).toBeCalledWith(photoTestData.deleteData);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(photoTestData.removeTag1);
   });
 });
 
@@ -299,8 +299,8 @@ describe('should delete a tags', () => {
       json: jest.fn().mockReturnThis(),
     };
     await photoController.removeTag(mReq, mRes);
-    expect(mRes.status).toBeCalledWith(204);
-    expect(mRes.json).toBeCalledWith(photoTestData.deleteData);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(photoTestData.removeTag2);
   });
 });
 
@@ -326,7 +326,7 @@ describe('should add a tag on a photo', () => {
 describe('should add a tag on a photo', () => {
   test('should add tag Skyline', async () => {
     const mReq = {
-      params: { id: '608d5450ec00005468628b7d' },
+      params: { id: '608d5450ec00005468628b6d' },
       body: {
         tags: 'Skyline',
       },
