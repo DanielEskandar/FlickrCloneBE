@@ -1,6 +1,7 @@
 // INCLUDE MODELS
 const photoModel = require('../models/photoModel.js');
 const commentModel = require('../models/commentModel.js');
+const galleryModel = require('../models/galleryModel.js');
 
 // INCLUDE ERROR CLASS AND ERROR CONTROLLER
 const AppError = require('../utils/appError.js');
@@ -358,6 +359,44 @@ exports.editPhotoInformation = async (req, res) => {
           contentType: updatedPhoto.contentType,
         })
       ),
+    });
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};
+
+exports.getGalleriesforPhoto = async (req, res) => {
+  try {
+    // No auth
+    const photo = await photoModel.findById(req.params.id);
+    if (!photo) {
+      throw new AppError('No Photo Found with This ID', 404);
+    }
+
+    // pagination
+    const page = req.body.page || 1;
+    const perPage = req.body.per_page || 100;
+    const skip = (page - 1) * perPage;
+
+    if (req.body.page) {
+      //  if number of skipped pages > number of documents -> this page not found
+      const galleriesNum = await galleryModel
+        .find({ 'photos.photoId': req.params.id })
+        .countDocuments();
+      if (galleriesNum < skip)
+        throw new AppError('This page does not exist', 404);
+    }
+    const galleries = await galleryModel
+      .find({ 'photos.photoId': req.params.id })
+      .select({ _id: 1 })
+      .skip(skip)
+      .limit(perPage);
+
+    res.status(200).json({
+      status: 'success',
+      data: {
+        galleries: JSON.parse(JSON.stringify(galleries.map(({ _id }) => _id))),
+      },
     });
   } catch (err) {
     errorController.sendError(err, req, res);

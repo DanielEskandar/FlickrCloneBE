@@ -462,3 +462,10 @@ module.exports.editPhotoInfo = {
     contentType: 'Photo',
   },
 };
+
+module.exports.getGalleriesforPhoto = {
+  status: 'success',
+  data: {
+    galleries: ['608f34a634413f11f020b121', '608f34a634413f11f020b124'],
+  },
+};

@@ -374,3 +374,23 @@ describe('should edit photo info', () => {
     expect(mRes.json).toBeCalledWith(photoTestData.editPhotoInfo);
   });
 });
+
+// get GalleriesforPhoto
+describe('should  get Galleries for Photo', () => {
+  test('should get Galleries for Photo with id 608d5450ec00005468628a0d', async () => {
+    const mReq = {
+      params: { id: '608d5450ec00005468628a0d' },
+      body: {
+        per_page: 3,
+        page: 1,
+      },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await photoController.getGalleriesforPhoto(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(photoTestData.getGalleriesforPhoto);
+  });
+});
