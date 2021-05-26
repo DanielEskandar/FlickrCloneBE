@@ -5,6 +5,8 @@ const express = require('express');
 const photoController = require('../controllers/photoController.js');
 const authController = require('../controllers/authController.js');
 
+const multer = require('multer');
+
 // CREATE ROUTER
 const photoRouter = express.Router();
 
@@ -84,7 +86,11 @@ const photoRouter = express.Router();
  * @apiUse UnauthError
  *
  */
-photoRouter.post('/');
+photoRouter.post(
+  '/',
+  photoController.uploadDirectory.single('photo'),
+  photoController.uploadPhoto
+);
 
 /**
  * @api {patch} /photo/:id/perm Change a Photo's Privacy and Visibility

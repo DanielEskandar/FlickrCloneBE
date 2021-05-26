@@ -2,10 +2,59 @@
 const photoModel = require('../models/photoModel.js');
 const commentModel = require('../models/commentModel.js');
 const galleryModel = require('../models/galleryModel.js');
+const multer = require('multer');
+
+// MULTER STORAGE
+const multerStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, '/upload');
+  },
+  filename: (req, file, cb) => {
+    const ext = file.mimetype.split('/')[1];
+    // Saving format: user-UserId-DateStamp.ext
+    //e.g user-608d55c7e512b74ee00791de-1621992912638.jpeg
+    cb(null, `user-${req.body.userId}-${Date.now()}.${ext}`);
+  },
+});
+
+//MULTER FILTER
+const multerFilter = (req, file, cb) => {
+  //mimetype always starts with image/ then png or jpeg or..
+  if (file.mimetype.startsWith('image')) {
+    cb(null, true);
+  } else {
+    cb(new AppError('You are only allowed to upload image files.', 400), false);
+  }
+};
+
+const uploadDirectory = multer({
+  storage: multerStorage,
+  fileFilter: multerFilter,
+});
 
 // INCLUDE ERROR CLASS AND ERROR CONTROLLER
 const AppError = require('../utils/appError.js');
 const errorController = require('./errorController.js');
+
+//UPLOAD PHOTO
+exports.uploadPhoto = async (req, res) => {
+  console.log(req.body);
+  console.log(req.file);
+
+  try {
+    const newPhoto = await photoModel.create(req.file);
+    newPhoto.save().then((result) => {
+      console.log('Saved');
+      res.status(201).json({
+        status: 'success',
+        // data: JSON.parse(JSON.stringify(newPhoto.file)),
+      });
+    });
+  } catch (err) {
+    console.log('Error in upload');
+    errorController.sendError(err, req, res);
+  }
+};
 
 // GET INFORMATION FOR A PHOTO
 exports.getInformation = async (req, res) => {
