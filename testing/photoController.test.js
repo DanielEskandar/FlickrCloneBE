@@ -195,7 +195,7 @@ describe('should delete a comment', () => {
     };
     await photoController.deleteComment(mReq, mRes);
     expect(mRes.status).toBeCalledWith(204);
-    expect(mRes.json).toBeCalledWith(photoTestData.deleteCommentData);
+    expect(mRes.json).toBeCalledWith(photoTestData.deleteData);
   });
 });
 
@@ -228,11 +228,11 @@ describe('should retrieve all sizes of a photo', () => {
 
 // TESTING SET TAGS
 describe('should set a tag on a photo', () => {
-  test('should set tag Unit Test Tag!', async () => {
+  test('should set tag Unittesttag1', async () => {
     const mReq = {
-      params: { id: '608d5450ec00005468628b1d' },
+      params: { id: '608d5450ec00005468628b5d' },
       body: {
-        tags: 'Unit test tag 1',
+        tags: 'Unittesttag1',
       },
     };
     const mRes = {
@@ -248,7 +248,7 @@ describe('should set a tag on a photo', () => {
 describe('should set a tag on a photo', () => {
   test('should set tag MirrorlessCamera', async () => {
     const mReq = {
-      params: { id: '608d5450ec00005468628b1d' },
+      params: { id: '608d5450ec00005468628b4d' },
       body: {
         tags: 'MirrorlessCamera',
       },
@@ -263,15 +263,15 @@ describe('should set a tag on a photo', () => {
   });
 });
 
-// TESTING DELETE COMMENT
-describe('should delete a tags', () => {
-  test('should delete tags #Sakure on ', async () => {
+// TESTING DELETE TAG
+describe('should delete a tag', () => {
+  test('should delete tags beauty', async () => {
     const mReq = {
       params: {
-        id: '608d5450ec00005468628b1d',
+        id: '608d5450ec00005468628b2d',
       },
       body: {
-        tags: '#Nihon',
+        tags: 'beauty',
       },
     };
     const mRes = {
@@ -280,18 +280,18 @@ describe('should delete a tags', () => {
     };
     await photoController.removeTag(mReq, mRes);
     expect(mRes.status).toBeCalledWith(204);
-    expect(mRes.json).toBeCalledWith(photoTestData.removeTag);
+    expect(mRes.json).toBeCalledWith(photoTestData.deleteData);
   });
 });
 
 describe('should delete a tags', () => {
-  test('should delete tags #Nihon on ', async () => {
+  test('should delete tag light', async () => {
     const mReq = {
       params: {
-        id: '608d5450ec00005468628b1d',
+        id: '608d5450ec00005468628b2d',
       },
       body: {
-        tags: '#Sakure',
+        tags: 'light',
       },
     };
     const mRes = {
@@ -300,17 +300,17 @@ describe('should delete a tags', () => {
     };
     await photoController.removeTag(mReq, mRes);
     expect(mRes.status).toBeCalledWith(204);
-    expect(mRes.json).toBeCalledWith(photoTestData.removeTag);
+    expect(mRes.json).toBeCalledWith(photoTestData.deleteData);
   });
 });
 
 // TESTING ADD TAG
 describe('should add a tag on a photo', () => {
-  test('should add tag Adding Tag!', async () => {
+  test('should add tag AddingTag', async () => {
     const mReq = {
-      params: { id: '604d5450ec00005468617a0c' },
+      params: { id: '608d5450ec00005468628b6d' },
       body: {
-        tags: 'Adding Tag',
+        tags: 'AddingTag',
       },
     };
     const mRes = {
@@ -326,7 +326,7 @@ describe('should add a tag on a photo', () => {
 describe('should add a tag on a photo', () => {
   test('should add tag Skyline', async () => {
     const mReq = {
-      params: { id: '608d5450ec00005468628b1d' },
+      params: { id: '608d5450ec00005468628b7d' },
       body: {
         tags: 'Skyline',
       },

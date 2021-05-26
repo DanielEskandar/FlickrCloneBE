@@ -202,19 +202,28 @@ exports.setTags = async (req, res) => {
       throw new AppError('No Photo Found with this ID', 404);
     }
 
+    if (req.body.tags.includes(' ')) {
+      throw new AppError('Cannot Set Tag With Spaces', 400);
+    }
+
     await photoModel.findByIdAndUpdate(
       req.params.id,
       {
         $push: { tags: req.body.tags },
       },
       {
+        new: true,
         runValidators: true,
       }
     );
 
+    const photoTags = await photoModel
+      .findById(req.params.id)
+      .select({ tags: 1, _id: 0 });
+
     res.status(200).json({
       status: 'success',
-      data: JSON.parse(JSON.stringify(req.body)),
+      data: JSON.parse(JSON.stringify(photoTags.tags)),
     });
   } catch (err) {
     errorController.sendError(err, req, res);
@@ -228,19 +237,28 @@ exports.addTag = async (req, res) => {
       throw new AppError('No Photo Found with this ID', 404);
     }
 
+    if (req.body.tags.includes(' ')) {
+      throw new AppError('Cannot Set Tag With Spaces', 400);
+    }
+
     await photoModel.findByIdAndUpdate(
       req.params.id,
       {
         $push: { tags: req.body.tags },
       },
       {
+        new: true,
         runValidators: true,
       }
     );
 
+    const photoTags = await photoModel
+      .findById(req.params.id)
+      .select({ tags: 1, _id: 0 });
+
     res.status(200).json({
       status: 'success',
-      data: JSON.parse(JSON.stringify(req.body)),
+      data: JSON.parse(JSON.stringify(photoTags.tags)),
     });
   } catch (err) {
     errorController.sendError(err, req, res);
@@ -262,12 +280,13 @@ exports.removeTag = async (req, res) => {
     );
 
     if (tag) {
-      await photoModel.findByIdAndUpdate(
+      const updatedPhoto = await photoModel.findByIdAndUpdate(
         req.params.id,
         {
           $pull: { tags: tag },
         },
         {
+          new: true,
           runValidators: true,
         }
       );
