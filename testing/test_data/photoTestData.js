@@ -432,3 +432,25 @@ module.exports.addTagData2 = {
   status: 'success',
   data: ['Skyline'],
 };
+
+module.exports.editPhotoInfo = {
+  status: 'success',
+  data: {
+    _id: '608d5450ec00005468628a0d',
+    title: 'Test Edit Info',
+    description: 'New description for testing',
+    tags: ['#Test', '#FlickrClonoe'],
+    dateUploaded: '2020-11-03T06:10:45.000Z',
+    dateTaken: '2019-11-03T06:10:45.000Z',
+    permissions: {
+      public: false,
+      friend: true,
+      family: true,
+      comment: 2,
+      addMeta: 2,
+    },
+    license: 2,
+    safetyLevel: 1,
+    contentType: 'Photo',
+  },
+};

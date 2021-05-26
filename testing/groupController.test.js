@@ -118,7 +118,7 @@ describe('should create new discussion with id 608d33c7e512b74ee00791df in group
         content: 'best pastaaa ever',
         date: '2021-01-01',
       },
-      headers: { userid: '608d55c7e512b74ee00791de' },
+      user: { id: '608d55c7e512b74ee00791de' },
     };
     const mRes = {
       status: jest.fn().mockReturnThis(),
@@ -140,7 +140,7 @@ describe('should create new reply with id 610fe93c38075024f8d3e6f3 on discussion
         content: 'mori sushi is the best',
         date: '2021-01-01',
       },
-      headers: { userid: '608d55c7e512b74ee00791de' },
+      user: { id: '608d55c7e512b74ee00791de' },
     };
     const mRes = {
       status: jest.fn().mockReturnThis(),
@@ -269,7 +269,7 @@ describe('userid in headers should create new group with content in body, add us
         name: 'backend unit test',
         startDate: '2021-01-02',
       },
-      headers: { userid: '608d55c7e512b74ee00791de' },
+      user: { id: '608d55c7e512b74ee00791de' },
     };
     const mRes = {
       status: jest.fn().mockReturnThis(),

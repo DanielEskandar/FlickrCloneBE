@@ -340,3 +340,37 @@ describe('should add a tag on a photo', () => {
     expect(mRes.json).toBeCalledWith(photoTestData.addTagData2);
   });
 });
+
+// EDIT PHOTO INFO
+describe('should edit photo info', () => {
+  test('should edit photo info with id 608d5450ec00005468628a0d', async () => {
+    const mReq = {
+      params: { id: '608d5450ec00005468628a0d' },
+      user: { id: '608d55c7e512b74ee00791dc' },
+      body: {
+        title: 'Test Edit Info',
+        description: 'New description for testing',
+        tags: ['#Test', '#FlickrClonoe'],
+        dateUploaded: '2020-11-03T06:10:45+00:00',
+        dateTaken: '2019-11-03T06:10:45+00:00',
+        permissions: {
+          public: 0,
+          friend: 1,
+          family: 1,
+          comment: 2,
+          addMeta: 2,
+        },
+        license: 2,
+        safetyLevel: 1,
+        contentType: 'Photo',
+      },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await photoController.editPhotoInformation(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(photoTestData.editPhotoInfo);
+  });
+});

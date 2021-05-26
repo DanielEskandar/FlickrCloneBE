@@ -410,7 +410,7 @@ module.exports.addCommentData = {
   },
 };
 
-module.exports.deleteCommentData = {
+module.exports.successResponse = {
   status: 'success',
   data: 'ok',
 };
@@ -424,5 +424,34 @@ module.exports.createAlbumData = {
     albumName: 'Egypt',
     primaryPhotoId: '608d5450ec00005468607a0f',
     __v: 0,
+  },
+};
+
+module.exports.setPrimaryPhoto = {
+  status: 'success',
+  data: {
+    albumID: '608f3c70197abc18509aec60',
+    primaryPhotoId: '608d5450ec00005468628a0d',
+  },
+};
+
+module.exports.editMeta = {
+  status: 'success',
+  data: {
+    albumID: '608f3c70197abc18509aec5f',
+    albumName: 'TEST edit Meta',
+    description: 'Work is work, but family is for life',
+  },
+};
+
+module.exports.addPhoto = {
+  status: 'success',
+  data: {
+    photos: [
+      '608d5450ec00005468617a0c',
+      '608d5450ec00005468607a0f',
+      '608d5450ec00005468628a0d',
+      '608d5560ec00005468607a0e',
+    ],
   },
 };

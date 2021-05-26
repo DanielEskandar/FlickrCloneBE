@@ -14,7 +14,7 @@ module.exports.signupData3 = {
 };
 
 module.exports.signupData4 = {
-  stastus: 'success',
+  status: 'success',
   token: expect.any(String),
   data: {
     user: {
@@ -30,7 +30,7 @@ module.exports.signupData4 = {
       },
       privacySettings: {
         global: {
-          infoVisiblity: {
+          infoVisibility: {
             email: 2,
             name: 1,
             currentCity: 1,

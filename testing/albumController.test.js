@@ -59,6 +59,7 @@ describe('should get Comments in an album', () => {
 describe('should edit a comment in an album', () => {
   test(`should edit a Comments with id 6090ca99f002f5466cd8485b`, async () => {
     const mReq = {
+      user: { id: '608d55c7e512b74ee00791db' },
       params: { id: '6090ca99f002f5466cd8485b' },
       body: { body: 'family is everything <3' },
     };
@@ -79,9 +80,9 @@ describe('should Add a comment to an album', () => {
     await commentModel.findByIdAndDelete('1190beb07237ad1fb4458fae');
     const mReq = {
       params: { id: '608f3c70197abc18509aec61' },
+      user: { id: '608d5450ec00005468607a0c' },
       body: {
         _id: '1190beb07237ad1fb4458fae',
-        userId: '608d5450ec00005468607a0c',
         date: '2021-05-04T18:21:34.924Z',
         body: 'GREAT SHOTS!',
       },
@@ -100,6 +101,7 @@ describe('should Add a comment to an album', () => {
 describe('should delete a comment from an album', () => {
   test(`should delete a comment from an album with id 608f3c70197abc18509aec61`, async () => {
     const mReq = {
+      user: { id: '608d5450ec00005468607a0c' },
       params: {
         id: '608f3c70197abc18509aec61',
         commentid: '4990be955537ad1fb4458f13',
@@ -111,7 +113,7 @@ describe('should delete a comment from an album', () => {
     };
     await albumController.deleteComment(mReq, mRes);
     expect(mRes.status).toBeCalledWith(204);
-    expect(mRes.json).toBeCalledWith(albumTestData.deleteCommentData);
+    expect(mRes.json).toBeCalledWith(albumTestData.successResponse);
   });
 });
 
@@ -121,7 +123,7 @@ describe('should Create an album', () => {
     // delete any album with 305f34a634413f11f020b130
     await albumModel.findByIdAndDelete('305f34a634413f11f020b130');
     const mReq = {
-      headers: { userid: '608d5450ec00005468607a11' },
+      user: { id: '608d5450ec00005468607a11' },
       body: {
         _id: '305f34a634413f11f020b130',
         albumName: 'Egypt',
@@ -145,6 +147,7 @@ describe('should Create an album', () => {
 describe('should add Photo to an album', () => {
   test(`should should add Photo to an album id 608f3c70197abc18509aec5f`, async () => {
     const mReq = {
+      user: { id: '608d5450ec00005468607a11' },
       params: { id: '608f3c70197abc18509aec5f' },
       body: {
         photoID: '608d5560ec00005468607a0e',
@@ -156,10 +159,7 @@ describe('should add Photo to an album', () => {
     };
     await albumController.addPhoto(mReq, mRes);
     expect(mRes.status).toBeCalledWith(200);
-    expect(mRes.json).toBeCalledWith({
-      status: 'success',
-      data: 'ok',
-    });
+    expect(mRes.json).toBeCalledWith(albumTestData.addPhoto);
   });
 });
 
@@ -167,6 +167,7 @@ describe('should add Photo to an album', () => {
 describe('should delete a photo from an album', () => {
   test(`should delete a photo from an album with id 608f3c70197abc18509aec61`, async () => {
     const mReq = {
+      user: { id: '608d5450ec00005468607a11' },
       params: {
         id: '608f3c70197abc18509aec61',
         photoid: '608d5450ec00005468607a0f',
@@ -178,10 +179,7 @@ describe('should delete a photo from an album', () => {
     };
     await albumController.removePhoto(mReq, mRes);
     expect(mRes.status).toBeCalledWith(204);
-    expect(mRes.json).toBeCalledWith({
-      status: 'success',
-      data: 'ok',
-    });
+    expect(mRes.json).toBeCalledWith(albumTestData.successResponse);
   });
 });
 
@@ -189,6 +187,7 @@ describe('should delete a photo from an album', () => {
 describe('should delete list of photos from an album', () => {
   test(`should delete a photo from an album with id 608f3c70197abc18509aec60`, async () => {
     const mReq = {
+      user: { id: '608d5450ec00005468607a11' },
       params: {
         id: '608f3c70197abc18509aec60',
       },
@@ -202,9 +201,46 @@ describe('should delete list of photos from an album', () => {
     };
     await albumController.removePhotos(mReq, mRes);
     expect(mRes.status).toBeCalledWith(204);
-    expect(mRes.json).toBeCalledWith({
-      status: 'success',
-      data: 'ok',
-    });
+    expect(mRes.json).toBeCalledWith(albumTestData.successResponse);
+  });
+});
+
+// TESTING: editMeta
+describe('should edit meta of an album', () => {
+  test(`should edit meta of an album with id 608f3c70197abc18509aec5f`, async () => {
+    const mReq = {
+      user: { id: '608d5450ec00005468607a11' },
+      params: {
+        id: '608f3c70197abc18509aec5f',
+      },
+      body: { albumName: 'TEST edit Meta' },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await albumController.editMeta(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(albumTestData.editMeta);
+  });
+});
+
+// TESTING: setPrimaryPhoto
+describe('should set Primary Photo of an album', () => {
+  test(`should set Primary Photo of an album with id 608f3c70197abc18509aec60`, async () => {
+    const mReq = {
+      user: { id: '608d5450ec00005468607a11' },
+      params: {
+        id: '608f3c70197abc18509aec60',
+        photoid: '608d5450ec00005468628a0d',
+      },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await albumController.setPrimaryPhoto(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(albumTestData.setPrimaryPhoto);
   });
 });

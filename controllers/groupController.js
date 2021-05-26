@@ -30,7 +30,7 @@ exports.getInfo = async (req, res) => {
 // CREATE NEW GROUP
 exports.createGroup = async (req, res) => {
   try {
-    const creator = await userModel.findById(req.headers.userid);
+    const creator = await userModel.findById(req.user.id);
     const newGroup = await groupModel.create(req.body);
 
     if (!newGroup) {
@@ -149,7 +149,7 @@ exports.removePhotofromPool = async (req, res) => {
       throw new AppError('Photo Already isnt in group Pool', 404);
     }
 
-    inPhoto = await photoModel.findById(req.params.photoid);
+    const inPhoto = await photoModel.findById(req.params.photoid);
     const updatedGroup = await groupModel
       .findByIdAndUpdate(
         req.params.id,
@@ -218,11 +218,11 @@ exports.createDiscussion = async (req, res) => {
         runValidators: true,
       }
     ); //pushing new discussion topic to group
-    //   const author = await userModel.findById(req.headers.userid);
+    const author = await userModel.findById(req.user.id);
     const newDiscussion = await discModel.findByIdAndUpdate(
       Discussion,
       {
-        user: req.headers.userid,
+        user: author.id,
       },
       {
         new: true,
@@ -266,7 +266,7 @@ exports.addReply = async (req, res) => {
     const newReply = await replyModel.findByIdAndUpdate(
       reply,
       {
-        user: req.headers.userid,
+        user: req.user.id,
       },
       {
         new: true,

@@ -3,6 +3,7 @@ const express = require('express');
 
 // INCLUDE CONTROLLERS
 const photoController = require('../controllers/photoController.js');
+const authController = require('../controllers/authController.js');
 
 // CREATE ROUTER
 const photoRouter = express.Router();
@@ -118,6 +119,16 @@ photoRouter.patch('/:id/perm');
  * @apiGroup Photo
  *
  * @apiParam {String} id The Photo's ID
+ * @apiParam (Request Body) {String} title Photo's Name
+ * @apiParam (Request Body) {String} description Photo's Description
+ * @apiParam (Request Body) {[String]} tags Photo's Tags
+ * @apiParam (Request Body) {Date}  dateUploaded Date Uploaded
+ * @apiParam (Request Body) {Date} dateTaken   Date Taken
+ * @apiParam (Request Body) {Object{}} permissions  The Photo's Viewing Permisions
+ * @apiParam (Request Body) {Number}  license License Number (From 0 to 10)  
+ * @apiParam (Request Body) {Number} safetyLevel Safety Level 
+ * @apiParam (Request Body) {String} contentType Content Type 
+
  *
  * @apiSuccess {string} Status Status of API
  *
@@ -128,7 +139,11 @@ photoRouter.patch('/:id/perm');
  * @apiUse PhotoNotFoundError
  *
  */
-photoRouter.patch('/:id/');
+photoRouter.patch(
+  '/:id/',
+  authController.protect,
+  photoController.editPhotoInformation
+);
 
 /**
  * @api {delete} /photo/:id Delete a User's Photo

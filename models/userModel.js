@@ -91,7 +91,7 @@ const userSchema = new mongoose.Schema({
       hideEXIF: { type: Boolean, default: 0 },
       hidePhotoSearch: { type: Boolean, default: 0 },
       hideProfileSearch: { type: Boolean, default: 0 },
-      infoVisiblity: {
+      infoVisibility: {
         email: { type: Number, default: 2 },
         name: { type: Number, default: 1 },
         currentCity: { type: Number, default: 1 },
