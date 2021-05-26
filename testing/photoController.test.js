@@ -195,7 +195,7 @@ describe('should delete a comment', () => {
     };
     await photoController.deleteComment(mReq, mRes);
     expect(mRes.status).toBeCalledWith(204);
-    expect(mRes.json).toBeCalledWith(photoTestData.deleteCommentData);
+    expect(mRes.json).toBeCalledWith(photoTestData.deleteData);
   });
 });
 
@@ -223,6 +223,175 @@ describe('should retrieve all sizes of a photo', () => {
     await photoController.getSizes(mReq, mRes);
     expect(mRes.status).toBeCalledWith(200);
     expect(mRes.json).toBeCalledWith(photoTestData.getSizesData1);
+  });
+});
+
+// TESTING SET TAGS
+describe('should set a tag on a photo', () => {
+  test('should set tag Unittesttag1', async () => {
+    const mReq = {
+      params: { id: '608d5450ec00005468628b5d' },
+      body: {
+        tags: ['Unittesttag1', 'Unit', 'Test', 'Tag'],
+      },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await photoController.setTags(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(photoTestData.setTagData1);
+  });
+});
+
+describe('should set a tag on a photo', () => {
+  test('should set tag MirrorlessCamera', async () => {
+    const mReq = {
+      params: { id: '608d5450ec00005468628b4d' },
+      body: {
+        tags: ['MirrorlessCamera', 'LowExposure'],
+      },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await photoController.setTags(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(photoTestData.setTagData2);
+  });
+});
+
+// TESTING DELETE TAG
+describe('should delete a tag', () => {
+  test('should delete tags beauty', async () => {
+    const mReq = {
+      params: {
+        id: '608d5450ec00005468628b2d',
+      },
+      body: {
+        tags: 'beauty',
+      },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await photoController.removeTag(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(photoTestData.removeTag1);
+  });
+});
+
+describe('should delete a tags', () => {
+  test('should delete tag light', async () => {
+    const mReq = {
+      params: {
+        id: '608d5450ec00005468628b2d',
+      },
+      body: {
+        tags: 'light',
+      },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await photoController.removeTag(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(photoTestData.removeTag2);
+  });
+});
+
+// TESTING ADD TAG
+describe('should add a tag on a photo', () => {
+  test('should add tag AddingTag', async () => {
+    const mReq = {
+      params: { id: '608d5450ec00005468628b6d' },
+      body: {
+        tags: 'AddingTag',
+      },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await photoController.addTag(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(photoTestData.addTagData1);
+  });
+});
+
+describe('should add a tag on a photo', () => {
+  test('should add tag Skyline', async () => {
+    const mReq = {
+      params: { id: '608d5450ec00005468628b6d' },
+      body: {
+        tags: 'Skyline',
+      },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await photoController.addTag(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(photoTestData.addTagData2);
+  });
+});
+
+// EDIT PHOTO INFO
+describe('should edit photo info', () => {
+  test('should edit photo info with id 608d5450ec00005468628a0d', async () => {
+    const mReq = {
+      params: { id: '608d5450ec00005468628a0d' },
+      user: { id: '608d55c7e512b74ee00791dc' },
+      body: {
+        title: 'Test Edit Info',
+        description: 'New description for testing',
+        tags: ['#Test', '#FlickrClonoe'],
+        dateUploaded: '2020-11-03T06:10:45+00:00',
+        dateTaken: '2019-11-03T06:10:45+00:00',
+        permissions: {
+          public: 0,
+          friend: 1,
+          family: 1,
+          comment: 2,
+          addMeta: 2,
+        },
+        license: 2,
+        safetyLevel: 1,
+        contentType: 'Photo',
+      },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await photoController.editPhotoInformation(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(photoTestData.editPhotoInfo);
+  });
+});
+
+// get GalleriesforPhoto
+describe('should  get Galleries for Photo', () => {
+  test('should get Galleries for Photo with id 608d5450ec00005468628a0d', async () => {
+    const mReq = {
+      params: { id: '608d5450ec00005468628a0d' },
+      body: {
+        per_page: 3,
+        page: 1,
+      },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await photoController.getGalleriesforPhoto(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(photoTestData.getGalleriesforPhoto);
   });
 });
 
