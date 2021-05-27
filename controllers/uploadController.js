@@ -52,7 +52,7 @@ exports.photoProcessor = async (req, res, next) => {
 
     req.file.uploadPath = './public/img/';
 
-    req.file.Exif = exif(metadata.exif);
+    if (metadata.exif) req.file.Exif = exif(metadata.exif);
 
     req.file.filename_original = `photo-0-${req.user.id}-${Date.now()}-o.jpeg`;
     req.file.filename_large = `photo-1-${req.user.id}-${Date.now()}-b.jpeg`;
