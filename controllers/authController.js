@@ -223,7 +223,9 @@ exports.resetPassword = async (req, res) => {
 exports.updatePassword = async (req, res) => {
   try {
     // Get user from collection
-    const user = await userModel.findById(req.user.id).select('password');
+    const user = await userModel
+      .findById(req.user.id)
+      .select({ password: 1, firstName: 1, lastName: 1, displayName: 1 });
 
     // Check if POSTed current password is corrcect
     if (
