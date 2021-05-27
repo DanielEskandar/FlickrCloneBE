@@ -68,64 +68,104 @@ exports.photoProcessor = async (req, res, next) => {
     req.file.filename_largesq = `photo-8-${req.user.id}-${Date.now()}-q.jpeg`;
     req.file.filename_square = `photo-9-${req.user.id}-${Date.now()}-s.jpeg`;
 
-    image
+    await image
       .toFormat('jpeg')
+      .withMetadata()
       .jpeg({ quality: 90 })
-      .toFile(`${req.file.uploadPath}${req.file.filename_original}`);
+      .toFile(`${req.file.uploadPath}${req.file.filename_original}`)
+      .then((info) => {
+        req.file.sizeOriginal = { w: info.width, h: info.height };
+      });
 
-    image
+    await image
       .resize(w[0], h[0])
+      .withMetadata()
       .toFormat('jpeg')
       .jpeg({ quality: 90 })
-      .toFile(`${req.file.uploadPath}${req.file.filename_large}`);
+      .toFile(`${req.file.uploadPath}${req.file.filename_large}`)
+      .then((info) => {
+        req.file.sizeLarge = { w: info.width, h: info.height };
+      });
 
-    image
+    await image
       .resize(w[1], h[1])
+      .withMetadata()
       .toFormat('jpeg')
       .jpeg({ quality: 90 })
-      .toFile(`${req.file.uploadPath}${req.file.filename_medium800}`);
+      .toFile(`${req.file.uploadPath}${req.file.filename_medium800}`)
+      .then((info) => {
+        req.file.sizeMedium800 = { w: info.width, h: info.height };
+      });
 
-    image
+    await image
       .resize(w[2], h[2])
+      .withMetadata()
       .toFormat('jpeg')
       .jpeg({ quality: 90 })
-      .toFile(`${req.file.uploadPath}${req.file.filename_medium640}`);
+      .toFile(`${req.file.uploadPath}${req.file.filename_medium640}`)
+      .then((info) => {
+        req.file.sizeMedium640 = { w: info.width, h: info.height };
+      });
 
-    image
+    await image
       .resize(w[3], h[3])
+      .withMetadata()
       .toFormat('jpeg')
       .jpeg({ quality: 90 })
-      .toFile(`${req.file.uploadPath}${req.file.filename_medium}`);
+      .toFile(`${req.file.uploadPath}${req.file.filename_medium}`)
+      .then((info) => {
+        req.file.sizesizeMedium = { w: info.width, h: info.height };
+      });
 
-    image
+    await image
       .resize(w[4], h[4])
+      .withMetadata()
       .toFormat('jpeg')
       .jpeg({ quality: 90 })
-      .toFile(`${req.file.uploadPath}${req.file.filename_small320}`);
+      .toFile(`${req.file.uploadPath}${req.file.filename_small320}`)
+      .then((info) => {
+        req.file.sizeSmall320 = { w: info.width, h: info.height };
+      });
 
-    image
+    await image
       .resize(w[5], h[5])
+      .withMetadata()
       .toFormat('jpeg')
       .jpeg({ quality: 90 })
-      .toFile(`${req.file.uploadPath}${req.file.filename_small}`);
+      .toFile(`${req.file.uploadPath}${req.file.filename_small}`)
+      .then((info) => {
+        req.file.sizeSmall = { w: info.width, h: info.height };
+      });
 
-    image
+    await image
       .resize(w[6], h[6])
+      .withMetadata()
       .toFormat('jpeg')
       .jpeg({ quality: 90 })
-      .toFile(`${req.file.uploadPath}${req.file.filename_thumbnail}`);
+      .toFile(`${req.file.uploadPath}${req.file.filename_thumbnail}`)
+      .then((info) => {
+        req.file.sizeThumb = { w: info.width, h: info.height };
+      });
 
-    image
+    await image
       .resize(w[7], h[7])
+      .withMetadata()
       .toFormat('jpeg')
       .jpeg({ quality: 90 })
-      .toFile(`${req.file.uploadPath}${req.file.filename_largesq}`);
+      .toFile(`${req.file.uploadPath}${req.file.filename_largesq}`)
+      .then((info) => {
+        req.file.sizeLargeSq = { w: info.width, h: info.height };
+      });
 
-    image
+    await image
       .resize(w[8], h[8])
+      .withMetadata()
       .toFormat('jpeg')
       .jpeg({ quality: 90 })
-      .toFile(`${req.file.uploadPath}${req.file.filename_square}`);
+      .toFile(`${req.file.uploadPath}${req.file.filename_square}`)
+      .then((info) => {
+        req.file.sizeSquare = { w: info.width, h: info.height };
+      });
 
     next();
   } catch (err) {
@@ -138,7 +178,7 @@ exports.photoProcessor = async (req, res, next) => {
 // UPLOAD PHOTO
 exports.uploadPhoto = async (req, res) => {
   try {
-    console.log('Saved');
+    console.log(req.file);
     res.status(201).json({
       status: 'success',
       data: 'uploaded',
