@@ -9,6 +9,8 @@ const commentModel = require('../models/commentModel.js');
 const AppError = require('../utils/appError.js');
 const errorController = require('./errorController.js');
 
+// UTILITY AND MIDDLEWARE FUNCTIONS
+
 // MULTER STORAGE
 const multerStorage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -16,9 +18,10 @@ const multerStorage = multer.diskStorage({
   },
   filename: (req, file, cb) => {
     const ext = file.mimetype.split('/')[1];
-    // Saving format: user-UserId-DateStamp.ext
-    // e.g user-608d55c7e512b74ee00791de-1621992912638.jpeg
-    cb(null, `user-${req.body.userId}-${Date.now()}.${ext}`);
+
+    // Saving format: photo-UserId-DateStamp.ext
+
+    cb(null, `photo-${req.user.id}-${Date.now()}.${ext}`);
   },
 });
 
@@ -28,7 +31,7 @@ const multerFilter = (req, file, cb) => {
   if (file.mimetype.startsWith('image')) {
     cb(null, true);
   } else {
-    cb(new AppError('You are only allowed to upload image files.', 400), false);
+    cb(new AppError('You are only allowed to upload image files.', 409), false);
   }
 };
 
@@ -38,11 +41,18 @@ exports.upload = multer({
   fileFilter: multerFilter,
 });
 
-//UPLOAD PHOTO
+// PUBLIC API IMPLEMENTATIONS
+
+// UPLOAD PHOTO
 exports.uploadPhoto = async (req, res) => {
   try {
     console.log('Saved');
+    res.status(201).json({
+      status: 'success',
+      data: 'uploaded',
+    });
   } catch (err) {
+    console.log('Error in upload');
     errorController.sendError(err, req, res);
   }
 };
