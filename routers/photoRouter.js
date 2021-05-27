@@ -4,6 +4,7 @@ const express = require('express');
 // INCLUDE CONTROLLERS
 const photoController = require('../controllers/photoController.js');
 const authController = require('../controllers/authController.js');
+const uploadController = require('../controllers/uploadController.js');
 
 // CREATE ROUTER
 const photoRouter = express.Router();
@@ -87,8 +88,8 @@ const photoRouter = express.Router();
 photoRouter.post(
   '/',
   authController.protect,
-  photoController.photoUpload,
-  photoController.photoProcessor,
+  uploadController.photoUpload,
+  uploadController.photoProcessor,
   photoController.uploadPhoto
 );
 
