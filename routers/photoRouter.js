@@ -3,6 +3,7 @@ const express = require('express');
 
 // INCLUDE CONTROLLERS
 const photoController = require('../controllers/photoController.js');
+const authController = require('../controllers/authController.js');
 
 // CREATE ROUTER
 const photoRouter = express.Router();
@@ -118,6 +119,16 @@ photoRouter.patch('/:id/perm');
  * @apiGroup Photo
  *
  * @apiParam {String} id The Photo's ID
+ * @apiParam (Request Body) {String} title Photo's Name
+ * @apiParam (Request Body) {String} description Photo's Description
+ * @apiParam (Request Body) {[String]} tags Photo's Tags
+ * @apiParam (Request Body) {Date}  dateUploaded Date Uploaded
+ * @apiParam (Request Body) {Date} dateTaken   Date Taken
+ * @apiParam (Request Body) {Object{}} permissions  The Photo's Viewing Permisions
+ * @apiParam (Request Body) {Number}  license License Number (From 0 to 10)  
+ * @apiParam (Request Body) {Number} safetyLevel Safety Level 
+ * @apiParam (Request Body) {String} contentType Content Type 
+
  *
  * @apiSuccess {string} Status Status of API
  *
@@ -128,7 +139,11 @@ photoRouter.patch('/:id/perm');
  * @apiUse PhotoNotFoundError
  *
  */
-photoRouter.patch('/:id/');
+photoRouter.patch(
+  '/:id/',
+  authController.protect,
+  photoController.editPhotoInformation
+);
 
 /**
  * @api {delete} /photo/:id Delete a User's Photo
@@ -305,7 +320,7 @@ photoRouter.get('/:id/url');
  *
  * @apiParam {String} id The Photo's ID
  *
- * @apiParam (Request Body) {String} tags All Tags for the Photo
+ * @apiParam (Request Body) {String} tag The New Tag Text to Add
  *
  * @apiSuccess {string} Status Status of API
  *
@@ -316,7 +331,7 @@ photoRouter.get('/:id/url');
  * @apiUse PhotoNotFoundError
  *
  */
-photoRouter.patch('/:id/tags');
+photoRouter.patch('/:id/tags', photoController.setTags);
 
 /**
  * @api {post} /photo/ Add a Set of Tags to a Photo
@@ -328,7 +343,7 @@ photoRouter.patch('/:id/tags');
  *
  * @apiParam {String} id The Photo's ID
  *
- * @apiParam (Request Body) {String} tags All Tags for the Photo
+ * @apiParam (Request Body) {String} tags The Tag Text to Add
  *
  * @apiUse SuccessRes
  *
@@ -337,7 +352,7 @@ photoRouter.patch('/:id/tags');
  * @apiUse PhotoNotFoundError
  *
  */
-photoRouter.post('/:id/tags');
+photoRouter.post('/:id/tags', photoController.addTag);
 
 /**
  * @api {delete} /photo/:id Remove a Tag
@@ -358,7 +373,7 @@ photoRouter.post('/:id/tags');
  * @apiUse PhotoNotFoundError
  *
  */
-photoRouter.delete('/:id/tags');
+photoRouter.delete('/:id/tags', photoController.removeTag);
 
 /**
  * @api {get} /photo/:id/galleries Gets all Galleries Photo Belongs to
@@ -368,12 +383,10 @@ photoRouter.delete('/:id/tags');
  *
  * @apiParam {String} id The Photo's ID 
  * 
- * @apiParam (Request Body) {Number} galleriesperpage Number of Galleries to return Per Page
- * @apiParam (Request Body) {Number} page The Page of Results to Return
- * @apiParam (Request Body) {Number} perpage Number of Comments Per Page to Return
+ * @apiParam (Request Body) {Number} per_page Number of Galleries to return Per Page
  * @apiParam (Request Body) {Number} page The Page Number to Return
  * 
- * @apiSuccess {Object[]} gallerylist Array of Gallery ID's Photo Belong to
+ * @apiSuccess {Object[]} galleries Array of Gallery ID's Photo Belong to
  * 
  * @apiSuccessExample Success-Response:
  *      HTTP/1.1 200 OK
@@ -381,7 +394,7 @@ photoRouter.delete('/:id/tags');
  *          "status": "success",
  *          "data":
  *          {
-               "gallerylist": [
+               "galleries": [
  *
  *              ] 
  *          }
@@ -392,7 +405,7 @@ photoRouter.delete('/:id/tags');
  * @apiUse PhotoNotFoundError
  * 
  */
-photoRouter.get('/:id/galleries');
+photoRouter.get('/:id/galleries', photoController.getGalleriesforPhoto);
 
 /**
  * @api {get} /photo/:id/contexts/all Gets all Visible Sets and Pools Photo Belongs to
