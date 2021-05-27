@@ -33,3 +33,6 @@ module.exports.DisplayNameUserValidToken =
 
 module.exports.AboutMeUserValidToken =
   'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwYWE0ZTcxNmQ3NTE0MWFjODExY2YyZSIsImlhdCI6MTYyMTc3NDA1NSwiZXhwIjoxNjI5NTUwMDU1fQ.jzvoo3VLm1qhT74msF7rER_rJt7oG0po1IDOfIUzL1g';
+
+module.exports.UpdatePasswordUserValidToken =
+  'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwYWVlYTc0OGQyMjIxNTBjOGRiYWFmMSIsImlhdCI6MTYyMjA3NjEzNCwiZXhwIjoxNjI5ODUyMTM0fQ.d0VpsgrxQiXybQlx408WH-IGbeXBt-ucQ2M1dn6f90w';

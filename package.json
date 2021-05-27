@@ -8,7 +8,7 @@
     "start:prod": "NODE_ENV=production nodemon server.js",
     "apidoc": "apidoc -i routers/ -o apidoc/",
     "pretest": "node devData --delete && node devData --import",
-    "test": "jest testing/ --detectOpenHandles --forceExit --verbose"
+    "test": "jest testing/ --detectOpenHandles --forceExit"
   },
   "repository": {
     "type": "git",
