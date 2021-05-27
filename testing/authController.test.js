@@ -335,3 +335,57 @@ describe('should reset user password', () => {
     expect(mRes.json).toBeCalledWith(authTestData.resetPasswordData2);
   });
 });
+
+// TESTING: updatePassword
+describe('should perform update password operation correctly and send response', () => {
+  test('should not update user password because current password is incorrect', async () => {
+    const mReq = {
+      user: { id: '60aeea748d222150c8dbaaf1' },
+      body: {
+        passwordCurrent: 'Abdcdef!',
+        password: 'Abdcdef!1',
+      },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await authController.updatePassword(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(401);
+    expect(mRes.json).toBeCalledWith(authTestData.updatePasswordData1);
+  });
+
+  test('should not update user password because new password is weak', async () => {
+    const mReq = {
+      user: { id: '60aeea748d222150c8dbaaf1' },
+      body: {
+        passwordCurrent: 'Abdcdef!1',
+        password: 'Abdcdef!',
+      },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await authController.updatePassword(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(400);
+    expect(mRes.json).toBeCalledWith(authTestData.updatePasswordData2);
+  });
+
+  test('should update password of updatePasswordTestUser', async () => {
+    const mReq = {
+      user: { id: '60aeea748d222150c8dbaaf1' },
+      body: {
+        passwordCurrent: 'Abdcdef!1',
+        password: 'Abdcdef!2',
+      },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await authController.updatePassword(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(authTestData.updatePasswordData3);
+  });
+});

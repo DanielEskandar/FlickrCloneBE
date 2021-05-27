@@ -544,7 +544,7 @@
     "_id": "60aeb7c7824d05334c309754",
     "firstName": "resetPasswordValidFirstName",
     "lastName": "resetPasswordValidLastName",
-    "displayName": "resetPasswordValid",
+    "displayName": "resetPasswordValidTestUser",
     "email": "resetpasswordvalid@gmail.com",
     "age": 21,
     "password": "Abdcdef!1",
@@ -563,5 +563,15 @@
     "joinDate": "2021-05-22T10:11:16.876+00:00",
     "passwordResetToken": "255c7903bca8d78b96d0f71ca5be8c4d75ceef422f35e31831436d30f88649af",
     "passwordResetExpires": "2021-05-26T20:53:12.447+00:00"
+  },
+  {
+    "_id": "60aeea748d222150c8dbaaf1",
+    "firstName": "updatePasswordFirstName",
+    "lastName": "updatePasswordLastName",
+    "displayName": "updatePasswordTestUser",
+    "email": "updatepassword@gmail.com",
+    "age": 21,
+    "password": "Abdcdef!1",
+    "joinDate": "2021-05-22T10:11:16.876+00:00"
   }
 ]

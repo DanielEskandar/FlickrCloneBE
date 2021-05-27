@@ -227,6 +227,7 @@ exports.updatePassword = async (req, res) => {
 
     // Update password
     user.password = req.body.password;
+    await user.save();
 
     // Log user and send JWT
     createSignToken(user, 200, res);

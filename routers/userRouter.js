@@ -936,7 +936,11 @@ userRouter.patch(
  *
  */
 
-userRouter.patch('/password');
+userRouter.patch(
+  '/password',
+  authController.protect,
+  authController.updatePassword
+);
 
 /**
  *

@@ -120,3 +120,23 @@ module.exports.resetPasswordData2 = {
     },
   },
 };
+
+module.exports.updatePasswordData1 = {
+  status: 'fail',
+  message: 'Your current password is wrong.',
+};
+
+module.exports.updatePasswordData2 = {
+  status: 'fail',
+  message: 'Invalid input data. Weak password',
+};
+
+module.exports.updatePasswordData3 = {
+  status: 'success',
+  token: expect.any(String),
+  data: {
+    user: {
+      _id: '60aeea748d222150c8dbaaf1',
+    },
+  },
+};
