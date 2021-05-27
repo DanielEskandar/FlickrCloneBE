@@ -1,40 +1,11 @@
 // INCLUDE DEPENDENCIES
 const express = require('express');
-const multer = require('multer');
 
 // INCLUDE CONTROLLERS
 const photoController = require('../controllers/photoController.js');
 
 // CREATE ROUTER
 const photoRouter = express.Router();
-
-// MULTER STORAGE
-const multerStorage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, '/uploads');
-  },
-  filename: (req, file, cb) => {
-    const ext = file.mimetype.split('/')[1];
-    // Saving format: user-UserId-DateStamp.ext
-    //e.g user-608d55c7e512b74ee00791de-1621992912638.jpeg
-    cb(null, `user-${req.body.userId}-${Date.now()}.${ext}`);
-  },
-});
-
-//MULTER FILTER
-const multerFilter = (req, file, cb) => {
-  //mimetype always starts with image/ then png or jpeg or..
-  if (file.mimetype.startsWith('image')) {
-    cb(null, true);
-  } else {
-    cb(new AppError('You are only allowed to upload image files.', 400), false);
-  }
-};
-
-const uploadDirectory = multer({
-  storage: multerStorage,
-  fileFilter: multerFilter,
-});
 
 // ROUTE URLs
 
@@ -114,7 +85,7 @@ const uploadDirectory = multer({
  */
 photoRouter.post(
   '/',
-  uploadDirectory.single('photo'),
+  photoController.upload.single('photo'),
   photoController.uploadPhoto
 );
 
