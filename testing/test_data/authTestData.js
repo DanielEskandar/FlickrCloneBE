@@ -24,6 +24,9 @@ module.exports.signupData4 = {
   data: {
     user: {
       _id: expect.any(String),
+      displayName: 'firstlast',
+      firstName: 'First Name Test',
+      lastName: 'Last Name Test',
     },
   },
 };
@@ -53,7 +56,10 @@ module.exports.signinData4 = {
   token: expect.any(String),
   data: {
     user: {
-      _id: '608d55c7e512b74ee00791db',
+      _id: expect.any(String),
+      displayName: 'DanielEskandar',
+      firstName: 'Daniel',
+      lastName: 'Eskandar',
     },
   },
 };
@@ -117,6 +123,9 @@ module.exports.resetPasswordData2 = {
   data: {
     user: {
       _id: '60aeb7c7824d05334c309754',
+      displayName: 'resetPasswordValidTestUser',
+      firstName: 'resetPasswordValidFirstName',
+      lastName: 'resetPasswordValidLastName',
     },
   },
 };
@@ -137,6 +146,9 @@ module.exports.updatePasswordData3 = {
   data: {
     user: {
       _id: '60aeea748d222150c8dbaaf1',
+      displayName: 'updatePasswordTestUser',
+      firstName: 'updatePasswordFirstName',
+      lastName: 'updatePasswordLastName',
     },
   },
 };
