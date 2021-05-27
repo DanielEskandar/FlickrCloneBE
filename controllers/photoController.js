@@ -1,5 +1,6 @@
 // INCLUDE DEPENDENCIES
 const multer = require('multer');
+const sharp = require('sharp');
 
 // INCLUDE MODELS
 const photoModel = require('../models/photoModel.js');
@@ -12,18 +13,7 @@ const errorController = require('./errorController.js');
 // UTILITY AND MIDDLEWARE FUNCTIONS
 
 // MULTER STORAGE
-const multerStorage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, './public/img');
-  },
-  filename: (req, file, cb) => {
-    const ext = file.mimetype.split('/')[1];
-
-    // Saving format: photo-UserId-DateStamp.ext
-
-    cb(null, `photo-${req.user.id}-${Date.now()}.${ext}`);
-  },
-});
+const multerStorage = multer.memoryStorage();
 
 // MULTER FILTER
 const multerFilter = (req, file, cb) => {
@@ -36,10 +26,96 @@ const multerFilter = (req, file, cb) => {
 };
 
 // MULTER UPLOAD FUNC
-exports.upload = multer({
+const upload = multer({
   storage: multerStorage,
   fileFilter: multerFilter,
 });
+
+exports.photoUpload = upload.single('photo');
+
+// UPLOADED PHOTO PROCESSOR
+
+exports.photoProcessor = (req, res, next) => {
+  try {
+    if (!req.file) {
+      throw new AppError('No File is Attached', 409);
+    }
+
+    req.file.filename_original = `photo-${req.user.id}-${Date.now()}-o.jpeg`;
+    req.file.filename_large = `photo-${req.user.id}-${Date.now()}-b.jpeg`;
+    req.file.filename_medium800 = `photo-${req.user.id}-${Date.now()}-c.jpeg`;
+    req.file.filename_medium640 = `photo-${req.user.id}-${Date.now()}-z.jpeg`;
+    req.file.filename_medium = `photo-${req.user.id}-${Date.now()}.jpeg`;
+    req.file.filename_small320 = `photo-${req.user.id}-${Date.now()}-n.jpeg`;
+    req.file.filename_small = `photo-${req.user.id}-${Date.now()}-m.jpeg`;
+    req.file.filename_thumbnail = `photo-${req.user.id}-${Date.now()}-t.jpeg`;
+    req.file.filename_largesquare = `photo-${req.user.id}-${Date.now()}-q.jpeg`;
+    req.file.filename_square = `photo-${req.user.id}-${Date.now()}-s.jpeg`;
+
+    sharp(req.file.buffer)
+      .toFormat('jpeg')
+      .jpeg({ quality: 90 })
+      .toFile(`./public/img/${req.file.filename_original}`);
+
+    sharp(req.file.buffer)
+      .resize(1024, null)
+      .toFormat('jpeg')
+      .jpeg({ quality: 90 })
+      .toFile(`./public/img/${req.file.filename_large}`);
+
+    sharp(req.file.buffer)
+      .resize(800, null)
+      .toFormat('jpeg')
+      .jpeg({ quality: 90 })
+      .toFile(`./public/img/${req.file.filename_medium800}`);
+
+    sharp(req.file.buffer)
+      .resize(640, null)
+      .toFormat('jpeg')
+      .jpeg({ quality: 90 })
+      .toFile(`./public/img/${req.file.filename_medium640}`);
+
+    sharp(req.file.buffer)
+      .resize(500, null)
+      .toFormat('jpeg')
+      .jpeg({ quality: 90 })
+      .toFile(`./public/img/${req.file.filename_medium}`);
+
+    sharp(req.file.buffer)
+      .resize(320, null)
+      .toFormat('jpeg')
+      .jpeg({ quality: 90 })
+      .toFile(`./public/img/${req.file.filename_small320}`);
+
+    sharp(req.file.buffer)
+      .resize(240, null)
+      .toFormat('jpeg')
+      .jpeg({ quality: 90 })
+      .toFile(`./public/img/${req.file.filename_small}`);
+
+    sharp(req.file.buffer)
+      .resize(100, null)
+      .toFormat('jpeg')
+      .jpeg({ quality: 90 })
+      .toFile(`./public/img/${req.file.filename_thumbnail}`);
+
+    sharp(req.file.buffer)
+      .resize(150, 150)
+      .toFormat('jpeg')
+      .jpeg({ quality: 90 })
+      .toFile(`./public/img/${req.file.filename_largesquare}`);
+
+    sharp(req.file.buffer)
+      .resize(75, 75)
+      .toFormat('jpeg')
+      .jpeg({ quality: 90 })
+      .toFile(`./public/img/${req.file.filename_square}`);
+
+    next();
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};
 
 // PUBLIC API IMPLEMENTATIONS
 
