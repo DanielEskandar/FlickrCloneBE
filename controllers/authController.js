@@ -23,11 +23,18 @@ const signToken = (id) =>
 const createSignToken = (user, statusCode, res) => {
   const token = signToken(user._id);
 
+  console.log(user);
+
   res.status(statusCode).json({
     status: 'success',
     token,
     data: {
-      user: { _id: JSON.parse(JSON.stringify(user._id)) },
+      user: {
+        _id: JSON.parse(JSON.stringify(user._id)),
+        firstName: JSON.parse(JSON.stringify(user.firstName)),
+        lastName: JSON.parse(JSON.stringify(user.lastName)),
+        displayName: JSON.parse(JSON.stringify(user.displayName)),
+      },
     },
   });
 };
@@ -61,7 +68,9 @@ exports.signIn = async (req, res, next) => {
     }
 
     // check if user exists
-    const user = await userModel.findOne({ email }).select('password');
+    const user = await userModel
+      .findOne({ email })
+      .select({ password: 1, firstName: 1, lastName: 1, displayName: 1 });
     if (!user) {
       throw new AppError('Invalid Email', 401);
     }
