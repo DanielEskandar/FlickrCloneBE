@@ -9,6 +9,7 @@ const errorController = require('./errorController.js');
 // UPLOAD PHOTO
 exports.uploadPhoto = async (req, res) => {
   try {
+    console.log(req.body);
     console.log(req.file);
     res.status(201).json({
       status: 'success',
