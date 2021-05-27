@@ -23,8 +23,6 @@ const signToken = (id) =>
 const createSignToken = (user, statusCode, res) => {
   const token = signToken(user._id);
 
-  console.log(user);
-
   res.status(statusCode).json({
     status: 'success',
     token,
