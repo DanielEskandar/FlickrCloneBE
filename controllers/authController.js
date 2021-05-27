@@ -19,6 +19,19 @@ const signToken = (id) =>
     expiresIn: process.env.JWT_EXPIRES_IN,
   });
 
+// CREATE SIGN TOKEN
+const createSignToken = (user, statusCode, res) => {
+  const token = signToken(user._id);
+
+  res.status(statusCode).json({
+    status: 'success',
+    token,
+    data: {
+      user: { _id: JSON.parse(JSON.stringify(user._id)) },
+    },
+  });
+};
+
 // SIGN UP
 exports.signUp = async (req, res) => {
   try {
@@ -31,15 +44,7 @@ exports.signUp = async (req, res) => {
       password: req.body.password,
     });
 
-    const token = signToken(newUser._id);
-
-    res.status(201).json({
-      status: 'success',
-      token,
-      data: {
-        user: JSON.parse(JSON.stringify(newUser)),
-      },
-    });
+    createSignToken(newUser, 201, res);
   } catch (err) {
     errorController.sendError(err, req, res);
   }
@@ -68,11 +73,7 @@ exports.signIn = async (req, res, next) => {
     }
 
     // if everything ok, send token to client
-    const token = signToken(user._id);
-    res.status(200).json({
-      status: 'success',
-      token,
-    });
+    createSignToken(user, 200, res);
   } catch (err) {
     errorController.sendError(err, req, res);
   }
@@ -146,17 +147,18 @@ exports.forgotPassword = async (req, res) => {
       'host'
     )}/user/reset-password/${resetToken}`;
 
-    const message = `To reset the password on your account, simply use the link below and follow the steps.\n
-    ${resetURL}\n
-    If you did not request a password reset, please disregard this email. Nothing will change to your account.`;
+    const message = {
+      html: `<p>To reset the password on your account, simply use the link below and follow the steps.</p>
+      <a href="${resetURL}">Reset your password</a>
+      <p>If you did not request a password reset, please disregard this email. Nothing will change to your account.</p>
+      <p>The Flickr team.</p>`,
+    };
 
     try {
       await sendEmail({
         email: user.email,
         subject: 'Flickr - Reset your password',
-        message: {
-          html: message,
-        },
+        message,
       });
 
       res.status(200).json({
@@ -204,11 +206,30 @@ exports.resetPassword = async (req, res) => {
     await user.save();
 
     // Log the user in and send JWT
-    const token = signToken(user._id);
-    res.status(200).json({
-      status: 'success',
-      token,
-    });
+    createSignToken(user, 200, res);
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};
+
+// UPDATE PASSWORD
+exports.updatePassword = async (req, res) => {
+  try {
+    // Get user from collection
+    const user = await userModel.findById(req.user.id).select('password');
+
+    // Check if POSTed current password is corrcect
+    if (
+      !(await user.correctPassword(req.body.passwordCurrent, user.password))
+    ) {
+      throw new AppError('Your current password is wrong.', 401);
+    }
+
+    // Update password
+    user.password = req.body.password;
+
+    // Log user and send JWT
+    createSignToken(user, 200, res);
   } catch (err) {
     errorController.sendError(err, req, res);
   }
