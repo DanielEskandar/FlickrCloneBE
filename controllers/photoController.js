@@ -9,14 +9,82 @@ const errorController = require('./errorController.js');
 // UPLOAD PHOTO
 exports.uploadPhoto = async (req, res) => {
   try {
-    console.log(req.body);
-    console.log(req.file);
+    const photoNew = {
+      userId: req.user.id,
+      title: req.body.title,
+      sizes: {
+        canDownload: 0,
+        size: {
+          original: {
+            height: req.file.sizeOriginal.h,
+            width: req.file.sizeOriginal.w,
+            source: req.file.filename_original,
+            url: req.file.filename_original,
+          },
+          large: {
+            height: req.file.sizeLarge.h,
+            width: req.file.sizeLarge.w,
+            source: req.file.filename_large,
+            url: req.file.filename_large,
+          },
+          medium800: {
+            height: req.file.sizeMedium800.h,
+            width: req.file.sizeMedium800.w,
+            source: req.file.filename_medium800,
+            url: req.file.filename_medium800,
+          },
+          medium640: {
+            height: req.file.sizeMedium640.h,
+            width: req.file.sizeMedium640.w,
+            source: req.file.filename_medium640,
+            url: req.file.filename_medium640,
+          },
+          medium: {
+            height: req.file.sizesizeMedium.h,
+            width: req.file.sizesizeMedium.w,
+            source: req.file.filename_medium,
+            url: req.file.filename_medium,
+          },
+          small320: {
+            height: req.file.sizeSmall320.h,
+            width: req.file.sizeSmall320.w,
+            source: req.file.filename_small320,
+            url: req.file.filename_small320,
+          },
+          small: {
+            height: req.file.sizeSmall.h,
+            width: req.file.sizeSmall.w,
+            source: req.file.filename_small,
+            url: req.file.filename_small,
+          },
+          thumbnail: {
+            height: req.file.sizeThumb.h,
+            width: req.file.sizeThumb.w,
+            source: req.file.filename_thumbnail,
+            url: req.file.filename_thumbnail,
+          },
+          largeSquare: {
+            height: req.file.sizeLargeSq.h,
+            width: req.file.sizeLargeSq.w,
+            source: req.file.filename_largesq,
+            url: req.file.filename_largesq,
+          },
+          square: {
+            height: req.file.sizeSquare.h,
+            width: req.file.sizeSquare.w,
+            source: req.file.filename_square,
+            url: req.file.filename_square,
+          },
+        },
+      },
+    };
+
+    const newPhoto = await photoModel.create(photoNew);
     res.status(201).json({
       status: 'success',
-      data: 'uploaded',
+      data: JSON.parse(JSON.stringify(newPhoto)),
     });
   } catch (err) {
-    console.log('Error in upload');
     errorController.sendError(err, req, res);
   }
 };
