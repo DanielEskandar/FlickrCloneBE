@@ -239,3 +239,43 @@ describe('should retrieve tagged people in a photo', () => {
     expect(mRes.json).toBeCalledWith(photoTestData.getTaggedData);
   });
 });
+
+//TESTING TAG USER
+describe('should tag a user to the photo ', () => {
+  test('should retrieve 2 tagged users', async () => {
+    const mReq = {
+      params: {
+        id: '608d5450ec00005468607a0f',
+        userid: '608d55c7e512b74ee00791dd',
+      },
+      user: { id: '608d55c7e512b74ee00791de' },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await photoController.tagUser(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(photoTestData.tagUserData);
+  });
+});
+
+//TESTING REMOVE TAGGED USER
+describe('should remove a tagged user from the photo ', () => {
+  test('should retrieve 1 tagged users', async () => {
+    const mReq = {
+      params: {
+        id: '608d5450ec00005468607a0f',
+        userid: '608d55c7e512b74ee00791dd',
+      },
+      user: { id: '608d55c7e512b74ee00791de' },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await photoController.removePerson(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(photoTestData.removePersonData);
+  });
+});
