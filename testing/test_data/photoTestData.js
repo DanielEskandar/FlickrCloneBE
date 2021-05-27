@@ -404,38 +404,7 @@ module.exports.getTaggedData = {
   data: {
     peopleTagged: [
       {
-        _id: expect.any(String),
-        userId: '608d5450ec00005468604a0c',
-        tagDate: '2012-04-13T18:25:43.511Z',
-      },
-    ],
-  },
-};
-
-module.exports.tagUserData = {
-  status: 'success',
-  data: {
-    peopleTagged: [
-      {
-        _id: expect.any(String),
-        userId: '608d5450ec00005468604a0c',
-        tagDate: expect.any(String),
-      },
-      {
-        _id: expect.any(String),
-        userId: '608d55c7e512b74ee00791dd',
-        tagDate: expect.any(String),
-      },
-    ],
-  },
-};
-
-module.exports.removePersonData = {
-  status: 'success',
-  data: {
-    peopleTagged: [
-      {
-        _id: expect.any(String),
+        _id: '609093af84b808271488fafd',
         userId: '608d5450ec00005468604a0c',
         tagDate: '2012-04-13T18:25:43.511Z',
       },

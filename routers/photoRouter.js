@@ -3,7 +3,7 @@ const express = require('express');
 
 // INCLUDE CONTROLLERS
 const photoController = require('../controllers/photoController.js');
-const authController = require('../controllers/authController.js');
+
 // CREATE ROUTER
 const photoRouter = express.Router();
 
@@ -321,7 +321,7 @@ photoRouter.patch('/:id/tags');
 /**
  * @api {post} /photo/ Add a Set of Tags to a Photo
  * @apiVersion 1.0.0
- * @apiName addTag
+ * @apiName AddTags
  * @apiGroup Photo
  *
  * @apiHeader {string} Token Authenticaton Token
@@ -1043,16 +1043,12 @@ photoRouter.patch('/:id/licenses');
  * @apiUse PhotoNotFoundError
  *
  */
-photoRouter.post(
-  '/:id/tags/:userid',
-  authController.protect,
-  photoController.tagUser
-);
+photoRouter.post('/:id/tags/:userId');
 
 /**
  * @api {delete} /photo/:id/tags/:userId Remove a User from a Photo
  * @apiVersion 1.0.0
- * @apiName removePerson
+ * @apiName RemovePerson
  * @apiGroup Photo
  *
  * @apiParam {String} photoid The Photo's ID to Remove from
@@ -1068,11 +1064,7 @@ photoRouter.post(
  * @apiUse PhotoNotFoundError
  *
  */
-photoRouter.delete(
-  '/:id/tags/:userid',
-  authController.protect,
-  photoController.removePerson
-);
+photoRouter.delete('/:id/tags/:userId');
 
 /**
  * @api {get} /photo/:id/tags Gets a List of User's Tagged in a Photo
@@ -1083,6 +1075,13 @@ photoRouter.delete(
  * @apiParam {String} id The Photo's ID
  *
  * @apiSuccess {Object[]} taggedlist Array of User IDs Tagged in the Photo
+ * @apiSuccess {Object[]} usernamelist Array of User Names of Users Tagged
+ * @apiSuccess {Object[]} realnamelist Array of Real Names of Users Tagged
+ * @apiSuccess {Object[]} addedbylist Array of Users who Added the Tag
+ * @apiSuccess {Object[]} xlist Array of X Coordinate of the Box
+ * @apiSuccess {Object[]} ylist Array of Y Coordinate of the Box
+ * @apiSuccess {Object[]} heightlist Array of Height of the Box
+ * @apiSuccess {Object[]} widthlist Array of Width of the Box
  *
  * @apiSuccessExample Success-Response:
  *      HTTP/1.1 200 OK
@@ -1090,14 +1089,31 @@ photoRouter.delete(
  *          "status": "success",
  *          "data":
  *          {
- *              "peopleTagged": [
- *                          {
- *                               _id: '609093af84b808271488fafd',
- *                               userId: '608d5450ec00005468604a0c',
- *                               tagDate: '2012-04-13T18:25:43.511Z',
- *                           },
- *              ]
+ *              "taggedlist": [
  *
+ *              ]
+ *              "usernamelist": [
+ *
+ *              ]
+ *              "realnamelist": [
+ *
+ *              ]
+ *              "addedbylist": [
+ *
+ *              ]
+ *              "xlist": [
+ *
+ *              ]
+ *              "ylist": [
+ *
+ *              ]
+ *              "heightlist": [
+ *
+ *              ]
+ *              "widthlist": [
+ *
+ *              ]
+ *          }
  *      }
  *
  * @apiUse UnauthError

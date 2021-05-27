@@ -1,7 +1,6 @@
 // INCLUDE MODELS
 const photoModel = require('../models/photoModel.js');
 const commentModel = require('../models/commentModel.js');
-const userModel = require('../models/userModel.js');
 
 // INCLUDE ERROR CLASS AND ERROR CONTROLLER
 const AppError = require('../utils/appError.js');
@@ -205,7 +204,8 @@ exports.getTagged = async (req, res) => {
 
     const tags = await photoModel
       .findById(req.params.id)
-      .select({ _id: 0, peopleTagged: 1 });
+      .select({ _id: 0 })
+      .select('peopleTagged');
 
     if (!tags) {
       throw new AppError('No tags found for this photo', 404);
@@ -214,111 +214,6 @@ exports.getTagged = async (req, res) => {
     res.status(200).json({
       status: 'success',
       data: JSON.parse(JSON.stringify(tags)),
-    });
-  } catch (err) {
-    errorController.sendError(err, req, res);
-  }
-};
-
-// ADD TAGGED PEOPLE
-exports.tagUser = async (req, res) => {
-  try {
-    //if user trying to tag is authenticated
-    if ((await userModel.findById(req.user.id)) === null) {
-      throw new AppError('You are not authorized to do this action', 403);
-    }
-
-    //validations on photp ID
-    if ((await photoModel.findById(req.params.id)) === null) {
-      throw new AppError('No photo Found with this ID', 404);
-    }
-
-    if ((await userModel.findById(req.params.userid)) === null) {
-      throw new AppError('No user to tag Found with this ID', 404);
-    }
-
-    const photo = await photoModel.findById(req.params.id);
-    //if user alread tagged
-    const exists = photo.peopleTagged.find(
-      (elem) => elem.userId.toString() === req.params.userid.toString()
-    );
-    if (exists) {
-      throw new AppError('User already tagged', 409);
-    }
-
-    const tagTaggedList = await photoModel
-      .findByIdAndUpdate(
-        req.params.id,
-        {
-          $push: {
-            peopleTagged: {
-              userId: req.params.userid,
-            },
-          },
-        },
-        {
-          new: true,
-          runValidators: true,
-        }
-      )
-      .select({ peopleTagged: 1, _id: 0 });
-
-    //tagTaggedList.map({ _id, userId, tagDate }, { userId, tagDate });
-    res.status(200).json({
-      status: 'success',
-      data: JSON.parse(JSON.stringify(tagTaggedList)),
-    });
-  } catch (err) {
-    errorController.sendError(err, req, res);
-  }
-};
-
-// REMOVE A TAGGED USER
-exports.removePerson = async (req, res) => {
-  try {
-    //if user trying to remove tagged person is authenticated
-    if ((await userModel.findById(req.user.id)) === null) {
-      throw new AppError('You are not authorized to do this action', 403);
-    }
-
-    if ((await photoModel.findById(req.params.id)) === null) {
-      throw new AppError('No photo Found with this ID', 404);
-    }
-
-    //check if photo exists in DB
-    if ((await userModel.findById(req.params.userid)) === null) {
-      throw new AppError('User doesnt Exist', 404);
-    }
-
-    const user = await userModel.findById(req.params.userid);
-
-    const photo = await photoModel.findById(req.params.id);
-    //if user already not tagged
-    const exists = photo.peopleTagged.find(
-      (elem) => elem.userId.toString() === req.params.userid.toString()
-    );
-    if (!exists) {
-      throw new AppError('User already not tagged', 409);
-    }
-
-    const taggedlist = await photoModel
-      .findByIdAndUpdate(
-        req.params.id,
-        {
-          $pull: {
-            peopleTagged: { userId: user._id },
-          },
-        },
-        {
-          new: true,
-          runValidators: true,
-        }
-      )
-      .select({ _id: 0, peopleTagged: 1 });
-
-    res.status(200).json({
-      status: 'success',
-      data: JSON.parse(JSON.stringify(taggedlist)),
     });
   } catch (err) {
     errorController.sendError(err, req, res);
