@@ -35,11 +35,27 @@ exports.photoUpload = upload.single('photo');
 
 // UPLOADED PHOTO PROCESSOR
 
-exports.photoProcessor = (req, res, next) => {
+exports.photoProcessor = async (req, res, next) => {
   try {
     if (!req.file) {
       throw new AppError('No File is Attached', 409);
     }
+
+    const image = sharp(req.file.buffer);
+
+    const metadata = await image.metadata();
+
+    let h = [null, null, null, null, null, null, null, 150, 75];
+    let w = [null, null, null, null, null, null, null, 150, 75];
+    const sizeArr = [1024, 800, 640, 500, 320, 240, 100, 150, 75];
+
+    if (metadata.height > metadata.width) {
+      h = Array.from(sizeArr);
+    } else {
+      w = Array.from(sizeArr);
+    }
+
+    req.file.uploadPath = './public/img/';
 
     req.file.filename_original = `photo-${req.user.id}-${Date.now()}-o.jpeg`;
     req.file.filename_large = `photo-${req.user.id}-${Date.now()}-b.jpeg`;
@@ -55,61 +71,61 @@ exports.photoProcessor = (req, res, next) => {
     sharp(req.file.buffer)
       .toFormat('jpeg')
       .jpeg({ quality: 90 })
-      .toFile(`./public/img/${req.file.filename_original}`);
+      .toFile(`${req.file.uploadPath}${req.file.filename_original}`);
 
     sharp(req.file.buffer)
-      .resize(1024, null)
+      .resize(w[0], h[0])
       .toFormat('jpeg')
       .jpeg({ quality: 90 })
-      .toFile(`./public/img/${req.file.filename_large}`);
+      .toFile(`${req.file.uploadPath}${req.file.filename_large}`);
 
     sharp(req.file.buffer)
-      .resize(800, null)
+      .resize(w[1], h[1])
       .toFormat('jpeg')
       .jpeg({ quality: 90 })
-      .toFile(`./public/img/${req.file.filename_medium800}`);
+      .toFile(`${req.file.uploadPath}${req.file.filename_medium800}`);
 
     sharp(req.file.buffer)
-      .resize(640, null)
+      .resize(w[2], h[2])
       .toFormat('jpeg')
       .jpeg({ quality: 90 })
-      .toFile(`./public/img/${req.file.filename_medium640}`);
+      .toFile(`${req.file.uploadPath}${req.file.filename_medium640}`);
 
     sharp(req.file.buffer)
-      .resize(500, null)
+      .resize(w[3], h[3])
       .toFormat('jpeg')
       .jpeg({ quality: 90 })
-      .toFile(`./public/img/${req.file.filename_medium}`);
+      .toFile(`${req.file.uploadPath}${req.file.filename_medium}`);
 
     sharp(req.file.buffer)
-      .resize(320, null)
+      .resize(w[4], h[4])
       .toFormat('jpeg')
       .jpeg({ quality: 90 })
-      .toFile(`./public/img/${req.file.filename_small320}`);
+      .toFile(`${req.file.uploadPath}${req.file.filename_small320}`);
 
     sharp(req.file.buffer)
-      .resize(240, null)
+      .resize(w[5], h[5])
       .toFormat('jpeg')
       .jpeg({ quality: 90 })
-      .toFile(`./public/img/${req.file.filename_small}`);
+      .toFile(`${req.file.uploadPath}${req.file.filename_small}`);
 
     sharp(req.file.buffer)
-      .resize(100, null)
+      .resize(w[6], h[6])
       .toFormat('jpeg')
       .jpeg({ quality: 90 })
-      .toFile(`./public/img/${req.file.filename_thumbnail}`);
+      .toFile(`${req.file.uploadPath}${req.file.filename_thumbnail}`);
 
     sharp(req.file.buffer)
-      .resize(150, 150)
+      .resize(w[7], h[7])
       .toFormat('jpeg')
       .jpeg({ quality: 90 })
-      .toFile(`./public/img/${req.file.filename_largesquare}`);
+      .toFile(`${req.file.uploadPath}${req.file.filename_largesquare}`);
 
     sharp(req.file.buffer)
-      .resize(75, 75)
+      .resize(w[8], h[8])
       .toFormat('jpeg')
       .jpeg({ quality: 90 })
-      .toFile(`./public/img/${req.file.filename_square}`);
+      .toFile(`${req.file.uploadPath}${req.file.filename_square}`);
 
     next();
   } catch (err) {
