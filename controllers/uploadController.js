@@ -29,6 +29,7 @@ const multerFilter = (req, file, cb) => {
 const upload = multer({
   storage: multerStorage,
   fileFilter: multerFilter,
+  limits: { fileSize: 2000000 },
 });
 
 //MULTER UPLOAD FUNC
@@ -41,8 +42,6 @@ exports.photoProcessor = async (req, res, next) => {
     if (!req.file) {
       throw new AppError('No File is Attached', 409);
     }
-
-    console.log(req.file);
 
     const image = sharp(req.file.buffer);
 
@@ -192,7 +191,6 @@ exports.uploadToCloud = async (req, res, next) => {
           }
 
           if (result) {
-            console.log(result);
             sizeItem.source = result.secure_url;
             fs.unlink(`./public/img/${sizeItem.filename}`, (err) => {
               if (err) console.log(err);
