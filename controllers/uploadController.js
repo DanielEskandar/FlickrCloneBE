@@ -2,6 +2,8 @@
 const multer = require('multer');
 const sharp = require('sharp');
 const exif = require('exif-reader');
+const cloudinary = require('cloudinary');
+const fs = require('fs');
 
 // INCLUDE ERROR CLASS AND ERROR CONTROLLER
 const AppError = require('../utils/appError.js');
@@ -20,13 +22,14 @@ const multerFilter = (req, file, cb) => {
   }
 };
 
-// MULTER UPLOAD FUNC
+// MULTER CONFIG
 const upload = multer({
   storage: multerStorage,
   fileFilter: multerFilter,
 });
 
-exports.photoUpload = upload.single('photo');
+//MULTER UPLOAD FUNC
+exports.uploadToFile = upload.single('photo');
 
 // UPLOADED PHOTO PROCESSOR
 
@@ -36,13 +39,15 @@ exports.photoProcessor = async (req, res, next) => {
       throw new AppError('No File is Attached', 409);
     }
 
+    console.log(req.file);
+
     const image = sharp(req.file.buffer);
 
     const metadata = await image.metadata();
 
-    let h = [null, null, null, null, null, null, null, 150, 75];
-    let w = [null, null, null, null, null, null, null, 150, 75];
-    const sizeArr = [1024, 800, 640, 500, 320, 240, 100, 150, 75];
+    let h = [null, null, null, null, null, null, null, null, 150, 75];
+    let w = [null, null, null, null, null, null, null, null, 150, 75];
+    const sizeArr = [null, 1024, 800, 640, 500, 320, 240, 100, 150, 75];
 
     if (metadata.height > metadata.width) {
       h = Array.from(sizeArr);
@@ -50,122 +55,152 @@ exports.photoProcessor = async (req, res, next) => {
       w = Array.from(sizeArr);
     }
 
-    req.file.uploadPath = './public/img/';
-
     if (metadata.exif) req.file.Exif = exif(metadata.exif);
 
-    req.file.filename_original = `photo-0-${req.user.id}-${Date.now()}-o.jpeg`;
-    req.file.filename_large = `photo-1-${req.user.id}-${Date.now()}-b.jpeg`;
-    req.file.filename_medium800 = `photo-2-${req.user.id}-${Date.now()}-c.jpeg`;
-    req.file.filename_medium640 = `photo-3-${req.user.id}-${Date.now()}-z.jpeg`;
-    req.file.filename_medium = `photo-4-${req.user.id}-${Date.now()}.jpeg`;
-    req.file.filename_small320 = `photo-5-${req.user.id}-${Date.now()}-n.jpeg`;
-    req.file.filename_small = `photo-6-${req.user.id}-${Date.now()}-m.jpeg`;
-    req.file.filename_thumbnail = `photo-7-${req.user.id}-${Date.now()}-t.jpeg`;
-    req.file.filename_largesq = `photo-8-${req.user.id}-${Date.now()}-q.jpeg`;
-    req.file.filename_square = `photo-9-${req.user.id}-${Date.now()}-s.jpeg`;
+    req.file.data = [
+      {
+        label: 'original',
+        filename: `photo-0-${req.user.id}-${Date.now()}-o.jpeg`,
+        resizeFactor: {
+          h: h[0],
+          w: w[0],
+        },
+      },
+      {
+        label: 'large',
+        filename: `photo-1-${req.user.id}-${Date.now()}-b.jpeg`,
+        resizeFactor: {
+          h: h[1],
+          w: w[1],
+        },
+      },
+      {
+        label: 'medium800',
+        filename: `photo-2-${req.user.id}-${Date.now()}-c.jpeg`,
+        resizeFactor: {
+          h: h[2],
+          w: w[2],
+        },
+      },
+      {
+        label: 'medium640',
+        filename: `photo-3-${req.user.id}-${Date.now()}-z.jpeg`,
+        resizeFactor: {
+          h: h[3],
+          w: w[3],
+        },
+      },
+      {
+        label: 'medium',
+        filename: `photo-4-${req.user.id}-${Date.now()}.jpeg`,
+        resizeFactor: {
+          h: h[4],
+          w: w[4],
+        },
+      },
+      {
+        label: 'small320',
+        filename: `photo-5-${req.user.id}-${Date.now()}-n.jpeg`,
+        resizeFactor: {
+          h: h[5],
+          w: w[5],
+        },
+      },
+      {
+        label: 'small',
+        filename: `photo-6-${req.user.id}-${Date.now()}-m.jpeg`,
+        resizeFactor: {
+          h: h[6],
+          w: w[6],
+        },
+      },
+      {
+        label: 'thumbnail',
+        filename: `photo-7-${req.user.id}-${Date.now()}-t.jpeg`,
+        resizeFactor: {
+          h: h[7],
+          w: w[7],
+        },
+      },
+      {
+        label: 'largeSquare',
+        filename: `photo-8-${req.user.id}-${Date.now()}-q.jpeg`,
+        resizeFactor: {
+          h: h[8],
+          w: w[8],
+        },
+      },
+      {
+        label: 'square',
+        filename: `photo-9-${req.user.id}-${Date.now()}-s.jpeg`,
+        resizeFactor: {
+          h: h[9],
+          w: w[9],
+        },
+      },
+    ];
 
-    await image
-      .toFormat('jpeg')
-      .withMetadata()
-      .jpeg({ quality: 90 })
-      .toFile(`${req.file.uploadPath}${req.file.filename_original}`)
-      .then((info) => {
-        req.file.sizeOriginal = { w: info.width, h: info.height };
-      });
+    req.file.uploadPath = './public/img/';
 
-    await image
-      .resize(w[0], h[0])
-      .withMetadata()
-      .toFormat('jpeg')
-      .jpeg({ quality: 90 })
-      .toFile(`${req.file.uploadPath}${req.file.filename_large}`)
-      .then((info) => {
-        req.file.sizeLarge = { w: info.width, h: info.height };
-      });
-
-    await image
-      .resize(w[1], h[1])
-      .withMetadata()
-      .toFormat('jpeg')
-      .jpeg({ quality: 90 })
-      .toFile(`${req.file.uploadPath}${req.file.filename_medium800}`)
-      .then((info) => {
-        req.file.sizeMedium800 = { w: info.width, h: info.height };
-      });
-
-    await image
-      .resize(w[2], h[2])
-      .withMetadata()
-      .toFormat('jpeg')
-      .jpeg({ quality: 90 })
-      .toFile(`${req.file.uploadPath}${req.file.filename_medium640}`)
-      .then((info) => {
-        req.file.sizeMedium640 = { w: info.width, h: info.height };
-      });
-
-    await image
-      .resize(w[3], h[3])
-      .withMetadata()
-      .toFormat('jpeg')
-      .jpeg({ quality: 90 })
-      .toFile(`${req.file.uploadPath}${req.file.filename_medium}`)
-      .then((info) => {
-        req.file.sizesizeMedium = { w: info.width, h: info.height };
-      });
-
-    await image
-      .resize(w[4], h[4])
-      .withMetadata()
-      .toFormat('jpeg')
-      .jpeg({ quality: 90 })
-      .toFile(`${req.file.uploadPath}${req.file.filename_small320}`)
-      .then((info) => {
-        req.file.sizeSmall320 = { w: info.width, h: info.height };
-      });
-
-    await image
-      .resize(w[5], h[5])
-      .withMetadata()
-      .toFormat('jpeg')
-      .jpeg({ quality: 90 })
-      .toFile(`${req.file.uploadPath}${req.file.filename_small}`)
-      .then((info) => {
-        req.file.sizeSmall = { w: info.width, h: info.height };
-      });
-
-    await image
-      .resize(w[6], h[6])
-      .withMetadata()
-      .toFormat('jpeg')
-      .jpeg({ quality: 90 })
-      .toFile(`${req.file.uploadPath}${req.file.filename_thumbnail}`)
-      .then((info) => {
-        req.file.sizeThumb = { w: info.width, h: info.height };
-      });
-
-    await image
-      .resize(w[7], h[7])
-      .withMetadata()
-      .toFormat('jpeg')
-      .jpeg({ quality: 90 })
-      .toFile(`${req.file.uploadPath}${req.file.filename_largesq}`)
-      .then((info) => {
-        req.file.sizeLargeSq = { w: info.width, h: info.height };
-      });
-
-    await image
-      .resize(w[8], h[8])
-      .withMetadata()
-      .toFormat('jpeg')
-      .jpeg({ quality: 90 })
-      .toFile(`${req.file.uploadPath}${req.file.filename_square}`)
-      .then((info) => {
-        req.file.sizeSquare = { w: info.width, h: info.height };
-      });
-
+    await Promise.all(
+      req.file.data.map(async (sizeItem) => {
+        await image
+          .resize(sizeItem.resizeFactor.w, sizeItem.resizeFactor.h)
+          .withMetadata()
+          .toFormat('jpeg')
+          .jpeg(sizeItem.label === 'original' ? { quality: 2 } : { quality: 2 })
+          .toFile(`${req.file.uploadPath}${sizeItem.filename}`)
+          .then((info) => {
+            sizeItem.size = { w: info.width, h: info.height };
+          });
+      })
+    );
     next();
   } catch (err) {
     errorController.sendError(err, req, res);
   }
+};
+
+// CLOUDINARY CONFIG
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
+// CDN UPLOADER
+exports.uploadToCloud = async (req, res, next) => {
+  await Promise.all(
+    req.file.data.map(async (sizeItem) => {
+      try {
+        await cloudinary.v2.uploader.upload(
+          `./public/img/${sizeItem.filename}`,
+          {
+            public_id: `${sizeItem.filename.split('.')[0]}`,
+            timeout: 600000,
+          },
+          (error, result) => {
+            if (error) {
+              throw new AppError(
+                'Failed to upload the image to the server.',
+                504
+              );
+            }
+
+            if (result) {
+              console.log(result);
+              sizeItem.source = result.secure_url;
+              fs.unlink(`./public/img/${sizeItem.filename}`, (err) => {
+                if (err) console.log(err);
+              });
+            }
+          }
+        );
+      } catch (err) {
+        errorController.sendError(err, req, res);
+      }
+    })
+  );
+
+  next();
 };
