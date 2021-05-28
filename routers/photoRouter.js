@@ -80,7 +80,97 @@ const photoRouter = express.Router();
  *
  * @apiParam (Request Body) {Number} ticket The Ticket of the Upload
  *
- * @apiUse SuccessRes
+ * @apiSuccessExample Success-Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *        "status": "success",
+ *        "data": {
+ *            "permissions": {
+ *            "public": false,
+ *            "friend": false,
+ *            "family": false,
+ *            "comment": 3,
+ *            "addMeta": 0
+ *          },
+ *          "sizes": {
+ *            "size": {
+ *              "original": {
+ *                "height": 854,
+ *                "width": 1280,
+ *                "source": "https://res.cloudinary.com/dpuxq7nuq/image/upload/v1622228651/photo-0-608d55c7e512b74ee00791db-1622228648958-o.jpg",
+ *                "url": "https://res.cloudinary.com/dpuxq7nuq/image/upload/v1622228651/photo-0-608d55c7e512b74ee00791db-1622228648958-o.jpg"
+ *              },
+ *              "large": {
+ *                "height": 683,
+ *                "width": 1024,
+ *                "source": "https://res.cloudinary.com/dpuxq7nuq/image/upload/v1622228652/photo-1-608d55c7e512b74ee00791db-1622228648958-b.jpg",
+ *                "url": "https://res.cloudinary.com/dpuxq7nuq/image/upload/v1622228652/photo-1-608d55c7e512b74ee00791db-1622228648958-b.jpg"
+ *              },
+ *              "medium800": {
+ *                "height": 534,
+ *                "width": 800,
+ *                "source": "https://res.cloudinary.com/dpuxq7nuq/image/upload/v1622228653/photo-2-608d55c7e512b74ee00791db-1622228648958-c.jpg",
+ *                "url": "https://res.cloudinary.com/dpuxq7nuq/image/upload/v1622228653/photo-2-608d55c7e512b74ee00791db-1622228648958-c.jpg"
+ *              },
+ *              "medium640": {
+ *                "height": 427,
+ *                "width": 640,
+ *                "source": "https://res.cloudinary.com/dpuxq7nuq/image/upload/v1622228654/photo-3-608d55c7e512b74ee00791db-1622228648958-z.jpg",
+ *                "url": "https://res.cloudinary.com/dpuxq7nuq/image/upload/v1622228654/photo-3-608d55c7e512b74ee00791db-1622228648958-z.jpg"
+ *              },
+ *              "medium": {
+ *                "height": 334,
+ *                "width": 500,
+ *                "source": "https://res.cloudinary.com/dpuxq7nuq/image/upload/v1622228656/photo-4-608d55c7e512b74ee00791db-1622228648958.jpg",
+ *                "url": "https://res.cloudinary.com/dpuxq7nuq/image/upload/v1622228656/photo-4-608d55c7e512b74ee00791db-1622228648958.jpg"
+ *              },
+ *              "small320": {
+ *                "height": 214,
+ *                "width": 320,
+ *                "source": "https://res.cloudinary.com/dpuxq7nuq/image/upload/v1622228657/photo-5-608d55c7e512b74ee00791db-1622228648958-n.jpg",
+ *                "url": "https://res.cloudinary.com/dpuxq7nuq/image/upload/v1622228657/photo-5-608d55c7e512b74ee00791db-1622228648958-n.jpg"
+ *              },
+ *              "small": {
+ *                "height": 160,
+ *                "width": 240,
+ *                "source": "https://res.cloudinary.com/dpuxq7nuq/image/upload/v1622228658/photo-6-608d55c7e512b74ee00791db-1622228648958-m.jpg",
+ *                "url": "https://res.cloudinary.com/dpuxq7nuq/image/upload/v1622228658/photo-6-608d55c7e512b74ee00791db-1622228648958-m.jpg"
+ *              },
+ *              "thumbnail": {
+ *                "height": 67,
+ *                "width": 100,
+ *                "source": "https://res.cloudinary.com/dpuxq7nuq/image/upload/v1622228658/photo-7-608d55c7e512b74ee00791db-1622228648958-t.jpg",
+ *                "url": "https://res.cloudinary.com/dpuxq7nuq/image/upload/v1622228658/photo-7-608d55c7e512b74ee00791db-1622228648958-t.jpg"
+ *              },
+ *              "largeSquare": {
+ *                "height": 150,
+ *                "width": 150,
+ *                "source": "https://res.cloudinary.com/dpuxq7nuq/image/upload/v1622228659/photo-8-608d55c7e512b74ee00791db-1622228648958-q.jpg",
+ *                "url": "https://res.cloudinary.com/dpuxq7nuq/image/upload/v1622228659/photo-8-608d55c7e512b74ee00791db-1622228648958-q.jpg"
+ *              },
+ *              "square": {
+ *                "height": 75,
+ *                "width": 75,
+ *                "source": "https://res.cloudinary.com/dpuxq7nuq/image/upload/v1622228660/photo-9-608d55c7e512b74ee00791db-1622228648958-s.jpg",
+ *                "url": "https://res.cloudinary.com/dpuxq7nuq/image/upload/v1622228660/photo-9-608d55c7e512b74ee00791db-1622228648958-s.jpg"
+ *              }
+ *            },
+ *            "canDownload": false
+ *          },
+ *          "comments": [],
+ *          "favourites": 0,
+ *          "views": 0,
+ *          "tags": [],
+ *          "hidden": true,
+ *          "_id": "60b13eb4f67eb137b8815dbb",
+ *          "userId": "608d55c7e512b74ee00791db",
+ *          "title": "Hello",
+ *          "description": "best photo ever",
+ *          "dateUploaded": "2021-05-28T19:04:20.110Z",
+ *          "peopleTagged": [],
+ *          "__v": 0
+ *          }
+ *        }
  *
  * @apiUse UnauthError
  *

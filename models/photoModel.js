@@ -125,7 +125,7 @@ const photoSchema = new mongoose.Schema({
     flash: Number,
     iso: Number,
   },
-  EXIF: {},
+  EXIF: String,
   safetyLevel: {
     type: Number,
     minimum: 1,

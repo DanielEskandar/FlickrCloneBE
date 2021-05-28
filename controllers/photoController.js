@@ -2,6 +2,7 @@
 const photoModel = require('../models/photoModel.js');
 const commentModel = require('../models/commentModel.js');
 const galleryModel = require('../models/galleryModel.js');
+const userModel = require('../models/userModel.js');
 
 // INCLUDE ERROR CLASS AND ERROR CONTROLLER
 const AppError = require('../utils/appError.js');
@@ -10,8 +11,8 @@ const errorController = require('./errorController.js');
 // UPLOAD PHOTO
 exports.uploadPhoto = async (req, res) => {
   try {
-    let ExifString;
-    let DateCapture;
+    let ExifString = '';
+    let DateCapture = '';
     let metadataStream;
 
     if (req.file.Exif) {
@@ -143,11 +144,27 @@ exports.uploadPhoto = async (req, res) => {
       throw new AppError('Failed to Create New Photo.', 409);
     }
 
+    const userPhotoList = await userModel
+      .findByIdAndUpdate(
+        req.user.id,
+        {
+          $push: { photos: newPhoto._id },
+        },
+        {
+          new: true,
+          runValidators: true,
+        }
+      )
+      .select('photos');
+
     const createdPhoto = await photoModel.findById(newPhoto._id);
 
     res.status(201).json({
       status: 'success',
-      data: JSON.parse(JSON.stringify(createdPhoto)),
+      data: {
+        newPhoto: JSON.parse(JSON.stringify(createdPhoto)),
+        userPhotoList: JSON.parse(JSON.stringify(userPhotoList)),
+      },
     });
   } catch (err) {
     errorController.sendError(err, req, res);
