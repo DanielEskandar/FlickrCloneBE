@@ -9,71 +9,125 @@ const errorController = require('./errorController.js');
 // UPLOAD PHOTO
 exports.uploadPhoto = async (req, res) => {
   try {
+    let ExifString;
+    let DateCapture;
+    let metadataStream;
+
+    if (req.file.Exif) {
+      metadataStream = {
+        cameraMake: '',
+        cameraModel: '',
+        lensName: '',
+        fNumber: '',
+        focalLength: '',
+        exposureTime: '',
+        flash: '',
+        iso: '',
+      };
+
+      DateCapture = new Date(req.file.Exif.exif.DateTimeOriginal);
+
+      if (req.file.Exif.image) {
+        if (req.file.Exif.image.Make)
+          metadataStream.cameraMake = req.file.Exif.image.Make;
+
+        if (req.file.Exif.image.Model)
+          metadataStream.cameraModel = req.file.Exif.image.Model;
+      }
+
+      if (req.file.Exif.exif) {
+        if (req.file.Exif.exif.MakerNote) req.file.Exif.exif.MakerNote = '';
+
+        ExifString = JSON.stringify(req.file.Exif.exif);
+
+        if (req.file.Exif.exif.ExposureTime)
+          metadataStream.exposureTime = req.file.Exif.exif.ExposureTime;
+
+        if (req.file.Exif.exif.FNumber)
+          metadataStream.fNumber = req.file.Exif.exif.FNumber;
+
+        if (req.file.Exif.exif.FocalLength)
+          metadataStream.focalLength = req.file.Exif.exif.FocalLength;
+
+        if (req.file.Exif.exif.Flash)
+          metadataStream.flash = req.file.Exif.exif.Flash;
+
+        if (req.file.Exif.exif.ISO) metadataStream.iso = req.file.Exif.exif.ISO;
+
+        if (req.file.Exif.exif.LensModel)
+          metadataStream.lensName = req.file.Exif.exif.LensModel;
+      }
+    }
+
     const photoNew = {
       userId: req.user.id,
       title: req.body.title,
+      description: req.body.description,
+      metadata: metadataStream,
+      EXIF: ExifString,
+      dateTaken: DateCapture,
       sizes: {
         canDownload: 0,
         size: {
           original: {
-            height: req.file.sizeOriginal.h,
-            width: req.file.sizeOriginal.w,
-            source: req.file.filename_original,
-            url: req.file.filename_original,
+            height: req.file.data[0].size.h,
+            width: req.file.data[0].size.w,
+            source: req.file.data[0].source,
+            url: req.file.data[0].source,
           },
           large: {
-            height: req.file.sizeLarge.h,
-            width: req.file.sizeLarge.w,
-            source: req.file.filename_large,
-            url: req.file.filename_large,
+            height: req.file.data[1].size.h,
+            width: req.file.data[1].size.w,
+            source: req.file.data[1].source,
+            url: req.file.data[1].source,
           },
           medium800: {
-            height: req.file.sizeMedium800.h,
-            width: req.file.sizeMedium800.w,
-            source: req.file.filename_medium800,
-            url: req.file.filename_medium800,
+            height: req.file.data[2].size.h,
+            width: req.file.data[2].size.w,
+            source: req.file.data[2].source,
+            url: req.file.data[2].source,
           },
           medium640: {
-            height: req.file.sizeMedium640.h,
-            width: req.file.sizeMedium640.w,
-            source: req.file.filename_medium640,
-            url: req.file.filename_medium640,
+            height: req.file.data[3].size.h,
+            width: req.file.data[3].size.w,
+            source: req.file.data[3].source,
+            url: req.file.data[3].source,
           },
           medium: {
-            height: req.file.sizesizeMedium.h,
-            width: req.file.sizesizeMedium.w,
-            source: req.file.filename_medium,
-            url: req.file.filename_medium,
+            height: req.file.data[4].size.h,
+            width: req.file.data[4].size.w,
+            source: req.file.data[4].source,
+            url: req.file.data[4].source,
           },
           small320: {
-            height: req.file.sizeSmall320.h,
-            width: req.file.sizeSmall320.w,
-            source: req.file.filename_small320,
-            url: req.file.filename_small320,
+            height: req.file.data[5].size.h,
+            width: req.file.data[5].size.w,
+            source: req.file.data[5].source,
+            url: req.file.data[5].source,
           },
           small: {
-            height: req.file.sizeSmall.h,
-            width: req.file.sizeSmall.w,
-            source: req.file.filename_small,
-            url: req.file.filename_small,
+            height: req.file.data[6].size.h,
+            width: req.file.data[6].size.w,
+            source: req.file.data[6].source,
+            url: req.file.data[6].source,
           },
           thumbnail: {
-            height: req.file.sizeThumb.h,
-            width: req.file.sizeThumb.w,
-            source: req.file.filename_thumbnail,
-            url: req.file.filename_thumbnail,
+            height: req.file.data[7].size.h,
+            width: req.file.data[7].size.w,
+            source: req.file.data[7].source,
+            url: req.file.data[7].source,
           },
           largeSquare: {
-            height: req.file.sizeLargeSq.h,
-            width: req.file.sizeLargeSq.w,
-            source: req.file.filename_largesq,
-            url: req.file.filename_largesq,
+            height: req.file.data[8].size.h,
+            width: req.file.data[8].size.w,
+            source: req.file.data[8].source,
+            url: req.file.data[8].source,
           },
           square: {
-            height: req.file.sizeSquare.h,
-            width: req.file.sizeSquare.w,
-            source: req.file.filename_square,
-            url: req.file.filename_square,
+            height: req.file.data[9].size.h,
+            width: req.file.data[9].size.w,
+            source: req.file.data[9].source,
+            url: req.file.data[9].source,
           },
         },
       },

@@ -88,8 +88,9 @@ const photoRouter = express.Router();
 photoRouter.post(
   '/',
   authController.protect,
-  uploadController.photoUpload,
+  uploadController.uploadToFile,
   uploadController.photoProcessor,
+  uploadController.uploadToCloud,
   photoController.uploadPhoto
 );
 
