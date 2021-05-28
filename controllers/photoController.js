@@ -66,6 +66,9 @@ exports.uploadPhoto = async (req, res) => {
       description: req.body.description,
       metadata: metadataStream,
       EXIF: ExifString,
+      license: req.body.license,
+      safetyLevel: req.body.safetyLevel,
+      contentType: req.body.contentType,
       dateTaken: DateCapture,
       sizes: {
         canDownload: 0,
@@ -135,9 +138,16 @@ exports.uploadPhoto = async (req, res) => {
     };
 
     const newPhoto = await photoModel.create(photoNew);
+
+    if (!newPhoto) {
+      throw new AppError('Failed to Create New Photo.', 409);
+    }
+
+    const createdPhoto = await photoModel.findById(newPhoto._id);
+
     res.status(201).json({
       status: 'success',
-      data: JSON.parse(JSON.stringify(newPhoto)),
+      data: JSON.parse(JSON.stringify(createdPhoto)),
     });
   } catch (err) {
     errorController.sendError(err, req, res);
