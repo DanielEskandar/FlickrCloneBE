@@ -1,3 +1,6 @@
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable no-await-in-loop */
+
 // INCLUDE DEPENDENCIES
 const multer = require('multer');
 const sharp = require('sharp');
@@ -148,7 +151,9 @@ exports.photoProcessor = async (req, res, next) => {
           .resize(sizeItem.resizeFactor.w, sizeItem.resizeFactor.h)
           .withMetadata()
           .toFormat('jpeg')
-          .jpeg(sizeItem.label === 'original' ? { quality: 2 } : { quality: 2 })
+          .jpeg(
+            sizeItem.label === 'original' ? { quality: 30 } : { quality: 80 }
+          )
           .toFile(`${req.file.uploadPath}${sizeItem.filename}`)
           .then((info) => {
             sizeItem.size = { w: info.width, h: info.height };
@@ -170,37 +175,35 @@ cloudinary.config({
 
 // CDN UPLOADER
 exports.uploadToCloud = async (req, res, next) => {
-  await Promise.all(
-    req.file.data.map(async (sizeItem) => {
-      try {
-        await cloudinary.v2.uploader.upload(
-          `./public/img/${sizeItem.filename}`,
-          {
-            public_id: `${sizeItem.filename.split('.')[0]}`,
-            timeout: 600000,
-          },
-          (error, result) => {
-            if (error) {
-              throw new AppError(
-                'Failed to upload the image to the server.',
-                504
-              );
-            }
-
-            if (result) {
-              console.log(result);
-              sizeItem.source = result.secure_url;
-              fs.unlink(`./public/img/${sizeItem.filename}`, (err) => {
-                if (err) console.log(err);
-              });
-            }
+  for (const sizeItem of req.file.data) {
+    try {
+      await cloudinary.v2.uploader.upload(
+        `./public/img/${sizeItem.filename}`,
+        {
+          public_id: `${sizeItem.filename.split('.')[0]}`,
+          timeout: 600000,
+        },
+        (error, result) => {
+          if (error) {
+            throw new AppError(
+              'Failed to upload the image to the server.',
+              504
+            );
           }
-        );
-      } catch (err) {
-        errorController.sendError(err, req, res);
-      }
-    })
-  );
+
+          if (result) {
+            console.log(result);
+            sizeItem.source = result.secure_url;
+            fs.unlink(`./public/img/${sizeItem.filename}`, (err) => {
+              if (err) console.log(err);
+            });
+          }
+        }
+      );
+    } catch (err) {
+      errorController.sendError(err, req, res);
+    }
+  }
 
   next();
 };
