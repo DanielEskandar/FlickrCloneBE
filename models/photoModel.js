@@ -115,7 +115,17 @@ const photoSchema = new mongoose.Schema({
       },
     },
   },
-  EXIF: String,
+  metadata: {
+    cameraMake: String,
+    cameraModel: String,
+    lensName: String,
+    fNumber: Number,
+    focalLength: Number,
+    exposureTime: Number,
+    flash: Number,
+    iso: Number,
+  },
+  EXIF: {},
   safetyLevel: {
     type: Number,
     minimum: 1,
