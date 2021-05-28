@@ -331,7 +331,7 @@ photoRouter.get('/:id/url');
  * @apiUse PhotoNotFoundError
  *
  */
-photoRouter.patch('/:id/tags', photoController.setTags);
+photoRouter.patch('/:id/tags', authController.protect, photoController.setTags);
 
 /**
  * @api {post} /photo/ Add a Set of Tags to a Photo
@@ -352,7 +352,7 @@ photoRouter.patch('/:id/tags', photoController.setTags);
  * @apiUse PhotoNotFoundError
  *
  */
-photoRouter.post('/:id/tags', photoController.addTag);
+photoRouter.post('/:id/tags', authController.protect, photoController.addTag);
 
 /**
  * @api {delete} /photo/:id Remove a Tag
@@ -373,7 +373,11 @@ photoRouter.post('/:id/tags', photoController.addTag);
  * @apiUse PhotoNotFoundError
  *
  */
-photoRouter.delete('/:id/tags', photoController.removeTag);
+photoRouter.delete(
+  '/:id/tags',
+  authController.protect,
+  photoController.removeTag
+);
 
 /**
  * @api {get} /photo/:id/galleries Gets all Galleries Photo Belongs to
@@ -805,7 +809,11 @@ photoRouter.patch('/:id/safety-level');
  * @apiUse PhotoNotFoundError
  *
  */
-photoRouter.post('/:id/comments', photoController.addComment);
+photoRouter.post(
+  '/:id/comments',
+  authController.protect,
+  photoController.addComment
+);
 
 /**
  * @api {delete} /photo/comments/:id Delete a Comment by Commenting User
@@ -825,7 +833,11 @@ photoRouter.post('/:id/comments', photoController.addComment);
  * @apiUse PhotoNotFoundError
  *
  */
-photoRouter.delete('/:id/comments/:commentid', photoController.deleteComment);
+photoRouter.delete(
+  '/:id/comments/:commentid',
+  authController.protect,
+  photoController.deleteComment
+);
 
 /**
  * @api {patch} /photo/comments/:id Edit a Text of a Comment as the Commenting User
@@ -848,7 +860,11 @@ photoRouter.delete('/:id/comments/:commentid', photoController.deleteComment);
  * @apiUse PhotoNotFoundError
  *
  */
-photoRouter.patch('/comments/:id', photoController.editComment);
+photoRouter.patch(
+  '/comments/:id',
+  authController.protect,
+  photoController.editComment
+);
 
 /**
  * @api {get} /photo/:id/comments Get List of Comments for a Photo
