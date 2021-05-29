@@ -606,3 +606,61 @@ describe('should update about me section by id and send response correctly', () 
     expect(mRes.json).toBeCalledWith(userTestData.updateAboutMeData);
   });
 });
+
+// TESTING: search
+describe('should search users and send response correctly', () => {
+  test('should search all users whose firstName, lastName or displayName is search1', async () => {
+    const mReq = { query: { searchText: 'search1' } };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await userController.search(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(userTestData.searchData1);
+  });
+
+  test('should search all users whose firstName, lastName or displayName is search2 or search3', async () => {
+    const mReq = { query: { searchText: 'search2 search3' } };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await userController.search(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(userTestData.searchData2);
+  });
+
+  test('should send page 1 of size 2 of users whose firstName, lastName or displayName is search1', async () => {
+    const mReq = { query: { searchText: 'search1', page: 1, limit: 2 } };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await userController.search(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(userTestData.searchData3);
+  });
+
+  test('should send page 3 of size 1 of users whose firstName, lastName or displayName is search1', async () => {
+    const mReq = { query: { searchText: 'search1', page: 3, limit: 1 } };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await userController.search(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(userTestData.searchData4);
+  });
+
+  test('should send page 4 of size 3 of users whose firstName, lastName or displayName is search1', async () => {
+    const mReq = { query: { searchText: 'search1', page: 4, limit: 3 } };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await userController.search(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(userTestData.searchData5);
+  });
+});

@@ -1,3 +1,6 @@
+// INCLUDE DEPENDENCIES
+const _ = require('underscore');
+
 // INCLUDE MODELS
 const userModel = require('../models/userModel.js');
 const photoModel = require('../models/photoModel.js');
@@ -6,6 +9,9 @@ const testimonialModel = require('../models/testimonialModel.js');
 // INCLUDE ERROR CLASS AND ERROR CONTROLLER
 const AppError = require('../utils/appError.js');
 const errorController = require('./errorController.js');
+
+// INCLUDE API FEATURES
+const { paginate } = require('../utils/APIFeatures.js');
 
 // GET REAL NAME
 exports.getRealName = async (req, res) => {
@@ -631,6 +637,58 @@ exports.updateAboutMe = async (req, res) => {
     res.status(200).json({
       status: 'success',
       data: JSON.parse(JSON.stringify(aboutMe)),
+    });
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};
+
+// SEARCH
+exports.search = async (req, res) => {
+  try {
+    // Check if query exists
+    if (!req.query.searchText) {
+      throw new AppError('No query found.', 400);
+    }
+
+    // Split query on space character
+    const queries = req.query.searchText.split(' ');
+
+    // Search for users
+    const searchResults = [];
+    await Promise.all(
+      queries.map(async (el) => {
+        const searchResult = await userModel
+          .find({
+            $or: [{ firstName: el }, { lastName: el }, { displayName: el }],
+          })
+          .select({ _id: 1, firstName: 1, lastName: 1, displayName: 1 });
+        searchResults.push(searchResult);
+      })
+    );
+
+    // Calculate intersection of the results of the queries
+    let results = [];
+    if (searchResults) {
+      results = searchResults[0];
+      searchResults.forEach((el) => {
+        results = results.filter((item1) =>
+          el.some((item2) => item1.displayName === item2.displayName)
+        );
+      });
+
+      // Pagination
+      const page = req.query.page * 1 || 1;
+      const limit = req.query.limit * 1 || 100;
+      results = paginate(results, page, limit);
+
+      // SORTING
+      results = _.sortBy(results, 'firstName');
+    }
+
+    res.status(200).json({
+      status: 'success',
+      data: JSON.parse(JSON.stringify(results)),
     });
   } catch (err) {
     errorController.sendError(err, req, res);

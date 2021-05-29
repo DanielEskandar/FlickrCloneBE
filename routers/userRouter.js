@@ -1572,6 +1572,8 @@ userRouter.get('/notif/contact');
 
 userRouter.get('/notif/follow');
 
+userRouter.get('/search', userController.search);
+
 /**
  * @api {get} /user/:id Get the User's Information
  * @apiVersion 1.0.0
