@@ -2,6 +2,7 @@
 const photoModel = require('../models/photoModel.js');
 const commentModel = require('../models/commentModel.js');
 const galleryModel = require('../models/galleryModel.js');
+const locationModel = require('../models/locationModel.js');
 
 // INCLUDE ERROR CLASS AND ERROR CONTROLLER
 const AppError = require('../utils/appError.js');
@@ -397,6 +398,37 @@ exports.getGalleriesforPhoto = async (req, res) => {
       data: {
         galleries: JSON.parse(JSON.stringify(galleries.map(({ _id }) => _id))),
       },
+    });
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};
+
+// GET LOCATION
+exports.getLocation = async (req, res) => {
+  try {
+    const photo = await photoModel
+      .findById(req.params.id)
+      .select({
+        _id: 0,
+        location: 1,
+      })
+      .populate([
+        {
+          path: 'location',
+          model: 'locationModel',
+          select: 'coordinates.latitude coordinates.longitude',
+          select: { _id: 0, __v: 0 },
+        },
+      ]);
+
+    if (!photo) {
+      throw new AppError('No Photo Found with this ID', 404);
+    }
+
+    res.status(200).json({
+      status: 'success',
+      data: JSON.parse(JSON.stringify(photo)),
     });
   } catch (err) {
     errorController.sendError(err, req, res);

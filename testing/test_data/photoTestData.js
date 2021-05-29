@@ -86,7 +86,7 @@ module.exports.getInformationData1 = {
     tags: ['#Amesterdam', '#Colorful', '#SunnyDay'],
     dateUploaded: '2018-12-23T18:29:43.511Z',
     dateTaken: '2017-07-12T18:25:47.511Z',
-    location: '608d5450ec00005468604a1c',
+    location: '60b2806c5bcb4c81a866cf9b',
     title: 'Wijdesteeg in Amsterdam',
     userId: '608d55c7e512b74ee00791dd',
     description: 'So vibrant!',
@@ -177,7 +177,7 @@ module.exports.getInformationData2 = {
     tags: ['#Sakure', '#Flowers', '#Nihon'],
     dateUploaded: '2021-12-23T18:25:43.511Z',
     dateTaken: '2013-07-23T18:25:43.511Z',
-    location: '608d5450ec00005468604a0c',
+    location: '60b2806c5bcb4c81a866cf9b',
     title: 'Sakura Season in Nihon',
     userId: '608d55c7e512b74ee00791dc',
     description: 'Kawaii',
@@ -467,5 +467,17 @@ module.exports.getGalleriesforPhoto = {
   status: 'success',
   data: {
     galleries: ['608f34a634413f11f020b121', '608f34a634413f11f020b124'],
+  },
+};
+
+module.exports.getLocationData = {
+  status: 'success',
+  data: {
+    location: {
+      coordinates: {
+        latitude: 222,
+        longitude: 20,
+      },
+    },
   },
 };

@@ -916,7 +916,7 @@ photoRouter.get('/comments/recent');
 /**
  * @api {get} /photo/:id/location Get Location of a Photo
  * @apiVersion 1.0.0
- * @apiName GetLocation
+ * @apiName getLocation
  * @apiGroup Photo
  *
  * @apiParam {String} id The Photo's ID
@@ -937,7 +937,7 @@ photoRouter.get('/comments/recent');
  * @apiUse ForbiddenError
  * @apiUse PhotoNotFoundError
  */
-photoRouter.get('/:id/location');
+photoRouter.get('/:id/location', photoController.getLocation);
 
 /**
  * @api {patch} /photo/:id/location Set a Photo's Location

@@ -394,3 +394,19 @@ describe('should  get Galleries for Photo', () => {
     expect(mRes.json).toBeCalledWith(photoTestData.getGalleriesforPhoto);
   });
 });
+
+// get photo location
+describe('should  get location details of a photo', () => {
+  test('should return coordinates of  Photo with id 608d5450ec00005468607a0f', async () => {
+    const mReq = {
+      params: { id: '608d5450ec00005468607a0f' },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await photoController.getLocation(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(photoTestData.getLocationData);
+  });
+});
