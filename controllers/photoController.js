@@ -131,7 +131,7 @@ exports.deleteComment = async (req, res) => {
     if (!comment) {
       throw new AppError('No Comment Found with this ID', 404);
     }
-    if (photoWithComment.userId !== req.user.id) {
+    if (photoWithComment.userId != req.user.id) {
       throw new AppError('You are Not Allowed to Delete this Comment', 403);
     }
 

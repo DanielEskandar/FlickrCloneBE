@@ -182,28 +182,6 @@ describe('should edit comments on a photo', () => {
   });
 });
 
-/*
-// TESTING DELETE COMMENT
-describe('should delete a comment', () => {
-  test('should delete comment on 604d5450ec01005468617a04 with ID 6091c557d6c7ec6b48c51e60', async () => {
-    const mReq = {
-      params: {
-        id: '604d5450ec01005468617a04',
-        commentid: '6091c557d6c7ec6b48c51e60',
-      },
-    };
-    const mRes = {
-      status: jest.fn().mockReturnThis(),
-      json: jest.fn().mockReturnThis(),
-    };
-    await photoController.deleteComment(mReq, mRes);
-    expect(mRes.status).toBeCalledWith(204);
-    expect(mRes.json).toBeCalledWith(photoTestData.deleteData);
-  });
-});
-
-*/
-
 //TESTING GET SIZES
 describe('should retrieve all sizes of a photo', () => {
   test('should retrieve sizes of photo 608d5450ec00005468607a0f', async () => {
@@ -290,7 +268,7 @@ describe('should delete a tag', () => {
   });
 });
 
-describe('should delete a tags', () => {
+describe('should delete a tag on a photo', () => {
   test('should delete tag light', async () => {
     const mReq = {
       user: { id: '608d55c7e512b74ee00791dc' },
@@ -399,5 +377,44 @@ describe('should  get Galleries for Photo', () => {
     await photoController.getGalleriesforPhoto(mReq, mRes);
     expect(mRes.status).toBeCalledWith(200);
     expect(mRes.json).toBeCalledWith(photoTestData.getGalleriesforPhoto);
+  });
+});
+
+// TESTING DELETE COMMENT
+describe('should delete a comment', () => {
+  test('should delete comment with ID 608d5450ec00005468629b3d', async () => {
+    const mReq = {
+      user: { id: '608d55c7e512b74ee00791dc' },
+      params: {
+        id: '608d5450ec00005468628b2d',
+        commentid: '608d5450ec00005468629b3d',
+      },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await photoController.deleteComment(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(204);
+    expect(mRes.json).toBeCalledWith(photoTestData.deleteCommentData);
+  });
+});
+
+describe('should delete a comment', () => {
+  test('should delete comment with ID 608d5450ec00005468629b3d', async () => {
+    const mReq = {
+      user: { id: '608d55c7e512b74ee00791dc' },
+      params: {
+        id: '608d5450ec00005468628b2d',
+        commentid: '608d5450ec00005468629b4d',
+      },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await photoController.deleteComment(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(204);
+    expect(mRes.json).toBeCalledWith(photoTestData.deleteCommentData);
   });
 });
