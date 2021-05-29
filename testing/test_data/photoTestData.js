@@ -12,6 +12,11 @@ module.exports.getFavouritesData2 = {
   },
 };
 
+module.exports.deleteCommentData = {
+  data: 'deleted',
+  status: 'success',
+};
+
 module.exports.getInformationData1 = {
   status: 'success',
   data: {
