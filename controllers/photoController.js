@@ -101,7 +101,7 @@ exports.editComment = async (req, res) => {
       throw new AppError('No Comment Found with this ID', 404);
     }
 
-    if (editedComment.userId !== req.user.id) {
+    if (editedComment.userId != req.user.id) {
       throw new AppError('You are Not Allowed to Edit this Comment', 403);
     }
 
@@ -119,7 +119,7 @@ exports.deleteComment = async (req, res) => {
   try {
     const photoWithComment = await photoModel
       .findById(req.params.id)
-      .select({ comments: 1, _id: 0 });
+      .select({ comments: 1, _id: 0, userId: 1 });
 
     if (!photoWithComment) {
       throw new AppError('No Photo Found with this ID', 404);
@@ -131,8 +131,7 @@ exports.deleteComment = async (req, res) => {
     if (!comment) {
       throw new AppError('No Comment Found with this ID', 404);
     }
-
-    if (comment.userId !== req.user.id) {
+    if (photoWithComment.userId !== req.user.id) {
       throw new AppError('You are Not Allowed to Delete this Comment', 403);
     }
 
@@ -282,7 +281,7 @@ exports.removeTag = async (req, res) => {
   try {
     const photoWithTag = await photoModel
       .findById(req.params.id)
-      .select({ tags: 1, _id: 0 });
+      .select({ tags: 1, _id: 0, userId: 1 });
 
     if (!photoWithTag) {
       throw new AppError('No Photo Found with this ID', 404);
@@ -294,8 +293,7 @@ exports.removeTag = async (req, res) => {
     if (!tag) {
       throw new AppError('No such Tag Exists', 404);
     }
-
-    if (photoWithTag.userId !== req.user.id) {
+    if (photoWithTag.userId != req.user.id) {
       throw new AppError('You are Not Allowed to Remove this Tag', 403);
     }
 
