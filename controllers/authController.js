@@ -1,6 +1,7 @@
 // INCLUDE DEPENDENCIES
 const jwt = require('jsonwebtoken');
 const { promisify } = require('util');
+const crypto = require('crypto');
 
 // INCLUDE MODELS
 const userModel = require('../models/userModel.js');
@@ -9,11 +10,32 @@ const userModel = require('../models/userModel.js');
 const AppError = require('../utils/appError.js');
 const errorController = require('./errorController.js');
 
+// INCLUDE EMAIL SENDER
+const sendEmail = require('../utils/emailSender.js');
+
 // SIGN TOKEN
 const signToken = (id) =>
   jwt.sign({ id }, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_EXPIRES_IN,
   });
+
+// CREATE SIGN TOKEN
+const createSignToken = (user, statusCode, res) => {
+  const token = signToken(user._id);
+
+  res.status(statusCode).json({
+    status: 'success',
+    token,
+    data: {
+      user: {
+        _id: JSON.parse(JSON.stringify(user._id)),
+        firstName: JSON.parse(JSON.stringify(user.firstName)),
+        lastName: JSON.parse(JSON.stringify(user.lastName)),
+        displayName: JSON.parse(JSON.stringify(user.displayName)),
+      },
+    },
+  });
+};
 
 // SIGN UP
 exports.signUp = async (req, res) => {
@@ -27,15 +49,7 @@ exports.signUp = async (req, res) => {
       password: req.body.password,
     });
 
-    const token = signToken(newUser._id);
-
-    res.status(201).json({
-      stastus: 'success',
-      token,
-      data: {
-        user: JSON.parse(JSON.stringify(newUser)),
-      },
-    });
+    createSignToken(newUser, 201, res);
   } catch (err) {
     errorController.sendError(err, req, res);
   }
@@ -52,7 +66,9 @@ exports.signIn = async (req, res, next) => {
     }
 
     // check if user exists
-    const user = await userModel.findOne({ email }).select('password');
+    const user = await userModel
+      .findOne({ email })
+      .select({ password: 1, firstName: 1, lastName: 1, displayName: 1 });
     if (!user) {
       throw new AppError('Invalid Email', 401);
     }
@@ -64,11 +80,7 @@ exports.signIn = async (req, res, next) => {
     }
 
     // if everything ok, send token to client
-    const token = signToken(user._id);
-    res.status(200).json({
-      status: 'success',
-      token,
-    });
+    createSignToken(user, 200, res);
   } catch (err) {
     errorController.sendError(err, req, res);
   }
@@ -119,6 +131,115 @@ exports.protect = async (req, res, next) => {
     // Grant access to protected route
     req.user = currentUser;
     next();
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};
+
+// FORGOT PASSWORD
+exports.forgotPassword = async (req, res) => {
+  try {
+    // Get user based on email
+    const user = await userModel.findOne({ email: req.body.email });
+    if (!user) {
+      throw new AppError('No user is found by that email', 404);
+    }
+
+    // Generate the random reset token
+    const resetToken = user.createPasswordResetToken();
+    await user.save({ validateBeforeSave: false });
+
+    // Send it to the users's email
+    const resetURL = `${req.protocol}://${req.get(
+      'host'
+    )}/user/reset-password/${resetToken}`;
+
+    const message = {
+      html: `<p>To reset the password on your account, simply use the link below and follow the steps.</p>
+      <a href="${resetURL}">Reset your password</a>
+      <p>If you did not request a password reset, please disregard this email. Nothing will change to your account.</p>
+      <p>The Flickr team.</p>`,
+    };
+
+    try {
+      await sendEmail({
+        email: user.email,
+        subject: 'Flickr - Reset your password',
+        message,
+      });
+
+      res.status(200).json({
+        status: 'success',
+        message: 'Token sent to email',
+      });
+    } catch (err) {
+      user.passwordResetToken = undefined;
+      user.passwordResetExpires = undefined;
+      await user.save({ validateBeforeSave: false });
+
+      throw new AppError(
+        'There was an error sending the email. Please try again later.',
+        500
+      );
+    }
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};
+
+// RESET PASSWORD
+exports.resetPassword = async (req, res) => {
+  try {
+    // Get user based on the token
+    const hashedToken = crypto
+      .createHash('sha256')
+      .update(req.params.token)
+      .digest('hex');
+
+    const user = await userModel.findOne({
+      passwordResetToken: hashedToken,
+      passwordResetExpires: { $gt: Date.now() },
+    });
+
+    // If token has not expired, user exists, set the new password
+    if (!user) {
+      throw new AppError('Token is invalid or has expired', 400);
+    }
+
+    // udpate password property
+    user.password = req.body.password;
+    user.passwordResetToken = undefined;
+    user.passwordResetExpires = undefined;
+    await user.save();
+
+    // Log the user in and send JWT
+    createSignToken(user, 200, res);
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};
+
+// UPDATE PASSWORD
+exports.updatePassword = async (req, res) => {
+  try {
+    // Get user from collection
+    const user = await userModel
+      .findById(req.user.id)
+      .select({ password: 1, firstName: 1, lastName: 1, displayName: 1 });
+
+    // Check if POSTed current password is corrcect
+    if (
+      !(await user.correctPassword(req.body.passwordCurrent, user.password))
+    ) {
+      throw new AppError('Your current password is wrong.', 401);
+    }
+
+    // Update password
+    user.password = req.body.password;
+    await user.save();
+
+    // Log user and send JWT
+    createSignToken(user, 200, res);
   } catch (err) {
     errorController.sendError(err, req, res);
   }

@@ -557,5 +557,49 @@
     "age": 25,
     "password": "Abdcdef#3",
     "joinDate": "2021-05-21T10:11:16.876+00:00"
+  },
+  {
+    "_id": "60ae8e27520fd85714fd7ce5",
+    "firstName": "forgotPasswordFirstName",
+    "lastName": "forgotPasswordLastName",
+    "displayName": "forgotPasswordTestUser",
+    "email": "danielbassem@gmail.com",
+    "age": 21,
+    "password": "Abdcdef!1",
+    "joinDate": "2021-05-22T10:11:16.876+00:00"
+  },
+  {
+    "_id": "60aeb7c7824d05334c309754",
+    "firstName": "resetPasswordValidFirstName",
+    "lastName": "resetPasswordValidLastName",
+    "displayName": "resetPasswordValidTestUser",
+    "email": "resetpasswordvalid@gmail.com",
+    "age": 21,
+    "password": "Abdcdef!1",
+    "joinDate": "2021-05-22T10:11:16.876+00:00",
+    "passwordResetToken": "a477aeb0340142e730b97aaee7685cc105b2706a70bc6631336c17343b926023",
+    "passwordResetExpires": "2021-08-26T02:53:46.541+00:00"
+  },
+  {
+    "_id": "60aeb7c7824d05334c309755",
+    "firstName": "resetPasswordExpiredFirstName",
+    "lastName": "resetPasswordExpiredLastName",
+    "displayName": "resetPasswordExpired",
+    "email": "resetpasswordexpired@gmail.com",
+    "age": 21,
+    "password": "Abdcdef!1",
+    "joinDate": "2021-05-22T10:11:16.876+00:00",
+    "passwordResetToken": "255c7903bca8d78b96d0f71ca5be8c4d75ceef422f35e31831436d30f88649af",
+    "passwordResetExpires": "2021-05-26T20:53:12.447+00:00"
+  },
+  {
+    "_id": "60aeea748d222150c8dbaaf1",
+    "firstName": "updatePasswordFirstName",
+    "lastName": "updatePasswordLastName",
+    "displayName": "updatePasswordTestUser",
+    "email": "updatepassword@gmail.com",
+    "age": 21,
+    "password": "Abdcdef!1",
+    "joinDate": "2021-05-22T10:11:16.876+00:00"
   }
 ]

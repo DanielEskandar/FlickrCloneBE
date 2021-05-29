@@ -5,6 +5,11 @@
     "primaryPhotoId": "608d5450ec00005468607a0f",
     "photos": [
       {
+        "_id": "558f34a634413f11f020b122",
+        "photoId": "608d5450ec00005468628a0d",
+        "remark": "Photo1"
+      },
+      {
         "_id": "608f34a634413f11f020b122",
         "photoId": "608d5450ec00005468607a0f",
         "remark": "Photo1"
@@ -35,6 +40,11 @@
         "_id": "608f34a634413f11f020b126",
         "photoId": "608d5450ec00005468607a0f",
         "remark": ""
+      },
+      {
+        "_id": "568f34a634413f11f020b128",
+        "photoId": "608d5450ec00005468628a0d",
+        "remark": "Photo1"
       }
     ],
     "createdAt": "2021-05-03T00:07:30.005Z",

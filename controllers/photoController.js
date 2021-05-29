@@ -1,6 +1,7 @@
 // INCLUDE MODELS
 const photoModel = require('../models/photoModel.js');
 const commentModel = require('../models/commentModel.js');
+const galleryModel = require('../models/galleryModel.js');
 
 // INCLUDE ERROR CLASS AND ERROR CONTROLLER
 const AppError = require('../utils/appError.js');
@@ -54,7 +55,7 @@ exports.getFavourites = async (req, res) => {
   }
 };
 
-// ADD COMMENT TO PHOTO --
+// ADD COMMENT TO PHOTO
 exports.addComment = async (req, res) => {
   try {
     if (!(await photoModel.findById(req.params.id))) {
@@ -189,6 +190,213 @@ exports.getSizes = async (req, res) => {
     res.status(200).json({
       status: 'success',
       data: JSON.parse(JSON.stringify(sizes)),
+    });
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};
+
+// SET PHOTO TAGS
+exports.setTags = async (req, res) => {
+  try {
+    if (!(await photoModel.findById(req.params.id))) {
+      throw new AppError('No Photo Found with this ID', 404);
+    }
+
+    req.body.tags.forEach((element) => {
+      if (element.includes(' ')) {
+        throw new AppError('Cannot Set Tag With Spaces', 409);
+      }
+    });
+
+    await photoModel.findByIdAndUpdate(
+      req.params.id,
+      {
+        $set: { tags: req.body.tags },
+      },
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
+
+    const photoTags = await photoModel
+      .findById(req.params.id)
+      .select({ tags: 1, _id: 0 });
+
+    res.status(200).json({
+      status: 'success',
+      data: { updatedTags: JSON.parse(JSON.stringify(photoTags.tags)) },
+    });
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};
+
+// ADD PHOTO TAGS
+exports.addTag = async (req, res) => {
+  try {
+    if (!(await photoModel.findById(req.params.id))) {
+      throw new AppError('No Photo Found with this ID', 404);
+    }
+
+    if (req.body.tags.includes(' ')) {
+      throw new AppError('Cannot Set Tag With Spaces', 409);
+    }
+
+    await photoModel.findByIdAndUpdate(
+      req.params.id,
+      {
+        $addToSet: { tags: req.body.tags },
+      },
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
+
+    const photoTags = await photoModel
+      .findById(req.params.id)
+      .select({ tags: 1, _id: 0 });
+
+    res.status(200).json({
+      status: 'success',
+      data: { updatedTags: JSON.parse(JSON.stringify(photoTags.tags)) },
+    });
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};
+
+// REMOVE PHOTO TAGS
+exports.removeTag = async (req, res) => {
+  try {
+    const photoWithTag = await photoModel
+      .findById(req.params.id)
+      .select({ tags: 1, _id: 0 });
+
+    if (!photoWithTag) {
+      throw new AppError('No Photo Found with this ID', 404);
+    }
+    const tag = photoWithTag.tags.find(
+      (element) => element.toString() === req.body.tags.toString()
+    );
+
+    if (tag) {
+      const updatedPhoto = await photoModel.findByIdAndUpdate(
+        req.params.id,
+        {
+          $pull: { tags: tag },
+        },
+        {
+          new: true,
+          runValidators: true,
+        }
+      );
+
+      res.status(200).json({
+        status: 'success',
+        data: {
+          updatedTags: JSON.parse(JSON.stringify(updatedPhoto.tags)),
+        },
+      });
+    } else {
+      throw new AppError('No such Tag Exists', 404);
+    }
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};
+
+// EDIT PHOTO INFORMATION
+exports.editPhotoInformation = async (req, res) => {
+  try {
+    // check if photo id exist or not
+    const photo = await photoModel.findById(req.params.id);
+    if (!photo) {
+      throw new AppError('No Photo Found with This ID', 404);
+    }
+    // auth
+    if (photo.userId.toString() !== req.user.id.toString())
+      throw new AppError(
+        'Permission Denied. You are not allowed to do this action',
+        403
+      );
+    // Update details in Photo Object
+    const updatedPhoto = await photoModel.findByIdAndUpdate(
+      req.params.id,
+      {
+        $set: {
+          title: req.body.title,
+          description: req.body.description,
+          tags: req.body.tags,
+          dateUploaded: req.body.dateUploaded,
+          dateTaken: req.body.dateTaken,
+          permissions: req.body.permissions,
+          license: req.body.license,
+          safetyLevel: req.body.safetyLevel,
+          contentType: req.body.contentType,
+        },
+      },
+      {
+        new: true,
+        runValidators: false,
+      }
+    );
+    res.status(200).json({
+      status: 'success',
+      data: JSON.parse(
+        JSON.stringify({
+          _id: updatedPhoto._id,
+          title: updatedPhoto.title,
+          description: updatedPhoto.description,
+          tags: updatedPhoto.tags,
+          dateUploaded: updatedPhoto.dateUploaded,
+          dateTaken: updatedPhoto.dateTaken,
+          permissions: updatedPhoto.permissions,
+          license: updatedPhoto.license,
+          safetyLevel: updatedPhoto.safetyLevel,
+          contentType: updatedPhoto.contentType,
+        })
+      ),
+    });
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};
+
+exports.getGalleriesforPhoto = async (req, res) => {
+  try {
+    // No auth
+    const photo = await photoModel.findById(req.params.id);
+    if (!photo) {
+      throw new AppError('No Photo Found with This ID', 404);
+    }
+
+    // pagination
+    const page = req.body.page || 1;
+    const perPage = req.body.per_page || 100;
+    const skip = (page - 1) * perPage;
+
+    if (req.body.page) {
+      //  if number of skipped pages > number of documents -> this page not found
+      const galleriesNum = await galleryModel
+        .find({ 'photos.photoId': req.params.id })
+        .countDocuments();
+      if (galleriesNum < skip)
+        throw new AppError('This page does not exist', 404);
+    }
+    const galleries = await galleryModel
+      .find({ 'photos.photoId': req.params.id })
+      .select({ _id: 1 })
+      .skip(skip)
+      .limit(perPage);
+
+    res.status(200).json({
+      status: 'success',
+      data: {
+        galleries: JSON.parse(JSON.stringify(galleries.map(({ _id }) => _id))),
+      },
     });
   } catch (err) {
     errorController.sendError(err, req, res);

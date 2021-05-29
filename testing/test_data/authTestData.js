@@ -1,3 +1,8 @@
+module.exports.userNotFound = {
+  status: 'fail',
+  message: 'No user is found by that email',
+};
+
 module.exports.signupData1 = {
   status: 'fail',
   message: 'Invalid input data. Minimum age is 13',
@@ -14,85 +19,14 @@ module.exports.signupData3 = {
 };
 
 module.exports.signupData4 = {
-  stastus: 'success',
+  status: 'success',
   token: expect.any(String),
   data: {
     user: {
-      limits: {
-        photos: {
-          maxdisplaypx: 1024,
-          maxupload: 15728640,
-        },
-        videos: {
-          maxduration: 90,
-          maxupload: 15728640,
-        },
-      },
-      privacySettings: {
-        global: {
-          infoVisibility: {
-            email: 2,
-            name: 1,
-            currentCity: 1,
-          },
-          downloadPerm: 1,
-          largestImgSize: 0,
-          allowShare: 1,
-          allowTag: 1,
-          allowGalleryAdd: true,
-          hideEXIF: false,
-          hidePhotoSearch: false,
-          hideProfileSearch: false,
-        },
-        defaults: {
-          perms: {
-            see: 1,
-            comment: 1,
-            addNotes: 2,
-          },
-          license: 0,
-          mapVisible: 1,
-          importEXIF: true,
-          safetyLevel: 1,
-          contentType: 1,
-        },
-        filters: {
-          search: {
-            safeSearch: true,
-            content: 1,
-          },
-        },
-      },
-      notificationSettings: {
-        notifMail: {
-          invites: true,
-          contact: true,
-          messages: true,
-          reminders: true,
-        },
-        activityMail: {
-          you: true,
-          contacts: true,
-        },
-      },
-      pro: false,
-      showcase: [],
-      favourites: [],
-      photos: [],
-      testimonials: [],
-      albums: [],
-      gallery: [],
-      blocked: [],
       _id: expect.any(String),
+      displayName: 'firstlast',
       firstName: 'First Name Test',
       lastName: 'Last Name Test',
-      displayName: 'firstlast',
-      age: 21,
-      email: 'first.last@email.com',
-      password: expect.any(String),
-      joinDate: expect.any(String),
-      following: [],
-      __v: 0,
     },
   },
 };
@@ -120,6 +54,14 @@ module.exports.signinData3 = {
 module.exports.signinData4 = {
   status: 'success',
   token: expect.any(String),
+  data: {
+    user: {
+      _id: expect.any(String),
+      displayName: 'DanielEskandar',
+      firstName: 'Daniel',
+      lastName: 'Eskandar',
+    },
+  },
 };
 
 module.exports.protectData1 = {
@@ -145,4 +87,68 @@ module.exports.protectData4 = {
 module.exports.protectData5 = {
   status: 'fail',
   message: 'The user belonging to this token does not exist',
+};
+
+module.exports.forgotPasswordData = {
+  status: 'success',
+  message: 'Token sent to email',
+};
+
+module.exports.resetPasswordReq1 = {
+  body: {
+    password: 'Abcdef@1',
+  },
+  params: {
+    token: 'c20171c2aa2a4530e21cb15fe56d336a236879fa478197b1492303369c364a2d',
+  },
+};
+
+module.exports.resetPasswordData1 = {
+  status: 'fail',
+  message: 'Token is invalid or has expired',
+};
+
+module.exports.resetPasswordReq2 = {
+  body: {
+    password: 'Abcdef@1',
+  },
+  params: {
+    token: '1c0104400229d67cc760a4f951715507d805b1d58267c0f6a57a2e10dcd2d02d',
+  },
+};
+
+module.exports.resetPasswordData2 = {
+  status: 'success',
+  token: expect.any(String),
+  data: {
+    user: {
+      _id: '60aeb7c7824d05334c309754',
+      displayName: 'resetPasswordValidTestUser',
+      firstName: 'resetPasswordValidFirstName',
+      lastName: 'resetPasswordValidLastName',
+    },
+  },
+};
+
+module.exports.updatePasswordData1 = {
+  status: 'fail',
+  message: 'Your current password is wrong.',
+};
+
+module.exports.updatePasswordData2 = {
+  status: 'fail',
+  message: 'Invalid input data. Weak password',
+};
+
+module.exports.updatePasswordData3 = {
+  status: 'success',
+  token: expect.any(String),
+  data: {
+    user: {
+      _id: '60aeea748d222150c8dbaaf1',
+      displayName: 'updatePasswordTestUser',
+      firstName: 'updatePasswordFirstName',
+      lastName: 'updatePasswordLastName',
+    },
+  },
 };
