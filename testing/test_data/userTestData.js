@@ -872,158 +872,161 @@ module.exports.updateAboutMeData = {
 module.exports.getPhotoStream = {
   status: 'success',
   data: {
-    photos: [
-      {
-        permissions: {
-          public: true,
-          friend: false,
-          family: true,
-          comment: 2,
-          addMeta: 1,
-        },
-        sizes: {
-          size: {
-            original: {
-              height: 120,
-              width: 60,
-              source: 'https://www.google.com/',
-              url: 'https://www.google.com/',
-            },
-            large: {
-              height: 190,
-              width: 20,
-              source: 'https://www.google.com/',
-              url: 'https://www.google.com/',
-            },
-            medium800: {
-              height: 200,
-              width: 60,
-              source: 'https://www.google.com/',
-              url: 'https://www.google.com/',
-            },
-            medium640: {
-              height: 1200,
-              width: 60,
-              source: 'https://www.google.com/',
-              url: 'https://www.google.com/',
-            },
-            medium: {
-              height: 120,
-              width: 600,
-              source: 'https://www.google.com/',
-              url: 'https://www.google.com/',
-            },
-            small320: {
-              height: 12,
-              width: 60,
-              source: 'https://www.google.com/',
-              url: 'https://www.google.com/',
-            },
-            small: {
-              height: 1000,
-              width: 60,
-              source: 'https://www.google.com/',
-              url: 'https://www.google.com/',
-            },
-            thumbnail: {
-              height: 50,
-              width: 50,
-              source: 'https://www.google.com/',
-              url: 'https://www.google.com/',
-            },
-            largeSquare: {
-              height: 120,
-              width: 120,
-              source: 'https://www.google.com/',
-              url: 'https://www.google.com/',
-            },
-            square: {
-              height: 60,
-              width: 60,
-              source: 'https://www.google.com/',
-              url: 'https://www.google.com/',
-            },
+    photos: {
+      photos: [
+        {
+          permissions: {
+            public: true,
+            friend: false,
+            family: true,
+            comment: 2,
+            addMeta: 1,
           },
-          canDownload: false,
-        },
-        _id: '604d5450ec00005468617a0c',
-      },
-      {
-        permissions: {
-          public: true,
-          friend: false,
-          family: false,
-          comment: 2,
-          addMeta: 1,
-        },
-        sizes: {
-          size: {
-            original: {
-              height: 100,
-              width: 60,
-              source: 'https://www.google.com/',
-              url: 'https://www.google.com/',
+          sizes: {
+            size: {
+              original: {
+                height: 120,
+                width: 60,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              large: {
+                height: 190,
+                width: 20,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              medium800: {
+                height: 200,
+                width: 60,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              medium640: {
+                height: 1200,
+                width: 60,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              medium: {
+                height: 120,
+                width: 600,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              small320: {
+                height: 12,
+                width: 60,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              small: {
+                height: 1000,
+                width: 60,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              thumbnail: {
+                height: 50,
+                width: 50,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              largeSquare: {
+                height: 120,
+                width: 120,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              square: {
+                height: 60,
+                width: 60,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
             },
-            large: {
-              height: 190,
-              width: 20,
-              source: 'https://www.google.com/',
-              url: 'https://www.google.com/',
-            },
-            medium800: {
-              height: 200,
-              width: 60,
-              source: 'https://www.google.com/',
-              url: 'https://www.google.com/',
-            },
-            medium640: {
-              height: 1200,
-              width: 60,
-              source: 'https://www.google.com/',
-              url: 'https://www.google.com/',
-            },
-            medium: {
-              height: 120,
-              width: 600,
-              source: 'https://www.google.com/',
-              url: 'https://www.google.com/',
-            },
-            small320: {
-              height: 12,
-              width: 60,
-              source: 'https://www.google.com/',
-              url: 'https://www.google.com/',
-            },
-            small: {
-              height: 1000,
-              width: 60,
-              source: 'https://www.google.com/',
-              url: 'https://www.google.com/',
-            },
-            thumbnail: {
-              height: 50,
-              width: 50,
-              source: 'https://www.google.com/',
-              url: 'https://www.google.com/',
-            },
-            largeSquare: {
-              height: 120,
-              width: 120,
-              source: 'https://www.google.com/',
-              url: 'https://www.google.com/',
-            },
-            square: {
-              height: 60,
-              width: 60,
-              source: 'https://www.google.com/',
-              url: 'https://www.google.com/',
-            },
+            canDownload: false,
           },
-          canDownload: true,
+          _id: '604d5450ec00005468617a0c',
         },
-        _id: '604d5450ec01005468617a04',
-      },
-    ],
+        {
+          permissions: {
+            public: true,
+            friend: false,
+            family: false,
+            comment: 2,
+            addMeta: 1,
+          },
+          sizes: {
+            size: {
+              original: {
+                height: 100,
+                width: 60,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              large: {
+                height: 190,
+                width: 20,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              medium800: {
+                height: 200,
+                width: 60,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              medium640: {
+                height: 1200,
+                width: 60,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              medium: {
+                height: 120,
+                width: 600,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              small320: {
+                height: 12,
+                width: 60,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              small: {
+                height: 1000,
+                width: 60,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              thumbnail: {
+                height: 50,
+                width: 50,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              largeSquare: {
+                height: 120,
+                width: 120,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              square: {
+                height: 60,
+                width: 60,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+            },
+            canDownload: true,
+          },
+          _id: '604d5450ec01005468617a04',
+        },
+      ],
+      _id: '608d5450ec00005468607a11',
+    },
   },
 };
 

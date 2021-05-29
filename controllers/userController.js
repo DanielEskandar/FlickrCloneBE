@@ -640,19 +640,29 @@ exports.updateAboutMe = async (req, res) => {
 // Get Photostream
 exports.getPhotoStream = async (req, res) => {
   try {
+    // pagination
+    const page = req.body.page || 1;
+    const perPage = req.body.per_page || 100;
+    const skip = (page - 1) * perPage;
+    if (perPage > 500) {
+      throw new AppError(
+        'Maximum allowed value of number of photos to return per page is 500',
+        404
+      );
+    }
     let photos = [];
-    // get user photos -> requested user
-    const userPhotos = await userModel
-      .findById(req.params.id)
-      .populate('photos', ['permissions', 'sizes'])
-      .select('photos');
-
     // if requested user == calling user
     // ALL PHOTOS ARE RETURNED
     if (req.params.id === req.user.id) {
-      photos = userPhotos;
+      photos = await userModel
+        .findById(req.params.id)
+        .populate('photos', 'sizes')
+        .select('photos')
+        .skip(skip)
+        .limit(perPage);
     } else {
-      // get requested user's following list
+      //   // get requested user's following list
+
       const userFollowing = await userModel
         .findById(req.params.id)
         .select('following');
@@ -660,27 +670,51 @@ exports.getPhotoStream = async (req, res) => {
       const relation = userFollowing.following.filter(
         (follow) => follow.user.toString() === req.user.id.toString()
       );
+
       // if stranger of undetermined -> public only
       if (relation.length === 0 || relation[0].relation === 'undetermined') {
-        photos = userPhotos.photos.filter(
-          (photo) => photo.permissions.public === true
-        );
+        photos = await userModel
+          .findById(req.params.id)
+          .populate('photos', ['permissions', 'sizes'], {
+            'permissions.public': true,
+          })
+          .select('photos')
+          .skip(skip)
+          .limit(perPage);
+
         // if friend -> public and friend
       } else if (relation[0].relation === 'friend') {
-        photos = userPhotos.photos.filter(
-          (photo) =>
-            photo.permissions.public === true ||
-            photo.permissions.friend === true
-        );
+        photos = await userModel
+          .findById(req.params.id)
+          .populate('photos', ['permissions', 'sizes'], {
+            $or: [
+              {
+                'permissions.public': true,
+              },
+              { 'permissions.friend': true },
+            ],
+          })
+          .select('photos')
+          .skip(skip)
+          .limit(perPage);
         // if family -> public and family
       } else if (relation[0].relation === 'family') {
-        photos = userPhotos.photos.filter(
-          (photo) =>
-            photo.permissions.public === true ||
-            photo.permissions.family === true
-        );
+        photos = await userModel
+          .findById(req.params.id)
+          .populate('photos', ['permissions', 'sizes'], {
+            $or: [
+              {
+                'permissions.public': true,
+              },
+              { 'permissions.family': true },
+            ],
+          })
+          .select('photos')
+          .skip(skip)
+          .limit(perPage);
       }
     }
+
     res.status(200).json({
       status: 'success',
       data: {
@@ -695,10 +729,23 @@ exports.getPhotoStream = async (req, res) => {
 // Get Camera-Roll
 exports.getCameraRoll = async (req, res) => {
   try {
+    // pagination
+    const page = req.body.page || 1;
+    const perPage = req.body.per_page || 100;
+    const skip = (page - 1) * perPage;
+
+    if (perPage > 500) {
+      throw new AppError(
+        'Maximum allowed value of number of photos to return per page is 500',
+        404
+      );
+    }
     const userPhotos = await userModel
       .findById(req.user.id)
       .populate('photos', 'sizes')
-      .select('photos');
+      .select('photos')
+      .skip(skip)
+      .limit(perPage);
 
     res.status(200).json({
       status: 'success',

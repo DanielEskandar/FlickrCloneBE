@@ -613,6 +613,10 @@ describe('should get PhotoStream of the requested user based on the calling user
     const mReq = {
       params: { id: '608d5450ec00005468607a11' },
       user: { id: '608d55c7e512b74ee00791de' },
+      body: {
+        per_page: 100,
+        page: 1,
+      },
     };
     const mRes = {
       status: jest.fn().mockReturnThis(),
@@ -629,6 +633,10 @@ describe('should get All Photos in CameraRoll of the calling user', () => {
   test('should get All Photos in CameraRoll of GalleryAlbumTest User', async () => {
     const mReq = {
       user: { id: '608d5450ec00005468607a11' },
+      body: {
+        per_page: 100,
+        page: 1,
+      },
     };
     const mRes = {
       status: jest.fn().mockReturnThis(),
