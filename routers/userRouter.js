@@ -547,7 +547,11 @@ userRouter.get('/:id/groups');
  * @apiUse UserNotFoundError
  */
 
-userRouter.get('/:id/stream');
+userRouter.get(
+  '/:id/stream',
+  authController.protect,
+  userController.getPhotoStream
+);
 
 /**
  * @api {get} /user/:id/albums Return a List of User albums
@@ -1157,7 +1161,11 @@ userRouter.get('/addable-pool');
  * @apiUse UnauthError
  */
 
-userRouter.get('/camera-roll');
+userRouter.get(
+  '/camera-roll',
+  authController.protect,
+  userController.getCameraRoll
+);
 
 /**
  * @api {get} /user/followed Gets a list of followed users

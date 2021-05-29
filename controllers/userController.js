@@ -636,3 +636,80 @@ exports.updateAboutMe = async (req, res) => {
     errorController.sendError(err, req, res);
   }
 };
+
+// Get Photostream
+exports.getPhotoStream = async (req, res) => {
+  try {
+    let photos = [];
+    // get user photos -> requested user
+    const userPhotos = await userModel
+      .findById(req.params.id)
+      .populate('photos', ['permissions', 'sizes'])
+      .select('photos');
+
+    // if requested user == calling user
+    // ALL PHOTOS ARE RETURNED
+    if (req.params.id === req.user.id) {
+      photos = userPhotos;
+    } else {
+      // get requested user's following list
+      const userFollowing = await userModel
+        .findById(req.params.id)
+        .select('following');
+      // get relation (if exist) between requested user and calling user
+      const relation = userFollowing.following.filter(
+        (follow) => follow.user.toString() === req.user.id.toString()
+      );
+      // if stranger of undetermined -> public only
+      if (relation.length === 0 || relation[0].relation === 'undetermined') {
+        photos = userPhotos.photos.filter(
+          (photo) => photo.permissions.public === true
+        );
+        // if friend -> public and friend
+      } else if (relation[0].relation === 'friend') {
+        photos = userPhotos.photos.filter(
+          (photo) =>
+            photo.permissions.public === true ||
+            photo.permissions.friend === true
+        );
+        // if family -> public and family
+      } else if (relation[0].relation === 'family') {
+        photos = userPhotos.photos.filter(
+          (photo) =>
+            photo.permissions.public === true ||
+            photo.permissions.family === true
+        );
+      }
+    }
+    res.status(200).json({
+      status: 'success',
+      data: {
+        photos: JSON.parse(JSON.stringify(photos)),
+      },
+    });
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};
+
+// Get Camera-Roll
+exports.getCameraRoll = async (req, res) => {
+  try {
+    const userPhotos = await userModel
+      .findById(req.user.id)
+      .populate('photos', 'sizes')
+      .select('photos');
+
+    res.status(200).json({
+      status: 'success',
+      data: {
+        photos: JSON.parse(
+          // eslint-disable-next-line no-unused-vars
+          JSON.stringify(userPhotos)
+        ),
+      },
+    });
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};
