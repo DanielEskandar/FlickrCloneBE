@@ -426,7 +426,8 @@ exports.getTagged = async (req, res) => {
 
     const tags = await photoModel
       .findById(req.params.id)
-      .select({ _id: 0, peopleTagged: 1 });
+      .select({ _id: 0, peopleTagged: 1 })
+      .populate('peopleTagged.userId', 'displayName firstName lastName');
 
     if (!tags) {
       throw new AppError('No tags found for this photo', 404);
@@ -482,7 +483,8 @@ exports.tagUser = async (req, res) => {
           runValidators: true,
         }
       )
-      .select({ peopleTagged: 1, _id: 0 });
+      .select({ peopleTagged: 1, _id: 0 })
+      .populate('peopleTagged.userId', 'displayName firstName lastName');
 
     res.status(200).json({
       status: 'success',
@@ -534,7 +536,8 @@ exports.removePerson = async (req, res) => {
           runValidators: true,
         }
       )
-      .select({ _id: 0, peopleTagged: 1 });
+      .select({ _id: 0, peopleTagged: 1 })
+      .populate('peopleTagged.userId', 'displayName firstName lastName');
 
     res.status(200).json({
       status: 'success',

@@ -481,7 +481,12 @@ module.exports.getTaggedData = {
     peopleTagged: [
       {
         _id: expect.any(String),
-        userId: '608d5450ec00005468604a0c',
+        userId: {
+          _id: '608d55c7e512b74ee00791de',
+          displayName: 'NadineMagdy',
+          firstName: 'Nadine',
+          lastName: 'Magdi',
+        },
         tagDate: '2012-04-13T18:25:43.511Z',
       },
     ],
@@ -494,12 +499,22 @@ module.exports.tagUserData = {
     peopleTagged: [
       {
         _id: expect.any(String),
-        userId: '608d5450ec00005468604a0c',
+        userId: {
+          _id: '608d55c7e512b74ee00791de',
+          displayName: 'NadineMagdy',
+          firstName: 'Nadine',
+          lastName: 'Magdi',
+        },
         tagDate: expect.any(String),
       },
       {
         _id: expect.any(String),
-        userId: '608d55c7e512b74ee00791dd',
+        userId: {
+          _id: '608d55c7e512b74ee00791dc',
+          displayName: 'AliaaKhalifa',
+          firstName: 'Aliaa',
+          lastName: 'Khalifa',
+        },
         tagDate: expect.any(String),
       },
     ],
@@ -512,7 +527,12 @@ module.exports.removePersonData = {
     peopleTagged: [
       {
         _id: expect.any(String),
-        userId: '608d5450ec00005468604a0c',
+        userId: {
+          _id: '608d55c7e512b74ee00791de',
+          displayName: 'NadineMagdy',
+          firstName: 'Nadine',
+          lastName: 'Magdi',
+        },
         tagDate: '2012-04-13T18:25:43.511Z',
       },
     ],

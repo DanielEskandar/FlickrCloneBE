@@ -439,7 +439,7 @@ describe('should tag a user to the photo ', () => {
     const mReq = {
       params: {
         id: '608d5450ec00005468607a0f',
-        userid: '608d55c7e512b74ee00791dd',
+        userid: '608d55c7e512b74ee00791dc',
       },
       user: { id: '608d55c7e512b74ee00791de' },
     };
@@ -459,7 +459,7 @@ describe('should remove a tagged user from the photo ', () => {
     const mReq = {
       params: {
         id: '608d5450ec00005468607a0f',
-        userid: '608d55c7e512b74ee00791dd',
+        userid: '608d55c7e512b74ee00791dc',
       },
       user: { id: '608d55c7e512b74ee00791de' },
     };
