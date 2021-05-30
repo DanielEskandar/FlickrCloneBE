@@ -398,8 +398,10 @@ exports.getGalleriesforPhoto = async (req, res) => {
       if (galleriesNum < skip)
         throw new AppError('This page does not exist', 404);
     }
+
     const galleries = await galleryModel
       .find({ 'photos.photoId': req.params.id })
+      .sort([['date', -1]])
       .select({ _id: 1 })
       .skip(skip)
       .limit(perPage);
