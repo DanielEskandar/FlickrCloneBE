@@ -1572,6 +1572,44 @@ userRouter.get('/notif/contact');
 
 userRouter.get('/notif/follow');
 
+/**
+ * @api {get} /user/search Search for a User on the Database
+ * @apiVersion 1.0.0
+ * @apiName searchUser
+ * @apiGroup User
+ *
+ * @apiParam (URL Query) {string} searchText Text used to search the database
+ * @apiParam (URL Query) {number} limit Number of results per page
+ * @apiParam (URL Query) {number} page Page Selected for Paginated request
+ *
+ * @apiExample {curl} Example usage:
+ *        /user/search?searchText=search1&limit=2&page=1
+ *
+ * @apiSuccess {Object[]} Results Results of the User Search
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *        "status": "success",
+ *        "data": [
+ *          {
+ *            "_id": "60b1619d62e64a359ccb4a63",
+ *            "firstName": "dummy3",
+ *            "lastName": "search1",
+ *            "displayName": "dummy4"
+ *          },
+ *          {
+ *            "_id": "60b1619d62e64a359ccb4a62",
+ *            "firstName": "search1",
+ *            "lastName": "dummy1",
+ *            "displayName": "dummy2"
+ *          }
+ *        ]
+ *      }
+ *
+ * @apiUse ServerError
+ */
+
 userRouter.get('/search', userController.search);
 
 /**
