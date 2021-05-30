@@ -336,7 +336,7 @@ photoRouter.patch('/:id/tags', authController.protect, photoController.setTags);
 /**
  * @api {post} /photo/ Add a Set of Tags to a Photo
  * @apiVersion 1.0.0
- * @apiName AddTags
+ * @apiName addTag
  * @apiGroup Photo
  *
  * @apiHeader {string} Token Authenticaton Token
@@ -1072,12 +1072,16 @@ photoRouter.patch('/:id/licenses');
  * @apiUse PhotoNotFoundError
  *
  */
-photoRouter.post('/:id/tags/:userId');
+photoRouter.post(
+  '/:id/tags/:userid',
+  authController.protect,
+  photoController.tagUser
+);
 
 /**
  * @api {delete} /photo/:id/tags/:userId Remove a User from a Photo
  * @apiVersion 1.0.0
- * @apiName RemovePerson
+ * @apiName removePerson
  * @apiGroup Photo
  *
  * @apiParam {String} photoid The Photo's ID to Remove from
@@ -1093,7 +1097,11 @@ photoRouter.post('/:id/tags/:userId');
  * @apiUse PhotoNotFoundError
  *
  */
-photoRouter.delete('/:id/tags/:userId');
+photoRouter.delete(
+  '/:id/tags/:userid',
+  authController.protect,
+  photoController.removePerson
+);
 
 /**
  * @api {get} /photo/:id/tags Gets a List of User's Tagged in a Photo
@@ -1104,13 +1112,6 @@ photoRouter.delete('/:id/tags/:userId');
  * @apiParam {String} id The Photo's ID
  *
  * @apiSuccess {Object[]} taggedlist Array of User IDs Tagged in the Photo
- * @apiSuccess {Object[]} usernamelist Array of User Names of Users Tagged
- * @apiSuccess {Object[]} realnamelist Array of Real Names of Users Tagged
- * @apiSuccess {Object[]} addedbylist Array of Users who Added the Tag
- * @apiSuccess {Object[]} xlist Array of X Coordinate of the Box
- * @apiSuccess {Object[]} ylist Array of Y Coordinate of the Box
- * @apiSuccess {Object[]} heightlist Array of Height of the Box
- * @apiSuccess {Object[]} widthlist Array of Width of the Box
  *
  * @apiSuccessExample Success-Response:
  *      HTTP/1.1 200 OK
@@ -1118,31 +1119,14 @@ photoRouter.delete('/:id/tags/:userId');
  *          "status": "success",
  *          "data":
  *          {
- *              "taggedlist": [
- *
+ *              "peopleTagged": [
+ *                          {
+ *                               _id: '609093af84b808271488fafd',
+ *                               userId: '608d5450ec00005468604a0c',
+ *                               tagDate: '2012-04-13T18:25:43.511Z',
+ *                           },
  *              ]
- *              "usernamelist": [
  *
- *              ]
- *              "realnamelist": [
- *
- *              ]
- *              "addedbylist": [
- *
- *              ]
- *              "xlist": [
- *
- *              ]
- *              "ylist": [
- *
- *              ]
- *              "heightlist": [
- *
- *              ]
- *              "widthlist": [
- *
- *              ]
- *          }
  *      }
  *
  * @apiUse UnauthError
@@ -1150,7 +1134,7 @@ photoRouter.delete('/:id/tags/:userId');
  * @apiUse PhotoNotFoundError
  *
  */
-photoRouter.get('/:id/tags');
+photoRouter.get('/:id/tags', photoController.getTagged);
 
 /**
  * @api {patch} /photo/:id/rotate Rotate a Photo
