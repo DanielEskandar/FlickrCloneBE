@@ -124,7 +124,7 @@ photoRouter.patch('/:id/perm');
  * @apiParam (Request Body) {[String]} tags Photo's Tags
  * @apiParam (Request Body) {Date}  dateUploaded Date Uploaded
  * @apiParam (Request Body) {Date} dateTaken   Date Taken
- * @apiParam (Request Body) {Object{}} permissions  The Photo's Viewing Permisions
+ * @apiParam (Request Body) {Object} permissions  The Photo's Viewing Permisions
  * @apiParam (Request Body) {Number}  license License Number (From 0 to 10)  
  * @apiParam (Request Body) {Number} safetyLevel Safety Level 
  * @apiParam (Request Body) {String} contentType Content Type 
