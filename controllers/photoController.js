@@ -434,3 +434,47 @@ exports.getLocation = async (req, res) => {
     errorController.sendError(err, req, res);
   }
 };
+
+// SET LOCATION
+//NOT COMPLETE
+exports.setLocation = async (req, res) => {
+  try {
+    const photo = await photoModel.findById(req.params.id);
+    if (!photo) {
+      throw new AppError('No Photo Found with This ID', 404);
+    }
+
+    const location = await locationModel.create(req.body); //create new location instance
+
+    const updated = await photoModel
+      .findByIdAndUpdate(
+        req.params.id,
+        {
+          $set: { location: location },
+        },
+        {
+          new: true,
+          runValidators: true,
+        }
+      )
+      .select({
+        _id: 0,
+        location: 1,
+      })
+      .populate([
+        {
+          path: 'location',
+          model: 'locationModel',
+          select: 'coordinates.latitude coordinates.longitude',
+          select: { _id: 0, __v: 0 },
+        },
+      ]);
+
+    res.status(200).json({
+      status: 'success',
+      data: JSON.parse(JSON.stringify(updated)),
+    });
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};

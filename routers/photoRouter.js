@@ -942,7 +942,7 @@ photoRouter.get('/:id/location', photoController.getLocation);
 /**
  * @api {patch} /photo/:id/location Set a Photo's Location
  * @apiVersion 1.0.0
- * @apiName SetLocation
+ * @apiName setLocation
  * @apiGroup Photo
  *
  * @apiParam {String} id The Photo's ID
@@ -961,7 +961,7 @@ photoRouter.get('/:id/location', photoController.getLocation);
  * @apiUse PhotoNotFoundError
  *
  */
-photoRouter.patch('/:id/location');
+photoRouter.patch('/:id/location', photoController.setLocation);
 
 /**
  * @api {delete} /photo/:id/location Delete a Photo's Location

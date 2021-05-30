@@ -481,3 +481,16 @@ module.exports.getLocationData = {
     },
   },
 };
+
+module.exports.setLocationData = {
+  status: 'success',
+  data: {
+    location: {
+      coordinates: {
+        latitude: 50,
+        longitude: 70,
+      },
+      name: 'location 1',
+    },
+  },
+};
