@@ -89,7 +89,7 @@
     "peopleTagged": [
       {
         "_id": "609093af84b808271488fafd",
-        "userId": "608d5450ec00005468604a0c",
+        "userId": "608d55c7e512b74ee00791de",
         "tagDate": "2012-04-13T18:25:43.511Z"
       }
     ],
@@ -790,7 +790,7 @@
     "dateUploaded": "2021-11-23T18:25:43.511Z",
     "dateTaken": "2014-07-23T18:25:43.511Z",
     "location": "608d5450ec00005468604a2c",
-    "comments": [],
+    "comments": ["608d5450ec00005468629b3d", "608d5450ec00005468629b4d"],
     "favourites": 24,
     "views": 31,
     "permissions": {
