@@ -573,5 +573,50 @@
     "age": 21,
     "password": "Abdcdef!1",
     "joinDate": "2021-05-22T10:11:16.876+00:00"
+  },
+  {
+    "_id": "60b1619d62e64a359ccb4a62",
+    "firstName": "search1",
+    "lastName": "dummy1",
+    "displayName": "dummy2",
+    "email": "search01@gmail.com",
+    "age": 21,
+    "password": "Abdcdef!1"
+  },
+  {
+    "_id": "60b1619d62e64a359ccb4a63",
+    "firstName": "dummy3",
+    "lastName": "search1",
+    "displayName": "dummy4",
+    "email": "search02@gmail.com",
+    "age": 21,
+    "password": "Abdcdef!1"
+  },
+  {
+    "_id": "60b1619d62e64a359ccb4a64",
+    "firstName": "dummy5",
+    "lastName": "dummy6",
+    "displayName": "search1",
+    "email": "search03@gmail.com",
+    "age": 21,
+    "password": "Abdcdef!1"
+  },
+  {
+    "_id": "60b1619d62e64a359ccb4a65",
+    "firstName": "search2",
+    "lastName": "search2",
+    "displayName": "search2",
+    "email": "search04@gmail.com",
+    "age": 21,
+    "password": "Abdcdef!1"
+  },
+  {
+    "_id": "60b1619d62e64a359ccb4a66",
+    "firstName": "search2",
+    "lastName": "search3",
+    "displayName": "dummy7",
+    "email": "search05@gmail.com",
+    "age": 21,
+    "password": "Abdcdef!1"
   }
 ]

@@ -868,3 +868,74 @@ module.exports.updateAboutMeData = {
     aboutMe: 'new about me content',
   },
 };
+
+module.exports.searchData1 = {
+  status: 'success',
+  data: [
+    {
+      _id: '60b1619d62e64a359ccb4a63',
+      firstName: 'dummy3',
+      lastName: 'search1',
+      displayName: 'dummy4',
+    },
+    {
+      _id: '60b1619d62e64a359ccb4a64',
+      firstName: 'dummy5',
+      lastName: 'dummy6',
+      displayName: 'search1',
+    },
+    {
+      _id: '60b1619d62e64a359ccb4a62',
+      firstName: 'search1',
+      lastName: 'dummy1',
+      displayName: 'dummy2',
+    },
+  ],
+};
+
+module.exports.searchData2 = {
+  status: 'success',
+  data: [
+    {
+      _id: '60b1619d62e64a359ccb4a66',
+      firstName: 'search2',
+      lastName: 'search3',
+      displayName: 'dummy7',
+    },
+  ],
+};
+
+module.exports.searchData3 = {
+  status: 'success',
+  data: [
+    {
+      _id: '60b1619d62e64a359ccb4a63',
+      firstName: 'dummy3',
+      lastName: 'search1',
+      displayName: 'dummy4',
+    },
+    {
+      _id: '60b1619d62e64a359ccb4a62',
+      firstName: 'search1',
+      lastName: 'dummy1',
+      displayName: 'dummy2',
+    },
+  ],
+};
+
+module.exports.searchData4 = {
+  status: 'success',
+  data: [
+    {
+      _id: '60b1619d62e64a359ccb4a64',
+      firstName: 'dummy5',
+      lastName: 'dummy6',
+      displayName: 'search1',
+    },
+  ],
+};
+
+module.exports.searchData5 = {
+  status: 'success',
+  data: [],
+};
