@@ -102,6 +102,10 @@ exports.editComment = async (req, res) => {
       throw new AppError('No Comment Found with this ID', 404);
     }
 
+    if (editedComment.userId != req.user.id) {
+      throw new AppError('You are Not Allowed to Edit this Comment', 403);
+    }
+
     res.status(200).json({
       status: 'success',
       data: JSON.parse(JSON.stringify(editedComment)),
@@ -116,7 +120,7 @@ exports.deleteComment = async (req, res) => {
   try {
     const photoWithComment = await photoModel
       .findById(req.params.id)
-      .select({ comments: 1, _id: 0 });
+      .select({ comments: 1, _id: 0, userId: 1 });
 
     if (!photoWithComment) {
       throw new AppError('No Photo Found with this ID', 404);
@@ -125,25 +129,29 @@ exports.deleteComment = async (req, res) => {
       (element) => element.toString() === req.params.commentid.toString()
     );
 
-    if (comment) {
-      await photoModel.findByIdAndUpdate(
-        req.params.id,
-        {
-          $pull: { comments: comment },
-        },
-        {
-          new: true,
-          runValidators: true,
-        }
-      );
-      await commentModel.findByIdAndDelete(req.params.commentid);
-      res.status(204).json({
-        status: 'success',
-        data: 'deleted',
-      });
-    } else {
+    if (!comment) {
       throw new AppError('No Comment Found with this ID', 404);
     }
+    if (photoWithComment.userId != req.user.id) {
+      throw new AppError('You are Not Allowed to Delete this Comment', 403);
+    }
+
+    await photoModel.findByIdAndUpdate(
+      req.params.id,
+      {
+        $pull: { comments: comment },
+      },
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
+
+    await commentModel.findByIdAndDelete(req.params.commentid);
+    res.status(204).json({
+      status: 'success',
+      data: 'deleted',
+    });
   } catch (err) {
     errorController.sendError(err, req, res);
   }
@@ -274,7 +282,7 @@ exports.removeTag = async (req, res) => {
   try {
     const photoWithTag = await photoModel
       .findById(req.params.id)
-      .select({ tags: 1, _id: 0 });
+      .select({ tags: 1, _id: 0, userId: 1 });
 
     if (!photoWithTag) {
       throw new AppError('No Photo Found with this ID', 404);
@@ -283,27 +291,30 @@ exports.removeTag = async (req, res) => {
       (element) => element.toString() === req.body.tags.toString()
     );
 
-    if (tag) {
-      const updatedPhoto = await photoModel.findByIdAndUpdate(
-        req.params.id,
-        {
-          $pull: { tags: tag },
-        },
-        {
-          new: true,
-          runValidators: true,
-        }
-      );
-
-      res.status(200).json({
-        status: 'success',
-        data: {
-          updatedTags: JSON.parse(JSON.stringify(updatedPhoto.tags)),
-        },
-      });
-    } else {
+    if (!tag) {
       throw new AppError('No such Tag Exists', 404);
     }
+    if (photoWithTag.userId != req.user.id) {
+      throw new AppError('You are Not Allowed to Remove this Tag', 403);
+    }
+
+    const updatedPhoto = await photoModel.findByIdAndUpdate(
+      req.params.id,
+      {
+        $pull: { tags: tag },
+      },
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
+
+    res.status(200).json({
+      status: 'success',
+      data: {
+        updatedTags: JSON.parse(JSON.stringify(updatedPhoto.tags)),
+      },
+    });
   } catch (err) {
     errorController.sendError(err, req, res);
   }
