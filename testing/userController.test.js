@@ -647,3 +647,83 @@ describe('should get All Photos in CameraRoll of the calling user', () => {
     expect(mRes.json).toBeCalledWith(userTestData.getCameraRoll);
   });
 });
+
+// TESTING: getRecentPhotos
+describe('should get recent Photos of the calling user', () => {
+  test('should get recent Photos of GalleryAlbumTest User', async () => {
+    const mReq = {
+      user: { id: '608d5450ec00005468607a11' },
+      body: {
+        per_page: 100,
+        page: 1,
+      },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await userController.getRecentPhotos(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(userTestData.getRecentPhotos);
+  });
+});
+
+// TESTING: getPopularPhotos
+describe('should get popular Photos of the calling user', () => {
+  test('should get popular Photos of GalleryAlbumTest User', async () => {
+    const mReq = {
+      user: { id: '608d5450ec00005468607a11' },
+      body: {
+        per_page: 100,
+        page: 1,
+      },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await userController.getPopularPhotos(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(userTestData.getPopularPhotos);
+  });
+});
+
+// TESTING: getRequestedUserRecentPhotos
+describe('should get recent Photos of the requested user', () => {
+  test('should get recent Photos of GalleryAlbumTest User', async () => {
+    const mReq = {
+      params: { id: '608d5450ec00005468607a11' },
+      body: {
+        per_page: 100,
+        page: 1,
+      },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await userController.getRequestedUserRecentPhotos(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(userTestData.getRecentPhotos);
+  });
+});
+
+// TESTING: getRequestedUserPopularPhotos
+describe('should get popular Photos of the requested user', () => {
+  test('should get popular Photos of GalleryAlbumTest User', async () => {
+    const mReq = {
+      params: { id: '608d5450ec00005468607a11' },
+      body: {
+        per_page: 100,
+        page: 1,
+      },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await userController.getRequestedUserPopularPhotos(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(userTestData.getPopularPhotos);
+  });
+});
