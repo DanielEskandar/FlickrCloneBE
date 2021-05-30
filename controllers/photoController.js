@@ -102,7 +102,7 @@ exports.editComment = async (req, res) => {
       throw new AppError('No Comment Found with this ID', 404);
     }
 
-    if (editedComment.userId != req.user.id) {
+    if (editedComment.userId.toString() !== req.user.id.toString()) {
       throw new AppError('You are Not Allowed to Edit this Comment', 403);
     }
 
@@ -132,7 +132,7 @@ exports.deleteComment = async (req, res) => {
     if (!comment) {
       throw new AppError('No Comment Found with this ID', 404);
     }
-    if (photoWithComment.userId != req.user.id) {
+    if (photoWithComment.userId.toString() !== req.user.id.toString()) {
       throw new AppError('You are Not Allowed to Delete this Comment', 403);
     }
 
@@ -294,7 +294,7 @@ exports.removeTag = async (req, res) => {
     if (!tag) {
       throw new AppError('No such Tag Exists', 404);
     }
-    if (photoWithTag.userId != req.user.id) {
+    if (photoWithTag.userId.toString() !== req.user.id.toString()) {
       throw new AppError('You are Not Allowed to Remove this Tag', 403);
     }
 
