@@ -30,6 +30,7 @@
     "mongoose": "^5.12.10",
     "nodemailer": "^6.6.1",
     "nodemailer-sendgrid": "^1.0.3",
+    "underscore": "^1.13.1",
     "validator": "^13.6.0"
   },
   "devDependencies": {
