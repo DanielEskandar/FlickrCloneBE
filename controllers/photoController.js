@@ -484,7 +484,6 @@ exports.tagUser = async (req, res) => {
       )
       .select({ peopleTagged: 1, _id: 0 });
 
-    //tagTaggedList.map({ _id, userId, tagDate }, { userId, tagDate });
     res.status(200).json({
       status: 'success',
       data: JSON.parse(JSON.stringify(tagTaggedList)),
@@ -508,7 +507,7 @@ exports.removePerson = async (req, res) => {
 
     //check if photo exists in DB
     if ((await userModel.findById(req.params.userid)) === null) {
-      throw new AppError('User doesnt Exist', 404);
+      throw new AppError('User does not Exist', 404);
     }
 
     const user = await userModel.findById(req.params.userid);
@@ -519,7 +518,7 @@ exports.removePerson = async (req, res) => {
       (elem) => elem.userId.toString() === req.params.userid.toString()
     );
     if (!exists) {
-      throw new AppError('User already not tagged', 409);
+      throw new AppError('User not tagged', 409);
     }
 
     const taggedlist = await photoModel
