@@ -868,3 +868,586 @@ module.exports.updateAboutMeData = {
     aboutMe: 'new about me content',
   },
 };
+
+module.exports.searchData1 = {
+  status: 'success',
+  data: [
+    {
+      _id: '60b1619d62e64a359ccb4a63',
+      firstName: 'dummy3',
+      lastName: 'search1',
+      displayName: 'dummy4',
+    },
+    {
+      _id: '60b1619d62e64a359ccb4a64',
+      firstName: 'dummy5',
+      lastName: 'dummy6',
+      displayName: 'search1',
+    },
+    {
+      _id: '60b1619d62e64a359ccb4a62',
+      firstName: 'search1',
+      lastName: 'dummy1',
+      displayName: 'dummy2',
+    },
+  ],
+};
+
+module.exports.searchData2 = {
+  status: 'success',
+  data: [
+    {
+      _id: '60b1619d62e64a359ccb4a66',
+      firstName: 'search2',
+      lastName: 'search3',
+      displayName: 'dummy7',
+    },
+  ],
+};
+
+module.exports.searchData3 = {
+  status: 'success',
+  data: [
+    {
+      _id: '60b1619d62e64a359ccb4a63',
+      firstName: 'dummy3',
+      lastName: 'search1',
+      displayName: 'dummy4',
+    },
+    {
+      _id: '60b1619d62e64a359ccb4a62',
+      firstName: 'search1',
+      lastName: 'dummy1',
+      displayName: 'dummy2',
+    },
+  ],
+};
+
+module.exports.searchData4 = {
+  status: 'success',
+  data: [
+    {
+      _id: '60b1619d62e64a359ccb4a64',
+      firstName: 'dummy5',
+      lastName: 'dummy6',
+      displayName: 'search1',
+    },
+  ],
+};
+
+module.exports.searchData5 = {
+  status: 'success',
+  data: [],
+};
+
+module.exports.getPhotoStream = {
+  status: 'success',
+  data: {
+    photos: {
+      photos: [
+        {
+          permissions: {
+            public: true,
+            friend: false,
+            family: true,
+            comment: 2,
+            addMeta: 1,
+          },
+          sizes: {
+            size: {
+              original: {
+                height: 120,
+                width: 60,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              large: {
+                height: 190,
+                width: 20,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              medium800: {
+                height: 200,
+                width: 60,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              medium640: {
+                height: 1200,
+                width: 60,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              medium: {
+                height: 120,
+                width: 600,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              small320: {
+                height: 12,
+                width: 60,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              small: {
+                height: 1000,
+                width: 60,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              thumbnail: {
+                height: 50,
+                width: 50,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              largeSquare: {
+                height: 120,
+                width: 120,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              square: {
+                height: 60,
+                width: 60,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+            },
+            canDownload: false,
+          },
+          _id: '604d5450ec00005468617a0c',
+        },
+        {
+          permissions: {
+            public: true,
+            friend: false,
+            family: false,
+            comment: 2,
+            addMeta: 1,
+          },
+          sizes: {
+            size: {
+              original: {
+                height: 100,
+                width: 60,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              large: {
+                height: 190,
+                width: 20,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              medium800: {
+                height: 200,
+                width: 60,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              medium640: {
+                height: 1200,
+                width: 60,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              medium: {
+                height: 120,
+                width: 600,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              small320: {
+                height: 12,
+                width: 60,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              small: {
+                height: 1000,
+                width: 60,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              thumbnail: {
+                height: 50,
+                width: 50,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              largeSquare: {
+                height: 120,
+                width: 120,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              square: {
+                height: 60,
+                width: 60,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+            },
+            canDownload: true,
+          },
+          _id: '604d5450ec01005468617a04',
+        },
+      ],
+      _id: '608d5450ec00005468607a11',
+    },
+  },
+};
+
+module.exports.getCameraRoll = {
+  status: 'success',
+  data: {
+    photos: {
+      photos: [
+        {
+          sizes: {
+            size: {
+              original: {
+                height: 120,
+                width: 60,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              large: {
+                height: 190,
+                width: 20,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              medium800: {
+                height: 200,
+                width: 60,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              medium640: {
+                height: 1200,
+                width: 60,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              medium: {
+                height: 120,
+                width: 600,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              small320: {
+                height: 12,
+                width: 60,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              small: {
+                height: 1000,
+                width: 60,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              thumbnail: {
+                height: 50,
+                width: 50,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              largeSquare: {
+                height: 120,
+                width: 120,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              square: {
+                height: 60,
+                width: 60,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+            },
+            canDownload: true,
+          },
+          _id: '608d5450ec00005468617a0c',
+        },
+        {
+          sizes: {
+            size: {
+              original: {
+                height: 120,
+                width: 60,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              large: {
+                height: 190,
+                width: 20,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              medium800: {
+                height: 200,
+                width: 60,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              medium640: {
+                height: 1200,
+                width: 60,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              medium: {
+                height: 120,
+                width: 600,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              small320: {
+                height: 12,
+                width: 60,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              small: {
+                height: 1000,
+                width: 60,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              thumbnail: {
+                height: 50,
+                width: 50,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              largeSquare: {
+                height: 120,
+                width: 120,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              square: {
+                height: 60,
+                width: 60,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+            },
+            canDownload: false,
+          },
+          _id: '604d5450ec00005468617a0c',
+        },
+        {
+          sizes: {
+            size: {
+              original: {
+                height: 100,
+                width: 60,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              large: {
+                height: 190,
+                width: 20,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              medium800: {
+                height: 200,
+                width: 60,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              medium640: {
+                height: 1200,
+                width: 60,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              medium: {
+                height: 120,
+                width: 600,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              small320: {
+                height: 12,
+                width: 60,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              small: {
+                height: 1000,
+                width: 60,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              thumbnail: {
+                height: 50,
+                width: 50,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              largeSquare: {
+                height: 120,
+                width: 120,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              square: {
+                height: 60,
+                width: 60,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+            },
+            canDownload: true,
+          },
+          _id: '604d5450ec01005468617a04',
+        },
+        {
+          sizes: {
+            size: {
+              original: {
+                height: 100,
+                width: 60,
+                source: 'http://www.nyan.cat/',
+                url: 'https://www.google.com/',
+              },
+              large: {
+                height: 190,
+                width: 20,
+                source: 'https://www.google.com/',
+                url: 'http://www.nyan.cat/',
+              },
+              medium800: {
+                height: 350,
+                width: 600,
+                source: 'https://www.google.com/',
+                url: 'https://thispersondoesnotexist.com/',
+              },
+              medium640: {
+                height: 1200,
+                width: 60,
+                source: 'https://thispersondoesnotexist.com/',
+                url: 'https://www.google.com/',
+              },
+              medium: {
+                height: 120,
+                width: 600,
+                source: 'https://www.google.com/',
+                url: 'https://www.youtube.com/watch?v=2AY4ngaybWI',
+              },
+              small320: {
+                height: 12,
+                width: 60,
+                source: 'https://www.youtube.com/watch?v=2AY4ngaybWI',
+                url: 'https://www.youtube.com/watch?v=2AY4ngaybWI',
+              },
+              small: {
+                height: 3500,
+                width: 600,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              thumbnail: {
+                height: 50,
+                width: 50,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              largeSquare: {
+                height: 100,
+                width: 120,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              square: {
+                height: 3500,
+                width: 3500,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+            },
+            canDownload: true,
+          },
+          _id: '604d5450ec01005468617a14',
+        },
+        {
+          sizes: {
+            size: {
+              original: {
+                height: 120,
+                width: 60,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              large: {
+                height: 190,
+                width: 20,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              medium800: {
+                height: 200,
+                width: 60,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              medium640: {
+                height: 1200,
+                width: 60,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              medium: {
+                height: 120,
+                width: 600,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              small320: {
+                height: 12,
+                width: 60,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              small: {
+                height: 1000,
+                width: 60,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              thumbnail: {
+                height: 50,
+                width: 50,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              largeSquare: {
+                height: 120,
+                width: 120,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              square: {
+                height: 60,
+                width: 60,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+            },
+            canDownload: true,
+          },
+          _id: '608d5450ec00005468628a0d',
+        },
+      ],
+      _id: '608d5450ec00005468607a11',
+    },
+  },
+};

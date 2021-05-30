@@ -12,6 +12,11 @@ module.exports.getFavouritesData2 = {
   },
 };
 
+module.exports.deleteCommentData = {
+  data: 'deleted',
+  status: 'success',
+};
+
 module.exports.getInformationData1 = {
   status: 'success',
   data: {
@@ -467,5 +472,69 @@ module.exports.getGalleriesforPhoto = {
   status: 'success',
   data: {
     galleries: ['608f34a634413f11f020b121', '608f34a634413f11f020b124'],
+  },
+};
+
+module.exports.getTaggedData = {
+  status: 'success',
+  data: {
+    peopleTagged: [
+      {
+        _id: expect.any(String),
+        userId: {
+          _id: '608d55c7e512b74ee00791de',
+          displayName: 'NadineMagdy',
+          firstName: 'Nadine',
+          lastName: 'Magdi',
+        },
+        tagDate: '2012-04-13T18:25:43.511Z',
+      },
+    ],
+  },
+};
+
+module.exports.tagUserData = {
+  status: 'success',
+  data: {
+    peopleTagged: [
+      {
+        _id: expect.any(String),
+        userId: {
+          _id: '608d55c7e512b74ee00791de',
+          displayName: 'NadineMagdy',
+          firstName: 'Nadine',
+          lastName: 'Magdi',
+        },
+        tagDate: expect.any(String),
+      },
+      {
+        _id: expect.any(String),
+        userId: {
+          _id: '608d55c7e512b74ee00791dc',
+          displayName: 'AliaaKhalifa',
+          firstName: 'Aliaa',
+          lastName: 'Khalifa',
+        },
+        tagDate: expect.any(String),
+      },
+    ],
+  },
+};
+
+module.exports.removePersonData = {
+  status: 'success',
+  data: {
+    peopleTagged: [
+      {
+        _id: expect.any(String),
+        userId: {
+          _id: '608d55c7e512b74ee00791de',
+          displayName: 'NadineMagdy',
+          firstName: 'Nadine',
+          lastName: 'Magdi',
+        },
+        tagDate: '2012-04-13T18:25:43.511Z',
+      },
+    ],
   },
 };

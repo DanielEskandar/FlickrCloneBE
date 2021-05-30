@@ -125,7 +125,6 @@ module.exports.getAllRepliesData = {
         },
         content: 'fastfood',
         date: '2021-01-01T00:00:00.000Z',
-        __v: 0,
       },
     ],
   },
