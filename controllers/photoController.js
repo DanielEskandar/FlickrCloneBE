@@ -1,3 +1,6 @@
+// INCLUDE DEPENDENCIES
+const _ = require('underscore');
+
 // INCLUDE MODELS
 const photoModel = require('../models/photoModel.js');
 const commentModel = require('../models/commentModel.js');
@@ -7,6 +10,9 @@ const galleryModel = require('../models/galleryModel.js');
 // INCLUDE ERROR CLASS AND ERROR CONTROLLER
 const AppError = require('../utils/appError.js');
 const errorController = require('./errorController.js');
+
+// INCLUDE API FEATURES
+const APIFeatures = require('../utils/APIFeatures.js');
 
 // GET INFORMATION FOR A PHOTO
 exports.getInformation = async (req, res) => {
@@ -532,6 +538,81 @@ exports.removePerson = async (req, res) => {
     res.status(200).json({
       status: 'success',
       data: JSON.parse(JSON.stringify(taggedlist)),
+    });
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};
+
+// SEARCH
+exports.search = async (req, res) => {
+  try {
+    // Check if query exists
+    if (!req.query.searchText) {
+      throw new AppError('No query found.', 400);
+    }
+
+    // Split query on space character
+    const queries = req.query.searchText.split(' ');
+
+    // Search for photos
+    let searchResults = [];
+    await Promise.all(
+      queries.map(async (el) => {
+        const searchResult = await photoModel.aggregate([
+          {
+            $match: {
+              $or: [
+                { title: { $regex: el, $options: 'i' } },
+                { description: { $regex: el, $options: 'i' } },
+                { tags: { $in: [el] } },
+              ],
+            },
+          },
+          {
+            $project: {
+              _id: 1,
+              title: 1,
+              description: 1,
+              favourites: 1,
+              dateUploaded: 1,
+              dateTaken: 1,
+              userId: 1,
+              sizes: 1,
+              comments: { $size: '$comments' },
+            },
+          },
+        ]);
+
+        searchResults.push(searchResult);
+      })
+    );
+
+    // Populate
+    await photoModel.populate(searchResults, {
+      path: 'userId',
+      model: 'userModel',
+      select: 'firstName lastName',
+    });
+
+    // Merge results of all queries into one array (Union Operation)
+    searchResults = searchResults.flat();
+
+    // Remove duplicates
+    searchResults = _.uniq(JSON.parse(JSON.stringify(searchResults)), '_id');
+
+    // Pagination
+    const page = req.query.page * 1 || 1;
+    const limit = req.query.limit * 1 || 100;
+    searchResults = APIFeatures.paginate(searchResults, page, limit);
+
+    // Sorting
+    const sort = req.query.sort || 'dateUploaded';
+    searchResults = _.sortBy(searchResults, sort).reverse();
+
+    res.status(200).json({
+      status: 'success',
+      data: JSON.parse(JSON.stringify(searchResults)),
     });
   } catch (err) {
     errorController.sendError(err, req, res);

@@ -650,5 +650,23 @@
     "email": "search05@gmail.com",
     "age": 21,
     "password": "Abdcdef!1"
+  },
+  {
+    "_id": "60b3d0ae25109d5840208164",
+    "firstName": "Photo Owner 1 First Name",
+    "lastName": "Photo Owner 1 Last Name",
+    "displayName": "photoOwner1",
+    "email": "photoowner1@gmail.com",
+    "age": 21,
+    "password": "Abdcdef!1"
+  },
+  {
+    "_id": "60b3d0ae25109d5840208165",
+    "firstName": "Photo Owner 2 First Name",
+    "lastName": "Photo Owner 2 Last Name",
+    "displayName": "photoOwner2",
+    "email": "photoowner2@gmail.com",
+    "age": 21,
+    "password": "Abdcdef!1"
   }
 ]

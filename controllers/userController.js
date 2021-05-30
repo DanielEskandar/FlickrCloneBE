@@ -11,7 +11,7 @@ const AppError = require('../utils/appError.js');
 const errorController = require('./errorController.js');
 
 // INCLUDE API FEATURES
-const { paginate } = require('../utils/APIFeatures.js');
+const APIFeatures = require('../utils/APIFeatures.js');
 
 // GET REAL NAME
 exports.getRealName = async (req, res) => {
@@ -680,7 +680,7 @@ exports.search = async (req, res) => {
       // Pagination
       const page = req.query.page * 1 || 1;
       const limit = req.query.limit * 1 || 100;
-      results = paginate(results, page, limit);
+      results = APIFeatures.paginate(results, page, limit);
 
       // SORTING
       results = _.sortBy(results, 'firstName');

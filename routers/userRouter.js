@@ -1667,7 +1667,7 @@ userRouter.get('/notif/follow');
  * @apiUse ServerError
  */
 
-userRouter.get('/search', userController.search);
+userRouter.get('/search', authController.protect, userController.search);
 
 /**
  * @api {get} /user/:id Get the User's Information

@@ -164,6 +164,8 @@ photoRouter.patch(
  */
 photoRouter.delete('/:id/');
 
+photoRouter.get('/search', authController.protect, photoController.search);
+
 /**
  * @api {get} /photo/:id Get Display Details for a Photo
  * @apiVersion 1.0.0
@@ -288,25 +290,25 @@ photoRouter.get('/:id', photoController.getInformation);
  * @apiHeader {String} Token Authenticaton Token
  *
  * @apiParam {String} id The Photo's ID
- * 
+ *
  * @apiParam (Request Body) {String} size All The Current Photo Size
- * 
+ *
  * @apiSuccess {string} photourl The Photo's URL for the Chosen Size
- * 
+ *
  * @apiSuccessExample Success-Response:
  *      HTTP/1.1 200 OK
  *      {
  *          "status": "success",
  *          "data":
  *          {
-                "photourl: " 
+ *               "photourl":
  *          }
  *      }
  *
  * @apiUse UnauthError
  * @apiUse ForbiddenError
  * @apiUse PhotoNotFoundError
- * 
+ *
  */
 photoRouter.get('/:id/url');
 
