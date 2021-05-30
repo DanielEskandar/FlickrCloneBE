@@ -375,10 +375,39 @@ userRouter.get('/:id/galleries');
 userRouter.get('/:id/groups');
 
 /**
+ * @api {get} /user/:id/stream Return a user's photo stream
+ * @apiVersion 1.0.0
+ * @apiName GetStream
+ * @apiGroup User
  *
+ * @apiParam {String} id The User's ID
+ *
+ * @apiParam (Request Body) {Number} per_page Number of Galleries to return Per Page (Optinal)
+ * @apiParam (Request Body) {Number} page The Page Number to Return (Optinal)
+ *
+ * @apiSuccess {Object[]} photo stream Array of non-private photos from the user's camera roll
+ *
+ *
+ * @apiSuccessExample Success-Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *          "status": "success",
+ *          "data":
+ *          {
+ *              "photos": [
+ *
+ *              ]
+ *          }
+ *      }
+ *
+ * @apiUse UserNotFoundError
  */
 
-userRouter.get('/:id/stream');
+userRouter.get(
+  '/:id/stream',
+  authController.protect,
+  userController.getPhotoStream
+);
 
 /**
  *
@@ -1368,10 +1397,38 @@ userRouter.get('/fave-context');
 userRouter.get('/addable-pool');
 
 /**
+ * @api {get} /user/camera-roll Return a user's camera roll
+ * @apiVersion 1.0.0
+ * @apiName GetCameraRoll
+ * @apiGroup User
  *
+ * @apiHeader {String} Token Authenticaton Token
+ *
+ * @apiParam (Request Body) {Number} per_page Number of Galleries to return Per Page (Optinal)
+ * @apiParam (Request Body) {Number} page The Page Number to Return (Optinal)
+ *
+ * @apiSuccess {Object[]} photos Array of photos from the user's camera roll
+ *
+ * @apiSuccessExample Success-Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *          "status": "success",
+ *          "data":
+ *          {
+ *              "photos": [
+ *
+ *              ]
+ *          }
+ *      }
+ *
+ * @apiUse UnauthError
  */
 
-userRouter.get('/camera-roll');
+userRouter.get(
+  '/camera-roll',
+  authController.protect,
+  userController.getCameraRoll
+);
 
 /**
  * @api {get} /user/followed Gets a list of followed users

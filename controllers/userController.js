@@ -694,3 +694,127 @@ exports.search = async (req, res) => {
     errorController.sendError(err, req, res);
   }
 };
+
+// Get Photostream
+exports.getPhotoStream = async (req, res) => {
+  try {
+    // pagination
+    const page = req.body.page || 1;
+    const perPage = req.body.per_page || 100;
+    const skip = (page - 1) * perPage;
+    if (perPage > 500) {
+      throw new AppError(
+        'Maximum allowed value of number of photos to return per page is 500',
+        404
+      );
+    }
+    let photos = [];
+    // if requested user == calling user
+    // ALL PHOTOS ARE RETURNED
+    if (req.params.id === req.user.id) {
+      photos = await userModel
+        .findById(req.params.id)
+        .populate('photos', 'sizes')
+        .select('photos')
+        .skip(skip)
+        .limit(perPage);
+    } else {
+      //   // get requested user's following list
+
+      const userFollowing = await userModel
+        .findById(req.params.id)
+        .select('following');
+      // get relation (if exist) between requested user and calling user
+      const relation = userFollowing.following.filter(
+        (follow) => follow.user.toString() === req.user.id.toString()
+      );
+
+      // if stranger of undetermined -> public only
+      if (relation.length === 0 || relation[0].relation === 'undetermined') {
+        photos = await userModel
+          .findById(req.params.id)
+          .populate('photos', ['permissions', 'sizes'], {
+            'permissions.public': true,
+          })
+          .select('photos')
+          .skip(skip)
+          .limit(perPage);
+
+        // if friend -> public and friend
+      } else if (relation[0].relation === 'friend') {
+        photos = await userModel
+          .findById(req.params.id)
+          .populate('photos', ['permissions', 'sizes'], {
+            $or: [
+              {
+                'permissions.public': true,
+              },
+              { 'permissions.friend': true },
+            ],
+          })
+          .select('photos')
+          .skip(skip)
+          .limit(perPage);
+        // if family -> public and family
+      } else if (relation[0].relation === 'family') {
+        photos = await userModel
+          .findById(req.params.id)
+          .populate('photos', ['permissions', 'sizes'], {
+            $or: [
+              {
+                'permissions.public': true,
+              },
+              { 'permissions.family': true },
+            ],
+          })
+          .select('photos')
+          .skip(skip)
+          .limit(perPage);
+      }
+    }
+
+    res.status(200).json({
+      status: 'success',
+      data: {
+        photos: JSON.parse(JSON.stringify(photos)),
+      },
+    });
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};
+
+// Get Camera-Roll
+exports.getCameraRoll = async (req, res) => {
+  try {
+    // pagination
+    const page = req.body.page || 1;
+    const perPage = req.body.per_page || 100;
+    const skip = (page - 1) * perPage;
+
+    if (perPage > 500) {
+      throw new AppError(
+        'Maximum allowed value of number of photos to return per page is 500',
+        404
+      );
+    }
+    const userPhotos = await userModel
+      .findById(req.user.id)
+      .populate('photos', 'sizes')
+      .select('photos')
+      .skip(skip)
+      .limit(perPage);
+
+    res.status(200).json({
+      status: 'success',
+      data: {
+        photos: JSON.parse(
+          // eslint-disable-next-line no-unused-vars
+          JSON.stringify(userPhotos)
+        ),
+      },
+    });
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};

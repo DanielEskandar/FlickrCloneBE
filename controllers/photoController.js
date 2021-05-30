@@ -338,17 +338,7 @@ exports.editPhotoInformation = async (req, res) => {
     const updatedPhoto = await photoModel.findByIdAndUpdate(
       req.params.id,
       {
-        $set: {
-          title: req.body.title,
-          description: req.body.description,
-          tags: req.body.tags,
-          dateUploaded: req.body.dateUploaded,
-          dateTaken: req.body.dateTaken,
-          permissions: req.body.permissions,
-          license: req.body.license,
-          safetyLevel: req.body.safetyLevel,
-          contentType: req.body.contentType,
-        },
+        $set: req.body,
       },
       {
         new: true,

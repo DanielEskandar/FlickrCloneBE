@@ -425,7 +425,6 @@ exports.setPrimaryPhoto = async (req, res) => {
     }
 
     // auth
-
     const currentUser = await userModel.findById(req.user.id);
     const userGalleries = currentUser.gallery.find(
       (element) => element.toString() === req.params.id.toString()

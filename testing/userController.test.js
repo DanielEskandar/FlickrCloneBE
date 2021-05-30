@@ -664,3 +664,44 @@ describe('should search users and send response correctly', () => {
     expect(mRes.json).toBeCalledWith(userTestData.searchData5);
   });
 });
+
+// TESTING: getPhotoStream
+describe('should get PhotoStream of the requested user based on the calling user', () => {
+  test('should get Photo Stream of GalleryAlbumTest User', async () => {
+    const mReq = {
+      params: { id: '608d5450ec00005468607a11' },
+      user: { id: '608d55c7e512b74ee00791de' },
+      body: {
+        per_page: 100,
+        page: 1,
+      },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await userController.getPhotoStream(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(userTestData.getPhotoStream);
+  });
+});
+
+// TESTING: getCameraRoll
+describe('should get All Photos in CameraRoll of the calling user', () => {
+  test('should get All Photos in CameraRoll of GalleryAlbumTest User', async () => {
+    const mReq = {
+      user: { id: '608d5450ec00005468607a11' },
+      body: {
+        per_page: 100,
+        page: 1,
+      },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await userController.getCameraRoll(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(userTestData.getCameraRoll);
+  });
+});

@@ -306,8 +306,8 @@
     "views": 54,
     "permissions": {
       "public": 1,
-      "friend": 1,
-      "family": 1,
+      "friend": 0,
+      "family": 0,
       "comment": 2,
       "addMeta": 1
     },
@@ -403,9 +403,9 @@
     "favourites": 1100,
     "views": 67893,
     "permissions": {
-      "public": 1,
+      "public": 0,
       "friend": 1,
-      "family": 1,
+      "family": 0,
       "comment": 3,
       "addMeta": 2
     },

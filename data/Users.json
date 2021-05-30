@@ -435,9 +435,16 @@
     "favourites": [
       "608d5450ec00005468607a0f",
       "608d5450ec00005468617a0c",
-      "608d5560ec00005468607a0e"
+      "608d5560ec00005468607a0e",
+      "604d5450ec01005468617a04"
     ],
-    "photos": [],
+    "photos": [
+      "608d5450ec00005468617a0c",
+      "604d5450ec00005468617a0c",
+      "604d5450ec01005468617a04",
+      "604d5450ec01005468617a14",
+      "608d5450ec00005468628a0d"
+    ],
     "testimonials": [],
     "albums": [
       "608f3c70197abc18509aec61",
@@ -449,7 +456,32 @@
       "608f34a634413f11f020b124",
       "608f34a634413f11f020b127"
     ],
-    "following": [],
+    "following": [
+      {
+        "_id": "50914e1ba87d736f3c382ed6",
+        "user": "608d55c7e512b74ee00791db",
+        "relation": "family",
+        "followDate": "2021-05-04T12:16:24.255+00:00"
+      },
+      {
+        "_id": "50914e1ba87d736f3c382ed7",
+        "user": "608d5450ec00005468607a0c",
+        "relation": "friend",
+        "followDate": "2021-05-04T12:17:24.255+00:00"
+      },
+      {
+        "_id": "50914e1ba87d736f3c382ed8",
+        "user": "608d55c7e512b74ee00791dc",
+        "relation": "undetermined",
+        "followDate": "2021-05-04T12:18:24.255+00:00"
+      },
+      {
+        "_id": "50914e1ba87d736f3c382ed9",
+        "user": "608d55c7e512b74ee00791dd",
+        "relation": "undetermined",
+        "followDate": "2021-05-04T12:19:24.255+00:00"
+      }
+    ],
     "blocked": [],
     "privacySettings": {
       "global": {
