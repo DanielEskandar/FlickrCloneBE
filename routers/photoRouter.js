@@ -4,6 +4,7 @@ const express = require('express');
 // INCLUDE CONTROLLERS
 const photoController = require('../controllers/photoController.js');
 const authController = require('../controllers/authController.js');
+const uploadController = require('../controllers/uploadController.js');
 
 // CREATE ROUTER
 const photoRouter = express.Router();
@@ -77,14 +78,135 @@ const photoRouter = express.Router();
  * @apiName UploadPhoto
  * @apiGroup Photo
  *
- * @apiParam (Request Body) {Number} ticket The Ticket of the Upload
+ * @apiParam (Request Body from form input) {String} Title The Photo's Title
+ * @apiParam (Request Body from form input) {String} Description The Photo's Description
+ * @apiParam (Request Body from form input) {File} Photo The Photo's Original File
  *
- * @apiUse SuccessRes
+ * @apiSuccessExample {json} Success-Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *        "status": "success",
+ *        "data": {
+ *          "newPhoto": {
+ *            "permissions": {
+ *              "public": false,
+ *              "friend": false,
+ *              "family": false,
+ *              "comment": 3,
+ *              "addMeta": 0
+ *            },
+ *            "sizes": {
+ *              "size": {
+ *                "original": {
+ *                  "height": 2736,
+ *                  "width": 3648,
+ *                  "source": "https://res.cloudinary.com/dpuxq7nuq/image/upload/v1622432733/photo-0-608d5450ec00005468607a0c-1622432660311-o.jpg",
+ *                  "url": "https://res.cloudinary.com/dpuxq7nuq/image/upload/v1622432733/photo-0-608d5450ec00005468607a0c-1622432660311-o.jpg"
+ *                },
+ *                "large": {
+ *                  "height": 768,
+ *                  "width": 1024,
+ *                  "source": "https://res.cloudinary.com/dpuxq7nuq/image/upload/v1622432746/photo-1-608d5450ec00005468607a0c-1622432660311-b.jpg",
+ *                  "url": "https://res.cloudinary.com/dpuxq7nuq/image/upload/v1622432746/photo-1-608d5450ec00005468607a0c-1622432660311-b.jpg"
+ *                },
+ *                "medium800": {
+ *                  "height": 600,
+ *                  "width": 800,
+ *                  "source": "https://res.cloudinary.com/dpuxq7nuq/image/upload/v1622432749/photo-2-608d5450ec00005468607a0c-1622432660311-c.jpg",
+ *                  "url": "https://res.cloudinary.com/dpuxq7nuq/image/upload/v1622432749/photo-2-608d5450ec00005468607a0c-1622432660311-c.jpg"
+ *                },
+ *                "medium640": {
+ *                  "height": 480,
+ *                  "width": 640,
+ *                  "source": "https://res.cloudinary.com/dpuxq7nuq/image/upload/v1622432755/photo-3-608d5450ec00005468607a0c-1622432660312-z.jpg",
+ *                  "url": "https://res.cloudinary.com/dpuxq7nuq/image/upload/v1622432755/photo-3-608d5450ec00005468607a0c-1622432660312-z.jpg"
+ *                },
+ *                "medium": {
+ *                  "height": 375,
+ *                  "width": 500,
+ *                  "source": "https://res.cloudinary.com/dpuxq7nuq/image/upload/v1622432756/photo-4-608d5450ec00005468607a0c-1622432660312.jpg",
+ *                  "url": "https://res.cloudinary.com/dpuxq7nuq/image/upload/v1622432756/photo-4-608d5450ec00005468607a0c-1622432660312.jpg"
+ *                },
+ *                "small320": {
+ *                  "height": 240,
+ *                  "width": 320,
+ *                  "source": "https://res.cloudinary.com/dpuxq7nuq/image/upload/v1622432757/photo-5-608d5450ec00005468607a0c-1622432660312-n.jpg",
+ *                  "url": "https://res.cloudinary.com/dpuxq7nuq/image/upload/v1622432757/photo-5-608d5450ec00005468607a0c-1622432660312-n.jpg"
+ *                },
+ *                "small": {
+ *                  "height": 180,
+ *                  "width": 240,
+ *                  "source": "https://res.cloudinary.com/dpuxq7nuq/image/upload/v1622432758/photo-6-608d5450ec00005468607a0c-1622432660312-m.jpg",
+ *                  "url": "https://res.cloudinary.com/dpuxq7nuq/image/upload/v1622432758/photo-6-608d5450ec00005468607a0c-1622432660312-m.jpg"
+ *                },
+ *                "thumbnail": {
+ *                  "height": 75,
+ *                  "width": 100,
+ *                  "source": "https://res.cloudinary.com/dpuxq7nuq/image/upload/v1622432759/photo-7-608d5450ec00005468607a0c-1622432660312-t.jpg",
+ *                  "url": "https://res.cloudinary.com/dpuxq7nuq/image/upload/v1622432759/photo-7-608d5450ec00005468607a0c-1622432660312-t.jpg"
+ *                },
+ *                "largeSquare": {
+ *                  "height": 150,
+ *                  "width": 150,
+ *                  "source": "https://res.cloudinary.com/dpuxq7nuq/image/upload/v1622432760/photo-8-608d5450ec00005468607a0c-1622432660312-q.jpg",
+ *                  "url": "https://res.cloudinary.com/dpuxq7nuq/image/upload/v1622432760/photo-8-608d5450ec00005468607a0c-1622432660312-q.jpg"
+ *                },
+ *                "square": {
+ *                  "height": 75,
+ *                  "width": 75,
+ *                  "source": "https://res.cloudinary.com/dpuxq7nuq/image/upload/v1622432760/photo-9-608d5450ec00005468607a0c-1622432660312-s.jpg",
+ *                  "url": "https://res.cloudinary.com/dpuxq7nuq/image/upload/v1622432760/photo-9-608d5450ec00005468607a0c-1622432660312-s.jpg"
+ *                }
+ *              },
+ *              "canDownload": false
+ *            },
+ *            "metadata": {
+ *              "cameraMake": "HUAWEI",
+ *              "cameraModel": "CLT-L29",
+ *              "lensName": "",
+ *              "fNumber": 1.8,
+ *              "focalLength": 3.95,
+ *              "exposureTime": 0.000249,
+ *              "flash": 24,
+ *              "iso": 50
+ *            },
+ *            "comments": [],
+ *            "favourites": 0,
+ *            "views": 0,
+ *            "tags": [],
+ *            "hidden": true,
+ *            "_id": "60b45bf802717a3e5c0490ee",
+ *            "userId": "608d5450ec00005468607a0c",
+ *            "title": "New Photo",
+ *            "description": "Check Out my Photo",
+ *            "EXIF": "{\"DocumentName\":{\"type\":\"Buffer\",\"data\":[]},\"ExposureTime\":0.000249,\"FNumber\":1.8,\"ExposureProgram\":2,\"ISO\":50,\"ExifVersion\":{\"type\":\"Buffer\",\"data\":[48,50,49,48]},\"DateTimeOriginal\":\"2018-07-13T18:50:43.000Z\",\"DateTimeDigitized\":\"2018-07-13T18:50:43.000Z\",\"ComponentsConfiguration\":{\"type\":\"Buffer\",\"data\":[1,2,3,0]},\"ShutterSpeedValue\":29.8973,\"ApertureValue\":1.69,\"BrightnessValue\":0,\"ExposureBiasValue\":0,\"MeteringMode\":5,\"LightSource\":1,\"Flash\":24,\"FocalLength\":3.95,\"MakerNote\":\"\",\"SubSecTime\":\"527769\",\"SubSecTimeOriginal\":\"527769\",\"SubSecTimeDigitized\":\"527769\",\"FlashpixVersion\":{\"type\":\"Buffer\",\"data\":[48,49,48,48]},\"ColorSpace\":1,\"PixelXDimension\":3648,\"PixelYDimension\":2736,\"InteropOffset\":8422,\"SensingMethod\":2,\"FileSource\":{\"type\":\"Buffer\",\"data\":[3]},\"SceneType\":{\"type\":\"Buffer\",\"data\":[1]},\"CustomRendered\":1,\"ExposureMode\":0,\"WhiteBalance\":0,\"DigitalZoomRatio\":1,\"FocalLengthIn35mmFormat\":27,\"SceneCaptureType\":0,\"GainControl\":0,\"Contrast\":0,\"Saturation\":0,\"Sharpness\":0,\"SubjectDistanceRange\":0}",
+ *            "dateTaken": "2018-07-13T18:50:43.000Z",
+ *            "dateUploaded": "2021-05-31T03:46:00.744Z",
+ *            "peopleTagged": [],
+ *            "__v": 0
+ *          },
+ *           "userPhotoList": {
+ *            "photos": [
+ *              "608d5450ec00005468607a0f",
+ *              "608d5450ec00005468617a0c",
+ *              "60b45bf802717a3e5c0490ee"
+ *            ],
+ *            "_id": "608d5450ec00005468607a0c"
+ *          }
+ *        }
+ *      }
  *
  * @apiUse UnauthError
  *
  */
-photoRouter.post('/');
+photoRouter.post(
+  '/',
+  authController.protect,
+  uploadController.uploadToFile,
+  uploadController.photoProcessor,
+  uploadController.uploadToCloud,
+  photoController.uploadPhoto
+);
 
 /**
  * @api {patch} /photo/:id/perm Change a Photo's Privacy and Visibility
@@ -139,11 +261,7 @@ photoRouter.patch('/:id/perm');
  * @apiUse PhotoNotFoundError
  *
  */
-photoRouter.patch(
-  '/:id/',
-  authController.protect,
-  photoController.editPhotoInformation
-);
+photoRouter.patch('/:id/');
 
 /**
  * @api {delete} /photo/:id Delete a User's Photo
@@ -184,93 +302,11 @@ photoRouter.get('/search', authController.protect, photoController.search);
  *          "status": "success",
  *          "data":
  *          {
- *            "sizes": {
- *             "size": {
- *             "original": {
- *                "height": 120,
- *                "width": 60,
- *                "source": "https://www.google.com/",
- *                "url": "https://www.google.com/"
- *              },
- *             "large": {
- *               "height": 190,
- *                "width": 20,
- *                "source": "https://www.google.com/",
- *                "url": "https://www.google.com/"
- *               },
- *             "medium800": {
- *               "height": 200,
- *               "width": 60,
- *               "source": "https://www.google.com/",
- *               "url": "https://www.google.com/"
- *               },
- *             "medium640": {
- *               "height": 1200,
- *               "width": 60,
- *               "source": "https://www.google.com/",
- *               "url": "https://www.google.com/"
- *               },
- *             "medium": {
- *               "height": 120,
- *               "width": 600,
- *               "source": "https://www.google.com/",
- *               "url": "https://www.google.com/"
- *               },
- *             "small320": {
- *               "height": 12,
- *               "width": 60,
- *               "source": "https://www.google.com/",
- *               "url": "https://www.google.com/"
- *               },
- *             "small": {
- *               "height": 1000,
- *               "width": 60,
- *               "source": "https://www.google.com/",
- *               "url": "https://www.google.com/"
- *               },
- *             "thumbnail": {
- *               "height": 50,
- *               "width": 50,
- *               "source": "https://www.google.com/",
- *               "url": "https://www.google.com/"
- *               },
- *             "largeSquare": {
- *               "height": 120,
- *               "width": 120,
- *               "source": "https://www.google.com/",
- *               "url": "https://www.google.com/"
- *               },
- *             "square": {
- *               "height": 60,
- *               "width": 60,
- *               "source": "https://www.google.com/",
- *               "url": "https://www.google.com/"
- *               }
- *           },
- *           "canDownload": false
- *           },
- *       "comments": [],
- *       "favourites": 7,
- *       "views": 21,
- *       "tags": [
- *       "#sunset"
- *       ],
- *       "userId": "608d55c7e512b74ee00791db",
- *       "title": "Some Title",
- *       "description": "Amazing shot",
- *       "dateUploaded": "2012-04-23T18:25:43.511Z",
- *      "dateTaken": "2013-04-23T18:25:43.511Z",
- *       "location": "608d5450ec00005468604a0c",
- *       "EXIF": "123erf",
- *       "contentType": "Screenshot",
- *       "peopleTagged": [
- *       {
- *           "_id": "609093af84b808271488fafd",
- *          "userId": "608d5450ec00005468604a0c",
- *           "tagDate": "2012-04-13T18:25:43.511Z"
- *       }
- *       ],
- *       "__v": 0
+ *              "permissions": {
+ *                0, 1, 1
+ *              }
+ *              "isfavourite : " 0,
+ *              "rotationAngle: " 90
  *          }
  *      }
  *
@@ -322,7 +358,7 @@ photoRouter.get('/:id/url');
  *
  * @apiParam {String} id The Photo's ID
  *
- * @apiParam (Request Body) {String} tag The New Tag Text to Add
+ * @apiParam (Request Body) {String} tags All Tags for the Photo
  *
  * @apiSuccess {string} Status Status of API
  *
@@ -345,7 +381,7 @@ photoRouter.patch('/:id/tags', authController.protect, photoController.setTags);
  *
  * @apiParam {String} id The Photo's ID
  *
- * @apiParam (Request Body) {String} tags The Tag Text to Add
+ * @apiParam (Request Body) {String} tags All Tags for the Photo
  *
  * @apiUse SuccessRes
  *
@@ -389,10 +425,12 @@ photoRouter.delete(
  *
  * @apiParam {String} id The Photo's ID 
  * 
- * @apiParam (Request Body) {Number} per_page Number of Galleries to return Per Page
+ * @apiParam (Request Body) {Number} galleriesperpage Number of Galleries to return Per Page
+ * @apiParam (Request Body) {Number} page The Page of Results to Return
+ * @apiParam (Request Body) {Number} perpage Number of Comments Per Page to Return
  * @apiParam (Request Body) {Number} page The Page Number to Return
  * 
- * @apiSuccess {Object[]} galleries Array of Gallery ID's Photo Belong to
+ * @apiSuccess {Object[]} gallerylist Array of Gallery ID's Photo Belong to
  * 
  * @apiSuccessExample Success-Response:
  *      HTTP/1.1 200 OK
@@ -400,7 +438,7 @@ photoRouter.delete(
  *          "status": "success",
  *          "data":
  *          {
-               "galleries": [
+               "gallerylist": [
  *
  *              ] 
  *          }
@@ -411,7 +449,7 @@ photoRouter.delete(
  * @apiUse PhotoNotFoundError
  * 
  */
-photoRouter.get('/:id/galleries', photoController.getGalleriesforPhoto);
+photoRouter.get('/:id/galleries');
 
 /**
  * @api {get} /photo/:id/contexts/all Gets all Visible Sets and Pools Photo Belongs to
@@ -613,7 +651,11 @@ photoRouter.get('/:id/perm');
  *
  * @apiParam {String} id The Photo's ID
  *
- * @apiSuccess {String[]} sizes Array of the Size
+ * @apiSuccess {String[]} nameofsize Array of The Labels for the Size
+ * @apiSuccess {Number[]} widths Array of the Widths of the Photo in Each Size
+ * @apiSuccess {Number[]} heigths Array of the Heights of the Photo in Each Size
+ * @apiSuccess {String[]} sizeurl Array of the URLs of the Photo in each Size
+ * @apiSuccess {String[]} sourceurl Array of the Source URLs
  *
  * @apiSuccessExample Success-Response:
  *      HTTP/1.1 200 OK
@@ -621,71 +663,7 @@ photoRouter.get('/:id/perm');
  *          "status": "success",
  *          "data":
  *          {
- *              "sizes": {
- *                  "size": {
- *                  "original": {
- *                   "height": 120,
- *                   "width": 60,
- *                   "source": "https://www.google.com/",
- *                   "url": "https://www.google.com/"
- *                  },
- *                 "large": {
- *                   "height": 190,
- *                   "width": 20,
- *                  "source": "https://www.google.com/",
- *                  "url": "https://www.google.com/"
- *                  },
- *                  "medium800": {
- *                  "height": 200,
- *                  "width": 60,
- *                  "source": "https://www.google.com/",
- *                  "url": "https://www.google.com/"
- *                  },
- *                  "medium640": {
- *                  "height": 1200,
- *                  "width": 60,
- *                  "source": "https://www.google.com/",
- *                   "url": "https://www.google.com/"
- *                   },
- *                   "medium": {
- *                   "height": 120,
- *                   "width": 600,
- *                  "source": "https://www.google.com/",
- *                   "url": "https://www.google.com/"
- *                   },
- *                   "small320": {
- *                   "height": 12,
- *                   "width": 60,
- *                   "source": "https://www.google.com/",
- *                   "url": "https://www.google.com/"
- *                   },
- *                   "small": {
- *                   "height": 1000,
- *                   "width": 60,
- *                   "source": "https://www.google.com/",
- *                   "url": "https://www.google.com/"
- *                   },
- *                   "thumbnail": {
- *                   "height": 50,
- *                   "width": 50,
- *                   "source": "https://www.google.com/",
- *                   "url": "https://www.google.com/"
- *                   },
- *                   "largeSquare": {
- *                   "height": 120,
- *                   "width": 120,
- *                   "source": "https://www.google.com/",
- *                   "url": "https://www.google.com/"
- *                   },
- *                   "square": {
- *                   "height": 60,
- *                   "width": 60,
- *                   "source": "https://www.google.com/",
- *                   "url": "https://www.google.com/"
- *                   }
- *               },
- *               "canDownload": false
- *               }
+ *
  *          }
  *      }
  *
@@ -801,8 +779,7 @@ photoRouter.patch('/:id/safety-level');
  *
  * @apiHeader {string} Token Authenticaton Token
  *
- * @apiParam (Request Body) {String} body The Text in the Comment
- * @apiParam (Request Body) {String} userId The ID of the Commenting User
+ * @apiParam (Request Body) {String} commenttext The Text in the Comment
  *
  * @apiUse SuccessRes
  *
@@ -851,7 +828,7 @@ photoRouter.delete(
  *
  * @apiHeader {string} Token Authenticaton Token
  *
- * @apiParam (Request Body) {String} body The New Comment Text
+ * @apiParam (Request Body) {String} id The New Comment Text
  *
  * @apiSuccess {string} Status Status of API
  *
