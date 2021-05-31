@@ -382,7 +382,17 @@ userRouter.get('/recent-update');
  *
  */
 
-userRouter.get('/:id/galleries');
+userRouter.get('/:id/galleries', userController.getRequestedUserGalleries);
+
+/**
+ *
+ */
+
+userRouter.get(
+  '/galleries',
+  authController.protect,
+  userController.getGalleries
+);
 
 /**
  *
@@ -429,7 +439,13 @@ userRouter.get(
  *
  */
 
-userRouter.get('/:id/albums');
+userRouter.get('/:id/albums', userController.getRequestedUserAlbums);
+
+/**
+ *
+ */
+
+userRouter.get('/albums', authController.protect, userController.getAlbums);
 
 /**
  * @api {get} /user/:id/showcase Return User defined image showcase

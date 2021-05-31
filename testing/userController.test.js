@@ -785,3 +785,83 @@ describe('should get popular Photos of the requested user', () => {
     expect(mRes.json).toBeCalledWith(userTestData.getPopularPhotos);
   });
 });
+
+// TESTING: getRequestedUserAlbums
+describe('should get albums of the requested user', () => {
+  test('should get albums of Nadin Magdy', async () => {
+    const mReq = {
+      params: { id: '608d55c7e512b74ee00791de' },
+      body: {
+        per_page: 100,
+        page: 1,
+      },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await userController.getRequestedUserAlbums(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(userTestData.getAlbums);
+  });
+});
+
+// TESTING: getRequestedUserGalleries
+describe('should get galleries of the requested user', () => {
+  test('should get galleries of Nadin Magdy', async () => {
+    const mReq = {
+      params: { id: '608d55c7e512b74ee00791de' },
+      body: {
+        per_page: 100,
+        page: 1,
+      },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await userController.getRequestedUserGalleries(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(userTestData.getGalleries);
+  });
+});
+
+// TESTING: getGalleries
+describe('should get galleries of the calling user', () => {
+  test('should get galleries of Nadin Magdy', async () => {
+    const mReq = {
+      user: { id: '608d55c7e512b74ee00791de' },
+      body: {
+        per_page: 100,
+        page: 1,
+      },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await userController.getGalleries(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(userTestData.getGalleries);
+  });
+});
+
+// TESTING: getAlbums
+describe('should get albums of the calling user', () => {
+  test('should get albums of Nadin Magdy', async () => {
+    const mReq = {
+      user: { id: '608d55c7e512b74ee00791de' },
+      body: {
+        per_page: 100,
+        page: 1,
+      },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await userController.getAlbums(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(userTestData.getAlbums);
+  });
+});
