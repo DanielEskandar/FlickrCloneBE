@@ -763,14 +763,14 @@ exports.search = async (req, res) => {
     // Remove duplicates
     searchResults = _.uniq(JSON.parse(JSON.stringify(searchResults)), '_id');
 
+    // Sorting
+    const sort = req.query.sort || 'dateUploaded';
+    searchResults = _.sortBy(searchResults, sort).reverse();
+
     // Pagination
     const page = req.query.page * 1 || 1;
     const limit = req.query.limit * 1 || 100;
     searchResults = APIFeatures.paginate(searchResults, page, limit);
-
-    // Sorting
-    const sort = req.query.sort || 'dateUploaded';
-    searchResults = _.sortBy(searchResults, sort).reverse();
 
     res.status(200).json({
       status: 'success',

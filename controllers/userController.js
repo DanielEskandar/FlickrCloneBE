@@ -677,13 +677,13 @@ exports.search = async (req, res) => {
         );
       });
 
+      // SORTING
+      results = _.sortBy(results, 'firstName');
+
       // Pagination
       const page = req.query.page * 1 || 1;
       const limit = req.query.limit * 1 || 100;
       results = APIFeatures.paginate(results, page, limit);
-
-      // SORTING
-      results = _.sortBy(results, 'firstName');
     }
 
     res.status(200).json({

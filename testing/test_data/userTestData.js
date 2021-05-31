@@ -915,10 +915,10 @@ module.exports.searchData3 = {
       displayName: 'dummy4',
     },
     {
-      _id: '60b1619d62e64a359ccb4a62',
-      firstName: 'search1',
-      lastName: 'dummy1',
-      displayName: 'dummy2',
+      _id: '60b1619d62e64a359ccb4a64',
+      firstName: 'dummy5',
+      lastName: 'dummy6',
+      displayName: 'search1',
     },
   ],
 };
@@ -927,10 +927,10 @@ module.exports.searchData4 = {
   status: 'success',
   data: [
     {
-      _id: '60b1619d62e64a359ccb4a64',
-      firstName: 'dummy5',
-      lastName: 'dummy6',
-      displayName: 'search1',
+      _id: '60b1619d62e64a359ccb4a62',
+      firstName: 'search1',
+      lastName: 'dummy1',
+      displayName: 'dummy2',
     },
   ],
 };
