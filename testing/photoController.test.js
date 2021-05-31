@@ -490,3 +490,83 @@ describe('Should record the data of an uploaded photo', () => {
     expect(mRes.json).toBeCalledWith(photoTestData.uploadResData);
   });
 });
+
+// TESTING: search
+describe('should search photos and send response correctly', () => {
+  test('should search all photos whose title, description or tags is photo1', async () => {
+    const mReq = { query: { searchText: 'photo1' } };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await photoController.search(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(photoTestData.searchData1);
+  });
+
+  test('should send page 2 of size 1 of all photos whose title, description or tags is photo1', async () => {
+    const mReq = { query: { searchText: 'photo1', page: 2, limit: 1 } };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await photoController.search(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(photoTestData.searchData2);
+  });
+
+  test('should search all photos whose title, description or tags is photo2', async () => {
+    const mReq = { query: { searchText: 'photo2' } };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await photoController.search(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(photoTestData.searchData3);
+  });
+
+  test('should search all photos whose title, description or tags is photo1 photo2', async () => {
+    const mReq = { query: { searchText: 'photo1 photo2' } };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await photoController.search(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(photoTestData.searchData4);
+  });
+
+  test('should search all photos whose title, description or tags is photo1 photo2 with sorting on dateTaken', async () => {
+    const mReq = { query: { searchText: 'photo1 photo2', sort: 'dateTaken' } };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await photoController.search(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(photoTestData.searchData5);
+  });
+
+  test('should search all photos whose title, description or tags is photo3 photo4', async () => {
+    const mReq = { query: { searchText: 'photo3 photo4' } };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await photoController.search(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(photoTestData.searchData6);
+  });
+
+  test('should search all photos whose title, description or tags is photo4', async () => {
+    const mReq = { query: { searchText: 'photo4' } };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await photoController.search(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(photoTestData.searchData7);
+  });
+});

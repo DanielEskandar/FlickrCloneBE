@@ -1669,13 +1669,17 @@ userRouter.get('/notif/follow');
  *            "_id": "60b1619d62e64a359ccb4a63",
  *            "firstName": "dummy3",
  *            "lastName": "search1",
- *            "displayName": "dummy4"
+ *            "displayName": "dummy4",
+ *            "photoCount": 0,
+ *            "followerCount": 0
  *          },
  *          {
- *            "_id": "60b1619d62e64a359ccb4a62",
- *            "firstName": "search1",
- *            "lastName": "dummy1",
- *            "displayName": "dummy2"
+ *            "_id": "60b1619d62e64a359ccb4a64",
+ *            "firstName": "dummy5",
+ *            "lastName": "dummy6",
+ *            "displayName": "search1",
+ *            "photoCount": 0,
+ *            "followerCount": 0
  *          }
  *        ]
  *      }
@@ -1683,7 +1687,7 @@ userRouter.get('/notif/follow');
  * @apiUse ServerError
  */
 
-userRouter.get('/search', userController.search);
+userRouter.get('/search', authController.protect, userController.search);
 
 /**
  * @api {get} /user/:id Get the User's Information

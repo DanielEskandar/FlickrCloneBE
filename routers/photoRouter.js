@@ -283,6 +283,194 @@ photoRouter.patch('/:id/');
 photoRouter.delete('/:id/');
 
 /**
+ * @api {get} /photo/search Search for a Photo on the Database
+ * @apiVersion 1.0.0
+ * @apiName searchPhoto
+ * @apiGroup Photo
+ *
+ * @apiParam (URL Query) {string} searchText Text used to search the database
+ * @apiParam (URL Query) {number} limit Number of results per page
+ * @apiParam (URL Query) {number} page Page Selected for Paginated request
+ *
+ * @apiExample {curl} Example usage:
+ *        /photo/search?searchText=search1&limit=2&page=1
+ *
+ * @apiSuccess {Object[]} Results Results of the Photo Search
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *      HTTP/1.1 200 OK
+ *				{
+ *					"status": "success",
+ *				  "data": [
+ *					{
+ *					  "_id": "60b3d288f257642aac48eb4e",
+ *					  "sizes": {
+ *						"size": {
+ *						  "original": {
+ *							"height": 120,
+ *							"width": 60,
+ *							"source": "https://www.google.com/",
+ *							"url": "https://www.google.com/"
+ *						  },
+ *						  "large": {
+ *							"height": 190,
+ *							"width": 20,
+ *							"source": "https://www.google.com/",
+ *							"url": "https://www.google.com/"
+ *						  },
+ *						  "medium800": {
+ *							"height": 200,
+ *							"width": 60,
+ *							"source": "https://www.google.com/",
+ *							"url": "https://www.google.com/"
+ *						  },
+ *						  "medium640": {
+ *							"height": 1200,
+ *							"width": 60,
+ *							"source": "https://www.google.com/",
+ *							"url": "https://www.google.com/"
+ *						  },
+ *						  "medium": {
+ *							"height": 120,
+ *							"width": 600,
+ *							"source": "https://www.google.com/",
+ *							"url": "https://www.google.com/"
+ *						  },
+ *						  "small320": {
+ *							"height": 12,
+ *							"width": 60,
+ *							"source": "https://www.google.com/",
+ *							"url": "https://www.google.com/"
+ *						  },
+ *						  "small": {
+ *							"height": 1000,
+ *							"width": 60,
+ *							"source": "https://www.google.com/",
+ *							"url": "https://www.google.com/"
+ *						  },
+ *						  "thumbnail": {
+ *							"height": 50,
+ *							"width": 50,
+ *							"source": "https://www.google.com/",
+ *							"url": "https://www.google.com/"
+ *						  },
+ *						  "largeSquare": {
+ *							"height": 120,
+ *							"width": 120,
+ *							"source": "https://www.google.com/",
+ *							"url": "https://www.google.com/"
+ *						  },
+ *						  "square": {
+ *							"height": 100,
+ *							"width": 100,
+ *							"source": "https://www.google.com/",
+ *							"url": "https://www.google.com/"
+ *						  }
+ *						},
+ *						"canDownload": false
+ *					  },
+ *					  "favourites": 38,
+ *					  "dateUploaded": "2012-04-23T18:25:43.511Z",
+ *					  "dateTaken": "2013-04-23T18:25:43.511Z",
+ *					  "userId": {
+ *						"pro": false,
+ *						"_id": "60b3d0ae25109d5840208165",
+ *						"firstName": "Photo Owner 2 First Name",
+ *						"lastName": "Photo Owner 2 Last Name"
+ *					  },
+ *					  "title": "dummy",
+ *					  "description": "dummy",
+ *					  "comments": 0
+ *					},
+ *					{
+ *					  "_id": "60b3d288f257642aac48eb4d",
+ *					  "sizes": {
+ *						"size": {
+ *						  "original": {
+ *							"height": 120,
+ *							"width": 60,
+ *							"source": "https://www.google.com/",
+ *							"url": "https://www.google.com/"
+ *						  },
+ *						  "large": {
+ *							"height": 190,
+ *							"width": 20,
+ *							"source": "https://www.google.com/",
+ *							"url": "https://www.google.com/"
+ *						  },
+ *						  "medium800": {
+ *							"height": 200,
+ *							"width": 60,
+ *							"source": "https://www.google.com/",
+ *							"url": "https://www.google.com/"
+ *						  },
+ *						  "medium640": {
+ *							"height": 1200,
+ *							"width": 60,
+ *							"source": "https://www.google.com/",
+ *							"url": "https://www.google.com/"
+ *						  },
+ *						  "medium": {
+ *							"height": 120,
+ *							"width": 600,
+ *							"source": "https://www.google.com/",
+ *							"url": "https://www.google.com/"
+ *						  },
+ *						  "small320": {
+ *							"height": 12,
+ *							"width": 60,
+ *							"source": "https://www.google.com/",
+ *							"url": "https://www.google.com/"
+ *						  },
+ *						  "small": {
+ *							"height": 1000,
+ *							"width": 60,
+ *							"source": "https://www.google.com/",
+ *							"url": "https://www.google.com/"
+ *						  },
+ *						  "thumbnail": {
+ *							"height": 50,
+ *							"width": 50,
+ *							"source": "https://www.google.com/",
+ *							"url": "https://www.google.com/"
+ *						  },
+ *						  "largeSquare": {
+ *							"height": 120,
+ *							"width": 120,
+ *							"source": "https://www.google.com/",
+ *							"url": "https://www.google.com/"
+ *						  },
+ *						  "square": {
+ *							"height": 100,
+ *							"width": 100,
+ *							"source": "https://www.google.com/",
+ *							"url": "https://www.google.com/"
+ *						  }
+ *						},
+ *						"canDownload": false
+ *					  },
+ *					  "favourites": 22,
+ *					  "dateUploaded": "2012-04-23T18:25:43.511Z",
+ *					  "dateTaken": "2013-04-23T18:25:43.511Z",
+ *					  "userId": {
+ *						"pro": false,
+ *						"_id": "60b3d0ae25109d5840208164",
+ *						"firstName": "Photo Owner 1 First Name",
+ *						"lastName": "Photo Owner 1 Last Name"
+ *					  },
+ *					  "title": "photo4",
+ *					  "description": "dummy",
+ *					  "comments": 0
+ *					}
+ *				  ]
+ *				}
+ *
+ * @apiUse ServerError
+ */
+
+photoRouter.get('/search', authController.protect, photoController.search);
+
+/**
  * @api {get} /photo/:id Get Display Details for a Photo
  * @apiVersion 1.0.0
  * @apiName GetInformation
@@ -324,25 +512,25 @@ photoRouter.get('/:id', photoController.getInformation);
  * @apiHeader {String} Token Authenticaton Token
  *
  * @apiParam {String} id The Photo's ID
- * 
+ *
  * @apiParam (Request Body) {String} size All The Current Photo Size
- * 
+ *
  * @apiSuccess {string} photourl The Photo's URL for the Chosen Size
- * 
+ *
  * @apiSuccessExample Success-Response:
  *      HTTP/1.1 200 OK
  *      {
  *          "status": "success",
  *          "data":
  *          {
-                "photourl: " 
+ *               "photourl":
  *          }
  *      }
  *
  * @apiUse UnauthError
  * @apiUse ForbiddenError
  * @apiUse PhotoNotFoundError
- * 
+ *
  */
 photoRouter.get('/:id/url');
 
