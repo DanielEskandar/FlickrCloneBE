@@ -252,7 +252,7 @@ userRouter.delete('/');
  * @apiUse UserNotFoundError
  */
 
-userRouter.get('/:id/stats');
+userRouter.get('/:id/stats', userController.getStats);
 
 /**
  *
