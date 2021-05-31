@@ -2163,3 +2163,1508 @@ module.exports.getPopularPhotos = {
     },
   },
 };
+
+module.exports.getAlbums = {
+  status: 'success',
+  data: {
+    albums: [
+      {
+        photos: [
+          {
+            sizes: {
+              size: {
+                original: {
+                  height: 120,
+                  width: 60,
+                  source: 'https://www.google.com/',
+                  url: 'https://www.google.com/',
+                },
+                large: {
+                  height: 190,
+                  width: 20,
+                  source: 'https://www.google.com/',
+                  url: 'https://www.google.com/',
+                },
+                medium800: {
+                  height: 200,
+                  width: 60,
+                  source: 'https://www.google.com/',
+                  url: 'https://www.google.com/',
+                },
+                medium640: {
+                  height: 1200,
+                  width: 60,
+                  source: 'https://www.google.com/',
+                  url: 'https://www.google.com/',
+                },
+                medium: {
+                  height: 120,
+                  width: 600,
+                  source: 'https://www.google.com/',
+                  url: 'https://www.google.com/',
+                },
+                small320: {
+                  height: 12,
+                  width: 60,
+                  source: 'https://www.google.com/',
+                  url: 'https://www.google.com/',
+                },
+                small: {
+                  height: 1000,
+                  width: 60,
+                  source: 'https://www.google.com/',
+                  url: 'https://www.google.com/',
+                },
+                thumbnail: {
+                  height: 50,
+                  width: 50,
+                  source: 'https://www.google.com/',
+                  url: 'https://www.google.com/',
+                },
+                largeSquare: {
+                  height: 120,
+                  width: 120,
+                  source: 'https://www.google.com/',
+                  url: 'https://www.google.com/',
+                },
+                square: {
+                  height: 60,
+                  width: 60,
+                  source: 'https://www.google.com/',
+                  url: 'https://www.google.com/',
+                },
+              },
+              canDownload: true,
+            },
+            _id: '608d5450ec00005468617a0c',
+          },
+          {
+            sizes: {
+              size: {
+                original: {
+                  height: 120,
+                  width: 60,
+                  source: 'https://www.google.com/',
+                  url: 'https://www.google.com/',
+                },
+                large: {
+                  height: 190,
+                  width: 20,
+                  source: 'https://www.google.com/',
+                  url: 'https://www.google.com/',
+                },
+                medium800: {
+                  height: 200,
+                  width: 60,
+                  source: 'https://www.google.com/',
+                  url: 'https://www.google.com/',
+                },
+                medium640: {
+                  height: 1200,
+                  width: 60,
+                  source: 'https://www.google.com/',
+                  url: 'https://www.google.com/',
+                },
+                medium: {
+                  height: 120,
+                  width: 600,
+                  source: 'https://www.google.com/',
+                  url: 'https://www.google.com/',
+                },
+                small320: {
+                  height: 12,
+                  width: 60,
+                  source: 'https://www.google.com/',
+                  url: 'https://www.google.com/',
+                },
+                small: {
+                  height: 1000,
+                  width: 60,
+                  source: 'https://www.google.com/',
+                  url: 'https://www.google.com/',
+                },
+                thumbnail: {
+                  height: 50,
+                  width: 50,
+                  source: 'https://www.google.com/',
+                  url: 'https://www.google.com/',
+                },
+                largeSquare: {
+                  height: 120,
+                  width: 120,
+                  source: 'https://www.google.com/',
+                  url: 'https://www.google.com/',
+                },
+                square: {
+                  height: 60,
+                  width: 60,
+                  source: 'https://www.google.com/',
+                  url: 'https://www.google.com/',
+                },
+              },
+              canDownload: false,
+            },
+            _id: '608d5450ec00005468607a0f',
+          },
+          {
+            sizes: {
+              size: {
+                original: {
+                  height: 120,
+                  width: 60,
+                  source: 'https://www.google.com/',
+                  url: 'https://www.google.com/',
+                },
+                large: {
+                  height: 190,
+                  width: 20,
+                  source: 'https://www.google.com/',
+                  url: 'https://www.google.com/',
+                },
+                medium800: {
+                  height: 200,
+                  width: 60,
+                  source: 'https://www.google.com/',
+                  url: 'https://www.google.com/',
+                },
+                medium640: {
+                  height: 1200,
+                  width: 60,
+                  source: 'https://www.google.com/',
+                  url: 'https://www.google.com/',
+                },
+                medium: {
+                  height: 120,
+                  width: 600,
+                  source: 'https://www.google.com/',
+                  url: 'https://www.google.com/',
+                },
+                small320: {
+                  height: 12,
+                  width: 60,
+                  source: 'https://www.google.com/',
+                  url: 'https://www.google.com/',
+                },
+                small: {
+                  height: 1000,
+                  width: 60,
+                  source: 'https://www.google.com/',
+                  url: 'https://www.google.com/',
+                },
+                thumbnail: {
+                  height: 50,
+                  width: 50,
+                  source: 'https://www.google.com/',
+                  url: 'https://www.google.com/',
+                },
+                largeSquare: {
+                  height: 120,
+                  width: 120,
+                  source: 'https://www.google.com/',
+                  url: 'https://www.google.com/',
+                },
+                square: {
+                  height: 60,
+                  width: 60,
+                  source: 'https://www.google.com/',
+                  url: 'https://www.google.com/',
+                },
+              },
+              canDownload: true,
+            },
+            _id: '608d5450ec00005468628a0d',
+          },
+        ],
+        _id: '812f3c70197abc18509aec61',
+        albumName: 'Test1',
+        primaryPhotoId: {
+          sizes: {
+            size: {
+              original: {
+                height: 120,
+                width: 60,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              large: {
+                height: 190,
+                width: 20,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              medium800: {
+                height: 200,
+                width: 60,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              medium640: {
+                height: 1200,
+                width: 60,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              medium: {
+                height: 120,
+                width: 600,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              small320: {
+                height: 12,
+                width: 60,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              small: {
+                height: 1000,
+                width: 60,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              thumbnail: {
+                height: 50,
+                width: 50,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              largeSquare: {
+                height: 120,
+                width: 120,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              square: {
+                height: 60,
+                width: 60,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+            },
+            canDownload: false,
+          },
+          _id: '608d5450ec00005468607a0f',
+        },
+      },
+      {
+        photos: [
+          {
+            sizes: {
+              size: {
+                original: {
+                  height: 120,
+                  width: 60,
+                  source: 'https://www.google.com/',
+                  url: 'https://www.google.com/',
+                },
+                large: {
+                  height: 190,
+                  width: 20,
+                  source: 'https://www.google.com/',
+                  url: 'https://www.google.com/',
+                },
+                medium800: {
+                  height: 200,
+                  width: 60,
+                  source: 'https://www.google.com/',
+                  url: 'https://www.google.com/',
+                },
+                medium640: {
+                  height: 1200,
+                  width: 60,
+                  source: 'https://www.google.com/',
+                  url: 'https://www.google.com/',
+                },
+                medium: {
+                  height: 120,
+                  width: 600,
+                  source: 'https://www.google.com/',
+                  url: 'https://www.google.com/',
+                },
+                small320: {
+                  height: 12,
+                  width: 60,
+                  source: 'https://www.google.com/',
+                  url: 'https://www.google.com/',
+                },
+                small: {
+                  height: 1000,
+                  width: 60,
+                  source: 'https://www.google.com/',
+                  url: 'https://www.google.com/',
+                },
+                thumbnail: {
+                  height: 50,
+                  width: 50,
+                  source: 'https://www.google.com/',
+                  url: 'https://www.google.com/',
+                },
+                largeSquare: {
+                  height: 120,
+                  width: 120,
+                  source: 'https://www.google.com/',
+                  url: 'https://www.google.com/',
+                },
+                square: {
+                  height: 60,
+                  width: 60,
+                  source: 'https://www.google.com/',
+                  url: 'https://www.google.com/',
+                },
+              },
+              canDownload: true,
+            },
+            _id: '608d5450ec00005468617a0c',
+          },
+          {
+            sizes: {
+              size: {
+                original: {
+                  height: 120,
+                  width: 60,
+                  source: 'https://www.google.com/',
+                  url: 'https://www.google.com/',
+                },
+                large: {
+                  height: 190,
+                  width: 20,
+                  source: 'https://www.google.com/',
+                  url: 'https://www.google.com/',
+                },
+                medium800: {
+                  height: 200,
+                  width: 60,
+                  source: 'https://www.google.com/',
+                  url: 'https://www.google.com/',
+                },
+                medium640: {
+                  height: 1200,
+                  width: 60,
+                  source: 'https://www.google.com/',
+                  url: 'https://www.google.com/',
+                },
+                medium: {
+                  height: 120,
+                  width: 600,
+                  source: 'https://www.google.com/',
+                  url: 'https://www.google.com/',
+                },
+                small320: {
+                  height: 12,
+                  width: 60,
+                  source: 'https://www.google.com/',
+                  url: 'https://www.google.com/',
+                },
+                small: {
+                  height: 1000,
+                  width: 60,
+                  source: 'https://www.google.com/',
+                  url: 'https://www.google.com/',
+                },
+                thumbnail: {
+                  height: 50,
+                  width: 50,
+                  source: 'https://www.google.com/',
+                  url: 'https://www.google.com/',
+                },
+                largeSquare: {
+                  height: 120,
+                  width: 120,
+                  source: 'https://www.google.com/',
+                  url: 'https://www.google.com/',
+                },
+                square: {
+                  height: 60,
+                  width: 60,
+                  source: 'https://www.google.com/',
+                  url: 'https://www.google.com/',
+                },
+              },
+              canDownload: false,
+            },
+            _id: '608d5450ec00005468607a0f',
+          },
+          {
+            sizes: {
+              size: {
+                original: {
+                  height: 120,
+                  width: 60,
+                  source: 'https://www.google.com/',
+                  url: 'https://www.google.com/',
+                },
+                large: {
+                  height: 190,
+                  width: 20,
+                  source: 'https://www.google.com/',
+                  url: 'https://www.google.com/',
+                },
+                medium800: {
+                  height: 200,
+                  width: 60,
+                  source: 'https://www.google.com/',
+                  url: 'https://www.google.com/',
+                },
+                medium640: {
+                  height: 1200,
+                  width: 60,
+                  source: 'https://www.google.com/',
+                  url: 'https://www.google.com/',
+                },
+                medium: {
+                  height: 120,
+                  width: 600,
+                  source: 'https://www.google.com/',
+                  url: 'https://www.google.com/',
+                },
+                small320: {
+                  height: 12,
+                  width: 60,
+                  source: 'https://www.google.com/',
+                  url: 'https://www.google.com/',
+                },
+                small: {
+                  height: 1000,
+                  width: 60,
+                  source: 'https://www.google.com/',
+                  url: 'https://www.google.com/',
+                },
+                thumbnail: {
+                  height: 50,
+                  width: 50,
+                  source: 'https://www.google.com/',
+                  url: 'https://www.google.com/',
+                },
+                largeSquare: {
+                  height: 120,
+                  width: 120,
+                  source: 'https://www.google.com/',
+                  url: 'https://www.google.com/',
+                },
+                square: {
+                  height: 60,
+                  width: 60,
+                  source: 'https://www.google.com/',
+                  url: 'https://www.google.com/',
+                },
+              },
+              canDownload: true,
+            },
+            _id: '608d5450ec00005468628a0d',
+          },
+        ],
+        _id: '811f3c70197abc18509aec5f',
+        albumName: 'Test2',
+        primaryPhotoId: {
+          sizes: {
+            size: {
+              original: {
+                height: 120,
+                width: 60,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              large: {
+                height: 190,
+                width: 20,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              medium800: {
+                height: 200,
+                width: 60,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              medium640: {
+                height: 1200,
+                width: 60,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              medium: {
+                height: 120,
+                width: 600,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              small320: {
+                height: 12,
+                width: 60,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              small: {
+                height: 1000,
+                width: 60,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              thumbnail: {
+                height: 50,
+                width: 50,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              largeSquare: {
+                height: 120,
+                width: 120,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              square: {
+                height: 60,
+                width: 60,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+            },
+            canDownload: false,
+          },
+          _id: '608d5450ec00005468607a0f',
+        },
+      },
+      {
+        photos: [
+          {
+            sizes: {
+              size: {
+                original: {
+                  height: 120,
+                  width: 60,
+                  source: 'https://www.google.com/',
+                  url: 'https://www.google.com/',
+                },
+                large: {
+                  height: 190,
+                  width: 20,
+                  source: 'https://www.google.com/',
+                  url: 'https://www.google.com/',
+                },
+                medium800: {
+                  height: 200,
+                  width: 60,
+                  source: 'https://www.google.com/',
+                  url: 'https://www.google.com/',
+                },
+                medium640: {
+                  height: 1200,
+                  width: 60,
+                  source: 'https://www.google.com/',
+                  url: 'https://www.google.com/',
+                },
+                medium: {
+                  height: 120,
+                  width: 600,
+                  source: 'https://www.google.com/',
+                  url: 'https://www.google.com/',
+                },
+                small320: {
+                  height: 12,
+                  width: 60,
+                  source: 'https://www.google.com/',
+                  url: 'https://www.google.com/',
+                },
+                small: {
+                  height: 1000,
+                  width: 60,
+                  source: 'https://www.google.com/',
+                  url: 'https://www.google.com/',
+                },
+                thumbnail: {
+                  height: 50,
+                  width: 50,
+                  source: 'https://www.google.com/',
+                  url: 'https://www.google.com/',
+                },
+                largeSquare: {
+                  height: 120,
+                  width: 120,
+                  source: 'https://www.google.com/',
+                  url: 'https://www.google.com/',
+                },
+                square: {
+                  height: 60,
+                  width: 60,
+                  source: 'https://www.google.com/',
+                  url: 'https://www.google.com/',
+                },
+              },
+              canDownload: true,
+            },
+            _id: '608d5450ec00005468617a0c',
+          },
+          {
+            sizes: {
+              size: {
+                original: {
+                  height: 120,
+                  width: 60,
+                  source: 'https://www.google.com/',
+                  url: 'https://www.google.com/',
+                },
+                large: {
+                  height: 190,
+                  width: 20,
+                  source: 'https://www.google.com/',
+                  url: 'https://www.google.com/',
+                },
+                medium800: {
+                  height: 200,
+                  width: 60,
+                  source: 'https://www.google.com/',
+                  url: 'https://www.google.com/',
+                },
+                medium640: {
+                  height: 1200,
+                  width: 60,
+                  source: 'https://www.google.com/',
+                  url: 'https://www.google.com/',
+                },
+                medium: {
+                  height: 120,
+                  width: 600,
+                  source: 'https://www.google.com/',
+                  url: 'https://www.google.com/',
+                },
+                small320: {
+                  height: 12,
+                  width: 60,
+                  source: 'https://www.google.com/',
+                  url: 'https://www.google.com/',
+                },
+                small: {
+                  height: 1000,
+                  width: 60,
+                  source: 'https://www.google.com/',
+                  url: 'https://www.google.com/',
+                },
+                thumbnail: {
+                  height: 50,
+                  width: 50,
+                  source: 'https://www.google.com/',
+                  url: 'https://www.google.com/',
+                },
+                largeSquare: {
+                  height: 120,
+                  width: 120,
+                  source: 'https://www.google.com/',
+                  url: 'https://www.google.com/',
+                },
+                square: {
+                  height: 60,
+                  width: 60,
+                  source: 'https://www.google.com/',
+                  url: 'https://www.google.com/',
+                },
+              },
+              canDownload: false,
+            },
+            _id: '608d5450ec00005468607a0f',
+          },
+          {
+            sizes: {
+              size: {
+                original: {
+                  height: 120,
+                  width: 60,
+                  source: 'https://www.google.com/',
+                  url: 'https://www.google.com/',
+                },
+                large: {
+                  height: 190,
+                  width: 20,
+                  source: 'https://www.google.com/',
+                  url: 'https://www.google.com/',
+                },
+                medium800: {
+                  height: 200,
+                  width: 60,
+                  source: 'https://www.google.com/',
+                  url: 'https://www.google.com/',
+                },
+                medium640: {
+                  height: 1200,
+                  width: 60,
+                  source: 'https://www.google.com/',
+                  url: 'https://www.google.com/',
+                },
+                medium: {
+                  height: 120,
+                  width: 600,
+                  source: 'https://www.google.com/',
+                  url: 'https://www.google.com/',
+                },
+                small320: {
+                  height: 12,
+                  width: 60,
+                  source: 'https://www.google.com/',
+                  url: 'https://www.google.com/',
+                },
+                small: {
+                  height: 1000,
+                  width: 60,
+                  source: 'https://www.google.com/',
+                  url: 'https://www.google.com/',
+                },
+                thumbnail: {
+                  height: 50,
+                  width: 50,
+                  source: 'https://www.google.com/',
+                  url: 'https://www.google.com/',
+                },
+                largeSquare: {
+                  height: 120,
+                  width: 120,
+                  source: 'https://www.google.com/',
+                  url: 'https://www.google.com/',
+                },
+                square: {
+                  height: 60,
+                  width: 60,
+                  source: 'https://www.google.com/',
+                  url: 'https://www.google.com/',
+                },
+              },
+              canDownload: true,
+            },
+            _id: '608d5450ec00005468628a0d',
+          },
+        ],
+        _id: '810f3c70197abc18509aec60',
+        albumName: 'Test3',
+        primaryPhotoId: {
+          sizes: {
+            size: {
+              original: {
+                height: 120,
+                width: 60,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              large: {
+                height: 190,
+                width: 20,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              medium800: {
+                height: 200,
+                width: 60,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              medium640: {
+                height: 1200,
+                width: 60,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              medium: {
+                height: 120,
+                width: 600,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              small320: {
+                height: 12,
+                width: 60,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              small: {
+                height: 1000,
+                width: 60,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              thumbnail: {
+                height: 50,
+                width: 50,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              largeSquare: {
+                height: 120,
+                width: 120,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              square: {
+                height: 60,
+                width: 60,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+            },
+            canDownload: false,
+          },
+          _id: '608d5450ec00005468607a0f',
+        },
+      },
+    ],
+    _id: '608d55c7e512b74ee00791de',
+  },
+};
+module.exports.getGalleries = {
+  status: 'success',
+  data: {
+    gallery: [
+      {
+        _id: '912f34a634413f11f020b127',
+        galleryName: 'Test3',
+        primaryPhotoId: {
+          sizes: {
+            size: {
+              original: {
+                height: 120,
+                width: 60,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              large: {
+                height: 190,
+                width: 20,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              medium800: {
+                height: 200,
+                width: 60,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              medium640: {
+                height: 1200,
+                width: 60,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              medium: {
+                height: 120,
+                width: 600,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              small320: {
+                height: 12,
+                width: 60,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              small: {
+                height: 1000,
+                width: 60,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              thumbnail: {
+                height: 50,
+                width: 50,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              largeSquare: {
+                height: 120,
+                width: 120,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              square: {
+                height: 60,
+                width: 60,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+            },
+            canDownload: false,
+          },
+          _id: '604d5450ec00005468617a0c',
+        },
+        photos: [
+          {
+            _id: '608f34a634413f11f020b128',
+            photoId: {
+              sizes: {
+                size: {
+                  original: {
+                    height: 120,
+                    width: 60,
+                    source: 'https://www.google.com/',
+                    url: 'https://www.google.com/',
+                  },
+                  large: {
+                    height: 190,
+                    width: 20,
+                    source: 'https://www.google.com/',
+                    url: 'https://www.google.com/',
+                  },
+                  medium800: {
+                    height: 200,
+                    width: 60,
+                    source: 'https://www.google.com/',
+                    url: 'https://www.google.com/',
+                  },
+                  medium640: {
+                    height: 1200,
+                    width: 60,
+                    source: 'https://www.google.com/',
+                    url: 'https://www.google.com/',
+                  },
+                  medium: {
+                    height: 120,
+                    width: 600,
+                    source: 'https://www.google.com/',
+                    url: 'https://www.google.com/',
+                  },
+                  small320: {
+                    height: 12,
+                    width: 60,
+                    source: 'https://www.google.com/',
+                    url: 'https://www.google.com/',
+                  },
+                  small: {
+                    height: 1000,
+                    width: 60,
+                    source: 'https://www.google.com/',
+                    url: 'https://www.google.com/',
+                  },
+                  thumbnail: {
+                    height: 50,
+                    width: 50,
+                    source: 'https://www.google.com/',
+                    url: 'https://www.google.com/',
+                  },
+                  largeSquare: {
+                    height: 120,
+                    width: 120,
+                    source: 'https://www.google.com/',
+                    url: 'https://www.google.com/',
+                  },
+                  square: {
+                    height: 60,
+                    width: 60,
+                    source: 'https://www.google.com/',
+                    url: 'https://www.google.com/',
+                  },
+                },
+                canDownload: false,
+              },
+              _id: '604d5450ec00005468617a0c',
+            },
+            remark: '',
+          },
+          {
+            _id: '608f34a634413f11f020b129',
+            photoId: {
+              sizes: {
+                size: {
+                  original: {
+                    height: 120,
+                    width: 60,
+                    source: 'https://www.google.com/',
+                    url: 'https://www.google.com/',
+                  },
+                  large: {
+                    height: 190,
+                    width: 20,
+                    source: 'https://www.google.com/',
+                    url: 'https://www.google.com/',
+                  },
+                  medium800: {
+                    height: 200,
+                    width: 60,
+                    source: 'https://www.google.com/',
+                    url: 'https://www.google.com/',
+                  },
+                  medium640: {
+                    height: 1200,
+                    width: 60,
+                    source: 'https://www.google.com/',
+                    url: 'https://www.google.com/',
+                  },
+                  medium: {
+                    height: 120,
+                    width: 600,
+                    source: 'https://www.google.com/',
+                    url: 'https://www.google.com/',
+                  },
+                  small320: {
+                    height: 12,
+                    width: 60,
+                    source: 'https://www.google.com/',
+                    url: 'https://www.google.com/',
+                  },
+                  small: {
+                    height: 1000,
+                    width: 60,
+                    source: 'https://www.google.com/',
+                    url: 'https://www.google.com/',
+                  },
+                  thumbnail: {
+                    height: 50,
+                    width: 50,
+                    source: 'https://www.google.com/',
+                    url: 'https://www.google.com/',
+                  },
+                  largeSquare: {
+                    height: 120,
+                    width: 120,
+                    source: 'https://www.google.com/',
+                    url: 'https://www.google.com/',
+                  },
+                  square: {
+                    height: 60,
+                    width: 60,
+                    source: 'https://www.google.com/',
+                    url: 'https://www.google.com/',
+                  },
+                },
+                canDownload: false,
+              },
+              _id: '608d5450ec00005468607a0f',
+            },
+            remark: '',
+          },
+        ],
+      },
+      {
+        _id: '911f34a634413f11f020b127',
+        galleryName: 'Test2',
+        primaryPhotoId: {
+          sizes: {
+            size: {
+              original: {
+                height: 120,
+                width: 60,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              large: {
+                height: 190,
+                width: 20,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              medium800: {
+                height: 200,
+                width: 60,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              medium640: {
+                height: 1200,
+                width: 60,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              medium: {
+                height: 120,
+                width: 600,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              small320: {
+                height: 12,
+                width: 60,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              small: {
+                height: 1000,
+                width: 60,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              thumbnail: {
+                height: 50,
+                width: 50,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              largeSquare: {
+                height: 120,
+                width: 120,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              square: {
+                height: 60,
+                width: 60,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+            },
+            canDownload: false,
+          },
+          _id: '604d5450ec00005468617a0c',
+        },
+        photos: [
+          {
+            _id: '608f34a634413f11f020b128',
+            photoId: {
+              sizes: {
+                size: {
+                  original: {
+                    height: 120,
+                    width: 60,
+                    source: 'https://www.google.com/',
+                    url: 'https://www.google.com/',
+                  },
+                  large: {
+                    height: 190,
+                    width: 20,
+                    source: 'https://www.google.com/',
+                    url: 'https://www.google.com/',
+                  },
+                  medium800: {
+                    height: 200,
+                    width: 60,
+                    source: 'https://www.google.com/',
+                    url: 'https://www.google.com/',
+                  },
+                  medium640: {
+                    height: 1200,
+                    width: 60,
+                    source: 'https://www.google.com/',
+                    url: 'https://www.google.com/',
+                  },
+                  medium: {
+                    height: 120,
+                    width: 600,
+                    source: 'https://www.google.com/',
+                    url: 'https://www.google.com/',
+                  },
+                  small320: {
+                    height: 12,
+                    width: 60,
+                    source: 'https://www.google.com/',
+                    url: 'https://www.google.com/',
+                  },
+                  small: {
+                    height: 1000,
+                    width: 60,
+                    source: 'https://www.google.com/',
+                    url: 'https://www.google.com/',
+                  },
+                  thumbnail: {
+                    height: 50,
+                    width: 50,
+                    source: 'https://www.google.com/',
+                    url: 'https://www.google.com/',
+                  },
+                  largeSquare: {
+                    height: 120,
+                    width: 120,
+                    source: 'https://www.google.com/',
+                    url: 'https://www.google.com/',
+                  },
+                  square: {
+                    height: 60,
+                    width: 60,
+                    source: 'https://www.google.com/',
+                    url: 'https://www.google.com/',
+                  },
+                },
+                canDownload: false,
+              },
+              _id: '604d5450ec00005468617a0c',
+            },
+            remark: '',
+          },
+          {
+            _id: '608f34a634413f11f020b129',
+            photoId: {
+              sizes: {
+                size: {
+                  original: {
+                    height: 120,
+                    width: 60,
+                    source: 'https://www.google.com/',
+                    url: 'https://www.google.com/',
+                  },
+                  large: {
+                    height: 190,
+                    width: 20,
+                    source: 'https://www.google.com/',
+                    url: 'https://www.google.com/',
+                  },
+                  medium800: {
+                    height: 200,
+                    width: 60,
+                    source: 'https://www.google.com/',
+                    url: 'https://www.google.com/',
+                  },
+                  medium640: {
+                    height: 1200,
+                    width: 60,
+                    source: 'https://www.google.com/',
+                    url: 'https://www.google.com/',
+                  },
+                  medium: {
+                    height: 120,
+                    width: 600,
+                    source: 'https://www.google.com/',
+                    url: 'https://www.google.com/',
+                  },
+                  small320: {
+                    height: 12,
+                    width: 60,
+                    source: 'https://www.google.com/',
+                    url: 'https://www.google.com/',
+                  },
+                  small: {
+                    height: 1000,
+                    width: 60,
+                    source: 'https://www.google.com/',
+                    url: 'https://www.google.com/',
+                  },
+                  thumbnail: {
+                    height: 50,
+                    width: 50,
+                    source: 'https://www.google.com/',
+                    url: 'https://www.google.com/',
+                  },
+                  largeSquare: {
+                    height: 120,
+                    width: 120,
+                    source: 'https://www.google.com/',
+                    url: 'https://www.google.com/',
+                  },
+                  square: {
+                    height: 60,
+                    width: 60,
+                    source: 'https://www.google.com/',
+                    url: 'https://www.google.com/',
+                  },
+                },
+                canDownload: false,
+              },
+              _id: '608d5450ec00005468607a0f',
+            },
+            remark: '',
+          },
+        ],
+      },
+      {
+        _id: '910f34a634413f11f020b127',
+        galleryName: 'Test1',
+        primaryPhotoId: {
+          sizes: {
+            size: {
+              original: {
+                height: 120,
+                width: 60,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              large: {
+                height: 190,
+                width: 20,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              medium800: {
+                height: 200,
+                width: 60,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              medium640: {
+                height: 1200,
+                width: 60,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              medium: {
+                height: 120,
+                width: 600,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              small320: {
+                height: 12,
+                width: 60,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              small: {
+                height: 1000,
+                width: 60,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              thumbnail: {
+                height: 50,
+                width: 50,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              largeSquare: {
+                height: 120,
+                width: 120,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              square: {
+                height: 60,
+                width: 60,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+            },
+            canDownload: false,
+          },
+          _id: '604d5450ec00005468617a0c',
+        },
+        photos: [
+          {
+            _id: '608f34a634413f11f020b128',
+            photoId: {
+              sizes: {
+                size: {
+                  original: {
+                    height: 120,
+                    width: 60,
+                    source: 'https://www.google.com/',
+                    url: 'https://www.google.com/',
+                  },
+                  large: {
+                    height: 190,
+                    width: 20,
+                    source: 'https://www.google.com/',
+                    url: 'https://www.google.com/',
+                  },
+                  medium800: {
+                    height: 200,
+                    width: 60,
+                    source: 'https://www.google.com/',
+                    url: 'https://www.google.com/',
+                  },
+                  medium640: {
+                    height: 1200,
+                    width: 60,
+                    source: 'https://www.google.com/',
+                    url: 'https://www.google.com/',
+                  },
+                  medium: {
+                    height: 120,
+                    width: 600,
+                    source: 'https://www.google.com/',
+                    url: 'https://www.google.com/',
+                  },
+                  small320: {
+                    height: 12,
+                    width: 60,
+                    source: 'https://www.google.com/',
+                    url: 'https://www.google.com/',
+                  },
+                  small: {
+                    height: 1000,
+                    width: 60,
+                    source: 'https://www.google.com/',
+                    url: 'https://www.google.com/',
+                  },
+                  thumbnail: {
+                    height: 50,
+                    width: 50,
+                    source: 'https://www.google.com/',
+                    url: 'https://www.google.com/',
+                  },
+                  largeSquare: {
+                    height: 120,
+                    width: 120,
+                    source: 'https://www.google.com/',
+                    url: 'https://www.google.com/',
+                  },
+                  square: {
+                    height: 60,
+                    width: 60,
+                    source: 'https://www.google.com/',
+                    url: 'https://www.google.com/',
+                  },
+                },
+                canDownload: false,
+              },
+              _id: '604d5450ec00005468617a0c',
+            },
+            remark: '',
+          },
+          {
+            _id: '608f34a634413f11f020b129',
+            photoId: {
+              sizes: {
+                size: {
+                  original: {
+                    height: 120,
+                    width: 60,
+                    source: 'https://www.google.com/',
+                    url: 'https://www.google.com/',
+                  },
+                  large: {
+                    height: 190,
+                    width: 20,
+                    source: 'https://www.google.com/',
+                    url: 'https://www.google.com/',
+                  },
+                  medium800: {
+                    height: 200,
+                    width: 60,
+                    source: 'https://www.google.com/',
+                    url: 'https://www.google.com/',
+                  },
+                  medium640: {
+                    height: 1200,
+                    width: 60,
+                    source: 'https://www.google.com/',
+                    url: 'https://www.google.com/',
+                  },
+                  medium: {
+                    height: 120,
+                    width: 600,
+                    source: 'https://www.google.com/',
+                    url: 'https://www.google.com/',
+                  },
+                  small320: {
+                    height: 12,
+                    width: 60,
+                    source: 'https://www.google.com/',
+                    url: 'https://www.google.com/',
+                  },
+                  small: {
+                    height: 1000,
+                    width: 60,
+                    source: 'https://www.google.com/',
+                    url: 'https://www.google.com/',
+                  },
+                  thumbnail: {
+                    height: 50,
+                    width: 50,
+                    source: 'https://www.google.com/',
+                    url: 'https://www.google.com/',
+                  },
+                  largeSquare: {
+                    height: 120,
+                    width: 120,
+                    source: 'https://www.google.com/',
+                    url: 'https://www.google.com/',
+                  },
+                  square: {
+                    height: 60,
+                    width: 60,
+                    source: 'https://www.google.com/',
+                    url: 'https://www.google.com/',
+                  },
+                },
+                canDownload: false,
+              },
+              _id: '608d5450ec00005468607a0f',
+            },
+            remark: '',
+          },
+        ],
+      },
+    ],
+    _id: '608d55c7e512b74ee00791de',
+  },
+};

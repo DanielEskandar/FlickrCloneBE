@@ -328,8 +328,16 @@
     "favourites": [],
     "photos": [],
     "testimonials": ["60a7b24a66d38d5e20966334"],
-    "albums": [],
-    "gallery": [],
+    "albums": [
+      "812f3c70197abc18509aec61",
+      "811f3c70197abc18509aec5f",
+      "810f3c70197abc18509aec60"
+    ],
+    "gallery": [
+      "912f34a634413f11f020b127",
+      "911f34a634413f11f020b127",
+      "910f34a634413f11f020b127"
+    ],
     "following": [
       {
         "_id": "60914e1ba87d736f3c382ed6",
