@@ -494,3 +494,105 @@ module.exports.setLocationData = {
     },
   },
 };
+
+module.exports.deleteLocationData = {
+  status: 'success',
+  data: {
+    permissions: {
+      public: false,
+      friend: true,
+      family: false,
+      comment: 2,
+      addMeta: 1,
+    },
+    sizes: {
+      size: {
+        original: {
+          height: 120,
+          width: 60,
+          source: 'https://www.google.com/',
+          url: 'https://www.google.com/',
+        },
+        large: {
+          height: 190,
+          width: 20,
+          source: 'https://www.google.com/',
+          url: 'https://www.google.com/',
+        },
+        medium800: {
+          height: 200,
+          width: 60,
+          source: 'https://www.google.com/',
+          url: 'https://www.google.com/',
+        },
+        medium640: {
+          height: 1200,
+          width: 60,
+          source: 'https://www.google.com/',
+          url: 'https://www.google.com/',
+        },
+        medium: {
+          height: 120,
+          width: 600,
+          source: 'https://www.google.com/',
+          url: 'https://www.google.com/',
+        },
+        small320: {
+          height: 12,
+          width: 60,
+          source: 'https://www.google.com/',
+          url: 'https://www.google.com/',
+        },
+        small: {
+          height: 1000,
+          width: 60,
+          source: 'https://www.google.com/',
+          url: 'https://www.google.com/',
+        },
+        thumbnail: {
+          height: 50,
+          width: 50,
+          source: 'https://www.google.com/',
+          url: 'https://www.google.com/',
+        },
+        largeSquare: {
+          height: 120,
+          width: 120,
+          source: 'https://www.google.com/',
+          url: 'https://www.google.com/',
+        },
+        square: {
+          height: 60,
+          width: 60,
+          source: 'https://www.google.com/',
+          url: 'https://www.google.com/',
+        },
+      },
+      canDownload: false,
+    },
+    comments: [],
+    favourites: 7,
+    views: 21,
+    tags: ['#sunset'],
+    hidden: true,
+    _id: '608d5450ec00005468607a0f',
+    userId: '608d55c7e512b74ee00791db',
+    title: 'Sunset in Bora Bora',
+    description: 'Amazing shot',
+    dateUploaded: '2012-04-23T18:25:43.511Z',
+    dateTaken: '2013-04-23T18:25:43.511Z',
+    location: null,
+    EXIF: '123erf',
+    safetyLevel: 2,
+    contentType: 'Screenshot',
+    peopleTagged: [
+      {
+        _id: '609093af84b808271488fafd',
+        userId: '608d5450ec00005468604a0c',
+        tagDate: '2012-04-13T18:25:43.511Z',
+      },
+    ],
+    license: 10,
+    __v: 0,
+  },
+};

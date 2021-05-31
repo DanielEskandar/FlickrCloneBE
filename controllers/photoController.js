@@ -436,7 +436,6 @@ exports.getLocation = async (req, res) => {
 };
 
 // SET LOCATION
-//NOT COMPLETE
 exports.setLocation = async (req, res) => {
   try {
     const photo = await photoModel.findById(req.params.id);
@@ -473,6 +472,74 @@ exports.setLocation = async (req, res) => {
     res.status(200).json({
       status: 'success',
       data: JSON.parse(JSON.stringify(updated)),
+    });
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};
+
+// DELETE COMMENT
+exports.deleteComment = async (req, res) => {
+  try {
+    const photoWithComment = await photoModel
+      .findById(req.params.id)
+      .select({ comments: 1, _id: 0 });
+
+    if (!photoWithComment) {
+      throw new AppError('No Photo Found with this ID', 404);
+    }
+    const comment = photoWithComment.comments.find(
+      (element) => element.toString() === req.params.commentid.toString()
+    );
+
+    if (comment) {
+      await photoModel.findByIdAndUpdate(
+        req.params.id,
+        {
+          $pull: { comments: comment },
+        },
+        {
+          new: true,
+          runValidators: true,
+        }
+      );
+      await commentModel.findByIdAndDelete(req.params.commentid);
+      res.status(204).json({
+        status: 'success',
+        data: 'deleted',
+      });
+    } else {
+      throw new AppError('No Comment Found with this ID', 404);
+    }
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};
+
+// DELETE LOCATION
+exports.deleteLocation = async (req, res) => {
+  try {
+    //photo validation
+    if (!(await photoModel.findById(req.params.id))) {
+      throw new AppError('No Photo Found with this ID', 404);
+    }
+    const check = await photoModel.findById(req.params.id);
+    if (check.location == null) {
+      throw new AppError('Photo Already doesnt have a location', 404);
+    }
+    const photo = await photoModel.findByIdAndUpdate(
+      req.params.id,
+      {
+        $set: { location: null },
+      },
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
+    res.status(200).json({
+      status: 'success',
+      data: JSON.parse(JSON.stringify(photo)),
     });
   } catch (err) {
     errorController.sendError(err, req, res);

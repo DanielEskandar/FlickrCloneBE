@@ -961,12 +961,16 @@ photoRouter.get('/:id/location', photoController.getLocation);
  * @apiUse PhotoNotFoundError
  *
  */
-photoRouter.patch('/:id/location', photoController.setLocation);
+photoRouter.patch(
+  '/:id/location',
+  authController.protect,
+  photoController.setLocation
+);
 
 /**
  * @api {delete} /photo/:id/location Delete a Photo's Location
  * @apiVersion 1.0.0
- * @apiName DeleteLocation
+ * @apiName deleteLocation
  * @apiGroup Photo
  *
  * @apiParam {String} id The Photo's ID
@@ -980,7 +984,11 @@ photoRouter.patch('/:id/location', photoController.setLocation);
  * @apiUse PhotoNotFoundError
  *
  */
-photoRouter.delete('/:id/location');
+photoRouter.delete(
+  '/:id/location',
+  authController.protect,
+  photoController.deleteLocation
+);
 
 /**
  * @api {get} /photo/:id/licenses Get Licenses of a Photo
