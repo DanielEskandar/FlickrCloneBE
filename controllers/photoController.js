@@ -29,6 +29,9 @@ exports.uploadPhoto = async (req, res) => {
 
       DateCapture = new Date(req.file.Exif.exif.DateTimeOriginal);
 
+      console.log(req.file.Exif.exif.DateTimeOriginal);
+      console.log(DateCapture);
+
       if (req.file.Exif.image) {
         if (req.file.Exif.image.Make)
           metadataStream.cameraMake = req.file.Exif.image.Make;
@@ -167,6 +170,7 @@ exports.uploadPhoto = async (req, res) => {
       },
     });
   } catch (err) {
+    console.log(err);
     errorController.sendError(err, req, res);
   }
 };

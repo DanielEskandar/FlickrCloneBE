@@ -394,3 +394,21 @@ describe('should  get Galleries for Photo', () => {
     expect(mRes.json).toBeCalledWith(photoTestData.getGalleriesforPhoto);
   });
 });
+
+// upload Photo
+describe('Should record the data of an uploaded photo', () => {
+  test('should get Galleries for Photo with id 608d5450ec00005468628a0d', async () => {
+    const mReq = {
+      user: { id: '60b3d74a79a1820bd89091c4' },
+      body: photoTestData.uploadReqData.body,
+      file: photoTestData.uploadReqData.file,
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await photoController.uploadPhoto(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(201);
+    expect(mRes.json).toBeCalledWith(photoTestData.uploadResData);
+  });
+});
