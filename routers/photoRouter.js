@@ -78,99 +78,123 @@ const photoRouter = express.Router();
  * @apiName UploadPhoto
  * @apiGroup Photo
  *
- * @apiParam (Request Body) {Number} ticket The Ticket of the Upload
+ * @apiParam (Request Body from form input) {String} Title The Photo's Title
+ * @apiParam (Request Body from form input) {String} Description The Photo's Description
+ * @apiParam (Request Body from form input) {File} Photo The Photo's Original File
  *
- * @apiSuccessExample Success-Response:
+ * @apiSuccessExample {json} Success-Response:
  *      HTTP/1.1 200 OK
  *      {
  *        "status": "success",
  *        "data": {
+ *          "newPhoto": {
  *            "permissions": {
- *            "public": false,
- *            "friend": false,
- *            "family": false,
- *            "comment": 3,
- *            "addMeta": 0
- *          },
- *          "sizes": {
- *            "size": {
- *              "original": {
- *                "height": 854,
- *                "width": 1280,
- *                "source": "https://res.cloudinary.com/dpuxq7nuq/image/upload/v1622228651/photo-0-608d55c7e512b74ee00791db-1622228648958-o.jpg",
- *                "url": "https://res.cloudinary.com/dpuxq7nuq/image/upload/v1622228651/photo-0-608d55c7e512b74ee00791db-1622228648958-o.jpg"
- *              },
- *              "large": {
- *                "height": 683,
- *                "width": 1024,
- *                "source": "https://res.cloudinary.com/dpuxq7nuq/image/upload/v1622228652/photo-1-608d55c7e512b74ee00791db-1622228648958-b.jpg",
- *                "url": "https://res.cloudinary.com/dpuxq7nuq/image/upload/v1622228652/photo-1-608d55c7e512b74ee00791db-1622228648958-b.jpg"
- *              },
- *              "medium800": {
- *                "height": 534,
- *                "width": 800,
- *                "source": "https://res.cloudinary.com/dpuxq7nuq/image/upload/v1622228653/photo-2-608d55c7e512b74ee00791db-1622228648958-c.jpg",
- *                "url": "https://res.cloudinary.com/dpuxq7nuq/image/upload/v1622228653/photo-2-608d55c7e512b74ee00791db-1622228648958-c.jpg"
- *              },
- *              "medium640": {
- *                "height": 427,
- *                "width": 640,
- *                "source": "https://res.cloudinary.com/dpuxq7nuq/image/upload/v1622228654/photo-3-608d55c7e512b74ee00791db-1622228648958-z.jpg",
- *                "url": "https://res.cloudinary.com/dpuxq7nuq/image/upload/v1622228654/photo-3-608d55c7e512b74ee00791db-1622228648958-z.jpg"
- *              },
- *              "medium": {
- *                "height": 334,
- *                "width": 500,
- *                "source": "https://res.cloudinary.com/dpuxq7nuq/image/upload/v1622228656/photo-4-608d55c7e512b74ee00791db-1622228648958.jpg",
- *                "url": "https://res.cloudinary.com/dpuxq7nuq/image/upload/v1622228656/photo-4-608d55c7e512b74ee00791db-1622228648958.jpg"
- *              },
- *              "small320": {
- *                "height": 214,
- *                "width": 320,
- *                "source": "https://res.cloudinary.com/dpuxq7nuq/image/upload/v1622228657/photo-5-608d55c7e512b74ee00791db-1622228648958-n.jpg",
- *                "url": "https://res.cloudinary.com/dpuxq7nuq/image/upload/v1622228657/photo-5-608d55c7e512b74ee00791db-1622228648958-n.jpg"
- *              },
- *              "small": {
- *                "height": 160,
- *                "width": 240,
- *                "source": "https://res.cloudinary.com/dpuxq7nuq/image/upload/v1622228658/photo-6-608d55c7e512b74ee00791db-1622228648958-m.jpg",
- *                "url": "https://res.cloudinary.com/dpuxq7nuq/image/upload/v1622228658/photo-6-608d55c7e512b74ee00791db-1622228648958-m.jpg"
- *              },
- *              "thumbnail": {
- *                "height": 67,
- *                "width": 100,
- *                "source": "https://res.cloudinary.com/dpuxq7nuq/image/upload/v1622228658/photo-7-608d55c7e512b74ee00791db-1622228648958-t.jpg",
- *                "url": "https://res.cloudinary.com/dpuxq7nuq/image/upload/v1622228658/photo-7-608d55c7e512b74ee00791db-1622228648958-t.jpg"
- *              },
- *              "largeSquare": {
- *                "height": 150,
- *                "width": 150,
- *                "source": "https://res.cloudinary.com/dpuxq7nuq/image/upload/v1622228659/photo-8-608d55c7e512b74ee00791db-1622228648958-q.jpg",
- *                "url": "https://res.cloudinary.com/dpuxq7nuq/image/upload/v1622228659/photo-8-608d55c7e512b74ee00791db-1622228648958-q.jpg"
- *              },
- *              "square": {
- *                "height": 75,
- *                "width": 75,
- *                "source": "https://res.cloudinary.com/dpuxq7nuq/image/upload/v1622228660/photo-9-608d55c7e512b74ee00791db-1622228648958-s.jpg",
- *                "url": "https://res.cloudinary.com/dpuxq7nuq/image/upload/v1622228660/photo-9-608d55c7e512b74ee00791db-1622228648958-s.jpg"
- *              }
+ *              "public": false,
+ *              "friend": false,
+ *              "family": false,
+ *              "comment": 3,
+ *              "addMeta": 0
  *            },
- *            "canDownload": false
+ *            "sizes": {
+ *              "size": {
+ *                "original": {
+ *                  "height": 2736,
+ *                  "width": 3648,
+ *                  "source": "https://res.cloudinary.com/dpuxq7nuq/image/upload/v1622432733/photo-0-608d5450ec00005468607a0c-1622432660311-o.jpg",
+ *                  "url": "https://res.cloudinary.com/dpuxq7nuq/image/upload/v1622432733/photo-0-608d5450ec00005468607a0c-1622432660311-o.jpg"
+ *                },
+ *                "large": {
+ *                  "height": 768,
+ *                  "width": 1024,
+ *                  "source": "https://res.cloudinary.com/dpuxq7nuq/image/upload/v1622432746/photo-1-608d5450ec00005468607a0c-1622432660311-b.jpg",
+ *                  "url": "https://res.cloudinary.com/dpuxq7nuq/image/upload/v1622432746/photo-1-608d5450ec00005468607a0c-1622432660311-b.jpg"
+ *                },
+ *                "medium800": {
+ *                  "height": 600,
+ *                  "width": 800,
+ *                  "source": "https://res.cloudinary.com/dpuxq7nuq/image/upload/v1622432749/photo-2-608d5450ec00005468607a0c-1622432660311-c.jpg",
+ *                  "url": "https://res.cloudinary.com/dpuxq7nuq/image/upload/v1622432749/photo-2-608d5450ec00005468607a0c-1622432660311-c.jpg"
+ *                },
+ *                "medium640": {
+ *                  "height": 480,
+ *                  "width": 640,
+ *                  "source": "https://res.cloudinary.com/dpuxq7nuq/image/upload/v1622432755/photo-3-608d5450ec00005468607a0c-1622432660312-z.jpg",
+ *                  "url": "https://res.cloudinary.com/dpuxq7nuq/image/upload/v1622432755/photo-3-608d5450ec00005468607a0c-1622432660312-z.jpg"
+ *                },
+ *                "medium": {
+ *                  "height": 375,
+ *                  "width": 500,
+ *                  "source": "https://res.cloudinary.com/dpuxq7nuq/image/upload/v1622432756/photo-4-608d5450ec00005468607a0c-1622432660312.jpg",
+ *                  "url": "https://res.cloudinary.com/dpuxq7nuq/image/upload/v1622432756/photo-4-608d5450ec00005468607a0c-1622432660312.jpg"
+ *                },
+ *                "small320": {
+ *                  "height": 240,
+ *                  "width": 320,
+ *                  "source": "https://res.cloudinary.com/dpuxq7nuq/image/upload/v1622432757/photo-5-608d5450ec00005468607a0c-1622432660312-n.jpg",
+ *                  "url": "https://res.cloudinary.com/dpuxq7nuq/image/upload/v1622432757/photo-5-608d5450ec00005468607a0c-1622432660312-n.jpg"
+ *                },
+ *                "small": {
+ *                  "height": 180,
+ *                  "width": 240,
+ *                  "source": "https://res.cloudinary.com/dpuxq7nuq/image/upload/v1622432758/photo-6-608d5450ec00005468607a0c-1622432660312-m.jpg",
+ *                  "url": "https://res.cloudinary.com/dpuxq7nuq/image/upload/v1622432758/photo-6-608d5450ec00005468607a0c-1622432660312-m.jpg"
+ *                },
+ *                "thumbnail": {
+ *                  "height": 75,
+ *                  "width": 100,
+ *                  "source": "https://res.cloudinary.com/dpuxq7nuq/image/upload/v1622432759/photo-7-608d5450ec00005468607a0c-1622432660312-t.jpg",
+ *                  "url": "https://res.cloudinary.com/dpuxq7nuq/image/upload/v1622432759/photo-7-608d5450ec00005468607a0c-1622432660312-t.jpg"
+ *                },
+ *                "largeSquare": {
+ *                  "height": 150,
+ *                  "width": 150,
+ *                  "source": "https://res.cloudinary.com/dpuxq7nuq/image/upload/v1622432760/photo-8-608d5450ec00005468607a0c-1622432660312-q.jpg",
+ *                  "url": "https://res.cloudinary.com/dpuxq7nuq/image/upload/v1622432760/photo-8-608d5450ec00005468607a0c-1622432660312-q.jpg"
+ *                },
+ *                "square": {
+ *                  "height": 75,
+ *                  "width": 75,
+ *                  "source": "https://res.cloudinary.com/dpuxq7nuq/image/upload/v1622432760/photo-9-608d5450ec00005468607a0c-1622432660312-s.jpg",
+ *                  "url": "https://res.cloudinary.com/dpuxq7nuq/image/upload/v1622432760/photo-9-608d5450ec00005468607a0c-1622432660312-s.jpg"
+ *                }
+ *              },
+ *              "canDownload": false
+ *            },
+ *            "metadata": {
+ *              "cameraMake": "HUAWEI",
+ *              "cameraModel": "CLT-L29",
+ *              "lensName": "",
+ *              "fNumber": 1.8,
+ *              "focalLength": 3.95,
+ *              "exposureTime": 0.000249,
+ *              "flash": 24,
+ *              "iso": 50
+ *            },
+ *            "comments": [],
+ *            "favourites": 0,
+ *            "views": 0,
+ *            "tags": [],
+ *            "hidden": true,
+ *            "_id": "60b45bf802717a3e5c0490ee",
+ *            "userId": "608d5450ec00005468607a0c",
+ *            "title": "New Photo",
+ *            "description": "Check Out my Photo",
+ *            "EXIF": "{\"DocumentName\":{\"type\":\"Buffer\",\"data\":[]},\"ExposureTime\":0.000249,\"FNumber\":1.8,\"ExposureProgram\":2,\"ISO\":50,\"ExifVersion\":{\"type\":\"Buffer\",\"data\":[48,50,49,48]},\"DateTimeOriginal\":\"2018-07-13T18:50:43.000Z\",\"DateTimeDigitized\":\"2018-07-13T18:50:43.000Z\",\"ComponentsConfiguration\":{\"type\":\"Buffer\",\"data\":[1,2,3,0]},\"ShutterSpeedValue\":29.8973,\"ApertureValue\":1.69,\"BrightnessValue\":0,\"ExposureBiasValue\":0,\"MeteringMode\":5,\"LightSource\":1,\"Flash\":24,\"FocalLength\":3.95,\"MakerNote\":\"\",\"SubSecTime\":\"527769\",\"SubSecTimeOriginal\":\"527769\",\"SubSecTimeDigitized\":\"527769\",\"FlashpixVersion\":{\"type\":\"Buffer\",\"data\":[48,49,48,48]},\"ColorSpace\":1,\"PixelXDimension\":3648,\"PixelYDimension\":2736,\"InteropOffset\":8422,\"SensingMethod\":2,\"FileSource\":{\"type\":\"Buffer\",\"data\":[3]},\"SceneType\":{\"type\":\"Buffer\",\"data\":[1]},\"CustomRendered\":1,\"ExposureMode\":0,\"WhiteBalance\":0,\"DigitalZoomRatio\":1,\"FocalLengthIn35mmFormat\":27,\"SceneCaptureType\":0,\"GainControl\":0,\"Contrast\":0,\"Saturation\":0,\"Sharpness\":0,\"SubjectDistanceRange\":0}",
+ *            "dateTaken": "2018-07-13T18:50:43.000Z",
+ *            "dateUploaded": "2021-05-31T03:46:00.744Z",
+ *            "peopleTagged": [],
+ *            "__v": 0
  *          },
- *          "comments": [],
- *          "favourites": 0,
- *          "views": 0,
- *          "tags": [],
- *          "hidden": true,
- *          "_id": "60b13eb4f67eb137b8815dbb",
- *          "userId": "608d55c7e512b74ee00791db",
- *          "title": "Hello",
- *          "description": "best photo ever",
- *          "dateUploaded": "2021-05-28T19:04:20.110Z",
- *          "peopleTagged": [],
- *          "__v": 0
+ *           "userPhotoList": {
+ *            "photos": [
+ *              "608d5450ec00005468607a0f",
+ *              "608d5450ec00005468617a0c",
+ *              "60b45bf802717a3e5c0490ee"
+ *            ],
+ *            "_id": "608d5450ec00005468607a0c"
  *          }
  *        }
+ *      }
  *
  * @apiUse UnauthError
  *
