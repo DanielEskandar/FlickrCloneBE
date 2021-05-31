@@ -258,13 +258,29 @@ userRouter.get('/:id/stats');
  *
  */
 
-userRouter.get('/:id/popular');
+userRouter.get(
+  '/popular',
+  authController.protect,
+  userController.getPopularPhotos
+);
 
 /**
  *
  */
 
-userRouter.get('/:id/recent');
+userRouter.get('/:id/recent', userController.getRequestedUserRecentPhotos);
+
+userRouter.get('/:id/popular', userController.getRequestedUserPopularPhotos);
+
+/**
+ *
+ */
+
+userRouter.get(
+  '/recent',
+  authController.protect,
+  userController.getRecentPhotos
+);
 
 /**
  *
