@@ -810,7 +810,7 @@ module.exports.uploadResData = {
       tags: [],
       hidden: true,
       _id: expect.any(String),
-      userId: '60b3d74a79a1820bd89091c4',
+      userId: '608d5450ec00005468607a0c',
       title: 'New Photo',
       description: 'Check Out my Photo',
       EXIF:
@@ -820,6 +820,13 @@ module.exports.uploadResData = {
       peopleTagged: [],
       __v: 0,
     },
-    userPhotoList: null,
+    userPhotoList: {
+      photos: [
+        '608d5450ec00005468607a0f',
+        '608d5450ec00005468617a0c',
+        expect.any(String),
+      ],
+      _id: '608d5450ec00005468607a0c',
+    },
   },
 };

@@ -553,7 +553,7 @@ exports.getGalleriesforPhoto = async (req, res) => {
 
     const galleries = await galleryModel
       .find({ 'photos.photoId': req.params.id })
-      .sort([['date', -1]])
+      .sort('createdAt')
       .select({ _id: 1 })
       .skip(skip)
       .limit(perPage);

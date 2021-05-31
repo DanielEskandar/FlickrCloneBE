@@ -475,9 +475,9 @@ describe('should remove a tagged user from the photo ', () => {
 
 // upload Photo
 describe('Should record the data of an uploaded photo', () => {
-  test('shoudl add info about a new photo by user 60b3d74a79a1820bd89091c4', async () => {
+  test('should add info about a new photo by user 60b3d74a79a1820bd89091c4', async () => {
     const mReq = {
-      user: { id: '60b3d74a79a1820bd89091c4' },
+      user: { id: '608d5450ec00005468607a0c' },
       body: photoTestData.uploadReqData.body,
       file: photoTestData.uploadReqData.file,
     };
