@@ -1451,3 +1451,29 @@ module.exports.getCameraRoll = {
     },
   },
 };
+
+module.exports.getFollowerData = {
+  status: 'success',
+  data: {
+    photos: [
+      {
+        _id: '608d55c7e512b74ee00791dc',
+        displayName: 'AliaaKhalifa',
+        firstName: 'Aliaa',
+        lastName: 'Khalifa',
+      },
+      {
+        _id: '608d55c7e512b74ee00791de',
+        displayName: 'NadineMagdy',
+        firstName: 'Nadine',
+        lastName: 'Magdi',
+      },
+      {
+        _id: '608d5450ec00005468607a11',
+        displayName: 'GalleryAlbumTest',
+        firstName: 'Test',
+        lastName: 'GalleryAlbum',
+      },
+    ],
+  },
+};

@@ -11,7 +11,7 @@ const AppError = require('../utils/appError.js');
 const errorController = require('./errorController.js');
 
 // INCLUDE API FEATURES
-const { paginate } = require('../utils/APIFeatures.js');
+const APIFeatures = require('../utils/APIFeatures.js');
 
 // GET REAL NAME
 exports.getRealName = async (req, res) => {
@@ -680,7 +680,7 @@ exports.search = async (req, res) => {
       // Pagination
       const page = req.query.page * 1 || 1;
       const limit = req.query.limit * 1 || 100;
-      results = paginate(results, page, limit);
+      results = APIFeatures.paginate(results, page, limit);
 
       // SORTING
       results = _.sortBy(results, 'firstName');
@@ -812,6 +812,30 @@ exports.getCameraRoll = async (req, res) => {
           // eslint-disable-next-line no-unused-vars
           JSON.stringify(userPhotos)
         ),
+      },
+    });
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};
+
+// Get Follower
+exports.getFollower = async (req, res) => {
+  try {
+    const followers = await userModel
+      .find({
+        'following.user': { $in: req.user.id },
+      })
+      .select({
+        firstName: 1,
+        lastName: 1,
+        displayName: 1,
+      });
+
+    res.status(200).json({
+      status: 'success',
+      data: {
+        photos: JSON.parse(JSON.stringify(followers)),
       },
     });
   } catch (err) {

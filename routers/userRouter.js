@@ -1510,13 +1510,7 @@ userRouter.get(
  *
  */
 
-userRouter.get('/follower');
-
-/**
- *
- */
-
-userRouter.get('/follower-not-followed');
+userRouter.get('/follower', authController.protect, userController.getFollower);
 
 /**
  * @api {get} /user/block Gets a list of User's Blocked users
