@@ -601,7 +601,7 @@ photoRouter.get('/:id/faves', photoController.getFavourites);
  * @apiUse PhotoNotFoundError
  *
  */
-photoRouter.get('/:id/perm');
+photoRouter.get('/:id/perm', photoController.getPerms);
 
 /**
  * @api {get} /photo/:id/sizes Get All Available Sizes for Photo

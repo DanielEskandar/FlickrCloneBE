@@ -472,3 +472,21 @@ describe('should remove a tagged user from the photo ', () => {
     expect(mRes.json).toBeCalledWith(photoTestData.removePersonData);
   });
 });
+
+//TESTING GET PERM
+describe('should get photo permissions with id 608d5450ec00005468607a0f ', () => {
+  test('should retrieve 2 tagged users', async () => {
+    const mReq = {
+      params: {
+        id: '608d5450ec00005468607a0f',
+      },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await photoController.getPerms(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(photoTestData.getPermData);
+  });
+});

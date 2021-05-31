@@ -537,3 +537,24 @@ exports.removePerson = async (req, res) => {
     errorController.sendError(err, req, res);
   }
 };
+
+// GET PERMISSIONS FOR A PHOTO
+exports.getPerms = async (req, res) => {
+  try {
+    const perms = await photoModel.findById(req.params.id).select({
+      permissions: 1,
+      _id: 0,
+    });
+
+    if (!perms) {
+      throw new AppError('No Photo Found with this ID', 404);
+    }
+
+    res.status(200).json({
+      status: 'success',
+      data: JSON.parse(JSON.stringify(perms)),
+    });
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};

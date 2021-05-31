@@ -538,3 +538,16 @@ module.exports.removePersonData = {
     ],
   },
 };
+
+module.exports.getPermData = {
+  status: 'success',
+  data: {
+    permissions: {
+      public: false,
+      friend: true,
+      family: false,
+      comment: 2,
+      addMeta: 1,
+    },
+  },
+};
