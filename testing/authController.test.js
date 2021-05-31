@@ -117,6 +117,7 @@ describe('should perform signup operation for a new user', () => {
   });
 });
 
+// TESTING: signIn
 describe('should perform login operation successfully', () => {
   test('should not login user because body does not contain email', async () => {
     const mReq = {
@@ -273,5 +274,118 @@ describe('should protect routes successfully by verifyin tokens', () => {
     await authController.protect(mReq, mRes, mNext);
     expect(mRes.status).toBeCalledWith(401);
     expect(mRes.json).toBeCalledWith(authTestData.protectData5);
+  });
+});
+
+// TESTING: forgotPassword
+describe('should send password reset email to user', () => {
+  test('should not send email because the user does not exist', async () => {
+    const mReq = {
+      body: {
+        email: 'agf@gmail.com',
+      },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await authController.forgotPassword(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(404);
+    expect(mRes.json).toBeCalledWith(authTestData.userNotFound);
+  });
+
+  test('should reset email to danielbassem@gmail.com', async () => {
+    const mReq = {
+      body: {
+        email: 'danielbassem@gmail.com',
+      },
+      get: jest.fn().mockReturnThis(),
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await authController.forgotPassword(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(authTestData.forgotPasswordData);
+  });
+});
+
+// TESTING: resetPassword
+describe('should reset user password', () => {
+  test('should not reset user password because token has expired', async () => {
+    const mReq = authTestData.resetPasswordReq1;
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await authController.resetPassword(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(400);
+    expect(mRes.json).toBeCalledWith(authTestData.resetPasswordData1);
+  });
+
+  test('should reset reset user password of resetPasswordValidUser', async () => {
+    const mReq = authTestData.resetPasswordReq2;
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await authController.resetPassword(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(authTestData.resetPasswordData2);
+  });
+});
+
+// TESTING: updatePassword
+describe('should perform update password operation correctly and send response', () => {
+  test('should not update user password because current password is incorrect', async () => {
+    const mReq = {
+      user: { id: '60aeea748d222150c8dbaaf1' },
+      body: {
+        passwordCurrent: 'Abdcdef!',
+        password: 'Abdcdef!1',
+      },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await authController.updatePassword(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(401);
+    expect(mRes.json).toBeCalledWith(authTestData.updatePasswordData1);
+  });
+
+  test('should not update user password because new password is weak', async () => {
+    const mReq = {
+      user: { id: '60aeea748d222150c8dbaaf1' },
+      body: {
+        passwordCurrent: 'Abdcdef!1',
+        password: 'Abdcdef!',
+      },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await authController.updatePassword(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(400);
+    expect(mRes.json).toBeCalledWith(authTestData.updatePasswordData2);
+  });
+
+  test('should update password of updatePasswordTestUser', async () => {
+    const mReq = {
+      user: { id: '60aeea748d222150c8dbaaf1' },
+      body: {
+        passwordCurrent: 'Abdcdef!1',
+        password: 'Abdcdef!2',
+      },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await authController.updatePassword(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(authTestData.updatePasswordData3);
   });
 });

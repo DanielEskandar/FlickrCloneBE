@@ -8,7 +8,7 @@
     "start:prod": "NODE_ENV=production nodemon server.js",
     "apidoc": "apidoc -i routers/ -o apidoc/",
     "pretest": "node devData --delete && node devData --import",
-    "test": "jest testing/ --detectOpenHandles --forceExit --verbose"
+    "test": "jest testing/ --detectOpenHandles --forceExit"
   },
   "repository": {
     "type": "git",
@@ -23,13 +23,18 @@
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
+    "cloudinary": "^1.25.1",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
+    "exif-reader": "^1.0.3",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.12.10",
+    "multer": "^1.4.2",
     "nodemailer": "^6.6.1",
     "nodemailer-sendgrid": "^1.0.3",
+    "sharp": "^0.28.3",
+    "underscore": "^1.13.1",
     "validator": "^13.6.0"
   },
   "devDependencies": {

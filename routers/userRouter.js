@@ -90,89 +90,18 @@ const userRouter = express.Router();
  *
  * @apiSuccessExample {json}  Success-Response:
  *      HTTP/1.1 200 OK
- *    {
- *      "status": "success",
- *      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwYWFmZWRkMjQyMWUzMzgzMDU2MGJlZSIsImlhdCI6MTYyMTgxOTEwMiwiZXhwIjoxNjI5NTk1MTAyfQ.02Mq52MI0IiKqNrDVWqIxwdPzzUqGrY5CkH_b9wWeNs",
- *      "data": {
- *        "user": {
- *          "limits": {
- *            "photos": {
- *              "maxdisplaypx": 1024,
- *              "maxupload": 15728640
- *            },
- *            "videos": {
- *              "maxduration": 90,
- *              "maxupload": 15728640
- *            }
- *          },
- *          "privacySettings": {
- *            "global": {
- *              "infoVisibility": {
- *                "email": 2,
- *                "name": 1,
- *                "currentCity": 1
- *              },
- *              "downloadPerm": 1,
- *              "largestImgSize": 0,
- *              "allowShare": 1,
- *              "allowTag": 1,
- *              "allowGalleryAdd": true,
- *              "hideEXIF": false,
- *              "hidePhotoSearch": false,
- *              "hideProfileSearch": false
- *            },
- *            "defaults": {
- *              "perms": {
- *                "see": 1,
- *                "comment": 1,
- *                "addNotes": 2
- *              },
- *              "license": 0,
- *              "mapVisible": 1,
- *              "importEXIF": true,
- *              "safetyLevel": 1,
- *              "contentType": 1
- *            },
- *            "filters": {
- *              "search": {
- *                "safeSearch": true,
- *                "content": 1
- *              }
- *            }
- *          },
- *          "notificationSettings": {
- *            "notifMail": {
- *              "invites": true,
- *              "contact": true,
- *              "messages": true,
- *              "reminders": true
- *            },
- *            "activityMail": {
- *              "you": true,
- *              "contacts": true
- *            }
- *          },
- *          "pro": false,
- *          "showcase": [],
- *          "favourites": [],
- *          "photos": [],
- *          "testimonials": [],
- *          "albums": [],
- *          "gallery": [],
- *          "blocked": [],
- *          "_id": "60aafedd2421e33830560bee",
- *          "firstName": "First Name Test",
- *          "lastName": "Last Name Test",
- *          "displayName": "firstlast",
- *          "age": 21,
- *          "email": "first.last@email.com",
- *          "password": "$2a$12$7B0oeSkT6JVEQvJnI2AHlOF5b6WmgafoD/pDEzOwgAoqCvywELEIW",
- *          "joinDate": "2021-05-24T01:18:21.652Z",
- *          "following": [],
- *          "__v": 0
+ *      {
+ *        "status": "success",
+ *        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwYWY5YjI5ODhhOGE3MDZiOGVmOTk0NCIsImlhdCI6MTYyMjEyMTI2MCwiZXhwIjoxNjI5ODk3MjYwfQ.daxYPodNUOJqCSPTTZgy8iUUPnte-vhn1mooyBJaBSk",
+ *        "data": {
+ *          "user": {
+ *            "_id": "60af9b2988a8a706b8ef9944",
+ *            "firstName": "First Name Test",
+ *            "lastName": "Last Name Test",
+ *            "displayName": "ffirstlast"
+ *          }
  *        }
  *      }
- *    }
  *
  * @apiUse ServerError
  */
@@ -206,7 +135,15 @@ userRouter.post('/confirm');
  *      HTTP/1.1 200 OK
  *      {
  *        "status": "success",
- *        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwOGQ1NDUwZWMwMDAwNTQ2ODYwN2ExMSIsImlhdCI6MTYyMTgyMDE4OSwiZXhwIjoxNjI5NTk2MTg5fQ.-8-NmMiw3kK4QfBOYMHiphZj-np_s9TqkwPeYc-bgYM"
+ *        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwYWY5YjI5ODhhOGE3MDZiOGVmOTk0NCIsImlhdCI6MTYyMjEyMTI2MCwiZXhwIjoxNjI5ODk3MjYwfQ.daxYPodNUOJqCSPTTZgy8iUUPnte-vhn1mooyBJaBSk",
+ *        "data": {
+ *          "user": {
+ *            "_id": "60af9b2988a8a706b8ef9944",
+ *            "firstName": "First Name Test",
+ *            "lastName": "Last Name Test",
+ *            "displayName": "ffirstlast"
+ *          }
+ *        }
  *      }
  *
  * @apiUse ServerError
@@ -285,7 +222,7 @@ userRouter.patch('/', authController.protect, userController.updateUserInfo);
 userRouter.delete('/');
 
 /**
- * @api {get} /user/:id/stats [WIP] Get the User's Statistics
+ * @api {get} /user/:id/stats Get the User's Statistics
  * @apiVersion 1.0.0
  * @apiName GetUserStats
  * @apiGroup User
@@ -301,33 +238,46 @@ userRouter.delete('/');
  * @apiSuccessExample Success-Response:
  *      HTTP/1.1 200 OK
  *      {
- *          "status": "success",
- *          "data":
- *          {
- *              "views": 9200000,
- *              "tags": 159,
- *              "geotags": 0,
- *              "faves": 131,
- *              "groups": 140
- *          }
+ *        "status": "success",
+ *        "data": {
+ *          "views": 358,
+ *          "faves": 2,
+ *          "tags": 4
+ *        }
  *      }
  *
  * @apiUse UserNotFoundError
  */
 
-userRouter.get('/:id/stats');
+userRouter.get('/:id/stats', userController.getStats);
 
 /**
  *
  */
 
-userRouter.get('/:id/popular');
+userRouter.get(
+  '/popular',
+  authController.protect,
+  userController.getPopularPhotos
+);
 
 /**
  *
  */
 
-userRouter.get('/:id/recent');
+userRouter.get('/:id/recent', userController.getRequestedUserRecentPhotos);
+
+userRouter.get('/:id/popular', userController.getRequestedUserPopularPhotos);
+
+/**
+ *
+ */
+
+userRouter.get(
+  '/recent',
+  authController.protect,
+  userController.getRecentPhotos
+);
 
 /**
  *
@@ -429,7 +379,17 @@ userRouter.get('/recent-update');
  *
  */
 
-userRouter.get('/:id/galleries');
+userRouter.get('/:id/galleries', userController.getRequestedUserGalleries);
+
+/**
+ *
+ */
+
+userRouter.get(
+  '/galleries',
+  authController.protect,
+  userController.getGalleries
+);
 
 /**
  *
@@ -438,16 +398,51 @@ userRouter.get('/:id/galleries');
 userRouter.get('/:id/groups');
 
 /**
+ * @api {get} /user/:id/stream Return a user's photo stream
+ * @apiVersion 1.0.0
+ * @apiName GetStream
+ * @apiGroup User
  *
+ * @apiParam {String} id The User's ID
+ *
+ * @apiParam (Request Body) {Number} per_page Number of Galleries to return Per Page (Optinal)
+ * @apiParam (Request Body) {Number} page The Page Number to Return (Optinal)
+ *
+ * @apiSuccess {Object[]} photo stream Array of non-private photos from the user's camera roll
+ *
+ *
+ * @apiSuccessExample Success-Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *          "status": "success",
+ *          "data":
+ *          {
+ *              "photos": [
+ *
+ *              ]
+ *          }
+ *      }
+ *
+ * @apiUse UserNotFoundError
  */
 
-userRouter.get('/:id/stream');
+userRouter.get(
+  '/:id/stream',
+  authController.protect,
+  userController.getPhotoStream
+);
 
 /**
  *
  */
 
-userRouter.get('/:id/albums');
+userRouter.get('/:id/albums', userController.getRequestedUserAlbums);
+
+/**
+ *
+ */
+
+userRouter.get('/albums', authController.protect, userController.getAlbums);
 
 /**
  * @api {get} /user/:id/showcase Return User defined image showcase
@@ -933,22 +928,120 @@ userRouter.patch(
 );
 
 /**
+ * @api {patch} /user/password Update the Password of User
+ * @apiVersion 1.0.0
+ * @apiName ChangePassword
+ * @apiGroup User
  *
+ * @apiHeader {string} Token Authenticaton Token
+ *
+ * @apiHeaderExample {json} Header-Example:
+ *     {
+ *          authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwOGQ1NWM3ZTUxMmI3NGVlMDA3OTFkYiIsImlhdCI6MTYyMTUwOTY5NywiZXhwIjoxNjI5Mjg1Njk3fQ.3WLVIdzDgIGpru3ybIxqWj9A9ROvtLG90dFuzHowuk0',
+ *     }
+ *
+ * @apiParam (Request Body) {string} aboutMe The New about me section of the calling User
+ *
+ * @apiParamExample {json} Request-Example:
+ *      {
+ *        "passwordCurrent": "Abdcdef!1",
+ *        "password": "Abdcdef!2"
+ *      }
+ *
+ * @apiSuccess {string} aboutMe Updated About Me Section
+ *
+ * @apiSuccessExample {json} Success_Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *        "status": "success",
+ *        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwYWViN2M3ODI0ZDA1MzM0YzMwOTc1NCIsImlhdCI6MTYyMjEyMTY0MSwiZXhwIjoxNjI5ODk3NjQxfQ.4OA0gp4a2oY5kNqv7Q20uHsxq5b9hW-k5TpgSDlwL9Q",
+ *        "data": {
+ *          "user": {
+ *            "_id": "60aeea748d222150c8dbaaf1",
+ *            "firstName": "updatePasswordFirstName",
+ *            "lastName": "updatePasswordLastName",
+ *            "displayName": "updatePasswordTestUser"
+ *          }
+ *        }
+ *      }
+ *
+ * @apiUse UnauthError
  */
 
-userRouter.patch('/password');
+userRouter.patch(
+  '/password',
+  authController.protect,
+  authController.updatePassword
+);
 
 /**
+ * @api {post} /user/forget-password Send a Forget Password Request
+ * @apiVersion 1.0.0
+ * @apiName ForgetPassword
+ * @apiGroup User
  *
+ * @apiParam (Request Body) {string} email Email of the User with Forgotten Password
+ *
+ * @apiParamExample {json} Request-Example:
+ *      {
+ *        "email": "danielbassem@gmail.com"
+ *      }
+ *
+ * @apiSuccess {string} message String Message for the User
+ *
+ * @apiSuccessExample {json} Success_Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *        "status": "success",
+ *        "message": "Token sent to email"
+ *      }
+ *
+ * @apiUse UnauthError
  */
 
-userRouter.post('/forget-password');
+userRouter.post('/forgot-password', authController.forgotPassword);
 
 /**
+ * @api {post} /user/reset-password Reset a Password through sent token
+ * @apiVersion 1.0.0
+ * @apiName resetPassword
+ * @apiGroup User
  *
+ * @apiHeader {string} Token Authenticaton Token
+ *
+ * @apiHeaderExample {json} Header-Example:
+ *     {
+ *          authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwOGQ1NWM3ZTUxMmI3NGVlMDA3OTFkYiIsImlhdCI6MTYyMTUwOTY5NywiZXhwIjoxNjI5Mjg1Njk3fQ.3WLVIdzDgIGpru3ybIxqWj9A9ROvtLG90dFuzHowuk0',
+ *     }
+ *
+ * @apiParam (Request Body) {string} newpassword The New Password of the calling User
+ *
+ * @apiParamExample {json} Request-Example:
+ *      {
+ *        "password": "Abcdef@1"
+ *      }
+ *
+ * @apiSuccess {string} Status Status of API
+ *
+ * @apiSuccessExample {json} Success_Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *        "status": "success",
+ *        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwYWViN2M3ODI0ZDA1MzM0YzMwOTc1NCIsImlhdCI6MTYyMjEyMTY0MSwiZXhwIjoxNjI5ODk3NjQxfQ.4OA0gp4a2oY5kNqv7Q20uHsxq5b9hW-k5TpgSDlwL9Q",
+ *        "data": {
+ *          "user": {
+ *            "_id": "60aeea748d222150c8dbaaf1",
+ *            "firstName": "resetPasswordFirstName",
+ *            "lastName": "resetPasswordLastName",
+ *            "displayName": "resetPasswordTestUser"
+ *          }
+ *        }
+ *      }
+ *
+ * @apiUse UnauthError
  */
 
-userRouter.post('/confirm-password');
+userRouter.patch('/reset-password/:token', authController.resetPassword);
 
 /**
  * @api {get} /user/perm Get User Permission Settings
@@ -1333,10 +1426,38 @@ userRouter.get('/fave-context');
 userRouter.get('/addable-pool');
 
 /**
+ * @api {get} /user/camera-roll Return a user's camera roll
+ * @apiVersion 1.0.0
+ * @apiName GetCameraRoll
+ * @apiGroup User
  *
+ * @apiHeader {String} Token Authenticaton Token
+ *
+ * @apiParam (Request Body) {Number} per_page Number of Galleries to return Per Page (Optinal)
+ * @apiParam (Request Body) {Number} page The Page Number to Return (Optinal)
+ *
+ * @apiSuccess {Object[]} photos Array of photos from the user's camera roll
+ *
+ * @apiSuccessExample Success-Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *          "status": "success",
+ *          "data":
+ *          {
+ *              "photos": [
+ *
+ *              ]
+ *          }
+ *      }
+ *
+ * @apiUse UnauthError
  */
 
-userRouter.get('/camera-roll');
+userRouter.get(
+  '/camera-roll',
+  authController.protect,
+  userController.getCameraRoll
+);
 
 /**
  * @api {get} /user/followed Gets a list of followed users
@@ -1538,6 +1659,50 @@ userRouter.get('/notif/contact');
 userRouter.get('/notif/follow');
 
 /**
+ * @api {get} /user/search Search for a User on the Database
+ * @apiVersion 1.0.0
+ * @apiName searchUser
+ * @apiGroup User
+ *
+ * @apiParam (URL Query) {string} searchText Text used to search the database
+ * @apiParam (URL Query) {number} limit Number of results per page
+ * @apiParam (URL Query) {number} page Page Selected for Paginated request
+ *
+ * @apiExample {curl} Example usage:
+ *        /user/search?searchText=search1&limit=2&page=1
+ *
+ * @apiSuccess {Object[]} Results Results of the User Search
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *        "status": "success",
+ *        "data": [
+ *          {
+ *            "_id": "60b1619d62e64a359ccb4a63",
+ *            "firstName": "dummy3",
+ *            "lastName": "search1",
+ *            "displayName": "dummy4",
+ *            "photoCount": 0,
+ *            "followerCount": 0
+ *          },
+ *          {
+ *            "_id": "60b1619d62e64a359ccb4a64",
+ *            "firstName": "dummy5",
+ *            "lastName": "dummy6",
+ *            "displayName": "search1",
+ *            "photoCount": 0,
+ *            "followerCount": 0
+ *          }
+ *        ]
+ *      }
+ *
+ * @apiUse ServerError
+ */
+
+userRouter.get('/search', authController.protect, userController.search);
+
+/**
  * @api {get} /user/:id Get the User's Information
  * @apiVersion 1.0.0
  * @apiName GetUserInfo
@@ -1565,6 +1730,14 @@ userRouter.get('/notif/follow');
  *          "status": "success",
  *          "data":
  *          {
+ *            "privacySettings": {
+ *              "global": {
+ *                "infoVisibility": {
+ *                  "email": 2,
+ *                  "currentCity": 1
+ *                  }
+ *                }
+ *              },
  *              "joinDate": "2015-10-07T06:09:54+00:00",
  *              "occupation": "Photographer",
  *              "hometown": "Beverly Hills",

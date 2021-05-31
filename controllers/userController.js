@@ -1,11 +1,24 @@
+// INCLUDE DEPENDENCIES
+const _ = require('underscore');
+
 // INCLUDE MODELS
 const userModel = require('../models/userModel.js');
 const photoModel = require('../models/photoModel.js');
+
+// eslint-disable-next-line no-unused-vars
+const albumModel = require('../models/albumModel.js');
+
+// eslint-disable-next-line no-unused-vars
+const galleryModel = require('../models/galleryModel.js');
+
 const testimonialModel = require('../models/testimonialModel.js');
 
 // INCLUDE ERROR CLASS AND ERROR CONTROLLER
 const AppError = require('../utils/appError.js');
 const errorController = require('./errorController.js');
+
+// INCLUDE API FEATURES
+const APIFeatures = require('../utils/APIFeatures.js');
 
 // GET REAL NAME
 exports.getRealName = async (req, res) => {
@@ -631,6 +644,645 @@ exports.updateAboutMe = async (req, res) => {
     res.status(200).json({
       status: 'success',
       data: JSON.parse(JSON.stringify(aboutMe)),
+    });
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};
+
+// SEARCH
+exports.search = async (req, res) => {
+  try {
+    // Check if query exists
+    if (!req.query.searchText) {
+      throw new AppError('No query found.', 400);
+    }
+
+    // Split query on space character
+    const queries = req.query.searchText.split(' ');
+
+    // Search for users
+    const searchResults = [];
+    await Promise.all(
+      queries.map(async (el) => {
+        const searchResult = await userModel.aggregate([
+          {
+            $match: {
+              $or: [{ firstName: el }, { lastName: el }, { displayName: el }],
+            },
+          },
+          {
+            $project: {
+              _id: 1,
+              firstName: 1,
+              lastName: 1,
+              displayName: 1,
+              photoCount: { $size: '$photos' },
+            },
+          },
+        ]);
+
+        searchResults.push(searchResult);
+      })
+    );
+
+    // Calculate intersection of the results of the queries
+    let results = [];
+    if (searchResults) {
+      results = searchResults[0];
+      searchResults.forEach((el) => {
+        results = results.filter((item1) =>
+          el.some((item2) => item1.displayName === item2.displayName)
+        );
+      });
+
+      // SORTING
+      results = _.sortBy(results, 'firstName');
+
+      // Pagination
+      const page = req.query.page * 1 || 1;
+      const limit = req.query.limit * 1 || 100;
+      results = APIFeatures.paginate(results, page, limit);
+
+      // Get FollowerCount
+      await Promise.all(
+        results.map(async (el) => {
+          const user = await userModel.aggregate([
+            {
+              $match: {
+                'following.user': el._id,
+              },
+            },
+            {
+              $group: {
+                _id: null,
+                followerCount: { $sum: 1 },
+              },
+            },
+          ]);
+          if (user.length === 1) {
+            el.followerCount = user[0].followerCount;
+          } else {
+            el.followerCount = 0;
+          }
+        })
+      );
+    }
+
+    res.status(200).json({
+      status: 'success',
+      data: JSON.parse(JSON.stringify(results)),
+    });
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};
+
+// Get Photostream
+exports.getPhotoStream = async (req, res) => {
+  try {
+    // pagination
+    const page = req.body.page || 1;
+    const perPage = req.body.per_page || 100;
+    const skip = (page - 1) * perPage;
+    if (perPage > 500) {
+      throw new AppError(
+        'Maximum allowed value of number of photos to return per page is 500',
+        404
+      );
+    }
+    let photos = [];
+    // if requested user == calling user
+    // ALL PHOTOS ARE RETURNED
+    if (req.params.id === req.user.id) {
+      photos = await userModel
+        .findById(req.params.id)
+        .populate('photos', 'sizes')
+        .select('photos')
+        .skip(skip)
+        .limit(perPage);
+    } else {
+      //   // get requested user's following list
+
+      const userFollowing = await userModel
+        .findById(req.params.id)
+        .select('following');
+      // get relation (if exist) between requested user and calling user
+      const relation = userFollowing.following.filter(
+        (follow) => follow.user.toString() === req.user.id.toString()
+      );
+
+      // if stranger of undetermined -> public only
+      if (relation.length === 0 || relation[0].relation === 'undetermined') {
+        photos = await userModel
+          .findById(req.params.id)
+          .populate('photos', ['permissions', 'sizes'], {
+            'permissions.public': true,
+          })
+          .select('photos')
+          .skip(skip)
+          .limit(perPage);
+
+        // if friend -> public and friend
+      } else if (relation[0].relation === 'friend') {
+        photos = await userModel
+          .findById(req.params.id)
+          .populate('photos', ['permissions', 'sizes'], {
+            $or: [
+              {
+                'permissions.public': true,
+              },
+              { 'permissions.friend': true },
+            ],
+          })
+          .select('photos')
+          .skip(skip)
+          .limit(perPage);
+        // if family -> public and family
+      } else if (relation[0].relation === 'family') {
+        photos = await userModel
+          .findById(req.params.id)
+          .populate('photos', ['permissions', 'sizes'], {
+            $or: [
+              {
+                'permissions.public': true,
+              },
+              { 'permissions.family': true },
+            ],
+          })
+          .select('photos')
+          .skip(skip)
+          .limit(perPage);
+      }
+    }
+
+    res.status(200).json({
+      status: 'success',
+      data: {
+        photos: JSON.parse(JSON.stringify(photos)),
+      },
+    });
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};
+
+// Get Camera-Roll
+exports.getCameraRoll = async (req, res) => {
+  try {
+    // pagination
+    const page = req.body.page || 1;
+    const perPage = req.body.per_page || 100;
+    const skip = (page - 1) * perPage;
+
+    if (perPage > 500) {
+      throw new AppError(
+        'Maximum allowed value of number of photos to return per page is 500',
+        404
+      );
+    }
+    const userPhotos = await userModel
+      .findById(req.user.id)
+      .populate('photos', 'sizes')
+      .select('photos')
+      .skip(skip)
+      .limit(perPage);
+
+    res.status(200).json({
+      status: 'success',
+      data: {
+        photos: JSON.parse(
+          // eslint-disable-next-line no-unused-vars
+          JSON.stringify(userPhotos)
+        ),
+      },
+    });
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};
+
+exports.getRecentPhotos = async (req, res) => {
+  try {
+    // pagination
+    const page = req.body.page || 1;
+    const perPage = req.body.per_page || 100;
+    const skip = (page - 1) * perPage;
+
+    if (perPage > 500) {
+      throw new AppError(
+        'Maximum allowed value of number of photos to return per page is 500',
+        404
+      );
+    }
+    const userPhotos = await userModel
+      .findById(req.user.id)
+      .populate({
+        path: 'photos',
+        select: ['title', 'dateUploaded', 'sizes', 'favourites', 'userId'],
+        populate: {
+          path: 'userId',
+          model: 'userModel',
+          select: ['firstName', 'lastName', 'displayName'],
+        },
+        options: { sort: '-dateUploaded' }, // DESCENDING SORT
+      })
+      .select('photos')
+      .skip(skip)
+      .limit(perPage);
+
+    res.status(200).json({
+      status: 'success',
+      data: {
+        photos: JSON.parse(
+          // eslint-disable-next-line no-unused-vars
+          JSON.stringify(userPhotos)
+        ),
+      },
+    });
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};
+
+exports.getPopularPhotos = async (req, res) => {
+  try {
+    // pagination
+    const page = req.body.page || 1;
+    const perPage = req.body.per_page || 100;
+    const skip = (page - 1) * perPage;
+
+    if (perPage > 500) {
+      throw new AppError(
+        'Maximum allowed value of number of photos to return per page is 500',
+        404
+      );
+    }
+    const userPhotos = await userModel
+      .findById(req.user.id)
+      .populate({
+        path: 'photos',
+        select: ['title', 'dateUploaded', 'sizes', 'favourites', 'userId'],
+        populate: {
+          path: 'userId',
+          model: 'userModel',
+          select: ['firstName', 'lastName', 'displayName'],
+        },
+        options: { sort: '-favourites' }, // DESCENDING SORT
+      })
+      .select('photos')
+      .skip(skip)
+      .limit(perPage);
+
+    res.status(200).json({
+      status: 'success',
+      data: {
+        photos: JSON.parse(
+          // eslint-disable-next-line no-unused-vars
+          JSON.stringify(userPhotos)
+        ),
+      },
+    });
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};
+
+exports.getRequestedUserRecentPhotos = async (req, res) => {
+  try {
+    if (!(await userModel.findById(req.params.id))) {
+      throw new AppError('No User Found with This ID', 404);
+    }
+    // pagination
+    const page = req.body.page || 1;
+    const perPage = req.body.per_page || 100;
+    const skip = (page - 1) * perPage;
+
+    if (perPage > 500) {
+      throw new AppError(
+        'Maximum allowed value of number of photos to return per page is 500',
+        404
+      );
+    }
+    const userPhotos = await userModel
+      .findById(req.params.id)
+      .populate({
+        path: 'photos',
+        select: ['title', 'dateUploaded', 'sizes', 'favourites', 'userId'],
+        populate: {
+          path: 'userId',
+          model: 'userModel',
+          select: ['firstName', 'lastName', 'displayName'],
+        },
+        options: { sort: '-dateUploaded' }, // DESCENDING SORT
+      })
+      .select('photos')
+      .skip(skip)
+      .limit(perPage);
+
+    res.status(200).json({
+      status: 'success',
+      data: {
+        photos: JSON.parse(
+          // eslint-disable-next-line no-unused-vars
+          JSON.stringify(userPhotos)
+        ),
+      },
+    });
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};
+
+exports.getRequestedUserPopularPhotos = async (req, res) => {
+  try {
+    if (!(await userModel.findById(req.params.id))) {
+      throw new AppError('No User Found with This ID', 404);
+    }
+    // pagination
+    const page = req.body.page || 1;
+    const perPage = req.body.per_page || 100;
+    const skip = (page - 1) * perPage;
+
+    if (perPage > 500) {
+      throw new AppError(
+        'Maximum allowed value of number of photos to return per page is 500',
+        404
+      );
+    }
+    const userPhotos = await userModel
+      .findById(req.params.id)
+      .populate({
+        path: 'photos',
+        select: ['title', 'dateUploaded', 'sizes', 'favourites', 'userId'],
+        populate: {
+          path: 'userId',
+          model: 'userModel',
+          select: ['firstName', 'lastName', 'displayName'],
+        },
+        options: { sort: '-favourites' }, // DESCENDING SORT
+      })
+      .select('photos')
+      .skip(skip)
+      .limit(perPage);
+
+    res.status(200).json({
+      status: 'success',
+      data: {
+        photos: JSON.parse(
+          // eslint-disable-next-line no-unused-vars
+          JSON.stringify(userPhotos)
+        ),
+      },
+    });
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};
+
+// getRequestedUserGalleries
+exports.getRequestedUserGalleries = async (req, res) => {
+  try {
+    if (!(await userModel.findById(req.params.id))) {
+      throw new AppError('No User Found with This ID', 404);
+    }
+    // pagination
+    const page = req.body.page || 1;
+    const perPage = req.body.per_page || 100;
+    const skip = (page - 1) * perPage;
+
+    if (perPage > 500) {
+      throw new AppError(
+        'Maximum allowed value of number of galleries to return per page is 500',
+        404
+      );
+    }
+    const userGalleries = await userModel
+      .findById(req.params.id)
+      .populate([
+        {
+          path: 'gallery',
+          model: 'galleryModel',
+          select: ['photos', 'primaryPhotoId', 'galleryName'],
+          populate: [
+            {
+              path: 'photos.photoId',
+              model: 'photoModel',
+              select: 'sizes',
+            },
+            {
+              path: 'primaryPhotoId',
+              model: 'photoModel',
+              select: 'sizes',
+            },
+          ],
+        },
+      ])
+      .select('gallery')
+      .skip(skip)
+      .limit(perPage);
+
+    res.status(200).json({
+      status: 'success',
+      data: JSON.parse(
+        // eslint-disable-next-line no-unused-vars
+        JSON.stringify(userGalleries)
+      ),
+    });
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};
+
+// getRequestedUserAlbums
+exports.getRequestedUserAlbums = async (req, res) => {
+  try {
+    if (!(await userModel.findById(req.params.id))) {
+      throw new AppError('No User Found with This ID', 404);
+    }
+    // pagination
+    const page = req.body.page || 1;
+    const perPage = req.body.per_page || 100;
+    const skip = (page - 1) * perPage;
+
+    if (perPage > 500) {
+      throw new AppError(
+        'Maximum allowed value of number of albums to return per page is 500',
+        404
+      );
+    }
+    const userAlbums = await userModel
+      .findById(req.params.id)
+      .populate([
+        {
+          path: 'albums',
+          model: 'albumModel',
+          select: ['photos', 'primaryPhotoId', 'albumName'],
+          populate: [
+            {
+              path: 'photos',
+              model: 'photoModel',
+              select: 'sizes',
+            },
+            {
+              path: 'primaryPhotoId',
+              model: 'photoModel',
+              select: 'sizes',
+            },
+          ],
+        },
+      ])
+      .select('albums')
+      .skip(skip)
+      .limit(perPage);
+
+    res.status(200).json({
+      status: 'success',
+      data: JSON.parse(
+        // eslint-disable-next-line no-unused-vars
+        JSON.stringify(userAlbums)
+      ),
+    });
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};
+
+// getGalleries
+exports.getGalleries = async (req, res) => {
+  try {
+    // pagination
+    const page = req.body.page || 1;
+    const perPage = req.body.per_page || 100;
+    const skip = (page - 1) * perPage;
+
+    if (perPage > 500) {
+      throw new AppError(
+        'Maximum allowed value of number of galleries to return per page is 500',
+        404
+      );
+    }
+    const userGalleries = await userModel
+      .findById(req.user.id)
+      .populate([
+        {
+          path: 'gallery',
+          model: 'galleryModel',
+          select: ['photos', 'primaryPhotoId', 'galleryName'],
+          populate: [
+            {
+              path: 'photos.photoId',
+              model: 'photoModel',
+              select: 'sizes',
+            },
+            {
+              path: 'primaryPhotoId',
+              model: 'photoModel',
+              select: 'sizes',
+            },
+          ],
+        },
+      ])
+      .select('gallery')
+      .skip(skip)
+      .limit(perPage);
+
+    res.status(200).json({
+      status: 'success',
+      data: JSON.parse(
+        // eslint-disable-next-line no-unused-vars
+        JSON.stringify(userGalleries)
+      ),
+    });
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};
+
+// getAlbums
+exports.getAlbums = async (req, res) => {
+  try {
+    // pagination
+    const page = req.body.page || 1;
+    const perPage = req.body.per_page || 100;
+    const skip = (page - 1) * perPage;
+
+    if (perPage > 500) {
+      throw new AppError(
+        'Maximum allowed value of number of albums to return per page is 500',
+        404
+      );
+    }
+    const userAlbums = await userModel
+      .findById(req.user.id)
+      .populate([
+        {
+          path: 'albums',
+          model: 'albumModel',
+          select: ['photos', 'primaryPhotoId', 'albumName'],
+          populate: [
+            {
+              path: 'photos',
+              model: 'photoModel',
+              select: 'sizes',
+            },
+            {
+              path: 'primaryPhotoId',
+              model: 'photoModel',
+              select: 'sizes',
+            },
+          ],
+        },
+      ])
+      .select('albums')
+      .skip(skip)
+      .limit(perPage);
+
+    res.status(200).json({
+      status: 'success',
+      data: JSON.parse(
+        // eslint-disable-next-line no-unused-vars
+        JSON.stringify(userAlbums)
+      ),
+    });
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};
+
+// getStats
+exports.getStats = async (req, res) => {
+  try {
+    const user = await userModel
+      .findById(req.params.id)
+      .populate('photos', 'views tags')
+      .select(['photos', 'favourites']);
+
+    if (!user) {
+      throw new AppError('No User Found with This ID', 404);
+    }
+
+    const userFavesCount = user.favourites.length;
+    const userViewsCount = user.photos
+      .map((photo) => photo.views)
+      .reduce((sum, photo) => sum + photo);
+
+    const userTagCount = user.photos
+      .map((photo) => photo.tags.length)
+      .reduce((sum, photo) => sum + photo);
+
+    const stats = {
+      views: userViewsCount,
+      faves: userFavesCount,
+      tags: userTagCount,
+    };
+
+    res.status(200).json({
+      status: 'success',
+      data: JSON.parse(
+        // eslint-disable-next-line no-unused-vars
+        JSON.stringify(stats)
+      ),
     });
   } catch (err) {
     errorController.sendError(err, req, res);

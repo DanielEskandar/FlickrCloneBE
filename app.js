@@ -2,7 +2,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const sendEmail = require('./utils/emailSender');
 
 // INCLUDE ERROR CLASS
 const AppError = require('./utils/appError.js');
@@ -55,26 +54,6 @@ app.use('/photo', photoRouter);
 app.use('/gallery', galleryRouter);
 app.use('/photoset', albumRouter);
 app.use('/group', groupRouter);
-
-// FUNCTION FOR TESTING EMAIL SENDER
-app.get('/testMail', async (req, res) => {
-  const trialMail = 'a_tarek1999@yahoo.com';
-  try {
-    await sendEmail({
-      email: trialMail,
-      subject: 'Flickr – Testing Mail',
-      message: {
-        html: `<p>To reset the password on your account, simply use the link below and follow the steps.</p>
-          <a href="https://www.google.com">Reset your password</a>
-          <p>If you did not request a password reset, please disregard this email. Nothing will change to your account.</p>
-          <p>The Flickr team.</p>`,
-      },
-    });
-    res.json({ message: 'Email Sent to User!' });
-  } catch (error) {
-    res.json({ message: error.message });
-  }
-});
 
 // UNHANDLED ROUTES
 app.all('*', (req, res, next) => {
