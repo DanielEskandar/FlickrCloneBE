@@ -217,6 +217,16 @@ photoRouter.patch('/:id/perm');
  * @apiGroup Photo
  *
  * @apiParam {String} id The Photo's ID
+ * @apiParam (Request Body) {String} title Photo's Name
+ * @apiParam (Request Body) {String} description Photo's Description
+ * @apiParam (Request Body) {[String]} tags Photo's Tags
+ * @apiParam (Request Body) {Date}  dateUploaded Date Uploaded
+ * @apiParam (Request Body) {Date} dateTaken   Date Taken
+ * @apiParam (Request Body) {Object} permissions  The Photo's Viewing Permisions
+ * @apiParam (Request Body) {Number}  license License Number (From 0 to 10)  
+ * @apiParam (Request Body) {Number} safetyLevel Safety Level 
+ * @apiParam (Request Body) {String} contentType Content Type 
+
  *
  * @apiSuccess {string} Status Status of API
  *
@@ -333,12 +343,12 @@ photoRouter.get('/:id/url');
  * @apiUse PhotoNotFoundError
  *
  */
-photoRouter.patch('/:id/tags');
+photoRouter.patch('/:id/tags', authController.protect, photoController.setTags);
 
 /**
  * @api {post} /photo/ Add a Set of Tags to a Photo
  * @apiVersion 1.0.0
- * @apiName AddTags
+ * @apiName addTag
  * @apiGroup Photo
  *
  * @apiHeader {string} Token Authenticaton Token
@@ -354,7 +364,7 @@ photoRouter.patch('/:id/tags');
  * @apiUse PhotoNotFoundError
  *
  */
-photoRouter.post('/:id/tags');
+photoRouter.post('/:id/tags', authController.protect, photoController.addTag);
 
 /**
  * @api {delete} /photo/:id Remove a Tag
@@ -375,7 +385,11 @@ photoRouter.post('/:id/tags');
  * @apiUse PhotoNotFoundError
  *
  */
-photoRouter.delete('/:id/tags');
+photoRouter.delete(
+  '/:id/tags',
+  authController.protect,
+  photoController.removeTag
+);
 
 /**
  * @api {get} /photo/:id/galleries Gets all Galleries Photo Belongs to
@@ -748,7 +762,11 @@ photoRouter.patch('/:id/safety-level');
  * @apiUse PhotoNotFoundError
  *
  */
-photoRouter.post('/:id/comments', photoController.addComment);
+photoRouter.post(
+  '/:id/comments',
+  authController.protect,
+  photoController.addComment
+);
 
 /**
  * @api {delete} /photo/comments/:id Delete a Comment by Commenting User
@@ -768,7 +786,11 @@ photoRouter.post('/:id/comments', photoController.addComment);
  * @apiUse PhotoNotFoundError
  *
  */
-photoRouter.delete('/:id/comments/:commentid', photoController.deleteComment);
+photoRouter.delete(
+  '/:id/comments/:commentid',
+  authController.protect,
+  photoController.deleteComment
+);
 
 /**
  * @api {patch} /photo/comments/:id Edit a Text of a Comment as the Commenting User
@@ -791,7 +813,11 @@ photoRouter.delete('/:id/comments/:commentid', photoController.deleteComment);
  * @apiUse PhotoNotFoundError
  *
  */
-photoRouter.patch('/comments/:id', photoController.editComment);
+photoRouter.patch(
+  '/comments/:id',
+  authController.protect,
+  photoController.editComment
+);
 
 /**
  * @api {get} /photo/:id/comments Get List of Comments for a Photo
@@ -999,12 +1025,16 @@ photoRouter.patch('/:id/licenses');
  * @apiUse PhotoNotFoundError
  *
  */
-photoRouter.post('/:id/tags/:userId');
+photoRouter.post(
+  '/:id/tags/:userid',
+  authController.protect,
+  photoController.tagUser
+);
 
 /**
  * @api {delete} /photo/:id/tags/:userId Remove a User from a Photo
  * @apiVersion 1.0.0
- * @apiName RemovePerson
+ * @apiName removePerson
  * @apiGroup Photo
  *
  * @apiParam {String} photoid The Photo's ID to Remove from
@@ -1020,7 +1050,11 @@ photoRouter.post('/:id/tags/:userId');
  * @apiUse PhotoNotFoundError
  *
  */
-photoRouter.delete('/:id/tags/:userId');
+photoRouter.delete(
+  '/:id/tags/:userid',
+  authController.protect,
+  photoController.removePerson
+);
 
 /**
  * @api {get} /photo/:id/tags Gets a List of User's Tagged in a Photo
@@ -1031,13 +1065,6 @@ photoRouter.delete('/:id/tags/:userId');
  * @apiParam {String} id The Photo's ID
  *
  * @apiSuccess {Object[]} taggedlist Array of User IDs Tagged in the Photo
- * @apiSuccess {Object[]} usernamelist Array of User Names of Users Tagged
- * @apiSuccess {Object[]} realnamelist Array of Real Names of Users Tagged
- * @apiSuccess {Object[]} addedbylist Array of Users who Added the Tag
- * @apiSuccess {Object[]} xlist Array of X Coordinate of the Box
- * @apiSuccess {Object[]} ylist Array of Y Coordinate of the Box
- * @apiSuccess {Object[]} heightlist Array of Height of the Box
- * @apiSuccess {Object[]} widthlist Array of Width of the Box
  *
  * @apiSuccessExample Success-Response:
  *      HTTP/1.1 200 OK
@@ -1045,31 +1072,14 @@ photoRouter.delete('/:id/tags/:userId');
  *          "status": "success",
  *          "data":
  *          {
- *              "taggedlist": [
- *
+ *              "peopleTagged": [
+ *                          {
+ *                               _id: '609093af84b808271488fafd',
+ *                               userId: '608d5450ec00005468604a0c',
+ *                               tagDate: '2012-04-13T18:25:43.511Z',
+ *                           },
  *              ]
- *              "usernamelist": [
  *
- *              ]
- *              "realnamelist": [
- *
- *              ]
- *              "addedbylist": [
- *
- *              ]
- *              "xlist": [
- *
- *              ]
- *              "ylist": [
- *
- *              ]
- *              "heightlist": [
- *
- *              ]
- *              "widthlist": [
- *
- *              ]
- *          }
  *      }
  *
  * @apiUse UnauthError
@@ -1077,7 +1087,7 @@ photoRouter.delete('/:id/tags/:userId');
  * @apiUse PhotoNotFoundError
  *
  */
-photoRouter.get('/:id/tags');
+photoRouter.get('/:id/tags', photoController.getTagged);
 
 /**
  * @api {patch} /photo/:id/rotate Rotate a Photo

@@ -414,9 +414,7 @@ exports.getAllReplies = async (req, res) => {
         {
           path: 'replies',
           model: 'replyModel',
-          select: 'content',
-          select: 'date',
-          select: { _id: 0 },
+          select: { content: 1, date: 1, _id: 0 },
           populate: {
             path: 'user',
             model: 'userModel',
