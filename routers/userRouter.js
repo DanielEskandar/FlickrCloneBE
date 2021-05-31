@@ -222,7 +222,7 @@ userRouter.patch('/', authController.protect, userController.updateUserInfo);
 userRouter.delete('/');
 
 /**
- * @api {get} /user/:id/stats [WIP] Get the User's Statistics
+ * @api {get} /user/:id/stats Get the User's Statistics
  * @apiVersion 1.0.0
  * @apiName GetUserStats
  * @apiGroup User
@@ -238,21 +238,18 @@ userRouter.delete('/');
  * @apiSuccessExample Success-Response:
  *      HTTP/1.1 200 OK
  *      {
- *          "status": "success",
- *          "data":
- *          {
- *              "views": 9200000,
- *              "tags": 159,
- *              "geotags": 0,
- *              "faves": 131,
- *              "groups": 140
- *          }
+ *        "status": "success",
+ *        "data": {
+ *          "views": 358,
+ *          "faves": 2,
+ *          "tags": 4
+ *        }
  *      }
  *
  * @apiUse UserNotFoundError
  */
 
-userRouter.get('/:id/stats');
+userRouter.get('/:id/stats', userController.getStats);
 
 /**
  *

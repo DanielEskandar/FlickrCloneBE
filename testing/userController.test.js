@@ -865,3 +865,19 @@ describe('should get albums of the calling user', () => {
     expect(mRes.json).toBeCalledWith(userTestData.getAlbums);
   });
 });
+
+// TESTING: getStats
+describe('should get stats of the requested User', () => {
+  test('should get stats of Ahmed Abdulkader', async () => {
+    const mReq = {
+      params: { id: '608d5450ec00005468607a0c' },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await userController.getStats(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(userTestData.getStatsData);
+  });
+});

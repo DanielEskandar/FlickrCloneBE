@@ -4,11 +4,13 @@ const _ = require('underscore');
 // INCLUDE MODELS
 const userModel = require('../models/userModel.js');
 const photoModel = require('../models/photoModel.js');
+
 // eslint-disable-next-line no-unused-vars
 const albumModel = require('../models/albumModel.js');
-// eslint-disable-next-line no-unused-vars
 
+// eslint-disable-next-line no-unused-vars
 const galleryModel = require('../models/galleryModel.js');
+
 const testimonialModel = require('../models/testimonialModel.js');
 
 // INCLUDE ERROR CLASS AND ERROR CONTROLLER
@@ -1241,6 +1243,45 @@ exports.getAlbums = async (req, res) => {
       data: JSON.parse(
         // eslint-disable-next-line no-unused-vars
         JSON.stringify(userAlbums)
+      ),
+    });
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};
+
+// getStats
+exports.getStats = async (req, res) => {
+  try {
+    const user = await userModel
+      .findById(req.params.id)
+      .populate('photos', 'views tags')
+      .select(['photos', 'favourites']);
+
+    if (!user) {
+      throw new AppError('No User Found with This ID', 404);
+    }
+
+    const userFavesCount = user.favourites.length;
+    const userViewsCount = user.photos
+      .map((photo) => photo.views)
+      .reduce((sum, photo) => sum + photo);
+
+    const userTagCount = user.photos
+      .map((photo) => photo.tags.length)
+      .reduce((sum, photo) => sum + photo);
+
+    const stats = {
+      views: userViewsCount,
+      faves: userFavesCount,
+      tags: userTagCount,
+    };
+
+    res.status(200).json({
+      status: 'success',
+      data: JSON.parse(
+        // eslint-disable-next-line no-unused-vars
+        JSON.stringify(stats)
       ),
     });
   } catch (err) {
