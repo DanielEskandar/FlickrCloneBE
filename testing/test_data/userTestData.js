@@ -947,9 +947,9 @@ module.exports.getPhotoStream = {
       photos: [
         {
           permissions: {
-            public: false,
+            public: true,
             friend: false,
-            family: true,
+            family: false,
             comment: 2,
             addMeta: 1,
           },

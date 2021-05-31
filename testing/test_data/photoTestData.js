@@ -551,3 +551,16 @@ module.exports.getPermData = {
     },
   },
 };
+
+module.exports.setPermData = {
+  status: 'success',
+  data: {
+    permissions: {
+      public: false,
+      friend: false,
+      family: true,
+      comment: 2,
+      addMeta: 1,
+    },
+  },
+};

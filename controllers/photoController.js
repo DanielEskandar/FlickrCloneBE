@@ -558,3 +558,63 @@ exports.getPerms = async (req, res) => {
     errorController.sendError(err, req, res);
   }
 };
+
+// SET PERMISSIONS FOR A PHOTO
+exports.setPerms = async (req, res) => {
+  try {
+    const photo = await photoModel.findById(req.params.id);
+    if (!photo) {
+      throw new AppError('No Photo Found with this ID', 404);
+    }
+
+    const { public, friend, family, comment, addMeta } = req.body;
+    console.log(public, friend, family, comment, addMeta);
+    if (
+      public === undefined ||
+      friend === undefined ||
+      family === undefined ||
+      comment === undefined ||
+      addMeta === undefined
+    ) {
+      throw new AppError('Missing property fields', 409);
+    }
+
+    if (
+      // if body input in '1' or '0'
+      (public === 1 && (friend !== 0 || family !== 0)) ||
+      ((friend === 1 || family === 1) && public !== 0)
+    ) {
+      throw new AppError('Conflict in permissions', 409);
+    }
+
+    if (
+      // if body input in 'true' or 'false'
+      (public === true && (friend !== false || family !== false)) ||
+      ((friend === true || family === true) && public !== false)
+    ) {
+      throw new AppError('Conflict in permissions', 409);
+    }
+
+    const setPerm = await photoModel
+      .findByIdAndUpdate(
+        req.params.id,
+        {
+          $set: { permissions: req.body },
+        },
+        {
+          new: true,
+          runValidators: true,
+        }
+      )
+      .select({
+        permissions: 1,
+        _id: 0,
+      });
+    res.status(200).json({
+      status: 'success',
+      data: JSON.parse(JSON.stringify(setPerm)),
+    });
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};

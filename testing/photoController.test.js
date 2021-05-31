@@ -490,3 +490,29 @@ describe('should get photo permissions with id 608d5450ec00005468607a0f ', () =>
     expect(mRes.json).toBeCalledWith(photoTestData.getPermData);
   });
 });
+
+//TESTING SET PERM
+describe('should set photo permissions with id 608d5450ec00005468628a0d ', () => {
+  test('should return updated permissions', async () => {
+    const mReq = {
+      params: {
+        id: '608d5450ec00005468628a0d',
+      },
+      body: {
+        public: false,
+        friend: false,
+        family: true,
+        comment: 2,
+        addMeta: 1,
+      },
+      user: { id: '608d55c7e512b74ee00791de' },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await photoController.setPerms(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(photoTestData.setPermData);
+  });
+});
