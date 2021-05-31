@@ -658,11 +658,23 @@ exports.search = async (req, res) => {
     const searchResults = [];
     await Promise.all(
       queries.map(async (el) => {
-        const searchResult = await userModel
-          .find({
-            $or: [{ firstName: el }, { lastName: el }, { displayName: el }],
-          })
-          .select({ _id: 1, firstName: 1, lastName: 1, displayName: 1 });
+        const searchResult = await userModel.aggregate([
+          {
+            $match: {
+              $or: [{ firstName: el }, { lastName: el }, { displayName: el }],
+            },
+          },
+          {
+            $project: {
+              _id: 1,
+              firstName: 1,
+              lastName: 1,
+              displayName: 1,
+              photoCount: { $size: '$photos' },
+            },
+          },
+        ]);
+
         searchResults.push(searchResult);
       })
     );
@@ -684,6 +696,30 @@ exports.search = async (req, res) => {
       const page = req.query.page * 1 || 1;
       const limit = req.query.limit * 1 || 100;
       results = APIFeatures.paginate(results, page, limit);
+
+      // Get FollowerCount
+      await Promise.all(
+        results.map(async (el) => {
+          const user = await userModel.aggregate([
+            {
+              $match: {
+                'following.user': el._id,
+              },
+            },
+            {
+              $group: {
+                _id: null,
+                followerCount: { $sum: 1 },
+              },
+            },
+          ]);
+          if (user.length === 1) {
+            el.followerCount = user[0].followerCount;
+          } else {
+            el.followerCount = 0;
+          }
+        })
+      );
     }
 
     res.status(200).json({

@@ -613,7 +613,12 @@
     "displayName": "dummy2",
     "email": "search01@gmail.com",
     "age": 21,
-    "password": "Abdcdef!1"
+    "password": "Abdcdef!1",
+    "photos": [
+      "60b3d288f257642aac48eb4e",
+      "60b3d288f257642aac48eb4d",
+      "60b3d288f257642aac48eb4c"
+    ]
   },
   {
     "_id": "60b1619d62e64a359ccb4a63",
@@ -640,7 +645,14 @@
     "displayName": "search2",
     "email": "search04@gmail.com",
     "age": 21,
-    "password": "Abdcdef!1"
+    "password": "Abdcdef!1",
+    "following": [
+      {
+        "user": "60b1619d62e64a359ccb4a62",
+        "relation": "friend",
+        "followDate": "2021-05-04T12:12:24.255+00:00"
+      }
+    ]
   },
   {
     "_id": "60b1619d62e64a359ccb4a66",
@@ -649,7 +661,14 @@
     "displayName": "dummy7",
     "email": "search05@gmail.com",
     "age": 21,
-    "password": "Abdcdef!1"
+    "password": "Abdcdef!1",
+    "following": [
+      {
+        "user": "60b1619d62e64a359ccb4a62",
+        "relation": "friend",
+        "followDate": "2021-05-04T12:12:24.255+00:00"
+      }
+    ]
   },
   {
     "_id": "60b3d0ae25109d5840208164",
@@ -658,7 +677,14 @@
     "displayName": "photoOwner1",
     "email": "photoowner1@gmail.com",
     "age": 21,
-    "password": "Abdcdef!1"
+    "password": "Abdcdef!1",
+    "following": [
+      {
+        "user": "60b1619d62e64a359ccb4a62",
+        "relation": "friend",
+        "followDate": "2021-05-04T12:12:24.255+00:00"
+      }
+    ]
   },
   {
     "_id": "60b3d0ae25109d5840208165",
@@ -667,6 +693,13 @@
     "displayName": "photoOwner2",
     "email": "photoowner2@gmail.com",
     "age": 21,
-    "password": "Abdcdef!1"
+    "password": "Abdcdef!1",
+    "following": [
+      {
+        "user": "60b1619d62e64a359ccb4a62",
+        "relation": "friend",
+        "followDate": "2021-05-04T12:12:24.255+00:00"
+      }
+    ]
   }
 ]
