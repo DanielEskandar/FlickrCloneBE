@@ -1263,9 +1263,6 @@ exports.getStats = async (req, res) => {
     }
 
     const userFavesCount = user.favourites.length;
-
-    console.log(user);
-
     const userViewsCount = user.photos
       .map((photo) => photo.views)
       .reduce((sum, photo) => sum + photo);

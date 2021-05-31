@@ -3762,3 +3762,12 @@ module.exports.getGalleries = {
     _id: '608d55c7e512b74ee00791de',
   },
 };
+
+exports.getStatsData = {
+  status: 'success',
+  data: {
+    views: 358,
+    faves: 2,
+    tags: 4,
+  },
+};
