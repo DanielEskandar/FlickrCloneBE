@@ -1523,7 +1523,15 @@ module.exports.getRecentPhotos = {
             },
             canDownload: true,
           },
+          favourites: 51,
           _id: '608d5450ec00005468617a0c',
+          userId: {
+            _id: '608d55c7e512b74ee00791dc',
+            displayName: 'AliaaKhalifa',
+            firstName: 'Aliaa',
+            lastName: 'Khalifa',
+          },
+          title: 'Sakura Season in Nihon',
           dateUploaded: '2021-12-23T18:25:43.511Z',
         },
         {
@@ -1592,7 +1600,15 @@ module.exports.getRecentPhotos = {
             },
             canDownload: true,
           },
+          favourites: 51,
           _id: '608d5450ec00005468628a0d',
+          userId: {
+            _id: '608d55c7e512b74ee00791dc',
+            displayName: 'AliaaKhalifa',
+            firstName: 'Aliaa',
+            lastName: 'Khalifa',
+          },
+          title: 'Tsushima Wallpaper',
           dateUploaded: '2021-12-23T18:25:43.511Z',
         },
         {
@@ -1661,7 +1677,15 @@ module.exports.getRecentPhotos = {
             },
             canDownload: true,
           },
+          favourites: 11,
           _id: '604d5450ec01005468617a04',
+          userId: {
+            _id: '608d5450ec00005468607a0c',
+            displayName: 'AhmedAbdulkader99',
+            firstName: 'Ahmed',
+            lastName: 'Abdulkader',
+          },
+          title: 'Family pic',
           dateUploaded: '2021-11-23T18:29:43.511Z',
         },
         {
@@ -1730,7 +1754,15 @@ module.exports.getRecentPhotos = {
             },
             canDownload: true,
           },
+          favourites: 1100,
           _id: '604d5450ec01005468617a14',
+          userId: {
+            _id: '608d5450ec00005468607a0c',
+            displayName: 'AhmedAbdulkader99',
+            firstName: 'Ahmed',
+            lastName: 'Abdulkader',
+          },
+          title: 'Meow',
           dateUploaded: '2021-11-23T18:29:43.511Z',
         },
         {
@@ -1799,7 +1831,15 @@ module.exports.getRecentPhotos = {
             },
             canDownload: false,
           },
+          favourites: 119,
           _id: '604d5450ec00005468617a0c',
+          userId: {
+            _id: '608d55c7e512b74ee00791dd',
+            displayName: 'MariamKhashab',
+            firstName: 'Mariam',
+            lastName: 'Khashab',
+          },
+          title: 'Wijdesteeg in Amsterdam',
           dateUploaded: '2018-12-23T18:29:43.511Z',
         },
       ],
@@ -1881,6 +1921,14 @@ module.exports.getPopularPhotos = {
           },
           favourites: 1100,
           _id: '604d5450ec01005468617a14',
+          userId: {
+            _id: '608d5450ec00005468607a0c',
+            displayName: 'AhmedAbdulkader99',
+            firstName: 'Ahmed',
+            lastName: 'Abdulkader',
+          },
+          title: 'Meow',
+          dateUploaded: '2021-11-23T18:29:43.511Z',
         },
         {
           sizes: {
@@ -1950,6 +1998,14 @@ module.exports.getPopularPhotos = {
           },
           favourites: 119,
           _id: '604d5450ec00005468617a0c',
+          userId: {
+            _id: '608d55c7e512b74ee00791dd',
+            displayName: 'MariamKhashab',
+            firstName: 'Mariam',
+            lastName: 'Khashab',
+          },
+          title: 'Wijdesteeg in Amsterdam',
+          dateUploaded: '2018-12-23T18:29:43.511Z',
         },
         {
           sizes: {
@@ -2019,6 +2075,14 @@ module.exports.getPopularPhotos = {
           },
           favourites: 51,
           _id: '608d5450ec00005468617a0c',
+          userId: {
+            _id: '608d55c7e512b74ee00791dc',
+            displayName: 'AliaaKhalifa',
+            firstName: 'Aliaa',
+            lastName: 'Khalifa',
+          },
+          title: 'Sakura Season in Nihon',
+          dateUploaded: '2021-12-23T18:25:43.511Z',
         },
         {
           sizes: {
@@ -2088,6 +2152,14 @@ module.exports.getPopularPhotos = {
           },
           favourites: 51,
           _id: '608d5450ec00005468628a0d',
+          userId: {
+            _id: '608d55c7e512b74ee00791dc',
+            displayName: 'AliaaKhalifa',
+            firstName: 'Aliaa',
+            lastName: 'Khalifa',
+          },
+          title: 'Tsushima Wallpaper',
+          dateUploaded: '2021-12-23T18:25:43.511Z',
         },
         {
           sizes: {
@@ -2157,6 +2229,14 @@ module.exports.getPopularPhotos = {
           },
           favourites: 11,
           _id: '604d5450ec01005468617a04',
+          userId: {
+            _id: '608d5450ec00005468607a0c',
+            displayName: 'AhmedAbdulkader99',
+            firstName: 'Ahmed',
+            lastName: 'Abdulkader',
+          },
+          title: 'Family pic',
+          dateUploaded: '2021-11-23T18:29:43.511Z',
         },
       ],
       _id: '608d5450ec00005468607a11',

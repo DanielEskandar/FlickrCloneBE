@@ -836,7 +836,12 @@ exports.getRecentPhotos = async (req, res) => {
       .findById(req.user.id)
       .populate({
         path: 'photos',
-        select: ['dateUploaded', 'sizes'],
+        select: ['title', 'dateUploaded', 'sizes', 'favourites', 'userId'],
+        populate: {
+          path: 'userId',
+          model: 'userModel',
+          select: ['firstName', 'lastName', 'displayName'],
+        },
         options: { sort: '-dateUploaded' }, // DESCENDING SORT
       })
       .select('photos')
@@ -874,7 +879,12 @@ exports.getPopularPhotos = async (req, res) => {
       .findById(req.user.id)
       .populate({
         path: 'photos',
-        select: ['favourites', 'sizes'],
+        select: ['title', 'dateUploaded', 'sizes', 'favourites', 'userId'],
+        populate: {
+          path: 'userId',
+          model: 'userModel',
+          select: ['firstName', 'lastName', 'displayName'],
+        },
         options: { sort: '-favourites' }, // DESCENDING SORT
       })
       .select('photos')
@@ -915,7 +925,12 @@ exports.getRequestedUserRecentPhotos = async (req, res) => {
       .findById(req.params.id)
       .populate({
         path: 'photos',
-        select: ['dateUploaded', 'sizes'],
+        select: ['title', 'dateUploaded', 'sizes', 'favourites', 'userId'],
+        populate: {
+          path: 'userId',
+          model: 'userModel',
+          select: ['firstName', 'lastName', 'displayName'],
+        },
         options: { sort: '-dateUploaded' }, // DESCENDING SORT
       })
       .select('photos')
@@ -956,7 +971,12 @@ exports.getRequestedUserPopularPhotos = async (req, res) => {
       .findById(req.params.id)
       .populate({
         path: 'photos',
-        select: ['favourites', 'sizes'],
+        select: ['title', 'dateUploaded', 'sizes', 'favourites', 'userId'],
+        populate: {
+          path: 'userId',
+          model: 'userModel',
+          select: ['firstName', 'lastName', 'displayName'],
+        },
         options: { sort: '-favourites' }, // DESCENDING SORT
       })
       .select('photos')
