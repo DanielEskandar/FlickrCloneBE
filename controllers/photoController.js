@@ -754,7 +754,7 @@ exports.search = async (req, res) => {
     await photoModel.populate(searchResults, {
       path: 'userId',
       model: 'userModel',
-      select: 'firstName lastName',
+      select: 'firstName lastName pro',
     });
 
     // Merge results of all queries into one array (Union Operation)

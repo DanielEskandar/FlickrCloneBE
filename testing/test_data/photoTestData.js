@@ -905,6 +905,7 @@ module.exports.searchData1 = {
       dateUploaded: '2018-04-23T18:25:43.511Z',
       dateTaken: '2011-04-23T18:25:43.511Z',
       userId: {
+        pro: false,
         _id: '60b3d0ae25109d5840208164',
         firstName: 'Photo Owner 1 First Name',
         lastName: 'Photo Owner 1 Last Name',
@@ -984,6 +985,7 @@ module.exports.searchData1 = {
       dateUploaded: '2017-04-23T18:25:43.511Z',
       dateTaken: '2012-04-23T18:25:43.511Z',
       userId: {
+        pro: false,
         _id: '60b3d0ae25109d5840208165',
         firstName: 'Photo Owner 2 First Name',
         lastName: 'Photo Owner 2 Last Name',
@@ -1063,6 +1065,7 @@ module.exports.searchData1 = {
       dateUploaded: '2016-04-23T18:25:43.511Z',
       dateTaken: '2013-04-23T18:25:43.511Z',
       userId: {
+        pro: false,
         _id: '60b3d0ae25109d5840208164',
         firstName: 'Photo Owner 1 First Name',
         lastName: 'Photo Owner 1 Last Name',
@@ -1148,6 +1151,7 @@ module.exports.searchData2 = {
       dateUploaded: '2017-04-23T18:25:43.511Z',
       dateTaken: '2012-04-23T18:25:43.511Z',
       userId: {
+        pro: false,
         _id: '60b3d0ae25109d5840208165',
         firstName: 'Photo Owner 2 First Name',
         lastName: 'Photo Owner 2 Last Name',
@@ -1233,6 +1237,7 @@ module.exports.searchData3 = {
       dateUploaded: '2018-04-23T18:25:43.511Z',
       dateTaken: '2011-04-23T18:25:43.511Z',
       userId: {
+        pro: false,
         _id: '60b3d0ae25109d5840208164',
         firstName: 'Photo Owner 1 First Name',
         lastName: 'Photo Owner 1 Last Name',
@@ -1312,6 +1317,7 @@ module.exports.searchData3 = {
       dateUploaded: '2016-04-23T18:25:43.511Z',
       dateTaken: '2013-04-23T18:25:43.511Z',
       userId: {
+        pro: false,
         _id: '60b3d0ae25109d5840208164',
         firstName: 'Photo Owner 1 First Name',
         lastName: 'Photo Owner 1 Last Name',
@@ -1397,6 +1403,7 @@ module.exports.searchData4 = {
       dateUploaded: '2018-04-23T18:25:43.511Z',
       dateTaken: '2011-04-23T18:25:43.511Z',
       userId: {
+        pro: false,
         _id: '60b3d0ae25109d5840208164',
         firstName: 'Photo Owner 1 First Name',
         lastName: 'Photo Owner 1 Last Name',
@@ -1476,6 +1483,7 @@ module.exports.searchData4 = {
       dateUploaded: '2017-04-23T18:25:43.511Z',
       dateTaken: '2012-04-23T18:25:43.511Z',
       userId: {
+        pro: false,
         _id: '60b3d0ae25109d5840208165',
         firstName: 'Photo Owner 2 First Name',
         lastName: 'Photo Owner 2 Last Name',
@@ -1555,6 +1563,7 @@ module.exports.searchData4 = {
       dateUploaded: '2016-04-23T18:25:43.511Z',
       dateTaken: '2013-04-23T18:25:43.511Z',
       userId: {
+        pro: false,
         _id: '60b3d0ae25109d5840208164',
         firstName: 'Photo Owner 1 First Name',
         lastName: 'Photo Owner 1 Last Name',
@@ -1640,6 +1649,7 @@ module.exports.searchData5 = {
       dateUploaded: '2016-04-23T18:25:43.511Z',
       dateTaken: '2013-04-23T18:25:43.511Z',
       userId: {
+        pro: false,
         _id: '60b3d0ae25109d5840208164',
         firstName: 'Photo Owner 1 First Name',
         lastName: 'Photo Owner 1 Last Name',
@@ -1719,6 +1729,7 @@ module.exports.searchData5 = {
       dateUploaded: '2017-04-23T18:25:43.511Z',
       dateTaken: '2012-04-23T18:25:43.511Z',
       userId: {
+        pro: false,
         _id: '60b3d0ae25109d5840208165',
         firstName: 'Photo Owner 2 First Name',
         lastName: 'Photo Owner 2 Last Name',
@@ -1798,6 +1809,7 @@ module.exports.searchData5 = {
       dateUploaded: '2018-04-23T18:25:43.511Z',
       dateTaken: '2011-04-23T18:25:43.511Z',
       userId: {
+        pro: false,
         _id: '60b3d0ae25109d5840208164',
         firstName: 'Photo Owner 1 First Name',
         lastName: 'Photo Owner 1 Last Name',
@@ -1883,6 +1895,7 @@ module.exports.searchData6 = {
       dateUploaded: '2012-04-23T18:25:43.511Z',
       dateTaken: '2013-04-23T18:25:43.511Z',
       userId: {
+        pro: false,
         _id: '60b3d0ae25109d5840208165',
         firstName: 'Photo Owner 2 First Name',
         lastName: 'Photo Owner 2 Last Name',
@@ -1962,6 +1975,7 @@ module.exports.searchData6 = {
       dateUploaded: '2012-04-23T18:25:43.511Z',
       dateTaken: '2013-04-23T18:25:43.511Z',
       userId: {
+        pro: false,
         _id: '60b3d0ae25109d5840208164',
         firstName: 'Photo Owner 1 First Name',
         lastName: 'Photo Owner 1 Last Name',
@@ -2041,6 +2055,7 @@ module.exports.searchData6 = {
       dateUploaded: '2012-04-23T18:25:43.511Z',
       dateTaken: '2013-04-23T18:25:43.511Z',
       userId: {
+        pro: false,
         _id: '60b3d0ae25109d5840208165',
         firstName: 'Photo Owner 2 First Name',
         lastName: 'Photo Owner 2 Last Name',
@@ -2126,6 +2141,7 @@ module.exports.searchData7 = {
       dateUploaded: '2012-04-23T18:25:43.511Z',
       dateTaken: '2013-04-23T18:25:43.511Z',
       userId: {
+        pro: false,
         _id: '60b3d0ae25109d5840208165',
         firstName: 'Photo Owner 2 First Name',
         lastName: 'Photo Owner 2 Last Name',
@@ -2205,6 +2221,7 @@ module.exports.searchData7 = {
       dateUploaded: '2012-04-23T18:25:43.511Z',
       dateTaken: '2013-04-23T18:25:43.511Z',
       userId: {
+        pro: false,
         _id: '60b3d0ae25109d5840208164',
         firstName: 'Photo Owner 1 First Name',
         lastName: 'Photo Owner 1 Last Name',
