@@ -3772,8 +3772,8 @@ module.exports.getGalleries = {
 exports.getStatsData = {
   status: 'success',
   data: {
-    views: 358,
-    faves: 2,
-    tags: 4,
+    views: 200,
+    faves: 38,
+    tags: 3,
   },
 };

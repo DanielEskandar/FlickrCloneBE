@@ -870,7 +870,7 @@ describe('should get albums of the calling user', () => {
 describe('should get stats of the requested User', () => {
   test('should get stats of Ahmed Abdulkader', async () => {
     const mReq = {
-      params: { id: '608d5450ec00005468607a0c' },
+      params: { id: '60b3d0ae25109d5840208161' },
     };
     const mRes = {
       status: jest.fn().mockReturnThis(),

@@ -193,7 +193,9 @@ exports.getInformation = async (req, res) => {
         }
       )
       .select({
+        permissions: 0,
         _id: 0,
+        safetyLevel: 0,
         hidden: 0,
         license: 0,
       });
