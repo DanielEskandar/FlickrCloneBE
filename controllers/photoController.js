@@ -6,6 +6,7 @@ const photoModel = require('../models/photoModel.js');
 const commentModel = require('../models/commentModel.js');
 const userModel = require('../models/userModel.js');
 const galleryModel = require('../models/galleryModel.js');
+const locationModel = require('../models/locationModel.js');
 
 // INCLUDE ERROR CLASS AND ERROR CONTROLLER
 const AppError = require('../utils/appError.js');
@@ -787,6 +788,96 @@ exports.search = async (req, res) => {
     res.status(200).json({
       status: 'success',
       data: JSON.parse(JSON.stringify(searchResults)),
+    });
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};
+
+// GET LOCATION
+exports.getLocation = async (req, res) => {
+  try {
+    const photo = await photoModel
+      .findById(req.params.id)
+      .select({
+        _id: 0,
+        location: 1,
+      })
+      .populate('location');
+
+    if (!photo) {
+      throw new AppError('No Photo Found with this ID', 404);
+    }
+
+    res.status(200).json({
+      status: 'success',
+      data: JSON.parse(JSON.stringify(photo)),
+    });
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};
+
+// SET LOCATION
+exports.setLocation = async (req, res) => {
+  try {
+    const photo = await photoModel.findById(req.params.id);
+    if (!photo) {
+      throw new AppError('No Photo Found with This ID', 404);
+    }
+
+    const location = await locationModel.create(req.body); //create new location instance
+
+    const updated = await photoModel
+      .findByIdAndUpdate(
+        req.params.id,
+        {
+          $set: { location: location },
+        },
+        {
+          new: true,
+          runValidators: true,
+        }
+      )
+      .select({
+        _id: 0,
+        location: 1,
+      })
+      .populate('location');
+
+    res.status(200).json({
+      status: 'success',
+      data: JSON.parse(JSON.stringify(updated)),
+    });
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};
+
+// DELETE LOCATION
+exports.deleteLocation = async (req, res) => {
+  try {
+    //photo validation
+    if (!(await photoModel.findById(req.params.id))) {
+      throw new AppError('No Photo Found with this ID', 404);
+    }
+    const check = await photoModel.findById(req.params.id);
+    if (check.location == null) {
+      throw new AppError('Photo Already doesnt have a location', 404);
+    }
+    const photo = await photoModel.findByIdAndUpdate(
+      req.params.id,
+      {
+        $set: { location: null },
+      },
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
+    res.status(200).json({
+      status: 'success',
+      data: JSON.parse(JSON.stringify(photo)),
     });
   } catch (err) {
     errorController.sendError(err, req, res);

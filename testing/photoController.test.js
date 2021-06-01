@@ -570,3 +570,55 @@ describe('should search photos and send response correctly', () => {
     expect(mRes.json).toBeCalledWith(photoTestData.searchData7);
   });
 });
+
+// get photo location
+describe('should  get location details of a photo', () => {
+  test('should return coordinates of  Photo with id 608d5450ec00005468607a0f', async () => {
+    const mReq = {
+      params: { id: '608d5450ec00005468607a0f' },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await photoController.getLocation(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(photoTestData.getLocationData);
+  });
+});
+
+// set photo location
+describe('should  set a new location to the photo', () => {
+  test('', async () => {
+    const mReq = {
+      params: { id: '608d5450ec00005468607a0f' },
+      body: {
+        name: 'location 1',
+        coordinates: { latitude: 50, longitude: 70 },
+      },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await photoController.setLocation(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(photoTestData.setLocationData);
+  });
+});
+
+// delete photo location
+describe('should remove the photo from tagged location', () => {
+  test('returns photo details with location set to null', async () => {
+    const mReq = {
+      params: { id: '608d5450ec00005468607a0f' },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await photoController.deleteLocation(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(photoTestData.deleteLocationData);
+  });
+});
