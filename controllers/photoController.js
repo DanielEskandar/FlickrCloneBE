@@ -181,13 +181,35 @@ exports.uploadPhoto = async (req, res) => {
 // GET INFORMATION FOR A PHOTO
 exports.getInformation = async (req, res) => {
   try {
-    const info = await photoModel.findById(req.params.id).select({
-      permissions: 0,
-      _id: 0,
-      safetyLevel: 0,
-      hidden: 0,
-      license: 0,
-    });
+    const info = await photoModel
+      .findById(req.params.id)
+      .select({
+        _id: 0,
+        hidden: 0,
+        license: 0,
+        __v: 0,
+      })
+      .populate([
+        {
+          path: 'comments',
+          model: 'commentModel',
+          populate: {
+            path: 'userId',
+            model: 'userModel',
+            select: 'displayName firstName lastName',
+          },
+        },
+        {
+          path: 'userId',
+          model: 'userModel',
+          select: 'displayName firstName lastName',
+        },
+        {
+          path: 'peopleTagged.userId',
+          model: 'userModel',
+          select: 'displayName firstName lastName',
+        },
+      ]);
 
     if (!info) {
       throw new AppError('No Photo Found with this ID', 404);
