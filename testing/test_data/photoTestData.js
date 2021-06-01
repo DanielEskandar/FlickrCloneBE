@@ -1006,7 +1006,7 @@ module.exports.searchData1 = {
       },
       favourites: 75,
       dateUploaded: '2017-04-23T18:25:43.511Z',
-      dateTaken: '2012-06-23T18:25:43.511Z',
+      dateTaken: '2012-04-23T18:25:43.511Z',
       userId: {
         pro: false,
         _id: '60b3d0ae25109d5840208165',
@@ -1172,7 +1172,7 @@ module.exports.searchData2 = {
       },
       favourites: 75,
       dateUploaded: '2017-04-23T18:25:43.511Z',
-      dateTaken: '2012-06-23T18:25:43.511Z',
+      dateTaken: '2012-04-23T18:25:43.511Z',
       userId: {
         pro: false,
         _id: '60b3d0ae25109d5840208165',
@@ -1504,7 +1504,7 @@ module.exports.searchData4 = {
       },
       favourites: 75,
       dateUploaded: '2017-04-23T18:25:43.511Z',
-      dateTaken: '2012-06-23T18:25:43.511Z',
+      dateTaken: '2012-04-23T18:25:43.511Z',
       userId: {
         pro: false,
         _id: '60b3d0ae25109d5840208165',
@@ -1750,7 +1750,7 @@ module.exports.searchData5 = {
       },
       favourites: 75,
       dateUploaded: '2017-04-23T18:25:43.511Z',
-      dateTaken: '2012-06-23T18:25:43.511Z',
+      dateTaken: '2012-04-23T18:25:43.511Z',
       userId: {
         pro: false,
         _id: '60b3d0ae25109d5840208165',
@@ -1848,6 +1848,86 @@ module.exports.searchData6 = {
   status: 'success',
   data: [
     {
+      _id: '60b3d288f257642aac48eb4e',
+      sizes: {
+        size: {
+          original: {
+            height: 120,
+            width: 60,
+            source: 'https://www.google.com/',
+            url: 'https://www.google.com/',
+          },
+          large: {
+            height: 190,
+            width: 20,
+            source: 'https://www.google.com/',
+            url: 'https://www.google.com/',
+          },
+          medium800: {
+            height: 200,
+            width: 60,
+            source: 'https://www.google.com/',
+            url: 'https://www.google.com/',
+          },
+          medium640: {
+            height: 1200,
+            width: 60,
+            source: 'https://www.google.com/',
+            url: 'https://www.google.com/',
+          },
+          medium: {
+            height: 120,
+            width: 600,
+            source: 'https://www.google.com/',
+            url: 'https://www.google.com/',
+          },
+          small320: {
+            height: 12,
+            width: 60,
+            source: 'https://www.google.com/',
+            url: 'https://www.google.com/',
+          },
+          small: {
+            height: 1000,
+            width: 60,
+            source: 'https://www.google.com/',
+            url: 'https://www.google.com/',
+          },
+          thumbnail: {
+            height: 50,
+            width: 50,
+            source: 'https://www.google.com/',
+            url: 'https://www.google.com/',
+          },
+          largeSquare: {
+            height: 120,
+            width: 120,
+            source: 'https://www.google.com/',
+            url: 'https://www.google.com/',
+          },
+          square: {
+            height: 100,
+            width: 100,
+            source: 'https://www.google.com/',
+            url: 'https://www.google.com/',
+          },
+        },
+        canDownload: false,
+      },
+      favourites: 38,
+      dateUploaded: '2012-04-23T18:25:43.511Z',
+      dateTaken: '2013-04-23T18:25:43.511Z',
+      userId: {
+        pro: false,
+        _id: '60b3d0ae25109d5840208165',
+        firstName: 'Photo Owner 2 First Name',
+        lastName: 'Photo Owner 2 Last Name',
+      },
+      title: 'dummy',
+      description: 'dummy',
+      comments: 0,
+    },
+    {
       _id: '60b3d288f257642aac48eb4d',
       sizes: {
         size: {
@@ -1915,7 +1995,7 @@ module.exports.searchData6 = {
         canDownload: false,
       },
       favourites: 22,
-      dateUploaded: '2012-08-23T18:25:43.511Z',
+      dateUploaded: '2012-04-23T18:25:43.511Z',
       dateTaken: '2013-04-23T18:25:43.511Z',
       userId: {
         pro: false,
@@ -1995,7 +2075,7 @@ module.exports.searchData6 = {
         canDownload: false,
       },
       favourites: 14,
-      dateUploaded: '2012-07-23T18:25:43.511Z',
+      dateUploaded: '2012-04-23T18:25:43.511Z',
       dateTaken: '2013-04-23T18:25:43.511Z',
       userId: {
         pro: false,
@@ -2007,6 +2087,12 @@ module.exports.searchData6 = {
       description: 'dummy',
       comments: 0,
     },
+  ],
+};
+
+module.exports.searchData7 = {
+  status: 'success',
+  data: [
     {
       _id: '60b3d288f257642aac48eb4e',
       sizes: {
@@ -2075,7 +2161,7 @@ module.exports.searchData6 = {
         canDownload: false,
       },
       favourites: 38,
-      dateUploaded: '2012-05-23T18:25:43.511Z',
+      dateUploaded: '2012-04-23T18:25:43.511Z',
       dateTaken: '2013-04-23T18:25:43.511Z',
       userId: {
         pro: false,
@@ -2087,12 +2173,6 @@ module.exports.searchData6 = {
       description: 'dummy',
       comments: 0,
     },
-  ],
-};
-
-module.exports.searchData7 = {
-  status: 'success',
-  data: [
     {
       _id: '60b3d288f257642aac48eb4d',
       sizes: {
@@ -2161,7 +2241,7 @@ module.exports.searchData7 = {
         canDownload: false,
       },
       favourites: 22,
-      dateUploaded: '2012-08-23T18:25:43.511Z',
+      dateUploaded: '2012-04-23T18:25:43.511Z',
       dateTaken: '2013-04-23T18:25:43.511Z',
       userId: {
         pro: false,
@@ -2170,86 +2250,6 @@ module.exports.searchData7 = {
         lastName: 'Photo Owner 1 Last Name',
       },
       title: 'photo4',
-      description: 'dummy',
-      comments: 0,
-    },
-    {
-      _id: '60b3d288f257642aac48eb4e',
-      sizes: {
-        size: {
-          original: {
-            height: 120,
-            width: 60,
-            source: 'https://www.google.com/',
-            url: 'https://www.google.com/',
-          },
-          large: {
-            height: 190,
-            width: 20,
-            source: 'https://www.google.com/',
-            url: 'https://www.google.com/',
-          },
-          medium800: {
-            height: 200,
-            width: 60,
-            source: 'https://www.google.com/',
-            url: 'https://www.google.com/',
-          },
-          medium640: {
-            height: 1200,
-            width: 60,
-            source: 'https://www.google.com/',
-            url: 'https://www.google.com/',
-          },
-          medium: {
-            height: 120,
-            width: 600,
-            source: 'https://www.google.com/',
-            url: 'https://www.google.com/',
-          },
-          small320: {
-            height: 12,
-            width: 60,
-            source: 'https://www.google.com/',
-            url: 'https://www.google.com/',
-          },
-          small: {
-            height: 1000,
-            width: 60,
-            source: 'https://www.google.com/',
-            url: 'https://www.google.com/',
-          },
-          thumbnail: {
-            height: 50,
-            width: 50,
-            source: 'https://www.google.com/',
-            url: 'https://www.google.com/',
-          },
-          largeSquare: {
-            height: 120,
-            width: 120,
-            source: 'https://www.google.com/',
-            url: 'https://www.google.com/',
-          },
-          square: {
-            height: 100,
-            width: 100,
-            source: 'https://www.google.com/',
-            url: 'https://www.google.com/',
-          },
-        },
-        canDownload: false,
-      },
-      favourites: 38,
-      dateUploaded: '2012-05-23T18:25:43.511Z',
-      dateTaken: '2013-04-23T18:25:43.511Z',
-      userId: {
-        pro: false,
-        _id: '60b3d0ae25109d5840208165',
-        firstName: 'Photo Owner 2 First Name',
-        lastName: 'Photo Owner 2 Last Name',
-      },
-      title: 'dummy',
       description: 'dummy',
       comments: 0,
     },
@@ -2503,6 +2503,87 @@ module.exports.explore = {
           sizes: {
             size: {
               original: {
+                height: 120,
+                width: 60,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              large: {
+                height: 190,
+                width: 20,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              medium800: {
+                height: 200,
+                width: 60,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              medium640: {
+                height: 1200,
+                width: 60,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              medium: {
+                height: 120,
+                width: 600,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              small320: {
+                height: 12,
+                width: 60,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              small: {
+                height: 1000,
+                width: 60,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              thumbnail: {
+                height: 50,
+                width: 50,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              largeSquare: {
+                height: 120,
+                width: 120,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+              square: {
+                height: 60,
+                width: 60,
+                source: 'https://www.google.com/',
+                url: 'https://www.google.com/',
+              },
+            },
+            canDownload: true,
+          },
+          comments: ['6090acefc4cc491a7cf8b47c', '6090beb07237ad1fb4458fae'],
+          favourites: 51,
+          _id: '608d5450ec00005468628a0d',
+          userId: {
+            _id: '608d55c7e512b74ee00791dc',
+            displayName: 'AliaaKhalifa',
+            firstName: 'Aliaa',
+            lastName: 'Khalifa',
+          },
+          title: 'Tsushima Wallpaper',
+          dateUploaded: '2021-12-23T18:25:43.511Z',
+        },
+        commentCount: 2,
+      },
+      {
+        photo: {
+          sizes: {
+            size: {
+              original: {
                 height: 100,
                 width: 60,
                 source: 'http://www.nyan.cat/',
@@ -2646,8 +2727,8 @@ module.exports.explore = {
             },
             canDownload: true,
           },
-          comments: [],
-          favourites: 25,
+          comments: ['608d5450ec00005468629b3d', '608d5450ec00005468629b4d'],
+          favourites: 24,
           _id: '608d5450ec00005468628b2d',
           userId: {
             _id: '608d55c7e512b74ee00791dc',
@@ -2658,7 +2739,7 @@ module.exports.explore = {
           title: 'Fireflies',
           dateUploaded: '2021-11-23T18:25:43.511Z',
         },
-        commentCount: 0,
+        commentCount: 2,
       },
       {
         photo: {
@@ -2806,90 +2887,9 @@ module.exports.explore = {
                 url: 'https://www.google.com/',
               },
             },
-            canDownload: true,
-          },
-          comments: ['6090acefc4cc491a7cf8b47c', '6090beb07237ad1fb4458fae'],
-          favourites: 51,
-          _id: '608d5450ec00005468628a0d',
-          userId: {
-            _id: '608d55c7e512b74ee00791dc',
-            displayName: 'AliaaKhalifa',
-            firstName: 'Aliaa',
-            lastName: 'Khalifa',
-          },
-          title: 'Test Edit Info',
-          dateUploaded: '2020-11-03T06:10:45.000Z',
-        },
-        commentCount: 2,
-      },
-      {
-        photo: {
-          sizes: {
-            size: {
-              original: {
-                height: 120,
-                width: 60,
-                source: 'https://www.google.com/',
-                url: 'https://www.google.com/',
-              },
-              large: {
-                height: 190,
-                width: 20,
-                source: 'https://www.google.com/',
-                url: 'https://www.google.com/',
-              },
-              medium800: {
-                height: 200,
-                width: 60,
-                source: 'https://www.google.com/',
-                url: 'https://www.google.com/',
-              },
-              medium640: {
-                height: 1200,
-                width: 60,
-                source: 'https://www.google.com/',
-                url: 'https://www.google.com/',
-              },
-              medium: {
-                height: 120,
-                width: 600,
-                source: 'https://www.google.com/',
-                url: 'https://www.google.com/',
-              },
-              small320: {
-                height: 12,
-                width: 60,
-                source: 'https://www.google.com/',
-                url: 'https://www.google.com/',
-              },
-              small: {
-                height: 1000,
-                width: 60,
-                source: 'https://www.google.com/',
-                url: 'https://www.google.com/',
-              },
-              thumbnail: {
-                height: 50,
-                width: 50,
-                source: 'https://www.google.com/',
-                url: 'https://www.google.com/',
-              },
-              largeSquare: {
-                height: 120,
-                width: 120,
-                source: 'https://www.google.com/',
-                url: 'https://www.google.com/',
-              },
-              square: {
-                height: 60,
-                width: 60,
-                source: 'https://www.google.com/',
-                url: 'https://www.google.com/',
-              },
-            },
             canDownload: false,
           },
-          comments: expect.anything(),
+          comments: ['6001c346c555f920e111f205', '6090c346c555f920e121f205'],
           favourites: 119,
           _id: '604d5450ec00005468617a0c',
           userId: {
@@ -2901,7 +2901,7 @@ module.exports.explore = {
           title: 'Wijdesteeg in Amsterdam',
           dateUploaded: '2018-12-23T18:29:43.511Z',
         },
-        commentCount: 4,
+        commentCount: 2,
       },
       {
         photo: {
@@ -3052,16 +3052,16 @@ module.exports.explore = {
             canDownload: false,
           },
           comments: [],
-          favourites: 22,
-          _id: '60b3d288f257642aac48eb4d',
-          dateUploaded: '2012-08-23T18:25:43.511Z',
+          favourites: 38,
+          _id: '60b3d288f257642aac48eb4e',
+          dateUploaded: '2012-04-23T18:25:43.511Z',
           userId: {
-            _id: '60b3d0ae25109d5840208164',
-            firstName: 'Photo Owner 1 First Name',
-            lastName: 'Photo Owner 1 Last Name',
-            displayName: 'photoOwner1',
+            _id: '60b3d0ae25109d5840208165',
+            firstName: 'Photo Owner 2 First Name',
+            lastName: 'Photo Owner 2 Last Name',
+            displayName: 'photoOwner2',
           },
-          title: 'photo4',
+          title: 'dummy',
         },
         commentCount: 0,
       },
@@ -3133,16 +3133,16 @@ module.exports.explore = {
             canDownload: false,
           },
           comments: [],
-          favourites: 38,
-          _id: '60b3d288f257642aac48eb4e',
-          dateUploaded: '2012-05-23T18:25:43.511Z',
+          favourites: 22,
+          _id: '60b3d288f257642aac48eb4d',
+          dateUploaded: '2012-04-23T18:25:43.511Z',
           userId: {
-            _id: '60b3d0ae25109d5840208165',
-            firstName: 'Photo Owner 2 First Name',
-            lastName: 'Photo Owner 2 Last Name',
-            displayName: 'photoOwner2',
+            _id: '60b3d0ae25109d5840208164',
+            firstName: 'Photo Owner 1 First Name',
+            lastName: 'Photo Owner 1 Last Name',
+            displayName: 'photoOwner1',
           },
-          title: 'dummy',
+          title: 'photo4',
         },
         commentCount: 0,
       },

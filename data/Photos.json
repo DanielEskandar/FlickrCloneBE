@@ -791,7 +791,7 @@
     "dateTaken": "2014-07-23T18:25:43.511Z",
     "location": "60b2806c5bcb4c81a866cf9b",
     "comments": ["608d5450ec00005468629b3d", "608d5450ec00005468629b4d"],
-    "favourites": 25,
+    "favourites": 24,
     "views": 31,
     "permissions": {
       "public": 0,
@@ -1412,7 +1412,7 @@
   {
     "_id": "60b3d288f257642aac48eb4a",
     "dateUploaded": "2017-04-23T18:25:43.511Z",
-    "dateTaken": "2012-06-23T18:25:43.511Z",
+    "dateTaken": "2012-04-23T18:25:43.511Z",
     "userId": "60b3d0ae25109d5840208165",
     "title": "dummy",
     "description": "descrption of photo1",
@@ -1562,7 +1562,7 @@
   },
   {
     "_id": "60b3d288f257642aac48eb4c",
-    "dateUploaded": "2012-07-23T18:25:43.511Z",
+    "dateUploaded": "2012-04-23T18:25:43.511Z",
     "dateTaken": "2013-04-23T18:25:43.511Z",
     "userId": "60b3d0ae25109d5840208165",
     "title": "photo3",
@@ -1637,7 +1637,7 @@
   },
   {
     "_id": "60b3d288f257642aac48eb4d",
-    "dateUploaded": "2012-08-23T18:25:43.511Z",
+    "dateUploaded": "2012-04-23T18:25:43.511Z",
     "dateTaken": "2013-04-23T18:25:43.511Z",
     "userId": "60b3d0ae25109d5840208164",
     "title": "photo4",
@@ -1712,7 +1712,7 @@
   },
   {
     "_id": "60b3d288f257642aac48eb4e",
-    "dateUploaded": "2012-05-23T18:25:43.511Z",
+    "dateUploaded": "2012-04-23T18:25:43.511Z",
     "dateTaken": "2013-04-23T18:25:43.511Z",
     "userId": "60b3d0ae25109d5840208165",
     "title": "dummy",
