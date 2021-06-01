@@ -3773,7 +3773,7 @@ exports.getStatsData = {
   status: 'success',
   data: {
     views: 200,
-    faves: 38,
+    faves: 2,
     tags: 3,
   },
 };
