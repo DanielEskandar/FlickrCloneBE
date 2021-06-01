@@ -26,7 +26,7 @@ const photoSchema = new mongoose.Schema({
     default: Date.now,
   },
   dateTaken: Date,
-  location: mongoose.Schema.ObjectId,
+  location: { type: mongoose.Schema.ObjectId, ref: 'locationModel' },
   comments: [
     {
       type: mongoose.Schema.ObjectId,
