@@ -988,8 +988,8 @@ exports.explore = async (req, res) => {
     }
     let Photos = await photoModel
       .find({
-        dateUploaded: {
-          $gt: new Date('2019-12-23T18:29:43.511Z'),
+        favourites: {
+          $gt: 20,
         },
       })
       .populate('userId', ['firstName', 'lastName', 'displayName'])
