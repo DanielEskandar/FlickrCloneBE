@@ -7,7 +7,6 @@ const photoModel = require('../models/photoModel.js');
 // eslint-disable-next-line no-unused-vars
 const albumModel = require('../models/albumModel.js');
 // eslint-disable-next-line no-unused-vars
-
 const galleryModel = require('../models/galleryModel.js');
 const testimonialModel = require('../models/testimonialModel.js');
 
@@ -1053,7 +1052,7 @@ exports.getRequestedUserAlbums = async (req, res) => {
         404
       );
     }
-    const userAlbums = await userModel
+    let userAlbums = await userModel
       .findById(req.params.id)
       .populate([
         {
@@ -1077,6 +1076,11 @@ exports.getRequestedUserAlbums = async (req, res) => {
       .select('albums')
       .skip(skip)
       .limit(perPage);
+
+    userAlbums = userAlbums.albums.map((album) => ({
+      album,
+      photoCount: album.photos.length,
+    }));
 
     res.status(200).json({
       status: 'success',
@@ -1155,7 +1159,7 @@ exports.getAlbums = async (req, res) => {
         404
       );
     }
-    const userAlbums = await userModel
+    let userAlbums = await userModel
       .findById(req.user.id)
       .populate([
         {
@@ -1179,6 +1183,11 @@ exports.getAlbums = async (req, res) => {
       .select('albums')
       .skip(skip)
       .limit(perPage);
+
+    userAlbums = userAlbums.albums.map((album) => ({
+      album,
+      photoCount: album.photos.length,
+    }));
 
     res.status(200).json({
       status: 'success',
