@@ -105,9 +105,9 @@ describe('should add comments on a photo', () => {
   test('should retrieve information about new comment', async () => {
     const mReq = {
       params: { id: '604d5450ec00005468617a0c' },
+      user: { id: '608d55c7e512b74ee00791db' },
       body: {
         body: 'Unit testing comment',
-        userId: '608d55c7e512b74ee00791db',
         date: '2021-05-04T14:07:48.071Z',
         _id: '508d55c7e512b74ee00791db',
       },
@@ -126,9 +126,9 @@ describe('should add comments on a photo', () => {
   test('should retrieve information about new comment', async () => {
     const mReq = {
       params: { id: '604d5450ec00005468617a0c' },
+      user: { id: '608d55c7e512b74ee00791db' },
       body: {
         body: 'Comment to add by photo testing',
-        userId: '608d55c7e512b74ee00791db',
         date: '2021-05-04T14:07:48.071Z',
         _id: '508d55c7e512b74ee00891db',
       },

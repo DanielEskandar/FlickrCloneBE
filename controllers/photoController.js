@@ -232,7 +232,12 @@ exports.addComment = async (req, res) => {
       throw new AppError('No Photo Found with this ID', 404);
     }
 
-    const newComment = await commentModel.create(req.body);
+    const comment = {
+      body: req.body.body,
+      userId: req.user.id,
+    };
+
+    const newComment = await commentModel.create(comment);
 
     await photoModel.findByIdAndUpdate(
       req.params.id,
@@ -335,7 +340,14 @@ exports.getComments = async (req, res) => {
 
     const comments = await photoModel
       .findById(req.params.id)
-      .select({ comments: 1, _id: 0 });
+      .select({ comments: 1, _id: 0 })
+      .populate({
+        path: 'comments',
+        populate: {
+          path: 'userId',
+          select: ['firstName', 'lastName'],
+        },
+      });
 
     if (!comments) {
       throw new AppError('No Comments Found for this Photo', 404);
