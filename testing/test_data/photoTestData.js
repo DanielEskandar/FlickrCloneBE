@@ -202,7 +202,30 @@ module.exports.getInformationData2 = {
 module.exports.getCommentsData1 = {
   status: 'success',
   data: {
-    comments: ['6001c346c555f920e111f205', '6090c346c555f920e121f205'],
+    comments: [
+      {
+        __v: 0,
+        _id: expect.any(String),
+        body: 'Vibrant colors',
+        date: expect.any(String),
+        userId: {
+          _id: '608d55c7e512b74ee00791db',
+          firstName: 'Daniel',
+          lastName: 'Eskandar',
+        },
+      },
+      {
+        __v: 0,
+        _id: expect.any(String),
+        body: 'Nice angle',
+        date: expect.any(String),
+        userId: {
+          _id: '608d55c7e512b74ee00791db',
+          firstName: 'Daniel',
+          lastName: 'Eskandar',
+        },
+      },
+    ],
   },
 };
 
@@ -216,10 +239,10 @@ module.exports.getCommentsData2 = {
 module.exports.addCommentData1 = {
   status: 'success',
   data: {
-    _id: '508d55c7e512b74ee00791db',
+    _id: expect.any(String),
     body: 'Unit testing comment',
     userId: '608d55c7e512b74ee00791db',
-    date: '2021-05-04T14:07:48.071Z',
+    date: expect.any(String),
     __v: 0,
   },
 };
@@ -227,10 +250,10 @@ module.exports.addCommentData1 = {
 module.exports.addCommentData2 = {
   status: 'success',
   data: {
-    _id: '508d55c7e512b74ee00891db',
+    _id: expect.any(String),
     body: 'Comment to add by photo testing',
     userId: '608d55c7e512b74ee00791db',
-    date: '2021-05-04T14:07:48.071Z',
+    date: expect.any(String),
     __v: 0,
   },
 };
