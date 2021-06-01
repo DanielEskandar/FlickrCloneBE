@@ -3,6 +3,7 @@ const express = require('express');
 
 // INCLUDE CONTROLLERS
 const galleryController = require('../controllers/galleryController.js');
+const authController = require('../controllers/authController.js');
 
 // CREATE ROUTER
 const galleryRouter = express.Router();
@@ -68,6 +69,7 @@ const galleryRouter = express.Router();
  *
  * @apiParam {String} id The Gallery's ID
  *
+ * @apiSuccess {String} status Status of the Operation
  * @apiSuccess {String} title Gallery's Name
  * @apiSuccess {String} description Gallery's Description
  * @apiSuccess {Object[]} photos Array of gallery's photos
@@ -75,6 +77,8 @@ const galleryRouter = express.Router();
  * @apiSuccess {Number} viewscount The count of views
  * @apiSuccess {ObjectID} primaryphoto The primary photo's id
  * @apiSuccess {Object[]} comments  Array of gallery's comments
+ * @apiSuccess {Date} createdAt created At Date
+ * @apiSuccess {Date} updatedAt  updated At Date
  *
  * @apiSuccessExample Success-Response:
  *      HTTP/1.1 200 OK
@@ -82,6 +86,7 @@ const galleryRouter = express.Router();
  *          "status": "success",
  *          "data":
  *          {
+ *              "_id" : "708f34a634413f11f020b139"
  *              "galleryName": sunsets,
  *              "description": best sunset photos,
  *              "photos count": 17,
@@ -94,7 +99,10 @@ const galleryRouter = express.Router();
  *               ]
  *              "comments" : [
  *
- *               ]
+ *               ],
+ *             "createdAt": "2021-05-03T00:07:30.005Z",
+ *             "updatedAt": "2021-05-03T00:07:30.005Z"
+ *
  *          }
  *      }
  *
@@ -192,7 +200,11 @@ galleryRouter.delete('/:id');
  * @apiUse UnauthError
  */
 
-galleryRouter.delete('/:id/:photoid');
+galleryRouter.delete(
+  '/:id/:photoid',
+  authController.protect,
+  galleryController.removePhoto
+);
 
 /**
  * @api {delete} /gallery/comments/:id Delete Comment
@@ -206,18 +218,19 @@ galleryRouter.delete('/:id/:photoid');
  *
  * @apiUse UnauthError
  *
- * @apiError CommentNotFoundError No comment is found by that comment ID
+ * @apiError CommentNotFoundError No Comment Found with This ID
  *
  * @apiErrorExample Error-Response:
  *      HTTP/1.1 404 Not Found
  *      {
  *          "status": "Error",
- *          "message": "No comment is found by that comment ID"
+ *          "message": "No Comment Found with This ID"
  *      }
  */
 
 galleryRouter.delete(
   '/:id/comments/:commentid',
+  authController.protect,
   galleryController.deleteComment
 );
 
@@ -227,16 +240,55 @@ galleryRouter.delete(
  * @apiName CreateGallery
  * @apiGroup Gallery
  *
- * @apiBody {String} title Gallery's Name
- * @apiBody {String} description Gallery's Description
- * @apiBody {String} primaryphoto The first photo to add to your gallery
+ * @apiParam (Request Body) {String} title Gallery's Name
+ * @apiParam (Request Body) {String} description Gallery's Description
+ * @apiParam (Request Body) {String} primaryphoto The first photo to add to your gallery
  *
- * @apiUse SuccessRes
+ * @apiDefine SuccessRes
+ * @apiSuccess {String} status Status of the Operation
+ * @apiSuccess {String} title Gallery's Name
+ * @apiSuccess {String} description Gallery's Description
+ * @apiSuccess {Object[]} photos Array of gallery's photos
+ * @apiSuccess {Number} photoscount The count of gallery's photos
+ * @apiSuccess {Number} viewscount The count of views
+ * @apiSuccess {ObjectID} primaryphoto The primary photo's id
+ * @apiSuccess {Object[]} comments  Array of gallery's comments
+ * @apiSuccess {Date} createdAt created At Date
+ * @apiSuccess {Date} updatedAt  updated At Date
+ *
+ * @apiSuccessExample Success-Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *          "status": "success",
+ *          "data":
+ *          {
+ *              "_id" : "708f34a634413f11f020b139"
+ *              "galleryName": sunsets,
+ *              "description": best sunset photos,
+ *              "photos count": 17,
+ *              "views count": 20,
+ *              "createdAt": "2021-05-03T00:07:30.005Z",
+ *              "updatedAt": "2021-05-03T00:07:30.005Z",
+ *              "primary photo id": 292882708,
+ *              "photos": [
+ *
+ *               ]
+ *              "comments" : [
+ *
+ *               ]
+ *             "createdAt": "2021-05-03T00:07:30.005Z",
+ *             "updatedAt": "2021-05-03T00:07:30.005Z"
+ *          }
+ *      }
  *
  * @apiUse UnauthError
  */
 
-galleryRouter.post('/', galleryController.createGallery);
+galleryRouter.post(
+  '/',
+  authController.protect,
+  galleryController.createGallery
+);
 
 /**
  * @api {post} /gallery/:id/photos Add a photo
@@ -246,7 +298,7 @@ galleryRouter.post('/', galleryController.createGallery);
  *
  * @apiParam {String} id The gallery's ID
  *
- * @apiBody {String} photo The Photo to add to the gallery
+ * @apiParam (Request Body) {objectID} photoID The PhotoID to add to the gallery
  *
  * @apiUse SuccessRes
  *
@@ -255,7 +307,11 @@ galleryRouter.post('/', galleryController.createGallery);
  * @apiUse GalleryNotFoundError
  */
 
-galleryRouter.post('/:id/photos');
+galleryRouter.post(
+  '/:id/photos',
+  authController.protect,
+  galleryController.addPhoto
+);
 
 /**
  * @api {post} /gallery/:id/comments Add a comment
@@ -265,9 +321,24 @@ galleryRouter.post('/:id/photos');
  *
  * @apiParam {String} id The gallery's ID
  *
- * @apiBody {String} body The body of the comment
+ * @apiParam (Request Body) {String} body The body of the comment
  *
- * @apiUse SuccessRes
+ * @apiDefine SuccessRes
+ * @apiSuccess {String} status Status of the Operation
+ * @apiSuccess {String} data Success Message
+ *
+ * @apiSuccessExample Success-Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *          "status": "success",
+ *          "data":
+ *          {
+ *            "_id": "5590beb07237ad1fb4458fae",
+ *            "userId": "608d5450ec00005468607a0c",
+ *            "body": "good one",
+ *            "date": "2021-05-14T20:53:10.256Z"
+ *         }
+ *      }
  *
  * @apiUse UnauthError
  *
@@ -275,7 +346,11 @@ galleryRouter.post('/:id/photos');
  *
  */
 
-galleryRouter.post('/:id/comments', galleryController.addComment);
+galleryRouter.post(
+  '/:id/comments',
+  authController.protect,
+  galleryController.addComment
+);
 
 /**
  * @api {patch} /gallery/:id/photos Add, Remove and Reorder photos
@@ -285,8 +360,8 @@ galleryRouter.post('/:id/comments', galleryController.addComment);
  *
  * @apiParam {String} id The gallery's ID
  *
- * @apiBody {String} primaryphoto The photo to use as primary photo for the gallery. Must also be included in the photos list
- * @apiBody {Object[]} photos The ordered list of photos to include in the gallery
+ * @apiParam (Request Body) {String} primaryphoto The photo to use as primary photo for the gallery. Must also be included in the photos list
+ * @apiParam (Request Body) {Object[]} photos The ordered list of photos to include in the gallery
  *
  * @apiUse SuccessRes
  *
@@ -306,8 +381,8 @@ galleryRouter.patch('/:id/photos');
  *
  * @apiParam {String} id The gallery's ID
  *
- * @apiBody {String} title The title of the Gallery
- * @apiBody {String} description The new description for the gallery
+ * @apiParam (Request Body) {String} galleryName The title of the Gallery
+ * @apiParam (Request Body) {String} description The new description for the gallery
  *
  * @apiUse SuccessRes
  *
@@ -316,7 +391,11 @@ galleryRouter.patch('/:id/photos');
  * @apiUse GalleryNotFoundError
  */
 
-galleryRouter.patch('/:id/meta');
+galleryRouter.patch(
+  '/:id/meta',
+  authController.protect,
+  galleryController.editMeta
+);
 
 /**
  * @api {patch} /gallery/comments/:id Edit the body of a comment
@@ -326,23 +405,42 @@ galleryRouter.patch('/:id/meta');
  *
  * @apiParam {String} id The comment's ID
  *
- * @apiBody {String} body Update the comment to this text
+ * @apiParam (Request Body) {String} body Update the comment to this text
  *
- * @apiUse SuccessRes
+ * @apiDefine SuccessRes
+ * @apiSuccess {String} status Status of the Operation
+ * @apiSuccess {String} data Success Message
+ *
+ * @apiSuccessExample Success-Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *          "status": "success",
+ *          "data":
+ *          {
+ *            "_id": "5590beb07237ad1fb4458fae",
+ *            "userId": "608d5450ec00005468607a0c",
+ *            "body": "I like it",
+ *            "date": "2021-05-14T20:53:10.256Z"
+ *         }
+ *      }
  *
  * @apiUse UnauthError
  *
- * @apiError CommentNotFoundError No comment is found by that comment ID
+ * @apiError CommentNotFoundError No Comment Found with This ID
  *
  * @apiErrorExample Error-Response:
  *      HTTP/1.1 404 Not Found
  *      {
  *          "status": "Error",
- *          "message": "No comment is found by that comment ID"
+ *          "message": "No Comment Found with This ID"
  *      }
  */
 
-galleryRouter.patch('/comments/:id', galleryController.editComment);
+galleryRouter.patch(
+  '/comments/:id',
+  authController.protect,
+  galleryController.editComment
+);
 
 /**
  * @api {patch} /gallery/:id/primary/:photoid Set gallery's primary photo
@@ -362,7 +460,11 @@ galleryRouter.patch('/comments/:id', galleryController.editComment);
  * @apiUse PhotoNotFoundError
  */
 
-galleryRouter.patch('/:id/primary/:photoid');
+galleryRouter.patch(
+  '/:id/primary/:photoid',
+  authController.protect,
+  galleryController.setPrimaryPhoto
+);
 
 /**
  * @api {patch} /gallery/:id/:photoid Edit the comment for a gallery photo
@@ -372,7 +474,7 @@ galleryRouter.patch('/:id/primary/:photoid');
  * @apiParam {String} id The Gallery's ID
  * @apiParam {String} photoid The ID of the photo to set as primary
  *
- * @apiBody {String} comment The updated comment
+ * @apiParam (Request Body) {String} comment The updated comment
  *
  * @apiUse SuccessRes
  *

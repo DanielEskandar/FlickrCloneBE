@@ -1,18 +1,38 @@
 // INCLUDE DEPENDENCIES
 const mongoose = require('mongoose');
-const validator = require('validator');
 
 // CREATE SCHEMA
 const photoSchema = new mongoose.Schema({
-  userId: { type: mongoose.Schema.ObjectId, ref: 'userModel' },
-  cameraId: { type: mongoose.Schema.ObjectId, ref: 'cameraModel' },
+  userId: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'userModel',
+    required: [true, 'A photo must have an owner'],
+  },
+  title: {
+    type: String,
+    maxlength: [300, 'Title cannot be more than 300 characters long'],
+    required: [true, 'A photo must have an title'],
+  },
+  description: {
+    type: String,
+    maxlength: [2000, 'Description cannot be more than 2000 characters long'],
+  },
+  cameraId: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'cameraModel',
+  },
   dateUploaded: {
     type: Date,
     default: Date.now,
   },
   dateTaken: Date,
-  location: mongoose.Schema.ObjectId,
-  comments: [{ type: mongoose.Schema.ObjectId, ref: 'commentModel' }],
+  location: { type: mongoose.Schema.ObjectId, ref: 'locationModel' },
+  comments: [
+    {
+      type: mongoose.Schema.ObjectId,
+      ref: 'commentModel',
+    },
+  ],
   favourites: {
     type: Number,
     default: 0,
@@ -95,13 +115,15 @@ const photoSchema = new mongoose.Schema({
       },
     },
   },
-  title: {
-    type: String,
-    maxlength: [300, 'Title cannot be more than 300 characters long'],
-  },
-  description: {
-    type: String,
-    maxlength: [2000, 'Description cannot be more than 2000 characters long'],
+  metadata: {
+    cameraMake: String,
+    cameraModel: String,
+    lensName: String,
+    fNumber: Number,
+    focalLength: Number,
+    exposureTime: Number,
+    flash: Number,
+    iso: Number,
   },
   EXIF: String,
   safetyLevel: {
@@ -123,7 +145,10 @@ const photoSchema = new mongoose.Schema({
       tagDate: { type: Date, default: Date.now },
     },
   ],
-  hidden: Boolean,
+  hidden: {
+    type: Boolean,
+    default: 1,
+  },
   license: { type: Number, minimum: 0, maximum: 10 },
 });
 

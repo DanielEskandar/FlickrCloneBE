@@ -3,6 +3,7 @@ const express = require('express');
 
 // INCLUDE CONTROLLERS
 const userController = require('../controllers/userController.js');
+const authController = require('../controllers/authController.js');
 
 // CREATE ROUTER
 const userRouter = express.Router();
@@ -34,6 +35,18 @@ const userRouter = express.Router();
  */
 
 /**
+ * @apiDefine ServerError
+ * @apiError Failure Internal Server Error
+ *
+ * @apiErrorExample Error-Response:
+ *      HTTP/1.1 500 Server Error
+ *      {
+ *          "status": "error",
+ *          "message": "Internal Server Error"
+ *      }
+ */
+
+/**
  * @apiDefine SuccessRes
  * @apiSuccess {String} status Status of the Operation
  * @apiSuccess {String} data Success Message
@@ -51,37 +64,52 @@ const userRouter = express.Router();
 /**
  * @api {post} /user/sign-up Send a Sign-Up Request
  * @apiVersion 1.0.0
- * @apiName SignUp
+ * @apiName signUp
  * @apiGroup User
  *
- * @apiBody {string} username The Username of the User
- * @apiBody {string} email The Email of the User
- * @apiBody {string} firstname The First Name of the User
- * @apiBody {string} lastname The Last Name of the User
- * @apiBody {string} age The Age of the User
+ * @apiParam (Request Body) {string} firstName The First Name of the User
+ * @apiParam (Request Body) {string} lastName The Last Name of the User
+ * @apiParam (Request Body) {string} displayName The Username of the User
+ * @apiParam (Request Body) {string} age The Age of the User
+ * @apiParam (Request Body) {string} email The Email of the User
+ * @apiParam (Request Body) {string} password The Password of the User
  *
- * @apiSuccess {string} Status Status of API
+ * @apiParamExample {json} Request-Example:
+ *    {
+ *        "firstName": "First Name Test",
+ *        "lastName": "Last Name Test",
+ *        "displayName": "firstlast",
+ *        "age": 21,
+ *        "email": "first.last@email.com",
+ *        "password": "Abcdef@1"
+ *    }
  *
- * @apiUse SuccessRes
  *
- * @apiUse UnauthError
+ * @apiSuccess {string} Token Authentication Token for the User
+ * @apiSuccess {string} UserInfo Object Containing Full Details of User
+ *
+ * @apiSuccessExample {json}  Success-Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *        "status": "success",
+ *        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwYWY5YjI5ODhhOGE3MDZiOGVmOTk0NCIsImlhdCI6MTYyMjEyMTI2MCwiZXhwIjoxNjI5ODk3MjYwfQ.daxYPodNUOJqCSPTTZgy8iUUPnte-vhn1mooyBJaBSk",
+ *        "data": {
+ *          "user": {
+ *            "_id": "60af9b2988a8a706b8ef9944",
+ *            "firstName": "First Name Test",
+ *            "lastName": "Last Name Test",
+ *            "displayName": "ffirstlast"
+ *          }
+ *        }
+ *      }
+ *
+ * @apiUse ServerError
  */
 
-userRouter.post('/sign-up');
+userRouter.post('/sign-up', authController.signUp);
 
 /**
- * @api {post} /user/confirm Confirm a Signed Up user account
- * @apiVersion 1.0.0
- * @apiName SignUpConfirm
- * @apiGroup User
  *
- * @apiHeader {string} Token Authenticaton Token
- *
- * @apiSuccess {string} Status Status of API
- *
- * @apiUse SuccessRes
- *
- * @apiUse UnauthError
  */
 
 userRouter.post('/confirm');
@@ -92,29 +120,39 @@ userRouter.post('/confirm');
  * @apiName SignUpConfirm
  * @apiGroup User
  *
- * @apiBody {string} username Username entered by user
- * @apiBody (string) password Password entered by user
+ * @apiParam (Request Body) {string} email Email entered by user
+ * @apiParam (Request Body) (string) password Password entered by user
+ *
+ * @apiParamExample {json} Request-Example:
+ *    {
+ *      "email": "AGtest@mailserver.com",
+ *      "password": "AG5AG5TestCases_"
+ *    }
  *
  * @apiSuccess {string} Token Authenticaton Token
  *
- * @apiUse SuccessRes
+ * @apiSuccessExample {json} Success-Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *        "status": "success",
+ *        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwYWY5YjI5ODhhOGE3MDZiOGVmOTk0NCIsImlhdCI6MTYyMjEyMTI2MCwiZXhwIjoxNjI5ODk3MjYwfQ.daxYPodNUOJqCSPTTZgy8iUUPnte-vhn1mooyBJaBSk",
+ *        "data": {
+ *          "user": {
+ *            "_id": "60af9b2988a8a706b8ef9944",
+ *            "firstName": "First Name Test",
+ *            "lastName": "Last Name Test",
+ *            "displayName": "ffirstlast"
+ *          }
+ *        }
+ *      }
  *
- * @apiUse UnauthError
+ * @apiUse ServerError
  */
 
-userRouter.post('/sign-in');
+userRouter.post('/sign-in', authController.signIn);
 
 /**
- * @api {post} /user/sign-out Sign In a Confirmed User
- * @apiVersion 1.0.0
- * @apiName SignUpConfirm
- * @apiGroup User
  *
- * @apiHeader {string} Token Authenticaton Token
- *
- * @apiUse SuccessRes
- *
- * @apiUse UnauthError
  */
 
 userRouter.post('/sign-out');
@@ -127,24 +165,58 @@ userRouter.post('/sign-out');
  *
  * @apiHeader {string} Token Authenticaton Token
  *
- * @apiUse SuccessRes
+ * @apiHeaderExample {json} Header-Example:
+ *     {
+ *          authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwOGQ1NWM3ZTUxMmI3NGVlMDA3OTFkYiIsImlhdCI6MTYyMTUwOTY5NywiZXhwIjoxNjI5Mjg1Njk3fQ.3WLVIdzDgIGpru3ybIxqWj9A9ROvtLG90dFuzHowuk0',
+ *     }
+ *
+ * @apiParam (Request Body) {string} occupation Occupation of the user
+ * @apiParam (Request Body) (string) hometown Hometown of the user
+ * @apiParam (Request Body) (string) currentCity Current City of Residence
+ * @apiParam (Request Body) (string) country Current Country of Residence
+ * @apiParam (Request Body) (string) emailVisibility Privacy Setting for the Email
+ * @apiParam (Request Body) (string) currentCityVisibility Privacy Setting for the Current City Data
+ *
+ * @apiParamExample {json} Request-Example:
+ *    {
+ *        "occupation": "Artist",
+ *        "hometown": "Ile de France",
+ *        "currentCity": "Berlin",
+ *        "country": "Germany",
+ *        "emailVisibility": 1,
+ *        "currentCityVisibility": 2
+ *    }
+ *
+ * @apiSuccess {string} UserInfo Updated User Information
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *        "status": "success",
+ *        "data": {
+ *          "privacySettings": {
+ *            "global": {
+ *              "infoVisibility": {
+ *                "email": 1,
+ *                "currentCity": 2
+ *              }
+ *            }
+ *          },
+ *          "_id": "608d55c7e512b74ee00791db",
+ *          "occupation": "Artist",
+ *          "hometown": "Ile de France",
+ *          "currentCity": "Berlin",
+ *          "country": "Germany"
+ *        }
+ *      }
  *
  * @apiUse UnauthError
  */
 
-userRouter.patch('/');
+userRouter.patch('/', authController.protect, userController.updateUserInfo);
 
 /**
- * @api {delete} /user/ Delete the User's Account
- * @apiVersion 1.0.0
- * @apiName DeleteUser
- * @apiGroup User
  *
- * @apiHeader {string} Token Authenticaton Token
- *
- * @apiUse SuccessRes
- *
- * @apiUse UnauthError
  */
 
 userRouter.delete('/');
@@ -166,235 +238,79 @@ userRouter.delete('/');
  * @apiSuccessExample Success-Response:
  *      HTTP/1.1 200 OK
  *      {
- *          "status": "success",
- *          "data":
- *          {
- *              "views": 9200000,
- *              "tags": 159,
- *              "geotags": 0,
- *              "faves": 131,
- *              "groups": 140
- *          }
+ *        "status": "success",
+ *        "data": {
+ *          "views": 358,
+ *          "faves": 2,
+ *          "tags": 4
+ *        }
  *      }
  *
  * @apiUse UserNotFoundError
  */
 
-userRouter.get('/:id/stats');
+userRouter.get('/:id/stats', userController.getStats);
 
 /**
- * @api {get} /user/:id/popular Get the User's Most Popular Photos
- * @apiVersion 1.0.0
- * @apiName GetUserPopular
- * @apiGroup User
  *
- * @apiParam {String} id The User's ID
- *
- * @apiSuccess {Object[]} photos Array of the user's most popular photos (Fave Count)
- *
- * @apiSuccessExample Success-Response:
- *      HTTP/1.1 200 OK
- *      {
- *          "status": "success",
- *          "data":
- *          {
- *              "photos": [
- *
- *              ]
- *          }
- *      }
- *
- * @apiUse UserNotFoundError
  */
 
-userRouter.get('/:id/popular');
+userRouter.get(
+  '/popular',
+  authController.protect,
+  userController.getPopularPhotos
+);
 
 /**
- * @api {get} /user/:id/recent Get the User's Most Recent Photos
- * @apiVersion 1.0.0
- * @apiName GetUserRecent
- * @apiGroup User
  *
- * @apiParam {String} id The User's ID
- *
- * @apiSuccess {Object[]} photos Array of the user's most recent photos
- *
- * @apiSuccessExample Success-Response:
- *      HTTP/1.1 200 OK
- *      {
- *          "status": "success",
- *          "data":
- *          {
- *              "photos": [
- *
- *              ]
- *          }
- *      }
- *
- * @apiUse UserNotFoundError
  */
 
-userRouter.get('/:id/recent');
+userRouter.get('/:id/recent', userController.getRequestedUserRecentPhotos);
+
+userRouter.get('/:id/popular', userController.getRequestedUserPopularPhotos);
 
 /**
- * @api {get} /user/:id/recent-update Get the User's Most Recently Modified Photos
- * @apiVersion 1.0.0
- * @apiName GetUserRecentModified
- * @apiGroup User
  *
- * @apiHeader {string} Token Authenticaton Token
+ */
+
+userRouter.get(
+  '/recent',
+  authController.protect,
+  userController.getRecentPhotos
+);
+
+/**
  *
- * @apiSuccess {Object[]} photos Array of the user's most recently modified photos
- *
- * @apiSuccessExample Success-Response:
- *      HTTP/1.1 200 OK
- *      {
- *          "status": "success",
- *          "data":
- *          {
- *              "photos": [
- *
- *              ]
- *          }
- *      }
- *
- * @apiUse UserNotFoundError
  */
 
 userRouter.get('/recent-update');
 
 /**
- * @api {get} /user/:id/:locationId Get the User's Photos taken in a certain location
- * @apiVersion 1.0.0
- * @apiName GetPhotoLocation
- * @apiGroup User
  *
- * @apiParam {String} id The User's ID
- * @apiParam (string) loacationId The ID of the location
- *
- * @apiSuccess {Object[]} photos Array of the user's photos taken in the specified location
- *
- * @apiSuccessExample Success-Response:
- *      HTTP/1.1 200 OK
- *      {
- *          "status": "success",
- *          "data":
- *          {
- *              "photos": [
- *
- *              ]
- *          }
- *      }
- *
- * @apiUse UserNotFoundError
  */
 
 userRouter.get('/:id/:locationId');
 
 /**
- * @api {get} /user/:id/not-set Return Photos not in any sets (Galleries or Albums)
- * @apiVersion 1.0.0
- * @apiName GetNotInSet
- * @apiGroup User
  *
- * @apiParam {String} id The User's ID
- *
- * @apiSuccess {Object[]} photos Array of the user's photos not in any sets (Galleries or Albums)
- *
- * @apiSuccessExample Success-Response:
- *      HTTP/1.1 200 OK
- *      {
- *          "status": "success",
- *          "data":
- *          {
- *              "photos": [
- *
- *              ]
- *          }
- *      }
- *
- * @apiUse UserNotFoundError
  */
 
 userRouter.get('/:id/not-set');
 
 /**
- * @api {get} /user/:id/untagged Return a List of photos with no tags
- * @apiVersion 1.0.0
- * @apiName GetUntagged
- * @apiGroup User
  *
- * @apiParam {String} id The User's ID
- *
- * @apiSuccess {Object[]} photos Array of the user's photos with no tags
- *
- * @apiSuccessExample Success-Response:
- *      HTTP/1.1 200 OK
- *      {
- *          "status": "success",
- *          "data":
- *          {
- *              "photos": [
- *
- *              ]
- *          }
- *      }
- *
- * @apiUse UserNotFoundError
  */
 
 userRouter.get('/:id/untagged');
 
 /**
- * @api {get} /user/:id/geo Return a List of photos with location info
- * @apiVersion 1.0.0
- * @apiName GetGeo
- * @apiGroup User
  *
- * @apiParam {String} id The User's ID
- *
- * @apiSuccess {Object[]} photos Array of the user's photos with location info
- *
- * @apiSuccessExample Success-Response:
- *      HTTP/1.1 200 OK
- *      {
- *          "status": "success",
- *          "data":
- *          {
- *              "photos": [
- *
- *              ]
- *          }
- *      }
- *
- * @apiUse UserNotFoundError
  */
 
 userRouter.get('/:id/geo');
 
 /**
- * @api {get} /user/:id/no-geo Return a List of photos without location info
- * @apiVersion 1.0.0
- * @apiName GetNoGeo
- * @apiGroup User
  *
- * @apiParam {String} id The User's ID
- *
- * @apiSuccess {Object[]} photos Array of the user's photos without location info
- *
- * @apiSuccessExample Success-Response:
- *      HTTP/1.1 200 OK
- *      {
- *          "status": "success",
- *          "data":
- *          {
- *              "photos": [
- *
- *              ]
- *          }
- *      }
- *
- * @apiUse UserNotFoundError
  */
 
 userRouter.get('/:id/no-geo');
@@ -412,119 +328,88 @@ userRouter.get('/:id/no-geo');
  * @apiSuccessExample Success-Response:
  *      HTTP/1.1 200 OK
  *      {
- *          "status": "success",
- *          "data":
+ *        "status": "success",
+ *        "data": {
+ *        "testimonials": [
  *          {
- *              "testimonials": [
- *
- *              ]
+ *            "_id": "60a78931879c9b4f08aec669",
+ *            "by": {
+ *              "_id": "608d5450ec00005468607a0c",
+ *              "firstName": "Ahmed",
+ *              "lastName": "Abdulkader"
+ *            },
+ *            "content": "Testimonial about tetimonial test user from Ahmed"
+ *          },
+ *          {
+ *            "_id": "60a78931879c9b4f08aec66a",
+ *            "by": {
+ *              "_id": "608d55c7e512b74ee00791db",
+ *              "firstName": "Daniel",
+ *              "lastName": "Eskandar"
+ *            },
+ *            "content": "Testimonial about testimonial test user from Daniel"
  *          }
+ *        ],
+ *        "_id": "60a787449065c85bac893ab3"
  *      }
+ *    }
  *
  * @apiUse UserNotFoundError
  */
 
-userRouter.get('/:id/testimonials');
+userRouter.get('/:id/testimonials', userController.getTestimonials);
 
 /**
- * @api {post} /user/:id/testimonials Add a User testimonial
- * @apiVersion 1.0.0
- * @apiName AddTestimonial
- * @apiGroup User
  *
- * @apiParam {String} id The User's ID
- *
- * @apiSuccess {Object[]} testimonials Array of the user's account
- *
- * @apiHeader {string} Token Authenticaton Token
- *
- * @apiUse SuccessRes
- *
- * @apiUse UnauthError
  */
 
-userRouter.post('/:id/testimonials');
+userRouter.post(
+  '/:id/testimonials',
+  authController.protect,
+  userController.addTestimonial
+);
 
 /**
- * @api {get} /user/:id/recent-update Return a List of User testimonials
- * @apiVersion 1.0.0
- * @apiName GetRecentUpdate
- * @apiGroup User
  *
- * @apiHeader {string} Token Authenticaton Token
- *
- * @apiSuccess {Object[]} testimonials Array of the user's account
- *
- * @apiUse SuccessRes
- *
- * @apiUse UnauthError
  */
 
 userRouter.get('/recent-update');
 
 /**
- * @api {get} /user/:id/galleries Return a List of User galleries
- * @apiVersion 1.0.0
- * @apiName GetGallery
- * @apiGroup User
  *
- * @apiParam {String} id The User's ID
- *
- * @apiSuccess {Object[]} galleries Array of the user's account
- *
- * @apiSuccessExample Success-Response:
- *      HTTP/1.1 200 OK
- *      {
- *          "status": "success",
- *          "data":
- *          {
- *              "galleries": [
- *
- *              ]
- *          }
- *      }
- *
- * @apiUse UserNotFoundError
  */
 
-userRouter.get('/:id/galleries');
+userRouter.get('/:id/galleries', userController.getRequestedUserGalleries);
 
 /**
- * @api {get} /user/:id/group Return a List of User groups
- * @apiVersion 1.0.0
- * @apiName GetGroup
- * @apiGroup User
  *
- * @apiParam {String} id The User's ID
+ */
+
+userRouter.get(
+  '/galleries',
+  authController.protect,
+  userController.getGalleries
+);
+
+/**
  *
- * @apiSuccess {Object[]} groups Array of the user's account
- *
- * @apiSuccessExample Success-Response:
- *      HTTP/1.1 200 OK
- *      {
- *          "status": "success",
- *          "data":
- *          {
- *              "groups": [
- *
- *              ]
- *          }
- *      }
- *
- * @apiUse UserNotFoundError
  */
 
 userRouter.get('/:id/groups');
 
 /**
- * @api {get} /user/:id/gallery Return a user's photo stream of non-private photos from the camera roll
+ * @api {get} /user/:id/stream Return a user's photo stream
  * @apiVersion 1.0.0
  * @apiName GetStream
  * @apiGroup User
  *
  * @apiParam {String} id The User's ID
  *
+ * @apiParam (Request Body) {Number} per_page Number of Galleries to return Per Page (Optinal)
+ * @apiParam (Request Body) {Number} page The Page Number to Return (Optinal)
+ *
  * @apiSuccess {Object[]} photo stream Array of non-private photos from the user's camera roll
+ *
  *
  * @apiSuccessExample Success-Response:
  *      HTTP/1.1 200 OK
@@ -541,34 +426,23 @@ userRouter.get('/:id/groups');
  * @apiUse UserNotFoundError
  */
 
-userRouter.get('/:id/stream');
+userRouter.get(
+  '/:id/stream',
+  authController.protect,
+  userController.getPhotoStream
+);
 
 /**
- * @api {get} /user/:id/albums Return a List of User albums
- * @apiVersion 1.0.0
- * @apiName GetAlbum
- * @apiGroup User
  *
- * @apiParam {String} id The User's ID
- *
- * @apiSuccess {Object[]} albums Array of the user's account
- *
- * @apiSuccessExample Success-Response:
- *      HTTP/1.1 200 OK
- *      {
- *          "status": "success",
- *          "data":
- *          {
- *              "albums": [
- *
- *              ]
- *          }
- *      }
- *
- * @apiUse UserNotFoundError
  */
 
-userRouter.get('/:id/albums');
+userRouter.get('/:id/albums', userController.getRequestedUserAlbums);
+
+/**
+ *
+ */
+
+userRouter.get('/albums', authController.protect, userController.getAlbums);
 
 /**
  * @api {get} /user/:id/showcase Return User defined image showcase
@@ -578,24 +452,205 @@ userRouter.get('/:id/albums');
  *
  * @apiParam {String} id The User's ID
  *
- * @apiSuccess {Object[]} Showcase array of the user
+ * @apiSuccess {Object[]} showcase array of the user
  *
- * @apiSuccessExample Success-Response:
+ * @apiSuccessExample {json} Success-Response:
  *      HTTP/1.1 200 OK
  *      {
- *          "status": "success",
- *          "data":
+ *        "status": "success",
+ *        "data": {
+ *        "showcase": [
  *          {
- *              "showcase": [
- *
- *              ]
+ *            "sizes": {
+ *              "size": {
+ *                  "original": {
+ *                  "height": 120,
+ *                  "width": 60,
+ *                  "source": "https://www.google.com/",
+ *                  "url": "https://www.google.com/"
+ *                },
+ *                "large": {
+ *                  "height": 190,
+ *                  "width": 20,
+ *                  "source": "https://www.google.com/",
+ *                  "url": "https://www.google.com/"
+ *                },
+ *                "medium800": {
+ *                  "height": 200,
+ *                  "width": 60,
+ *                  "source": "https://www.google.com/",
+ *                  "url": "https://www.google.com/"
+ *                },
+ *                "medium640": {
+ *                  "height": 1200,
+ *                  "width": 60,
+ *                  "source": "https://www.google.com/",
+ *                  "url": "https://www.google.com/"
+ *                },
+ *                "medium": {
+ *                  "height": 120,
+ *                  "width": 600,
+ *                  "source": "https://www.google.com/",
+ *                  "url": "https://www.google.com/"
+ *                },
+ *                "small320": {
+ *                  "height": 12,
+ *                  "width": 60,
+ *                  "source": "https://www.google.com/",
+ *                  "url": "https://www.google.com/"
+ *                },
+ *                "small": {
+ *                  "height": 1000,
+ *                  "width": 60,
+ *                  "source": "https://www.google.com/",
+ *                  "url": "https://www.google.com/"
+ *                },
+ *                "thumbnail": {
+ *                  "height": 50,
+ *                  "width": 50,
+ *                  "source": "https://www.google.com/",
+ *                  "url": "https://www.google.com/"
+ *                },
+ *                "largeSquare": {
+ *                  "height": 120,
+ *                   "width": 120,
+ *                  "source": "https://www.google.com/",
+ *                  "url": "https://www.google.com/"
+ *                },
+ *                "square": {
+ *                  "height": 60,
+ *                  "width": 60,
+ *                  "source": "https://www.google.com/",
+ *                  "url": "https://www.google.com/"
+ *                }
+ *              },
+ *              "canDownload": false
+ *            },
+ *            "_id": "608d5450ec00005468607a0f"
+ *          },
+ *          {
+ *            "sizes": {
+ *              "size": {
+ *                "original": {
+ *                  "height": 120,
+ *                  "width": 60,
+ *                  "source": "https://www.google.com/",
+ *                  "url": "https://www.google.com/"
+ *                },
+ *                "large": {
+ *                  "height": 190,
+ *                  "width": 20,
+ *                  "source": "https://www.google.com/",
+ *                  "url": "https://www.google.com/"
+ *                },
+ *                "medium800": {
+ *                  "height": 200,
+ *                  "width": 60,
+ *                  "source": "https://www.google.com/",
+ *                  "url": "https://www.google.com/"
+ *                },
+ *                "medium640": {
+ *                  "height": 1200,
+ *                  "width": 60,
+ *                  "source": "https://www.google.com/",
+ *                  "url": "https://www.google.com/"
+ *                },
+ *                "medium": {
+ *                  "height": 120,
+ *                  "width": 600,
+ *                  "source": "https://www.google.com/",
+ *                  "url": "https://www.google.com/"
+ *                },
+ *                "small320": {
+ *                  "height": 12,
+ *                  "width": 60,
+ *                  "source": "https://www.google.com/",
+ *                  "url": "https://www.google.com/"
+ *                },
+ *                "small": {
+ *                  "height": 1000,
+ *                  "width": 60,
+ *                  "source": "https://www.google.com/",
+ *                  "url": "https://www.google.com/"
+ *                },
+ *                "thumbnail": {
+ *                  "height": 50,
+ *                  "width": 50,
+ *                  "source": "https://www.google.com/",
+ *                  "url": "https://www.google.com/"
+ *                },
+ *                "largeSquare": {
+ *                  "height": 120,
+ *                  "width": 120,
+ *                  "source": "https://www.google.com/",
+ *                  "url": "https://www.google.com/"
+ *                },
+ *                "square": {
+ *                  "height": 60,
+ *                  "width": 60,
+ *                  "source": "https://www.google.com/",
+ *                  "url": "https://www.google.com/"
+ *                }
+ *              },
+ *              "canDownload": true
+ *            },
+ *            "_id": "608d5450ec00005468617a0c"
  *          }
+ *        ],
+ *        "_id": "608d5450ec00005468607a0c"
  *      }
+ *    }
  *
  * @apiUse UserNotFoundError
  */
 
-userRouter.get('/:id/showcase');
+userRouter.get('/:id/showcase', userController.getShowcase);
+
+/**
+ * @api {put} /user/showcase Update User defined image showcase
+ * @apiVersion 1.0.0
+ * @apiName UpdateShowcase
+ * @apiGroup User
+ *
+ * @apiHeader {string} Token Authenticaton Token
+ *
+ * @apiHeaderExample {json} Header-Example:
+ *     {
+ *          authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwOGQ1NWM3ZTUxMmI3NGVlMDA3OTFkYiIsImlhdCI6MTYyMTUwOTY5NywiZXhwIjoxNjI5Mjg1Njk3fQ.3WLVIdzDgIGpru3ybIxqWj9A9ROvtLG90dFuzHowuk0',
+ *     }
+ *
+ * @apiParam (Request Body) {string} showcase The New Showcase List
+ * @apiParamExample {json} Request-Example:
+ *      {
+ *          "showcase": [
+ *            "608d5450ec00005468607a0f",
+ *            "608d5450ec00005468617a0c",
+ *            "608d5450ec00005468628a0d"
+ *          ]
+ *      }
+ *
+ * @apiSuccess {Object[]} showcase Updated List in Showcase
+ * @apiSuccessExample {json} Success-Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *        "status": "success",
+ *        "data": {
+ *          "showcase": [
+ *            "608d5450ec00005468607a0f",
+ *            "608d5450ec00005468617a0c",
+ *            "608d5450ec00005468628a0d"
+ *          ]
+ *        }
+ *      }
+ *
+ * @apiUse UnauthError
+ */
+
+userRouter.put(
+  '/showcase',
+  authController.protect,
+  userController.updateShowcase
+);
 
 /**
  * @api {get} /user/:id/faves Return a List of all user faves
@@ -605,20 +660,58 @@ userRouter.get('/:id/showcase');
  *
  * @apiParam {String} id The User's ID
  *
- * @apiHeader {string} Token Authenticaton Token
- *
  * @apiSuccess {Object[]} List of all user faves
  *
- * @apiSuccessExample Success-Response:
+ * @apiSuccessExample {json} Success-Response:
  *      HTTP/1.1 200 OK
  *      {
- *          "status": "success",
- *          "data":
- *          {
- *              "faves": [
- *
- *              ]
- *          }
+ *        "status": "success",
+ *        "count": 2,
+ *        "data": {
+ *          "favourites": [
+ *            {
+ *              "sizes": {
+ *                "size": {
+ *                  "small": {
+ *                    "height": 1000,
+ *                    "width": 60,
+ *                    "source": "https://www.google.com/",
+ *                    "url": "https://www.google.com/"
+ *                  }
+ *                }
+ *              },
+ *              "favourites": 7,
+ *              "_id": "608d5450ec00005468607a0f",
+ *              "userId": {
+ *                "_id": "608d55c7e512b74ee00791db",
+ *                "firstName": "Daniel",
+ *                "lastName": "Eskandar"
+ *              },
+ *              "title": "Sunset in Bora Bora"
+ *            },
+ *            {
+ *              "sizes": {
+ *                "size": {
+ *                  "small": {
+ *                    "height": 1000,
+ *                    "width": 60,
+ *                    "source": "https://www.google.com/",
+ *                    "url": "https://www.google.com/"
+ *                  }
+ *                }
+ *              },
+ *              "favourites": 51,
+ *              "_id": "608d5450ec00005468617a0c",
+ *              "userId": {
+ *                "_id": "608d55c7e512b74ee00791dc",
+ *                "firstName": "Aliaa",
+ *                "lastName": "Khalifa"
+ *              },
+ *              "title": "Sakura Season in Nihon"
+ *            }
+ *          ],
+ *          "_id": "608d5450ec00005468607a0c"
+ *        }
  *      }
  *
  * @apiUse UserNotFoundError
@@ -634,6 +727,11 @@ userRouter.get('/:id/faves', userController.getFaves);
  *
  * @apiHeader {string} Token Authenticaton Token
  *
+ * @apiHeaderExample {json} Header-Example:
+ *     {
+ *          authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwOGQ1NWM3ZTUxMmI3NGVlMDA3OTFkYiIsImlhdCI6MTYyMTUwOTY5NywiZXhwIjoxNjI5Mjg1Njk3fQ.3WLVIdzDgIGpru3ybIxqWj9A9ROvtLG90dFuzHowuk0',
+ *     }
+ *
  * @apiSuccess {string} photos/maxdisplaypx Maximum size in pixels for photos displayed on the site (0 means that no limit is in place).
  * @apiSuccess {string} photos/maxupload Maximum file size in bytes for photo uploads.
  * @apiSuccess {string} videos/maxduration Maximum duration in seconds of a video.
@@ -641,50 +739,44 @@ userRouter.get('/:id/faves', userController.getFaves);
  *
  * @apiSuccessExample Success-Response:
  *      HTTP/1.1 200 OK
- *      {
+ *        {
  *          "status": "success",
- *          "data":
- *          {
- *              "photos":
- *              {
- *                  "maxdisplaypx": 1024
- *                  "maxupload": 15728640
- *              },
- *              "videos" :
- *              {
- *                  "maxduration": 90
- *                  "maxupload": 157286400
- *              ]
+ *          "data": {
+ *            "limits": {
+ *              "photos": {
+ *                "maxdisplaypx": 1024,
+ *                "maxupload": 15728640
+ *               },
+ *              "videos": {
+ *                "maxduration": 90,
+ *                "maxupload": 15728640
+ *              }
+ *            }
  *          }
- *      }
+ *        }
  *
  * @apiUse UnauthError
  */
 
-userRouter.get('/limits', userController.getLimits);
+userRouter.get('/limits', authController.protect, userController.getLimits);
 
 /**
- * @api {delete} /user/testimonials/:id Delete a testimonial
- * @apiVersion 1.0.0
- * @apiName DeleteTestimonial
- * @apiGroup User
  *
- * @apiHeader {string} Token Authenticaton Token
- *
- * @apiUse SuccessRes
- *
- * @apiUse UnauthError
  */
 
-userRouter.delete('/testimonials/:id');
+userRouter.delete(
+  '/testimonials/:testimonialId',
+  authController.protect,
+  userController.removeTestimonial
+);
 
 /**
- * @api {get} /user/real-name Return the real name of User
+ * @api {get} /:id/user/real-name Return the real name of User
  * @apiVersion 1.0.0
  * @apiName GetRealName
  * @apiGroup User
  *
- * @apiHeader {string} Token Authenticaton Token
+ * @apiParam {String} id The User's ID
  *
  * @apiSuccess {string} firstName The First Name of the calling User
  * @apiSuccess {string} lastName The Last Name of the calling User
@@ -700,18 +792,18 @@ userRouter.delete('/testimonials/:id');
  *          }
  *      }
  *
- * @apiUse UnauthError
+ * @apiUse UserNotFoundError
  */
 
-userRouter.get('/real-name', userController.getRealName);
+userRouter.get('/:id/real-name', userController.getRealName);
 
 /**
- * @api {get} /user/disp-name Return the display name of User
+ * @api {get} /user/:id/disp-name Return the display name of User
  * @apiVersion 1.0.0
  * @apiName GetDispName
  * @apiGroup User
  *
- * @apiHeader {string} Token Authenticaton Token
+ * @apiParam {String} id The User's ID
  *
  * @apiSuccess {string} displayName The Display name of the calling User
  *
@@ -725,10 +817,35 @@ userRouter.get('/real-name', userController.getRealName);
  *          }
  *      }
  *
- * @apiUse UnauthError
+ * @apiUse UserNotFoundError
  */
 
-userRouter.get('/disp-name', userController.getDispName);
+userRouter.get('/:id/disp-name', userController.getDispName);
+
+/**
+ * @api {get} /user/:id/about-me Return the about me section of User
+ * @apiVersion 1.0.0
+ * @apiName GetAboutMe
+ * @apiGroup User
+ *
+ * @apiParam {String} id The User's ID
+ *
+ * @apiSuccess {string} aboutMe The about me section of the calling User
+ *
+ * @apiSuccessExample Success-Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *          "status": "success",
+ *          "data":
+ *          {
+ *              "aboutMe": "Hello! I take nice photos.. follow me \":)"
+ *          }
+ *      }
+ *
+ * @apiUse UserNotFoundError
+ */
+
+userRouter.get('/:id/about-me', userController.getAboutMe);
 
 /**
  * @api {patch} /user/disp-name Update the display name of User
@@ -738,37 +855,124 @@ userRouter.get('/disp-name', userController.getDispName);
  *
  * @apiHeader {string} Token Authenticaton Token
  *
- * @apiBody {string} displayname The New Display name of the calling User
+ * @apiHeaderExample {json} Header-Example:
+ *     {
+ *          authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwOGQ1NWM3ZTUxMmI3NGVlMDA3OTFkYiIsImlhdCI6MTYyMTUwOTY5NywiZXhwIjoxNjI5Mjg1Njk3fQ.3WLVIdzDgIGpru3ybIxqWj9A9ROvtLG90dFuzHowuk0',
+ *     }
  *
- * @apiSuccess {string} Status Status of API
+ * @apiParam (Request Body) {string} displayname The New Display name of the calling User
  *
- * @apiUse SuccessRes
+ * @apiParamExample {json} Request-Example:
+ *        {
+ *          "displayName": "DanielEskandar99"
+ *        }
+ *
+ * @apiSuccess {string} displayName New Display Name for the User
+ *
+ * @apiSuccessExample {json} Success_Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *        "status": "success",
+ *        "data": {
+ *          "displayName": "DanielEskandar99"
+ *        }
+ *    }
  *
  * @apiUse UnauthError
  */
 
-userRouter.patch('/disp-name');
+userRouter.patch(
+  '/disp-name',
+  authController.protect,
+  userController.updateDispName
+);
 
 /**
- * @api {patch} /user/password Update the Password of User
+ * @api {patch} /user/about-me Update the about me section of User
  * @apiVersion 1.0.0
- * @apiName ChamgePassword
+ * @apiName UpdateAboutMe
  * @apiGroup User
  *
  * @apiHeader {string} Token Authenticaton Token
  *
- * @apiBody {string} oldpassword The Pervious Password of the calling User
- * @apiBody {string} newpassword The New Password of the calling User
- * @apiBody {string} confirmpassword Confirming the New Password of the calling User
+ * @apiHeaderExample {json} Header-Example:
+ *     {
+ *          authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwOGQ1NWM3ZTUxMmI3NGVlMDA3OTFkYiIsImlhdCI6MTYyMTUwOTY5NywiZXhwIjoxNjI5Mjg1Njk3fQ.3WLVIdzDgIGpru3ybIxqWj9A9ROvtLG90dFuzHowuk0',
+ *     }
  *
- * @apiSuccess {string} Status Status of API
+ * @apiParam (Request Body) {string} aboutMe The New about me section of the calling User
  *
- * @apiUse SuccessRes
+ * @apiParamExample {json} Request-Example:
+ *        {
+ *          "aboutMe": "new about me content"
+ *        }
+ *
+ * @apiSuccess {string} aboutMe Updated About Me Section
+ *
+ * @apiSuccessExample {json} Success_Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *        "status": "success",
+ *        "data": {
+ *          "aboutMe": "new about me content"
+ *        }
+ *    }
  *
  * @apiUse UnauthError
  */
 
-userRouter.patch('/password');
+userRouter.patch(
+  '/about-me',
+  authController.protect,
+  userController.updateAboutMe
+);
+
+/**
+ * @api {patch} /user/password Update the Password of User
+ * @apiVersion 1.0.0
+ * @apiName ChangePassword
+ * @apiGroup User
+ *
+ * @apiHeader {string} Token Authenticaton Token
+ *
+ * @apiHeaderExample {json} Header-Example:
+ *     {
+ *          authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwOGQ1NWM3ZTUxMmI3NGVlMDA3OTFkYiIsImlhdCI6MTYyMTUwOTY5NywiZXhwIjoxNjI5Mjg1Njk3fQ.3WLVIdzDgIGpru3ybIxqWj9A9ROvtLG90dFuzHowuk0',
+ *     }
+ *
+ * @apiParam (Request Body) {string} aboutMe The New about me section of the calling User
+ *
+ * @apiParamExample {json} Request-Example:
+ *      {
+ *        "passwordCurrent": "Abdcdef!1",
+ *        "password": "Abdcdef!2"
+ *      }
+ *
+ * @apiSuccess {string} aboutMe Updated About Me Section
+ *
+ * @apiSuccessExample {json} Success_Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *        "status": "success",
+ *        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwYWViN2M3ODI0ZDA1MzM0YzMwOTc1NCIsImlhdCI6MTYyMjEyMTY0MSwiZXhwIjoxNjI5ODk3NjQxfQ.4OA0gp4a2oY5kNqv7Q20uHsxq5b9hW-k5TpgSDlwL9Q",
+ *        "data": {
+ *          "user": {
+ *            "_id": "60aeea748d222150c8dbaaf1",
+ *            "firstName": "updatePasswordFirstName",
+ *            "lastName": "updatePasswordLastName",
+ *            "displayName": "updatePasswordTestUser"
+ *          }
+ *        }
+ *      }
+ *
+ * @apiUse UnauthError
+ */
+
+userRouter.patch(
+  '/password',
+  authController.protect,
+  authController.updatePassword
+);
 
 /**
  * @api {post} /user/forget-password Send a Forget Password Request
@@ -776,37 +980,68 @@ userRouter.patch('/password');
  * @apiName ForgetPassword
  * @apiGroup User
  *
- * @apiBody {string} username The Username of the User
- * @apiBody {string} email The Email of the User
+ * @apiParam (Request Body) {string} email Email of the User with Forgotten Password
  *
- * @apiSuccess {string} Status Status of API
+ * @apiParamExample {json} Request-Example:
+ *      {
+ *        "email": "danielbassem@gmail.com"
+ *      }
  *
- * @apiUse SuccessRes
+ * @apiSuccess {string} message String Message for the User
+ *
+ * @apiSuccessExample {json} Success_Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *        "status": "success",
+ *        "message": "Token sent to email"
+ *      }
  *
  * @apiUse UnauthError
  */
 
-userRouter.post('/forget-password');
+userRouter.post('/forgot-password', authController.forgotPassword);
 
 /**
- * @api {post} /user/confirm-password Send a Confirm Forgotten Password Request
+ * @api {post} /user/reset-password Reset a Password through sent token
  * @apiVersion 1.0.0
- * @apiName ConfirmForgetPassword
+ * @apiName resetPassword
  * @apiGroup User
  *
  * @apiHeader {string} Token Authenticaton Token
  *
- * @apiBody {string} newpassword The New Password of the calling User
- * @apiBody {string} confirmpassword Confirming the New Password of the calling User
+ * @apiHeaderExample {json} Header-Example:
+ *     {
+ *          authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwOGQ1NWM3ZTUxMmI3NGVlMDA3OTFkYiIsImlhdCI6MTYyMTUwOTY5NywiZXhwIjoxNjI5Mjg1Njk3fQ.3WLVIdzDgIGpru3ybIxqWj9A9ROvtLG90dFuzHowuk0',
+ *     }
+ *
+ * @apiParam (Request Body) {string} newpassword The New Password of the calling User
+ *
+ * @apiParamExample {json} Request-Example:
+ *      {
+ *        "password": "Abcdef@1"
+ *      }
  *
  * @apiSuccess {string} Status Status of API
  *
- * @apiUse SuccessRes
+ * @apiSuccessExample {json} Success_Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *        "status": "success",
+ *        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwYWViN2M3ODI0ZDA1MzM0YzMwOTc1NCIsImlhdCI6MTYyMjEyMTY0MSwiZXhwIjoxNjI5ODk3NjQxfQ.4OA0gp4a2oY5kNqv7Q20uHsxq5b9hW-k5TpgSDlwL9Q",
+ *        "data": {
+ *          "user": {
+ *            "_id": "60aeea748d222150c8dbaaf1",
+ *            "firstName": "resetPasswordFirstName",
+ *            "lastName": "resetPasswordLastName",
+ *            "displayName": "resetPasswordTestUser"
+ *          }
+ *        }
+ *      }
  *
  * @apiUse UnauthError
  */
 
-userRouter.post('/confirm-password');
+userRouter.patch('/reset-password/:token', authController.resetPassword);
 
 /**
  * @api {get} /user/perm Get User Permission Settings
@@ -816,54 +1051,65 @@ userRouter.post('/confirm-password');
  *
  * @apiHeader {string} Token Authenticaton Token
  *
- * @apiSuccess {string} Status Status of API
+ * @apiHeaderExample {json} Header-Example:
+ *     {
+ *          authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwOGQ1NWM3ZTUxMmI3NGVlMDA3OTFkYiIsImlhdCI6MTYyMTUwOTY5NywiZXhwIjoxNjI5Mjg1Njk3fQ.3WLVIdzDgIGpru3ybIxqWj9A9ROvtLG90dFuzHowuk0',
+ *     }
  *
- * @apiSuccessExample Success-Response:
+ * @apiSuccess {string} privacySettings User's Privacy Settings
+ *
+ * @apiSuccessExample {json} Success-Response:
  *      HTTP/1.1 200 OK
  *      {
- *          "status": "success",
- *          "data": {
- *              "global": {
- *                  "whocandownload": "Anyone",
- *                  "largestimgsize": "Best",
- *                  "allowshare": 1,
- *                  "allowtag": "any",
- *                  "allowgallery": 1,
- *                  "hideexif": 0,
- *                  "hidephotopublicsearch": 0,
- *                  "hideprofilepublicsearch": 0,
- *                  "whocansee": {
- *                      "email": "followed",
- *                      "name": "anyone",
- *                      "currentcity": "anyone"
- *                  }
+ *        "status": "success",
+ *        "data": {
+ *          "privacySettings": {
+ *            "global": {
+ *              "infoVisibility": {
+ *                "email": 2,
+ *                "name": 1,
+ *                "currentCity": 1
  *              },
- *              "defaults": {
- *                  "perms": {
- *                      "see": "anyone",
- *                      "comment": "anyone",
- *                      "addnotes": "followed"
- *                  },
- *                  "license": "All Rights Reserved (c)",
- *                  "mapvisible": "Anyone",
- *                  "importexif": 1,
- *                  "safetylevel": "safe",
- *                  "contenttype": "photos"
+ *              "downloadPerm": 1,
+ *              "largestImgSize": 0,
+ *              "allowShare": 1,
+ *              "allowTag": 1,
+ *              "allowGalleryAdd": true,
+ *              "hideEXIF": false,
+ *              "hidePhotoSearch": false,
+ *              "hideProfileSearch": false
+ *            },
+ *            "defaults": {
+ *              "perms": {
+ *                "see": 1,
+ *                "comment": 1,
+ *                "addNotes": 2
  *              },
- *              "filters": {
- *                  "search": {
- *                      "safesearch": 1,
- *                      "content": "photovideo"
- *                  }
+ *              "license": 0,
+ *              "mapVisible": 1,
+ *              "importEXIF": true,
+ *              "safetyLevel": 1,
+ *              "contentType": 1
+ *            },
+ *            "filters": {
+ *              "search": {
+ *                "safeSearch": true,
+ *                "content": 1
  *              }
+ *            }
  *          }
+ *        }
  *      }
  *
  *
  * @apiUse UnauthError
  */
 
-userRouter.get('/perm');
+userRouter.get(
+  '/perm',
+  authController.protect,
+  userController.getPrivacySettings
+);
 
 /**
  * @api {patch} /user/perm Update the User Permission Settings
@@ -873,14 +1119,110 @@ userRouter.get('/perm');
  *
  * @apiHeader {string} Token Authenticaton Token
  *
- * @apiSuccess {string} Status Status of API
+ * @apiHeaderExample {json} Header-Example:
+ *     {
+ *          authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwOGQ1NWM3ZTUxMmI3NGVlMDA3OTFkYiIsImlhdCI6MTYyMTUwOTY5NywiZXhwIjoxNjI5Mjg1Njk3fQ.3WLVIdzDgIGpru3ybIxqWj9A9ROvtLG90dFuzHowuk0',
+ *     }
  *
- * @apiUse SuccessRes
+ * @apiParam (Request Body) {string} privacySettings User's New Privacy Settings
+ *
+ * @apiParamExample {json} Request-Example:
+ *        {
+ *          "privacySettings": {
+ *            "global": {
+ *              "infoVisiblity": {
+ *                "email": 2,
+ *                "name": 1,
+ *                "currentCity": 1
+ *              },
+ *              "downloadPerm": 1,
+ *              "largestImgSize": 0,
+ *              "allowShare": 2,
+ *              "allowTag": 2,
+ *              "allowGalleryAdd": true,
+ *              "hideEXIF": false,
+ *              "hidePhotoSearch": false,
+ *              "hideProfileSearch": false,
+ *              "infoVisibility": {
+ *                "email": 2,
+ *                "name": 1,
+ *                "currentCity": 1
+ *              }
+ *            },
+ *            "defaults": {
+ *              "perms": {
+ *                "see": 1,
+ *                "comment": 1,
+ *                "addNotes": 2
+ *              },
+ *              "license": 0,
+ *              "mapVisible": 1,
+ *              "importEXIF": true,
+ *              "safetyLevel": 1,
+ *              "contentType": 1
+ *            },
+ *            "filters": {
+ *              "search": {
+ *                "safeSearch": true,
+ *                "content": 1
+ *              }
+ *            }
+ *          }
+ *        }
+ *
+ * @apiSuccess {string} privacySettings User's Updated Privacy Settings
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *        "status": "success",
+ *        "data": {
+ *          "privacySettings": {
+ *            "global": {
+ *              "infoVisibility": {
+ *                "email": 2,
+ *                "name": 1,
+ *                "currentCity": 1
+ *              },
+ *              "downloadPerm": 1,
+ *              "largestImgSize": 0,
+ *              "allowShare": 1,
+ *              "allowTag": 1,
+ *              "allowGalleryAdd": true,
+ *              "hideEXIF": false,
+ *              "hidePhotoSearch": false,
+ *              "hideProfileSearch": false
+ *            },
+ *            "defaults": {
+ *              "perms": {
+ *                "see": 1,
+ *                "comment": 1,
+ *                "addNotes": 2
+ *              },
+ *              "license": 0,
+ *              "mapVisible": 1,
+ *              "importEXIF": true,
+ *              "safetyLevel": 1,
+ *              "contentType": 1
+ *            },
+ *            "filters": {
+ *              "search": {
+ *                "safeSearch": true,
+ *                "content": 1
+ *              }
+ *            }
+ *          }
+ *        }
+ *      }
  *
  * @apiUse UnauthError
  */
 
-userRouter.patch('/perm');
+userRouter.patch(
+  '/perm',
+  authController.protect,
+  userController.updatePrivacySettings
+);
 
 /**
  * @api {get} /user/notif Get User Notification Settings
@@ -890,34 +1232,42 @@ userRouter.patch('/perm');
  *
  * @apiHeader {string} Token Authenticaton Token
  *
- * @apiSuccess {string} Status Status of API
+ * @apiHeaderExample {json} Header-Example:
+ *     {
+ *          authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwOGQ1NWM3ZTUxMmI3NGVlMDA3OTFkYiIsImlhdCI6MTYyMTUwOTY5NywiZXhwIjoxNjI5Mjg1Njk3fQ.3WLVIdzDgIGpru3ybIxqWj9A9ROvtLG90dFuzHowuk0',
+ *     }
  *
- * @apiSuccessExample Success-Response:
+ * @apiSuccess {string} notificationSettings The User's Notification Settings
+ *
+ * @apiSuccessExample {json} Success-Response:
  *      HTTP/1.1 200 OK
  *      {
- *          "status": "success",
- *          "data":
- *          {
- *              "notifmail":
- *              {
- *                  "invites": 1,
- *                  "contact": 1,
- *                 "messages": 1,
- *                 "reminders": 1
- *              },
- *              "activitymail":
- *              {
- *                  "you": 1,
- *                 "contacts": 1
- *              }
+ *        "status": "success",
+ *        "data": {
+ *          "notificationSettings": {
+ *            "notifMail": {
+ *              "invites": false,
+ *              "contact": false,
+ *              "messages": true,
+ *              "reminders": true
+ *            },
+ *            "activityMail": {
+ *              "you": true,
+ *              "contacts": true
+ *            }
  *          }
+ *        }
  *      }
  *
  *
  * @apiUse UnauthError
  */
 
-userRouter.get('/notif');
+userRouter.get(
+  '/notif',
+  authController.protect,
+  userController.getNotificationSettings
+);
 
 /**
  * @api {patch} /user/notif Update the User Notification Settings
@@ -927,14 +1277,59 @@ userRouter.get('/notif');
  *
  * @apiHeader {string} Token Authenticaton Token
  *
- * @apiSuccess {string} Status Status of API
+ * @apiHeaderExample {json} Header-Example:
+ *     {
+ *          authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwOGQ1NWM3ZTUxMmI3NGVlMDA3OTFkYiIsImlhdCI6MTYyMTUwOTY5NywiZXhwIjoxNjI5Mjg1Njk3fQ.3WLVIdzDgIGpru3ybIxqWj9A9ROvtLG90dFuzHowuk0',
+ *     }
  *
- * @apiUse SuccessRes
+ * @apiParam (Request Body) {string} privacySettings User's New Privacy Settings
+ *
+ * @apiParamExample {json} Request-Example:
+ *        {
+ *          "notificationSettings": {
+ *            "notifMail": {
+ *              "invites": false,
+ *              "contact": false,
+ *              "messages": true,
+ *              "reminders": true
+ *            },
+ *            "activityMail": {
+ *              "you": true,
+ *              "contacts": true
+ *            }
+ *          }
+ *        }
+ *
+ * @apiSuccess {string} notificationSettings The User's Updated Notificaation Settings
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *        "status": "success",
+ *        "data": {
+ *          "notificationSettings": {
+ *            "notifMail": {
+ *              "invites": false,
+ *              "contact": false,
+ *              "messages": true,
+ *              "reminders": true
+ *            },
+ *            "activityMail": {
+ *              "you": true,
+ *              "contacts": true
+ *            }
+ *          }
+ *        }
+ *      }
  *
  * @apiUse UnauthError
  */
 
-userRouter.patch('/notif');
+userRouter.patch(
+  '/notif',
+  authController.protect,
+  userController.updateNotificationSettings
+);
 
 /**
  * @api {post} /user/faves/:id Add a Photo to User Faves
@@ -946,12 +1341,33 @@ userRouter.patch('/notif');
  *
  * @apiHeader {string} Token Authenticaton Token
  *
- * @apiUse SuccessRes
+ * @apiHeaderExample {json} Header-Example:
+ *     {
+ *          authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwOGQ1NWM3ZTUxMmI3NGVlMDA3OTFkYiIsImlhdCI6MTYyMTUwOTY5NywiZXhwIjoxNjI5Mjg1Njk3fQ.3WLVIdzDgIGpru3ybIxqWj9A9ROvtLG90dFuzHowuk0',
+ *     }
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *        "status": "success",
+ *        "data": {
+ *          "newPhotoFaveCount": {
+ *            "favourites": 6,
+ *            "_id": "608d5450ec00005468607a0f"
+ *          },
+ *          "newUserFaveList": {
+ *            "favourites": [
+ *              "608d5450ec00005468617a0c"
+ *            ],
+ *            "_id": "608d5450ec00005468607a0c"
+ *          }
+ *        }
+ *      }
  *
  * @apiUse UnauthError
  */
 
-userRouter.post('/faves/:id', userController.addFave);
+userRouter.post('/faves/:id', authController.protect, userController.addFave);
 
 /**
  * @api {delete} /user/faves/:id Remove a Photo from User Faves
@@ -961,67 +1377,50 @@ userRouter.post('/faves/:id', userController.addFave);
  *
  * @apiParam {String} id The Photo's ID
  *
- * @apiHeader {String} Token Authenticaton Token
+ * @apiHeader {string} Token Authenticaton Token
  *
- * @apiUse SuccessRes
+ * @apiHeaderExample {json} Header-Example:
+ *     {
+ *          authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwOGQ1NWM3ZTUxMmI3NGVlMDA3OTFkYiIsImlhdCI6MTYyMTUwOTY5NywiZXhwIjoxNjI5Mjg1Njk3fQ.3WLVIdzDgIGpru3ybIxqWj9A9ROvtLG90dFuzHowuk0',
+ *     }
+ *
+ * @apiSuccess {string} notificationSettings The User's Updated Notificaation Settings
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *        "status": "success",
+ *        "data": {
+ *          "newPhotoFaveCount": {
+ *            "favourites": 6,
+ *            "_id": "608d5450ec00005468607a0f"
+ *          },
+ *          "newUserFaveList": {
+ *            "favourites": [
+ *              "608d5450ec00005468617a0c"
+ *            ],
+ *            "_id": "608d5450ec00005468607a0c"
+ *          }
+ *        }
+ *      }
  *
  * @apiUse UnauthError
  */
 
-userRouter.delete('/faves/:id', userController.removeFave);
+userRouter.delete(
+  '/faves/:id',
+  authController.protect,
+  userController.removeFave
+);
 
 /**
- * @api {get} /user/faves-context Get the context for a photo in Faves
- * @apiVersion 1.0.0
- * @apiName GetFavesContext
- * @apiGroup User
  *
- * @apiHeader {String} Token Authenticaton Token
- *
- * @apiSuccess {String} nextphoto Photo ID of the next photo
- * @apiSuccess {String} prevphoto Photo ID of the previous photo
- *
- *
- * @apiSuccessExample Success-Response:
- *      HTTP/1.1 200 OK
- *      {
- *          "status": "success",
- *          "data":
- *          {
- *              "nextphoto": "483490175892497",
- *              "prevphoto": "483490175892451"
- *          }
- *      }
- *
- * @apiUse UnauthError
  */
 
 userRouter.get('/fave-context');
 
 /**
- * @api {get} /user/addable-pool Gets a list of groups the user can add photos to
- * @apiVersion 1.0.0
- * @apiName GetAddablePool
- * @apiGroup User
  *
- * @apiHeader {String} Token Authenticaton Token
- *
- * @apiSuccess {Object[]} addablegroups ID's of all Groups the Photo can be added to
- *
- * @apiSuccessExample Success-Response:
- *      HTTP/1.1 200 OK
- *      {
- *          "status": "success",
- *          "data":
- *          {
- *              "addablegroups": [
- *
- *              ]
- *
- *          }
- *      }
- *
- * @apiUse UnauthError
  */
 
 userRouter.get('/addable-pool');
@@ -1033,6 +1432,9 @@ userRouter.get('/addable-pool');
  * @apiGroup User
  *
  * @apiHeader {String} Token Authenticaton Token
+ *
+ * @apiParam (Request Body) {Number} per_page Number of Galleries to return Per Page (Optinal)
+ * @apiParam (Request Body) {Number} page The Page Number to Return (Optinal)
  *
  * @apiSuccess {Object[]} photos Array of photos from the user's camera roll
  *
@@ -1051,7 +1453,11 @@ userRouter.get('/addable-pool');
  * @apiUse UnauthError
  */
 
-userRouter.get('/camera-roll');
+userRouter.get(
+  '/camera-roll',
+  authController.protect,
+  userController.getCameraRoll
+);
 
 /**
  * @api {get} /user/followed Gets a list of followed users
@@ -1064,78 +1470,79 @@ userRouter.get('/camera-roll');
  * @apiSuccess {Number} count Following list length
  * @apiSuccess {Object[]} Follwing list Array of User ID's of the Followed Users
  *
- * @apiSuccessExample Success-Response:
+ * @apiSuccessExample  {json} Success-Response:
  *      HTTP/1.1 200 OK
  *      {
- *          "status": "success",
- *          "data":
- *          {
- *              "count": 30
- *              "following": [
- *
- *              ]
- *          }
+ *        "status": "success",
+ *        "count": 4,
+ *        "data": {
+ *          "_id": "608d55c7e512b74ee00791de",
+ *          "following": [
+ *            {
+ *              "_id": "60914e1ba87d736f3c382ed6",
+ *              "user": {
+ *                "_id": "608d55c7e512b74ee00791db",
+ *                "displayName": "DanielEskandar",
+ *                "firstName": "Daniel",
+ *                "lastName": "Eskandar"
+ *              },
+ *              "relation": "undetermined",
+ *              "followDate": "2021-05-04T12:16:24.255Z"
+ *            },
+ *            {
+ *              "_id": "60914e1ba87d736f3c382ed7",
+ *              "user": {
+ *                "_id": "608d5450ec00005468607a0c",
+ *                "displayName": "AhmedAbdulkader99",
+ *                "firstName": "Ahmed",
+ *                "lastName": "Abdulkader"
+ *              },
+ *              "relation": "undetermined",
+ *              "followDate": "2021-05-04T12:17:24.255Z"
+ *            },
+ *            {
+ *              "_id": "60914e1ba87d736f3c382ed8",
+ *              "user": {
+ *                "_id": "608d55c7e512b74ee00791dc",
+ *                "displayName": "AliaaKhalifa",
+ *                "firstName": "Aliaa",
+ *                "lastName": "Khalifa"
+ *              },
+ *              "relation": "undetermined",
+ *              "followDate": "2021-05-04T12:18:24.255Z"
+ *            },
+ *            {
+ *              "_id": "60914e1ba87d736f3c382ed9",
+ *              "user": {
+ *                "_id": "608d55c7e512b74ee00791dd",
+ *                "displayName": "MariamKhashab",
+ *                "firstName": "Mariam",
+ *                "lastName": "Khashab"
+ *              },
+ *              "relation": "undetermined",
+ *              "followDate": "2021-05-04T12:19:24.255Z"
+ *            }
+ *          ]
+ *        }
  *      }
  *
  * @apiUse UserNotFoundError
  */
 
-userRouter.get('/:id/following', userController.getFollowing);
+userRouter.get(
+  '/:id/following',
+  authController.protect,
+  userController.getFollowing
+);
 
 /**
- * @api {get} /user/follower Gets a list of User's followers
- * @apiVersion 1.0.0
- * @apiName GetFollowers
- * @apiGroup User
  *
- * @apiHeader {String} Token Authenticaton Token
- *
- * @apiSuccess {Number} count User's Follower Count
- * @apiSuccess {Object[]} follwerlist Array of User ID's of the User's Follower
- *
- * @apiSuccessExample Success-Response:
- *      HTTP/1.1 200 OK
- *      {
- *          "status": "success",
- *          "data":
- *          {
- *              "count": 30
- *              "follwerlist": [
- *
- *              ]
- *          }
- *      }
- *
- * @apiUse UnauthError
  */
 
 userRouter.get('/follower');
 
 /**
- * @api {get} /user/follower-not-followed Gets a list of User's followers not followed by the User
- * @apiVersion 1.0.0
- * @apiName GetFollowersNotFollowed
- * @apiGroup User
  *
- * @apiHeader {String} Token Authenticaton Token
- *
- * @apiSuccess {Number} count User's Followers Not Followed Count
- * @apiSuccess {Object[]} list Array of User ID's of the User's Followers Not Followed
- *
- * @apiSuccessExample Success-Response:
- *      HTTP/1.1 200 OK
- *      {
- *          "status": "success",
- *          "data":
- *          {
- *              "count": 30
- *              "list": [
- *
- *              ]
- *          }
- *      }
- *
- * @apiUse UnauthError
  */
 
 userRouter.get('/follower-not-followed');
@@ -1146,295 +1553,204 @@ userRouter.get('/follower-not-followed');
  * @apiName GetBlocked
  * @apiGroup User
  *
- * @apiHeader {String} Token Authenticaton Token
+ * @apiHeader {string} Token Authenticaton Token
+ *
+ * @apiHeaderExample {json} Header-Example:
+ *     {
+ *          authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwOGQ1NWM3ZTUxMmI3NGVlMDA3OTFkYiIsImlhdCI6MTYyMTUwOTY5NywiZXhwIjoxNjI5Mjg1Njk3fQ.3WLVIdzDgIGpru3ybIxqWj9A9ROvtLG90dFuzHowuk0',
+ *     }
  *
  * @apiSuccess {Number} count User's Blocked Count
  * @apiSuccess {Object[]} blocked Array of User ID's of the User's Blocked users
  *
- * @apiSuccessExample Success-Response:
+ * @apiSuccessExample {json} Success-Response:
  *      HTTP/1.1 200 OK
  *      {
- *          "status": "success",
- *          "data":
- *          {
- *              "count": 30
- *              "blocked": [
- *
- *              ]
- *          }
+ *        "status": "success",
+ *        "count": 2,
+ *        "data": {
+ *          "blocked": [
+ *            {
+ *              "_id": "608d5450ec00005468607a0c",
+ *              "displayName": "AhmedAbdulkader99",
+ *              "firstName": "Ahmed",
+ *              "lastName": "Abdulkader"
+ *            },
+ *            {
+ *              "_id": "608d55c7e512b74ee00791dc",
+ *              "displayName": "AliaaKhalifa",
+ *              "firstName": "Aliaa",
+ *              "lastName": "Khalifa"
+ *            }
+ *          ],
+ *          "_id": "608d55c7e512b74ee00791db"
+ *        }
  *      }
  *
  * @apiUse UnauthError
  */
 
-userRouter.get('/block', userController.getBlocked);
+userRouter.get('/block', authController.protect, userController.getBlocked);
 
 /**
- * @api {post} /user/follow/:id Follow a User
- * @apiVersion 1.0.0
- * @apiName Follow
- * @apiGroup User
  *
- * @apiParam {String} id The Followed User's ID
- *
- * @apiHeader {string} Token Authenticaton Token
- *
- * @apiUse SuccessRes
- *
- * @apiUse UnauthError
  */
 
 userRouter.post('/follow/:id');
 
 /**
- * @api {post} /user/follow/:id Change the Relation to a Followed User
- * @apiVersion 1.0.0
- * @apiName UpdateFollowState
- * @apiGroup User
  *
- * @apiParam {String} id The Followed User's ID
- *
- * @apiBody {String} relation New Relation Setting (Friend, Family, none)
- *
- * @apiHeader {string} Token Authenticaton Token
- *
- * @apiUse SuccessRes
- *
- * @apiUse UnauthError
  */
 
 userRouter.patch('/follow/:id');
 
 /**
- * @api {delete} /user/follow/:id Unfollow a User
- * @apiVersion 1.0.0
- * @apiName Unfollow
- * @apiGroup User
  *
- * @apiParam {String} id The Unfollowed User's ID
- *
- * @apiHeader {string} Token Authenticaton Token
- *
- * @apiUse SuccessRes
- *
- * @apiUse UnauthError
  */
 
 userRouter.delete('/follow/:id');
 
 /**
- * @api {post} /user/block/:id Block a User
- * @apiVersion 1.0.0
- * @apiName Block
- * @apiGroup User
  *
- * @apiParam {String} id The Blocked User's ID
- *
- * @apiHeader {string} Token Authenticaton Token
- *
- * @apiUse SuccessRes
- *
- * @apiUse UnauthError
  */
 
 userRouter.post('/block/:id');
 
 /**
- * @api {delete} /user/block/:id Unblock a User
- * @apiVersion 1.0.0
- * @apiName Unblock
- * @apiGroup User
  *
- * @apiParam {String} id The Unblocked User's ID
- *
- * @apiHeader {string} Token Authenticaton Token
- *
- * @apiUse SuccessRes
- *
- * @apiUse UnauthError
  */
 
 userRouter.delete('/block/:id');
 
 /**
- * @api {get} /user/messages/sent Gets a list of User's Sent Messages
- * @apiVersion 1.0.0
- * @apiName GetSentMsg
- * @apiGroup User
  *
- * @apiHeader {String} Token Authenticaton Token
- *
- * @apiSuccess {Number} count User's Sent Messages
- * @apiSuccess {Object[]} msglist Array of Message ID's of the User's sent messages
- *
- * @apiSuccessExample Success-Response:
- *      HTTP/1.1 200 OK
- *      {
- *          "status": "success",
- *          "data":
- *          {
- *              "count": 30
- *              "msglist": [
- *
- *              ]
- *          }
- *      }
- *
- * @apiUse UnauthError
  */
 
 userRouter.get('/messages/sent');
 
 /**
- * @api {get} /user/messages/inbox Gets a list of User's Recieved Messages
- * @apiVersion 1.0.0
- * @apiName GetInbox
- * @apiGroup User
  *
- * @apiHeader {String} Token Authenticaton Token
- *
- * @apiSuccess {Number} count User's Recieved Messages
- * @apiSuccess {Object[]} msglist Array of Message ID's of the User's Recieved Messages
- *
- * @apiSuccessExample Success-Response:
- *      HTTP/1.1 200 OK
- *      {
- *          "status": "success",
- *          "data":
- *          {
- *              "count": 30
- *              "msglist": [
- *
- *              ]
- *          }
- *      }
- *
- * @apiUse UnauthError
  */
 
 userRouter.get('/messages/inbox');
 
 /**
- * @api {post} /user/messages/ Sends a New Message
- * @apiVersion 1.0.0
- * @apiName SendMessage
- * @apiGroup User
  *
- * @apiHeader {String} Token Authenticaton Token
- *
- * @apiBody {ObjectID} recieverid User ID of the User recieving the Message
- * @apiBody {String} subject Subject Line of the Message
- * @apiBody {String} body Main Content of the Message
- * @apiBody {ObjectID} replymsg Message being replied to (null if none)
- *
- * @apiUse SuccessRes
- *
- * @apiUse UnauthError
  */
 
 userRouter.post('/messages');
 
 /**
- * @api {delete} /user/messages/:id Delete a Message
- * @apiVersion 1.0.0
- * @apiName DeleteMsg
- * @apiGroup User
  *
- * @apiParam {String} id The Deleted Message's ID
- *
- * @apiHeader {string} Token Authenticaton Token
- *
- * @apiUse SuccessRes
- *
- * @apiUse UnauthError
  */
 
 userRouter.delete('/messages/:id');
 
 /**
- * @api {get} /user/notif/contact Gets a list of User's Contact Notifications
- * @apiVersion 1.0.0
- * @apiName ContactNotification
- * @apiGroup User
  *
- * @apiHeader {String} Token Authenticaton Token
- *
- * @apiSuccess {Number} count User's Recieved Messages
- * @apiSuccess {Object[]} notiflist Array of Notifications
- *
- * @apiSuccessExample Success-Response:
- *      HTTP/1.1 200 OK
- *      {
- *          "status": "success",
- *          "data":
- *          {
- *              "count": 30
- *              "notiflist": [
- *
- *              ]
- *          }
- *      }
- *
- * @apiUse UnauthError
  */
 
 userRouter.get('/notif/contact');
 
 /**
- * @api {get} /user/notif/follow Gets a list of User's Follow Notifications
- * @apiVersion 1.0.0
- * @apiName FollowtNotification
- * @apiGroup User
  *
- * @apiHeader {String} Token Authenticaton Token
- *
- * @apiSuccess {Number} count User's Recieved Messages
- * @apiSuccess {Object[]} notiflist Array of Notifications
- *
- * @apiSuccessExample Success-Response:
- *      HTTP/1.1 200 OK
- *      {
- *          "status": "success",
- *          "data":
- *          {
- *              "count": 30
- *              "notiflist": [
- *
- *              ]
- *          }
- *      }
- *
- * @apiUse UnauthError
  */
 
 userRouter.get('/notif/follow');
 
 /**
- * @api {get} /user/notif/interact Gets a list of User's Interact Notifications
+ * @api {get} /user/search Search for a User on the Database
  * @apiVersion 1.0.0
- * @apiName InteractNotification
+ * @apiName searchUser
  * @apiGroup User
  *
- * @apiHeader {String} Token Authenticaton Token
+ * @apiParam (URL Query) {string} searchText Text used to search the database
+ * @apiParam (URL Query) {number} limit Number of results per page
+ * @apiParam (URL Query) {number} page Page Selected for Paginated request
  *
- * @apiSuccess {Number} count User's Recieved Messages
- * @apiSuccess {Object[]} notiflist Array of Notifications
+ * @apiExample {curl} Example usage:
+ *        /user/search?searchText=search1&limit=2&page=1
  *
- * @apiSuccessExample Success-Response:
+ * @apiSuccess {Object[]} Results Results of the User Search
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *        "status": "success",
+ *        "data": [
+ *          {
+ *            "_id": "60b1619d62e64a359ccb4a63",
+ *            "firstName": "dummy3",
+ *            "lastName": "search1",
+ *            "displayName": "dummy4",
+ *            "photoCount": 0,
+ *            "followerCount": 0
+ *          },
+ *          {
+ *            "_id": "60b1619d62e64a359ccb4a64",
+ *            "firstName": "dummy5",
+ *            "lastName": "dummy6",
+ *            "displayName": "search1",
+ *            "photoCount": 0,
+ *            "followerCount": 0
+ *          }
+ *        ]
+ *      }
+ *
+ * @apiUse ServerError
+ */
+
+userRouter.get('/search', authController.protect, userController.search);
+
+/**
+ * @api {get} /user/:id Get the User's Information
+ * @apiVersion 1.0.0
+ * @apiName GetUserInfo
+ * @apiGroup User
+ *
+ * @apiParam {String} id The User's ID
+ *
+ * @apiHeader {string} Token Authenticaton Token
+ *
+ * @apiHeaderExample {json} Header-Example:
+ *     {
+ *          authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwOGQ1NWM3ZTUxMmI3NGVlMDA3OTFkYiIsImlhdCI6MTYyMTUwOTY5NywiZXhwIjoxNjI5Mjg1Njk3fQ.3WLVIdzDgIGpru3ybIxqWj9A9ROvtLG90dFuzHowuk0',
+ *     }
+ *
+ * @apiSuccess {String} joinDate Date when the user joined flickr
+ * @apiSuccess {String} occupation Occupation of the user
+ * @apiSuccess {String} hometown Hometown of the User
+ * @apiSuccess {String} currentCity Current city of the user
+ * @apiSuccess {string} country Country of the user
+ * @apiSuccess {string} email Email of the user
+ *
+ * @apiSuccessExample {json} Success-Response:
  *      HTTP/1.1 200 OK
  *      {
  *          "status": "success",
  *          "data":
  *          {
- *              "count": 30
- *              "notiflist": [
- *
- *              ]
+ *            "privacySettings": {
+ *              "global": {
+ *                "infoVisibility": {
+ *                  "email": 2,
+ *                  "currentCity": 1
+ *                  }
+ *                }
+ *              },
+ *              "joinDate": "2015-10-07T06:09:54+00:00",
+ *              "occupation": "Photographer",
+ *              "hometown": "Beverly Hills",
+ *              "currentCity": "California",
+ *              "country": "United States",
+ *              "email": "ahmedkader99@mailserver.com",
  *          }
  *      }
  *
- * @apiUse UnauthError
+ * @apiUse UserNotFoundError
  */
+
+userRouter.get('/:id', authController.protect, userController.getUserInfo);
 
 /**
  * @api {get} /user/:id Get the User's Information
@@ -1451,7 +1767,7 @@ userRouter.get('/notif/follow');
  * @apiSuccess {string} country Country of the user
  * @apiSuccess {string} email Email of the user
  *
- * @apiSuccessExample Success-Response:
+ * @apiSuccessExample {json} Success-Response:
  *      HTTP/1.1 200 OK
  *      {
  *          "status": "success",
@@ -1471,41 +1787,7 @@ userRouter.get('/notif/follow');
 
 userRouter.get('/:id', userController.getUserInfo);
 
-/**
- * @api {get} /user/:id Get the User's Information
- * @apiVersion 1.0.0
- * @apiName GetUserInfo
- * @apiGroup User
- *
- * @apiParam {String} id The User's ID
- *
- * @apiSuccess {String} joinDate Date when the user joined flickr
- * @apiSuccess {String} occupation Occupation of the user
- * @apiSuccess {String} hometown Hometown of the User
- * @apiSuccess {String} currentCity Current city of the user
- * @apiSuccess {string} country Country of the user
- * @apiSuccess {string} email Email of the user
- *
- * @apiSuccessExample Success-Response:
- *      HTTP/1.1 200 OK
- *      {
- *          "status": "success",
- *          "data":
- *          {
- *              "joinDate": "2015-10-07T06:09:54+00:00",
- *              "occupation": "Photographer",
- *              "hometown": "Beverly Hills",
- *              "currentCity": "California",
- *              "country": "United States",
- *              "email": "ahmedkader99@mailserver.com",
- *          }
- *      }
- *
- * @apiUse UserNotFoundError
- */
-
-userRouter.get('/:id', userController.getUserInfo);
-
+// Deprecated Routes
 userRouter.get('/notif/interact');
 
 userRouter.get('/recent-activity/comments');

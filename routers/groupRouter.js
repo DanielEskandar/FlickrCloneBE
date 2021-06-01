@@ -3,6 +3,7 @@ const express = require('express');
 
 // INCLUDE CONTROLLERS
 const groupController = require('../controllers/groupController.js');
+const authController = require('../controllers/authController.js');
 
 // CREATE ROUTER
 const groupRouter = express.Router();
@@ -74,20 +75,44 @@ const groupRouter = express.Router();
 /**
  * @api {post} /group Create a new group
  * @apiVersion 1.0.0
- * @apiName CreateGroup
+ * @apiName createGroup
  * @apiGroup Group
  *
- * @apiBody {string} name Group Name
- * @apiBody {string} description About the group
- * @apiBody {date} startDate Creation date
+ *  @apiHeader {String} Token Authenticaton Token
+ *
+ * @apiParam (Request Body) {string} name Group Name
+ * @apiParam (Request Body) {string} description About the group
+ * @apiParam (Request Body) {date} startDate Creation date
  *
  * @apiSuccess {Object} user Authenticaton Token
  *
  * @apiUse SuccessRes
- *
+ * @apiSuccessExample Success-Response:status:
+ *  HTTP/1.1 200 OK
+ * {
+ * 'success',
+ *  data: {
+ *   public: false,
+ *  invitation: false,
+ *   startDate: '2021-01-02T00:00:00.000Z',
+ *  photos: [],
+ *   discussionTopics: [],
+ *   ageRestriction: false,
+ *   _id: '609eed338a55978b34e2f061',
+ *   name: 'backend unit test',
+ *   users: [
+ *     {
+ *       joinDate: '2021-01-01T00:00:00.000Z',
+ *       userId: '608d55c7e512b74ee00791de',
+ *       admin: true,
+ *     },
+ *   ],
+ *   __v: 0,
+ * }
+ *}
  * @apiUse UnauthError
  */
-groupRouter.post('/');
+groupRouter.post('/', authController.protect, groupController.createGroup);
 
 /**
  * @api {delete} /group/:id Admin deletes a group
@@ -110,7 +135,7 @@ groupRouter.delete('/:id');
 /**
  * @api {get} /group/:id Get group's info
  * @apiVersion 1.0.0
- * @apiName GetInfo
+ * @apiName getInfo
  * @apiGroup Group
  *
  * @apiParam {String} id The Group's ID
@@ -149,7 +174,7 @@ groupRouter.get('/:id');
 /**
  * @api {get} /group/ Get All group's info
  * @apiVersion 1.0.0
- * @apiName GetInfo
+ * @apiName getInfo
  * @apiGroup Group
  *
  * @apiSuccess {Object[]} group All groups
@@ -167,7 +192,7 @@ groupRouter.get('/:id');
  *
  * @apiUse UnauthError
  */
-groupRouter.get('/', groupController.GetInfo);
+groupRouter.get('/', groupController.getInfo);
 /**
  * @api {post} /group/:id/user/:userid Join a public non-invitation group as a member
  * @apiVersion 1.0.0
@@ -267,37 +292,68 @@ groupRouter.get('/search');
  * @apiName createDiscussion
  * @apiGroup Group
  *
+ * @apiHeader {String} user Authenticaton Token
+ *
  * @apiParam {String} id The Group's ID
  *
- * @apiBody {Object} user Author
- * @apiBody {Date} date Date of publish
- * @apiBody {String} content Discussion content
+ * @apiParam (Request Body) {Object} user Author
+ * @apiParam (Request Body) {Date} date Date of publish
+ * @apiParam (Request Body) {String} content Discussion content
  *
  * @apiSuccess {Object} user Authenticaton Token
  *
  * @apiUse SuccessRes
  *
+ * @apiSuccessExample Success-Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *        status: 'success',
+ *      data: {
+ *       replies: ['609fe93c38075024f8d3e6f6'],
+ *      _id: '608f6e7519953b27004f6dac',
+ *       user: '608f3e678209d433946b946d',
+ *       content: 'edit 1',
+ *       date: '2021-01-01T00:00:00.000Z',
+ *       __v: 0,
+ *          },
+ *      }
  * @apiUse UnauthError
  * @apiUse ForbiddenAccss
  * @apiUse GroupNotFoundError
  */
-groupRouter.post('/:id/discussion', groupController.createDiscussion);
+groupRouter.post(
+  '/:id/discussion',
+  authController.protect,
+  groupController.createDiscussion
+);
 
 /**
  * @api {patch} /group/discussion/:id  Editting a discussion topic
  * @apiVersion 1.0.0
- * @apiName EditDiscussion
+ * @apiName editDiscussion
  * @apiGroup Group
  *
- * @apiHeader {string} Token Authenticaton Token
+ * @apiHeader {string} user Authenticaton Token
  *
  * @apiParam {String} id The discussion's ID
  *
- * @apiBody {Object} discussion The old discussion
- * @apiBody {Object} discussion The updated discussion
+ * @apiParam (Request Body) {Object} discussion The old discussion
+ * @apiParam (Request Body) {Object} discussion The updated discussion
  *
  * @apiSuccess {string} Status Status of API
- *
+ * @apiSuccessExample Success-Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *         status: 'success',
+ *         data: {
+ *           replies: ['609fe93c38075024f8d3e6f6'],
+ *           _id: '608f6e7519953b27004f6dac',
+ *           user: '608f3e678209d433946b946d',
+ *           content: 'edit 1',
+ *           date: '2021-01-01T00:00:00.000Z',
+ *           __v: 0,
+ *       },
+ *      }
  * @apiUse SuccessRes
  *
  *  @apiErrorExample Error-Response:
@@ -310,7 +366,11 @@ groupRouter.post('/:id/discussion', groupController.createDiscussion);
  * @apiUse UnauthError
  * @apiUse ForbiddenAccss
  */
-groupRouter.patch('/discussion/:id', groupController.EditDiscussion);
+groupRouter.patch(
+  '/discussion/:id',
+  authController.protect,
+  groupController.editDiscussion
+);
 
 /**
  * @api {get} /group/discussion/:id Get information about a group discussion topic.
@@ -324,6 +384,18 @@ groupRouter.patch('/discussion/:id', groupController.EditDiscussion);
  *
  * @apiUse SuccessRes
  *
+ * @apiSuccessExample Success-Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *          status: 'success',
+ *           data: {
+ *               replies: ['609fe93c38075024f8d3e6f6'],
+ *               user: '608f3e678209d433946b946d',
+ *               content: 'La casa de papel is overrated',
+ *               date: '2021-01-01T00:00:00.000Z',
+ *               __v: 0,
+ *           },
+ *       }
  * @apiErrorExample Error-Response:
  *      HTTP/1.1 401 FAILED
  *      {
@@ -334,44 +406,58 @@ groupRouter.patch('/discussion/:id', groupController.EditDiscussion);
  */
 groupRouter.get('/discussion/:id', groupController.getDiscussion);
 
-/** 
-* @api {get} /group/:id/discussion Get a list of discussion topics in a group.
-* @apiVersion 1.0.0
-* @apiName GetAllDiscussions
-* @apiGroup Group
-*
-* @apiParam {String} id The group's ID
-*
-* @apiSuccess {Object[]} discussionTopics List of discussion topics in the group. 
-*
-* @apiUse SuccessRes
-*
- @apiErrorExample Error-Response:
+/**
+ * @api {get} /group/:id/discussion Get a list of discussion topics in a group.
+ * @apiVersion 1.0.0
+ * @apiName getAllDiscussions
+ * @apiGroup Group
+ *
+ * @apiParam {String} id The group's ID
+ *
+ * @apiSuccess {Object[]} discussionTopics List of discussion topics in the group.
+ *
+ * @apiUse SuccessRes
+ *
+ * @apiSuccessExample Success-Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *     status: 'success',
+ *     data: {
+ *        discussionTopics: ['608f6e7519953b27004f6dab'],
+ *           },
+ *      }
+ * @apiErrorExample Error-Response:
  *      HTTP/1.1 401 FAILED
  *      {
  *          "status": "failed",
  *          "messege": " Error in fetching discussion "
  *      }
- * 
-* @apiUse UnauthError
-* @apiUse ForbiddenAccss
-* @apiUse GroupNotFoundError
-*/
+ *
+ * @apiUse UnauthError
+ * @apiUse ForbiddenAccss
+ * @apiUse GroupNotFoundError
+ */
 
-groupRouter.get('/:id/discussion', groupController.GetAllDiscussions);
+groupRouter.get('/:id/discussion', groupController.getAllDiscussions);
 
 /**
  * @api {delete} /group/discussion/:id Deleting a discussion post from the group
  * @apiVersion 1.0.0
- * @apiName DeleteDiscussion
+ * @apiName deleteDiscussion
  * @apiGroup Group
  *
  * @apiParam {String} id The discussion's ID
  *
- * @apiHeader {String} Token Authenticaton Token
+ * @apiHeader {String} user Authenticaton Token
  *
  * @apiUse SuccessRes
  *
+ *  @apiSuccessExample Success-Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *           status: 'success',
+ *           data: null,
+ *      }
  *  @apiErrorExample Error-Response:
  *      HTTP/1.1 401 FAILED
  *      {
@@ -382,7 +468,11 @@ groupRouter.get('/:id/discussion', groupController.GetAllDiscussions);
  * @apiUse UnauthError
  * @apiUse ForbiddenAccss
  */
-groupRouter.delete('/discussion/:id', groupController.DeleteDiscussion);
+groupRouter.delete(
+  '/discussion/:id',
+  authController.protect,
+  groupController.deleteDiscussion
+);
 
 /**
  * @api {patch} /group/:id/pinned/:topicId Setting a new pinned thread
@@ -395,8 +485,8 @@ groupRouter.delete('/discussion/:id', groupController.DeleteDiscussion);
  *
  * @apiHeader {string} Token Authenticaton Token
  *
- * @apiBody {Object} pinnedThread Old pinned thread or null
- * @apiBody {Object} pinnedThread new pinned thread
+ * @apiParam (Request Body) {Object} pinnedThread Old pinned thread or null
+ * @apiParam (Request Body) {Object} pinnedThread new pinned thread
  *
  * @apiSuccess {string} Status Status of API
  *
@@ -418,19 +508,32 @@ groupRouter.patch('/:id/pinned/:topicId');
 /**
  * @api {post} /group/discussion/:id/replies Add a reply to a discussion topic
  * @apiVersion 1.0.0
- * @apiName AddReply
+ * @apiName addReply
  * @apiGroup Group
+ *
+ * @apiHeader {String} user Authenticaton Token
  *
  * @apiParam {String} id The discussion's ID
  *
- * @apiBody {Object} user Author
- * @apiBody {Date} date Date of comment
- * @apiBody {String} content Reply content
+ * @apiParam (Request Body) {Object} user Author
+ * @apiParam (Request Body) {Date} date Date of comment
+ * @apiParam (Request Body) {String} content Reply content
  *
  * @apiSuccess {Object} user Authenticaton Token
  *
  * @apiUse SuccessRes
- *
+ * @apiSuccessExample Success-Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *           status: 'success',
+ *           data: {
+ *              _id: '610fe93c38075024f8d3e6f3',
+ *               content: 'mori sushi is the best',
+ *               date: '2021-01-01T00:00:00.000Z',
+ *              __v: 0,
+ *              user: '608d55c7e512b74ee00791de',
+ *                  },
+ *      }
  *  @apiErrorExample Error-Response:
  *      HTTP/1.1 401 FAILED
  *      {
@@ -442,20 +545,29 @@ groupRouter.patch('/:id/pinned/:topicId');
  * @apiUse ForbiddenAccss
  */
 
-groupRouter.post('/discussion/:id/replies');
+groupRouter.post(
+  '/discussion/:id/replies',
+  authController.protect,
+  groupController.addReply
+);
 
 /**
  * @api {delete} /group/discussion/replies/:id Deleting a reply on a discussion topic
  * @apiVersion 1.0.0
- * @apiName DeleteReply
+ * @apiName deleteReply
  * @apiGroup Group
  *
  * @apiParam {String} id The reply's ID
  *
- * @apiHeader {String} Token Authenticaton Token
+ * @apiHeader {String} user Authenticaton Token
  *
  * @apiUse SuccessRes
- *
+ *@apiSuccessExample Success-Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *           status: 'success',
+ *           data: null,
+ *      }
  *  @apiErrorExample Error-Response:
  *      HTTP/1.1 401 FAILED
  *      {
@@ -467,25 +579,40 @@ groupRouter.post('/discussion/:id/replies');
  * @apiUse ForbiddenAccss
  */
 
-groupRouter.delete('/discussion/replies/:id');
+groupRouter.delete(
+  '/discussion/replies/:id',
+  authController.protect,
+  groupController.deleteReply
+);
 
 /**
  * @api {patch} /group/discussion/replies/:id Edit a post reply
  * @apiVersion 1.0.0
- * @apiName Edit reply
+ * @apiName editReply
  * @apiGroup Group
  *
  * @apiParam {String} id The new reply's ID
  *
- * @apiHeader {string} Token Authenticaton Token
+ * @apiHeader {string} user Authenticaton Token
  *
- * @apiBody {Object} reply old reply
- * @apiBody {Object} reply new reply
+ * @apiParam (Request Body) {Object} reply old reply
+ * @apiParam (Request Body) {Object} reply new reply
  *
  * @apiSuccess {string} Status Status of API
  *
  * @apiUse SuccessRes
- *
+ *@apiSuccessExample Success-Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *           status: 'success',
+ *            data: {
+ *               _id: '609fe93c38075024f8d3e6f5',
+ *               user: '608d5450ec00005468607a0c',
+ *               content: 'try seoudi',
+ *               date: '2021-01-01T00:00:00.000Z',
+ *               __v: 0,
+ *                  },
+ *      }
  *  @apiErrorExample Error-Response:
  *      HTTP/1.1 401 FAILED
  *      {
@@ -497,12 +624,16 @@ groupRouter.delete('/discussion/replies/:id');
  * @apiUse ForbiddenAccss
  */
 
-groupRouter.patch('/discussion/replies/:id');
+groupRouter.patch(
+  '/discussion/replies/:id',
+  authController.protect,
+  groupController.editReply
+);
 
 /**
  * @api {get} /group/discussion/replies/:id Get info about a discussion topic reply
  * @apiVersion 1.0.0
- * @apiName GetReply
+ * @apiName getReply
  * @apiGroup Group
  *
  * @apiParam {String} id The reply's ID
@@ -511,6 +642,17 @@ groupRouter.patch('/discussion/replies/:id');
  *
  * @apiUse SuccessRes
  *
+ * @apiSuccessExample Success-Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *          status: 'success',
+ *           data: {
+ *               user: '608d5450ec00005468607a0c',
+ *               content: 'pet shops',
+ *               date: '2021-01-01T00:00:00.000Z',
+ *               __v: 0,
+ *           },
+ *      }
  * @apiErrorExample Error-Response:
  *      HTTP/1.1 401 FAILED
  *      {
@@ -520,12 +662,12 @@ groupRouter.patch('/discussion/replies/:id');
  * @apiUse UnauthError
  */
 
-groupRouter.get('/discussion/replies/:id');
+groupRouter.get('/discussion/replies/:id', groupController.getReply);
 
 /**
  * @api {get} /group/discussion/:id/replies Get a list of replies from a group discussion topic.
  * @apiVersion 1.0.0
- * @apiName GetAllReplies
+ * @apiName getAllReplies
  * @apiGroup Group
  *
  * @apiParam {String} id The discussion's ID
@@ -534,6 +676,14 @@ groupRouter.get('/discussion/replies/:id');
  *
  * @apiUse SuccessRes
  *
+ * @apiSuccessExample Success-Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *          status: 'success',
+ *           data: {
+ *               replies: ['609fe93c38075024f8d3e6f5'],
+ *           },
+ *      }
  * @apiErrorExample Error-Response:
  *      HTTP/1.1 401 FAILED
  *      {
@@ -543,12 +693,12 @@ groupRouter.get('/discussion/replies/:id');
  * @apiUse UnauthError
  */
 
-groupRouter.get('/discussion/:id/replies');
+groupRouter.get('/discussion/:id/replies', groupController.getAllReplies);
 
 /**
  * @api {get} /group/:id/members Get a list of the members of a group.
  * @apiVersion 1.0.0
- * @apiName GetMembers
+ * @apiName getMembers
  * @apiGroup Group
  *
  * @apiParam {String} id The group's ID
@@ -558,27 +708,54 @@ groupRouter.get('/discussion/:id/replies');
  *
  * @apiUse SuccessRes
  *
+ * @apiSuccessExample Success-Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *           status: 'success',
+ *           data: {
+ *               users: [
+ *               {
+ *                   joinDate: '2021-01-01T00:00:00.000Z',
+ *                   _id: '608d5450ec00005468607a0c',
+ *                   admin: true,
+ *               },
+ *               {
+ *                   joinDate: '2021-01-01T00:00:00.000Z',
+ *                   _id: '608d55c7e512b74ee00791dd',
+ *                    admin: false,
+ *               },
+ *               ],
+ *           },
+ *      }
  * @apiUse UnauthError
  * @apiUse GroupNotFoundError
  */
 
-groupRouter.get('/:id/members', groupController.GetMembers);
+groupRouter.get('/:id/members', groupController.getMembers);
 
 /**
  * @api {post} /group/:id/pool/:photoid Add a Photo to a Group Photo Pool
  * @apiVersion 1.0.0
- * @apiName AddPhototoPool
+ * @apiName addToPhotoPool
  * @apiGroup Group
  *
  * @apiParam {String} id The Group's ID
  * @apiParam {String} photoid The photo's ID
  *
- * @apiBody {Object} photo Author
+ * @apiParam (Request Body) {Object} photo Author
  *
  * @apiSuccess {Object} user Authenticaton Token
  *
  * @apiUse SuccessRes
- *
+ *@apiSuccessExample Success-Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *           status: 'success',
+ *           data:
+ *                 {
+ *               photos: ['608d5450ec00005468607a0f', '604d5450ec00005468617a0c'],
+ *                 }
+ *      }
  * @apiErrorExample Error-Response:
  *      HTTP/1.1 401 FAILED
  *      {
@@ -589,7 +766,7 @@ groupRouter.get('/:id/members', groupController.GetMembers);
  * @apiUse UnauthError
  * @apiUse ForbiddenAccss
  */
-groupRouter.post('/:id/pool/:id');
+groupRouter.post('/:id/pool/:photoid', groupController.addToPhotoPool);
 
 /**
  * @api {get} /group/:id/photo/:photoid/context Get Next and Previous Photos in Group Pool
@@ -631,7 +808,7 @@ groupRouter.get('/:id/photo/:photoid/context');
 /**
  * @api {get} /group/:id/pool Returns a list of pool photos for a given group
  * @apiVersion 1.0.0
- * @apiName GetPhotoPool
+ * @apiName getPhotoPool
  * @apiGroup Group
  *
  * @apiParam {String} id The group's ID
@@ -640,16 +817,24 @@ groupRouter.get('/:id/photo/:photoid/context');
  *
  * @apiUse SuccessRes
  *
+ *  @apiSuccessExample Success-Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *      status: 'success',
+ *       data: {
+ *           photos: ['608d5450ec00005468607a0f'],
+ *       },
+ *      }
  * @apiUse UnauthError
  * @apiUse GroupNotFoundError
  */
 
-groupRouter.get('/:id/pool', groupController.GetPhotoPool);
+groupRouter.get('/:id/pool', groupController.getPhotoPool);
 
 /**
  * @api {delete} /group/:id/pool/:photoId Remove a Photo from a Group Photo Pool
  * @apiVersion 1.0.0
- * @apiName RemovePhotofromPool
+ * @apiName removePhotofromPool
  * @apiGroup Group
  *
  * @apiParam {String} id The Group's ID
@@ -658,7 +843,14 @@ groupRouter.get('/:id/pool', groupController.GetPhotoPool);
  * @apiHeader {String} user Authenticaton Token
  *
  * @apiUse SuccessRes
- *
+ * @apiSuccessExample Success-Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *         status: 'success',
+ *           data: {
+ *               photos: ['608d5450ec00005468607a0f'],
+ *                  },
+ *       }
  * @apiErrorExample Error-Response:
  *      HTTP/1.1 401 FAILED
  *      {
@@ -670,7 +862,11 @@ groupRouter.get('/:id/pool', groupController.GetPhotoPool);
  * @apiUse ForbiddenAccss
  * @apiUse GroupNotFoundError
  */
-groupRouter.delete('/:id/pool');
+groupRouter.delete(
+  '/:id/pool/:photoid',
+  authController.protect,
+  groupController.removePhotofromPool
+);
 
 // EXPORT ROUTER
 module.exports = groupRouter;

@@ -1,6 +1,8 @@
 // INCLUDE DEPENDENCIES
 const mongoose = require('mongoose');
 const validator = require('validator');
+const bcrypt = require('bcryptjs');
+const crypto = require('crypto');
 
 // CREATE SCHEMA
 const userSchema = new mongoose.Schema({
@@ -9,10 +11,10 @@ const userSchema = new mongoose.Schema({
     trim: true,
     unique: [true, 'Display name must be unique'],
     required: [true, 'A user must have a display name'],
-    validate: [validator.isAlphanumeric, 'Invalid username'],
   },
   email: {
     type: String,
+    lowercase: true,
     required: [true, 'A user must have an email'],
     unique: [true, 'Email must be unique'],
     validate: [validator.isEmail, 'Invalid email address'],
@@ -24,20 +26,17 @@ const userSchema = new mongoose.Schema({
   },
   pro: {
     type: Boolean,
-    required: [true, 'A user must have a user type'],
     default: false,
   },
   firstName: {
     type: String,
     trim: true,
     required: [true, 'A user must have a first name'],
-    validate: [validator.isAlphanumeric, 'Invalid first name'],
   },
   lastName: {
     type: String,
     trim: true,
     required: [true, 'A user must have a last name'],
-    validate: [validator.isAlpha, 'Invalid last name'],
   },
   occupation: { type: String, trim: true },
   hometown: { type: String, trim: true },
@@ -46,7 +45,7 @@ const userSchema = new mongoose.Schema({
   age: {
     type: Number,
     required: [true, 'A user must have an age'],
-    min: 13,
+    min: [13, 'Minimum age is 13'],
   },
   aboutMe: { type: String, trim: true },
   joinDate: {
@@ -65,10 +64,10 @@ const userSchema = new mongoose.Schema({
   },
   showcase: [mongoose.Schema.ObjectId],
   favourites: [mongoose.Schema.ObjectId],
-  photos: [mongoose.Schema.ObjectId],
+  photos: [{ type: mongoose.Schema.Types.ObjectId, ref: 'photoModel' }],
   testimonials: [mongoose.Schema.ObjectId],
-  albums: [mongoose.Schema.ObjectId],
-  gallery: [mongoose.Schema.ObjectId],
+  albums: [{ type: mongoose.Schema.ObjectId, ref: 'albumModel' }],
+  gallery: [{ type: mongoose.Schema.ObjectId, ref: 'galleryModel' }],
   following: [
     {
       user: mongoose.Schema.ObjectId,
@@ -93,7 +92,7 @@ const userSchema = new mongoose.Schema({
       hideEXIF: { type: Boolean, default: 0 },
       hidePhotoSearch: { type: Boolean, default: 0 },
       hideProfileSearch: { type: Boolean, default: 0 },
-      infoVisiblity: {
+      infoVisibility: {
         email: { type: Number, default: 2 },
         name: { type: Number, default: 1 },
         currentCity: { type: Number, default: 1 },
@@ -130,7 +129,65 @@ const userSchema = new mongoose.Schema({
       contacts: { type: Boolean, default: 1 },
     },
   },
+  passwordChangedAt: Date,
+  passwordResetToken: String,
+  passwordResetExpires: Date,
 });
+
+// encrypt password
+userSchema.pre('save', async function (next) {
+  // Only run this function if password was actually modified
+  if (!this.isModified('password')) return next();
+
+  // Hash the password with cost of 12
+  this.password = await bcrypt.hash(this.password, 12);
+  next();
+});
+
+// update changedPasswordAt property
+userSchema.pre('save', function (next) {
+  if (!this.isModified('password') || this.isNew) return next();
+
+  this.passwordChangedAt = Date.now() - 1000;
+  next();
+});
+
+// check if the password is correct
+userSchema.methods.correctPassword = async function (
+  candidatePassword,
+  userPassword
+) {
+  return await bcrypt.compareSync(candidatePassword, userPassword);
+};
+
+// check if password was changed afer a token timestamp
+userSchema.methods.changedPasswordAfter = function (JWTTimestamp) {
+  if (this.passwordChangedAt) {
+    const changedTimestamp = parseInt(
+      this.passwordChangedAt.getTime() / 1000,
+      10
+    );
+
+    return JWTTimestamp < changedTimestamp;
+  }
+
+  // False means the password was not changed
+  return false;
+};
+
+// Create password reset token
+userSchema.methods.createPasswordResetToken = function () {
+  const resetToken = crypto.randomBytes(32).toString('hex');
+
+  this.passwordResetToken = crypto
+    .createHash('sha256')
+    .update(resetToken)
+    .digest('hex');
+
+  this.passwordResetExpires = Date.now() + 1 * 60 * 1000;
+
+  return resetToken;
+};
 
 // CREATE MODEL
 const userModel = mongoose.model('userModel', userSchema);
