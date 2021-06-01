@@ -2260,9 +2260,9 @@ module.exports.getPopularPhotos = {
 
 module.exports.getAlbums = {
   status: 'success',
-  data: {
-    albums: [
-      {
+  data: [
+    {
+      album: {
         photos: [
           {
             sizes: {
@@ -2540,7 +2540,10 @@ module.exports.getAlbums = {
           _id: '608d5450ec00005468607a0f',
         },
       },
-      {
+      photoCount: 3,
+    },
+    {
+      album: {
         photos: [
           {
             sizes: {
@@ -2818,7 +2821,10 @@ module.exports.getAlbums = {
           _id: '608d5450ec00005468607a0f',
         },
       },
-      {
+      photoCount: 3,
+    },
+    {
+      album: {
         photos: [
           {
             sizes: {
@@ -3096,9 +3102,9 @@ module.exports.getAlbums = {
           _id: '608d5450ec00005468607a0f',
         },
       },
-    ],
-    _id: '608d55c7e512b74ee00791de',
-  },
+      photoCount: 3,
+    },
+  ],
 };
 module.exports.getGalleries = {
   status: 'success',
