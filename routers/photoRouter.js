@@ -199,6 +199,7 @@ const photoRouter = express.Router();
  * @apiUse UnauthError
  *
  */
+
 photoRouter.post(
   '/',
   authController.protect,
@@ -207,6 +208,51 @@ photoRouter.post(
   uploadController.uploadToCloud,
   photoController.uploadPhoto
 );
+
+/**
+ * @api {get} /photo/explore
+ * @apiVersion 1.0.0
+ * @apiName expolre
+ * @apiGroup Photo
+ *
+ * @apiParam (Request Body) {Number} per_page Number of Galleries to return Per Page (Optinal)
+ *
+ * @apiParam (Request Body) {Number} page The Page Number to Return (Optinal)
+ *
+ * @apiSuccess {string} Status Status of API
+ *
+ * @apiSuccessExample Success-Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *         {
+ *            "status": "success",
+ *            "data": {
+ *            "photos": [
+ *             {
+ *                "photo": {
+ *                   "sizes" : {}
+ *                   "comments": [],
+ *                   "favourites": 24,
+ *                   "_id": "608d5450ec00005468628b2d",
+ *                   "userId": {
+ *                       "_id": "608d55c7e512b74ee00791dc",
+ *                       "displayName": "AliaaKhalifa",
+ *                       "firstName": "Aliaa",
+ *                       "lastName": "Khalifa"
+ *                   },
+ *                   "title": "Fireflies",
+ *                   "dateUploaded": "2021-12-24T18:25:43.511Z"
+ *               },
+ *               "commentCount": 0
+ *           },
+ *           ]
+ *     }
+ *   }
+ *}
+ *
+ *
+ * */
+photoRouter.get('/explore', photoController.explore);
 
 /**
  * @api {patch} /photo/:id/perm Change a Photo's Privacy and Visibility

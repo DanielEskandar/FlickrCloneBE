@@ -972,3 +972,55 @@ exports.setPerms = async (req, res) => {
     errorController.sendError(err, req, res);
   }
 };
+
+exports.explore = async (req, res) => {
+  try {
+    // pagination
+    const page = req.body.page || 1;
+    const perPage = req.body.per_page || 100;
+    const skip = (page - 1) * perPage;
+
+    if (perPage > 500) {
+      throw new AppError(
+        'Maximum allowed value of number of photos to return per page is 500',
+        404
+      );
+    }
+    let Photos = await photoModel
+      .find({
+        dateUploaded: {
+          $gt: new Date('2019-12-23T18:29:43.511Z'),
+        },
+      })
+      .populate('userId', ['firstName', 'lastName', 'displayName'])
+      .sort({ dateUploaded: -1, favourites: -1 })
+      .select({
+        userId: 1,
+        title: 1,
+        _id: 1,
+        dateUploaded: 1,
+        favourites: 1,
+        sizes: 1,
+        comments: 1,
+      })
+      .skip(skip)
+      .limit(perPage);
+
+    Photos = Photos.map((photo) => ({
+      photo,
+      commentCount: photo.comments.length,
+    }));
+
+    res.status(200).json({
+      status: 'success',
+      data: {
+        photos: JSON.parse(
+          // eslint-disable-next-line no-unused-vars
+          JSON.stringify(Photos)
+        ),
+      },
+    });
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};
