@@ -181,13 +181,24 @@ exports.uploadPhoto = async (req, res) => {
 // GET INFORMATION FOR A PHOTO
 exports.getInformation = async (req, res) => {
   try {
-    const info = await photoModel.findById(req.params.id).select({
-      permissions: 0,
-      _id: 0,
-      safetyLevel: 0,
-      hidden: 0,
-      license: 0,
-    });
+    const info = await photoModel
+      .findByIdAndUpdate(
+        req.params.id,
+        {
+          $inc: { views: 1 },
+        },
+        {
+          new: true,
+          runValidators: true,
+        }
+      )
+      .select({
+        permissions: 0,
+        _id: 0,
+        safetyLevel: 0,
+        hidden: 0,
+        license: 0,
+      });
 
     if (!info) {
       throw new AppError('No Photo Found with this ID', 404);
@@ -967,6 +978,58 @@ exports.setPerms = async (req, res) => {
     res.status(200).json({
       status: 'success',
       data: JSON.parse(JSON.stringify(setPerm)),
+    });
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};
+
+exports.explore = async (req, res) => {
+  try {
+    // pagination
+    const page = req.body.page || 1;
+    const perPage = req.body.per_page || 100;
+    const skip = (page - 1) * perPage;
+
+    if (perPage > 500) {
+      throw new AppError(
+        'Maximum allowed value of number of photos to return per page is 500',
+        404
+      );
+    }
+    let Photos = await photoModel
+      .find({
+        favourites: {
+          $gt: 20,
+        },
+      })
+      .populate('userId', ['firstName', 'lastName', 'displayName'])
+      .sort({ dateUploaded: -1, favourites: -1 })
+      .select({
+        userId: 1,
+        title: 1,
+        _id: 1,
+        dateUploaded: 1,
+        favourites: 1,
+        sizes: 1,
+        comments: 1,
+      })
+      .skip(skip)
+      .limit(perPage);
+
+    Photos = Photos.map((photo) => ({
+      photo,
+      commentCount: photo.comments.length,
+    }));
+
+    res.status(200).json({
+      status: 'success',
+      data: {
+        photos: JSON.parse(
+          // eslint-disable-next-line no-unused-vars
+          JSON.stringify(Photos)
+        ),
+      },
     });
   } catch (err) {
     errorController.sendError(err, req, res);

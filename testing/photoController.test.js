@@ -666,3 +666,22 @@ describe('should set photo permissions with id 608d5450ec00005468628a0d ', () =>
     expect(mRes.json).toBeCalledWith(photoTestData.setPermData);
   });
 });
+
+//TESTING EXPOLRE
+describe('should return trending photos on the explore page ', () => {
+  test('should return trending photos on the explore page', async () => {
+    const mReq = {
+      body: {
+        per_page: 100,
+        page: 1,
+      },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await photoController.explore(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(photoTestData.explore);
+  });
+});
