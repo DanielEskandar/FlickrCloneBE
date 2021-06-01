@@ -91,7 +91,7 @@ module.exports.getInformationData1 = {
     tags: ['#Amesterdam', '#Colorful', '#SunnyDay'],
     dateUploaded: '2018-12-23T18:29:43.511Z',
     dateTaken: '2017-07-12T18:25:47.511Z',
-    location: '608d5450ec00005468604a1c',
+    location: '60b2806c5bcb4c81a866cf9b',
     title: 'Wijdesteeg in Amsterdam',
     userId: '608d55c7e512b74ee00791dd',
     description: 'So vibrant!',
@@ -182,7 +182,7 @@ module.exports.getInformationData2 = {
     tags: ['#Sakure', '#Flowers', '#Nihon'],
     dateUploaded: '2021-12-23T18:25:43.511Z',
     dateTaken: '2013-07-23T18:25:43.511Z',
-    location: '608d5450ec00005468604a0c',
+    location: '60b2806c5bcb4c81a866cf9b',
     title: 'Sakura Season in Nihon',
     userId: '608d55c7e512b74ee00791dc',
     description: 'Kawaii',
@@ -202,7 +202,30 @@ module.exports.getInformationData2 = {
 module.exports.getCommentsData1 = {
   status: 'success',
   data: {
-    comments: ['6001c346c555f920e111f205', '6090c346c555f920e121f205'],
+    comments: [
+      {
+        __v: 0,
+        _id: expect.any(String),
+        body: 'Vibrant colors',
+        date: expect.any(String),
+        userId: {
+          _id: '608d55c7e512b74ee00791db',
+          firstName: 'Daniel',
+          lastName: 'Eskandar',
+        },
+      },
+      {
+        __v: 0,
+        _id: expect.any(String),
+        body: 'Nice angle',
+        date: expect.any(String),
+        userId: {
+          _id: '608d55c7e512b74ee00791db',
+          firstName: 'Daniel',
+          lastName: 'Eskandar',
+        },
+      },
+    ],
   },
 };
 
@@ -216,10 +239,10 @@ module.exports.getCommentsData2 = {
 module.exports.addCommentData1 = {
   status: 'success',
   data: {
-    _id: '508d55c7e512b74ee00791db',
+    _id: expect.any(String),
     body: 'Unit testing comment',
     userId: '608d55c7e512b74ee00791db',
-    date: '2021-05-04T14:07:48.071Z',
+    date: expect.any(String),
     __v: 0,
   },
 };
@@ -227,10 +250,10 @@ module.exports.addCommentData1 = {
 module.exports.addCommentData2 = {
   status: 'success',
   data: {
-    _id: '508d55c7e512b74ee00891db',
+    _id: expect.any(String),
     body: 'Comment to add by photo testing',
     userId: '608d55c7e512b74ee00791db',
-    date: '2021-05-04T14:07:48.071Z',
+    date: expect.any(String),
     __v: 0,
   },
 };
@@ -2231,4 +2254,161 @@ module.exports.searchData7 = {
       comments: 0,
     },
   ],
+};
+
+module.exports.getLocationData = {
+  status: 'success',
+  data: {
+    location: {
+      __v: 0,
+      _id: expect.any(String),
+      coordinates: {
+        latitude: 222,
+        longitude: 20,
+      },
+    },
+  },
+};
+
+module.exports.setLocationData = {
+  status: 'success',
+  data: {
+    location: {
+      __v: 0,
+      _id: expect.any(String),
+      coordinates: {
+        latitude: 50,
+        longitude: 70,
+      },
+      name: 'location 1',
+    },
+  },
+};
+
+module.exports.deleteLocationData = {
+  status: 'success',
+  data: {
+    permissions: {
+      public: false,
+      friend: true,
+      family: false,
+      comment: 2,
+      addMeta: 1,
+    },
+    sizes: {
+      size: {
+        original: {
+          height: 120,
+          width: 60,
+          source: 'https://www.google.com/',
+          url: 'https://www.google.com/',
+        },
+        large: {
+          height: 190,
+          width: 20,
+          source: 'https://www.google.com/',
+          url: 'https://www.google.com/',
+        },
+        medium800: {
+          height: 200,
+          width: 60,
+          source: 'https://www.google.com/',
+          url: 'https://www.google.com/',
+        },
+        medium640: {
+          height: 1200,
+          width: 60,
+          source: 'https://www.google.com/',
+          url: 'https://www.google.com/',
+        },
+        medium: {
+          height: 120,
+          width: 600,
+          source: 'https://www.google.com/',
+          url: 'https://www.google.com/',
+        },
+        small320: {
+          height: 12,
+          width: 60,
+          source: 'https://www.google.com/',
+          url: 'https://www.google.com/',
+        },
+        small: {
+          height: 1000,
+          width: 60,
+          source: 'https://www.google.com/',
+          url: 'https://www.google.com/',
+        },
+        thumbnail: {
+          height: 50,
+          width: 50,
+          source: 'https://www.google.com/',
+          url: 'https://www.google.com/',
+        },
+        largeSquare: {
+          height: 120,
+          width: 120,
+          source: 'https://www.google.com/',
+          url: 'https://www.google.com/',
+        },
+        square: {
+          height: 60,
+          width: 60,
+          source: 'https://www.google.com/',
+          url: 'https://www.google.com/',
+        },
+      },
+      canDownload: false,
+    },
+    comments: [],
+    favourites: 7,
+    views: 21,
+    tags: ['#sunset'],
+    hidden: true,
+    _id: '608d5450ec00005468607a0f',
+    userId: '608d55c7e512b74ee00791db',
+    title: 'Sunset in Bora Bora',
+    description: 'Amazing shot',
+    dateUploaded: '2012-04-23T18:25:43.511Z',
+    dateTaken: '2013-04-23T18:25:43.511Z',
+    location: null,
+    EXIF: '123erf',
+    safetyLevel: 2,
+    contentType: 'Screenshot',
+    peopleTagged: [
+      {
+        _id: '609093af84b808271488fafd',
+        userId: '608d55c7e512b74ee00791de',
+        tagDate: '2012-04-13T18:25:43.511Z',
+      },
+    ],
+    license: 10,
+    __v: 0,
+  },
+};
+
+module.exports.getPermData = {
+  status: 'success',
+  data: {
+    permissions: {
+      public: false,
+      friend: true,
+      family: false,
+      comment: 2,
+      addMeta: 1,
+    },
+  },
+};
+
+module.exports.setPermData = {
+  status: 'success',
+  data: {
+    permissions: {
+      public: false,
+      friend: false,
+      family: true,
+      comment: 2,
+      addMeta: 1,
+    },
+  },
 };

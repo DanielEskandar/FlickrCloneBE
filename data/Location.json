@@ -1,0 +1,16 @@
+[
+  {
+    "_id": "60b2806c5bcb4c81a866cf99",
+    "coordinates": { "latitude": 24, "longitude": 18 }
+  },
+
+  {
+    "_id": "60b2806c5bcb4c81a866cf9a",
+    "coordinates": { "latitude": 5, "longitude": 7 }
+  },
+
+  {
+    "_id": "60b2806c5bcb4c81a866cf9b",
+    "coordinates": { "latitude": 222, "longitude": 20 }
+  }
+]

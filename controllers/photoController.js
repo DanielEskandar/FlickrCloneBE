@@ -6,6 +6,7 @@ const photoModel = require('../models/photoModel.js');
 const commentModel = require('../models/commentModel.js');
 const userModel = require('../models/userModel.js');
 const galleryModel = require('../models/galleryModel.js');
+const locationModel = require('../models/locationModel.js');
 
 // INCLUDE ERROR CLASS AND ERROR CONTROLLER
 const AppError = require('../utils/appError.js');
@@ -232,7 +233,12 @@ exports.addComment = async (req, res) => {
       throw new AppError('No Photo Found with this ID', 404);
     }
 
-    const newComment = await commentModel.create(req.body);
+    const comment = {
+      body: req.body.body,
+      userId: req.user.id,
+    };
+
+    const newComment = await commentModel.create(comment);
 
     await photoModel.findByIdAndUpdate(
       req.params.id,
@@ -335,7 +341,14 @@ exports.getComments = async (req, res) => {
 
     const comments = await photoModel
       .findById(req.params.id)
-      .select({ comments: 1, _id: 0 });
+      .select({ comments: 1, _id: 0 })
+      .populate({
+        path: 'comments',
+        populate: {
+          path: 'userId',
+          select: ['firstName', 'lastName'],
+        },
+      });
 
     if (!comments) {
       throw new AppError('No Comments Found for this Photo', 404);
@@ -775,6 +788,185 @@ exports.search = async (req, res) => {
     res.status(200).json({
       status: 'success',
       data: JSON.parse(JSON.stringify(searchResults)),
+    });
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};
+
+// GET LOCATION
+exports.getLocation = async (req, res) => {
+  try {
+    const photo = await photoModel
+      .findById(req.params.id)
+      .select({
+        _id: 0,
+        location: 1,
+      })
+      .populate('location');
+
+    if (!photo) {
+      throw new AppError('No Photo Found with this ID', 404);
+    }
+
+    res.status(200).json({
+      status: 'success',
+      data: JSON.parse(JSON.stringify(photo)),
+    });
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};
+
+// SET LOCATION
+exports.setLocation = async (req, res) => {
+  try {
+    const photo = await photoModel.findById(req.params.id);
+    if (!photo) {
+      throw new AppError('No Photo Found with This ID', 404);
+    }
+
+    const location = await locationModel.create(req.body); //create new location instance
+
+    const updated = await photoModel
+      .findByIdAndUpdate(
+        req.params.id,
+        {
+          $set: { location: location },
+        },
+        {
+          new: true,
+          runValidators: true,
+        }
+      )
+      .select({
+        _id: 0,
+        location: 1,
+      })
+      .populate('location');
+
+    res.status(200).json({
+      status: 'success',
+      data: JSON.parse(JSON.stringify(updated)),
+    });
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};
+
+// DELETE LOCATION
+exports.deleteLocation = async (req, res) => {
+  try {
+    //photo validation
+    if (!(await photoModel.findById(req.params.id))) {
+      throw new AppError('No Photo Found with this ID', 404);
+    }
+    const check = await photoModel.findById(req.params.id);
+    if (check.location == null) {
+      throw new AppError('Photo Already doesnt have a location', 404);
+    }
+    const photo = await photoModel.findByIdAndUpdate(
+      req.params.id,
+      {
+        $set: { location: null },
+      },
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
+    res.status(200).json({
+      status: 'success',
+      data: JSON.parse(JSON.stringify(photo)),
+    });
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};
+
+// GET PERMISSIONS FOR A PHOTO
+exports.getPerms = async (req, res) => {
+  try {
+    const perms = await photoModel.findById(req.params.id).select({
+      permissions: 1,
+      _id: 0,
+    });
+
+    if (!perms) {
+      throw new AppError('No Photo Found with this ID', 404);
+    }
+
+    res.status(200).json({
+      status: 'success',
+      data: JSON.parse(JSON.stringify(perms)),
+    });
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};
+
+// SET PERMISSIONS FOR A PHOTO
+exports.setPerms = async (req, res) => {
+  try {
+    const photo = await photoModel.findById(req.params.id);
+    if (!photo) {
+      throw new AppError('No Photo Found with this ID', 404);
+    }
+
+    if (photo.userId.toString() !== req.user.id.toString())
+      throw new AppError('You are not allowed to set permissions', 403);
+
+    const publicIn = req.body.public;
+    const friendIn = req.body.friend;
+    const familyIn = req.body.family;
+    const commentIn = req.body.comment;
+    const addMetaIn = req.body.addMeta;
+
+    if (
+      publicIn === undefined ||
+      friendIn === undefined ||
+      familyIn === undefined ||
+      commentIn === undefined ||
+      addMetaIn === undefined
+    ) {
+      throw new AppError('Missing property fields', 409);
+    }
+
+    if (
+      // if body input in '1' or '0'
+      (publicIn === 1 && (friendIn !== 0 || familyIn !== 0)) ||
+      ((friendIn === 1 || familyIn === 1) && publicIn !== 0)
+    ) {
+      throw new AppError('Conflict in permissions', 409);
+    }
+
+    if (
+      // if body input in 'true' or 'false'
+      (publicIn === true && (friendIn !== false || familyIn !== false)) ||
+      ((friendIn === true || familyIn === true) && publicIn !== false)
+    ) {
+      throw new AppError('Conflict in permissions', 409);
+    }
+
+    const setPerm = await photoModel
+      .findByIdAndUpdate(
+        req.params.id,
+        {
+          $set: { permissions: req.body },
+        },
+        {
+          new: true,
+          runValidators: true,
+        }
+      )
+      .select({
+        permissions: 1,
+        _id: 0,
+      });
+
+    res.status(200).json({
+      status: 'success',
+      data: JSON.parse(JSON.stringify(setPerm)),
     });
   } catch (err) {
     errorController.sendError(err, req, res);

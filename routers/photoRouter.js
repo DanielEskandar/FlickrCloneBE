@@ -211,7 +211,7 @@ photoRouter.post(
 /**
  * @api {patch} /photo/:id/perm Change a Photo's Privacy and Visibility
  * @apiVersion 1.0.0
- * @apiName ChangePermissions
+ * @apiName setPerm
  * @apiGroup Photo
  *
  * @apiHeader {string} Token Authenticaton Token
@@ -232,7 +232,11 @@ photoRouter.post(
  * @apiUse ForbiddenError
  *
  */
-photoRouter.patch('/:id/perm');
+photoRouter.patch(
+  '/:id/perm',
+  authController.protect,
+  photoController.setPerms
+);
 
 /**
  * @api {patch} /photo/:id/perm Edit a Photo's Properties
@@ -827,7 +831,7 @@ photoRouter.get('/:id/faves', photoController.getFavourites);
  * @apiUse PhotoNotFoundError
  *
  */
-photoRouter.get('/:id/perm');
+photoRouter.get('/:id/perm', photoController.getPerms);
 
 /**
  * @api {get} /photo/:id/sizes Get All Available Sizes for Photo
@@ -1097,7 +1101,7 @@ photoRouter.get('/comments/recent');
 /**
  * @api {get} /photo/:id/location Get Location of a Photo
  * @apiVersion 1.0.0
- * @apiName GetLocation
+ * @apiName getLocation
  * @apiGroup Photo
  *
  * @apiParam {String} id The Photo's ID
@@ -1118,12 +1122,12 @@ photoRouter.get('/comments/recent');
  * @apiUse ForbiddenError
  * @apiUse PhotoNotFoundError
  */
-photoRouter.get('/:id/location');
+photoRouter.get('/:id/location', photoController.getLocation);
 
 /**
  * @api {patch} /photo/:id/location Set a Photo's Location
  * @apiVersion 1.0.0
- * @apiName SetLocation
+ * @apiName setLocation
  * @apiGroup Photo
  *
  * @apiParam {String} id The Photo's ID
@@ -1142,12 +1146,16 @@ photoRouter.get('/:id/location');
  * @apiUse PhotoNotFoundError
  *
  */
-photoRouter.patch('/:id/location');
+photoRouter.patch(
+  '/:id/location',
+  authController.protect,
+  photoController.setLocation
+);
 
 /**
  * @api {delete} /photo/:id/location Delete a Photo's Location
  * @apiVersion 1.0.0
- * @apiName DeleteLocation
+ * @apiName deleteLocation
  * @apiGroup Photo
  *
  * @apiParam {String} id The Photo's ID
@@ -1161,7 +1169,11 @@ photoRouter.patch('/:id/location');
  * @apiUse PhotoNotFoundError
  *
  */
-photoRouter.delete('/:id/location');
+photoRouter.delete(
+  '/:id/location',
+  authController.protect,
+  photoController.deleteLocation
+);
 
 /**
  * @api {get} /photo/:id/licenses Get Licenses of a Photo
