@@ -105,9 +105,9 @@ describe('should add comments on a photo', () => {
   test('should retrieve information about new comment', async () => {
     const mReq = {
       params: { id: '604d5450ec00005468617a0c' },
+      user: { id: '608d55c7e512b74ee00791db' },
       body: {
         body: 'Unit testing comment',
-        userId: '608d55c7e512b74ee00791db',
         date: '2021-05-04T14:07:48.071Z',
         _id: '508d55c7e512b74ee00791db',
       },
@@ -126,9 +126,9 @@ describe('should add comments on a photo', () => {
   test('should retrieve information about new comment', async () => {
     const mReq = {
       params: { id: '604d5450ec00005468617a0c' },
+      user: { id: '608d55c7e512b74ee00791db' },
       body: {
         body: 'Comment to add by photo testing',
-        userId: '608d55c7e512b74ee00791db',
         date: '2021-05-04T14:07:48.071Z',
         _id: '508d55c7e512b74ee00891db',
       },
@@ -147,6 +147,7 @@ describe('should add comments on a photo', () => {
 describe('should edit comments on a photo', () => {
   test('should edit comment 6090c346c555f920e121f205', async () => {
     const mReq = {
+      user: { id: '608d55c7e512b74ee00791db' },
       params: { id: '6090c346c555f920e121f205' },
       body: {
         body: 'Nice angle, edit comment test',
@@ -165,6 +166,7 @@ describe('should edit comments on a photo', () => {
 describe('should edit comments on a photo', () => {
   test('should edit comment 6001c346c555f920e111f205', async () => {
     const mReq = {
+      user: { id: '608d55c7e512b74ee00791db' },
       params: { id: '6001c346c555f920e111f205' },
       body: {
         body: 'Edited successfully',
@@ -177,25 +179,6 @@ describe('should edit comments on a photo', () => {
     await photoController.editComment(mReq, mRes);
     expect(mRes.status).toBeCalledWith(200);
     expect(mRes.json).toBeCalledWith(photoTestData.editCommentData2);
-  });
-});
-
-// TESTING DELETE COMMENT
-describe('should delete a comment', () => {
-  test('should delete comment on 604d5450ec01005468617a04 with ID 6091c557d6c7ec6b48c51e60', async () => {
-    const mReq = {
-      params: {
-        id: '604d5450ec01005468617a04',
-        commentid: '6091c557d6c7ec6b48c51e60',
-      },
-    };
-    const mRes = {
-      status: jest.fn().mockReturnThis(),
-      json: jest.fn().mockReturnThis(),
-    };
-    await photoController.deleteComment(mReq, mRes);
-    expect(mRes.status).toBeCalledWith(204);
-    expect(mRes.json).toBeCalledWith(photoTestData.deleteData);
   });
 });
 
@@ -267,6 +250,7 @@ describe('should set a tag on a photo', () => {
 describe('should delete a tag', () => {
   test('should delete tags beauty', async () => {
     const mReq = {
+      user: { id: '608d55c7e512b74ee00791dc' },
       params: {
         id: '608d5450ec00005468628b2d',
       },
@@ -284,9 +268,10 @@ describe('should delete a tag', () => {
   });
 });
 
-describe('should delete a tags', () => {
+describe('should delete a tag on a photo', () => {
   test('should delete tag light', async () => {
     const mReq = {
+      user: { id: '608d55c7e512b74ee00791dc' },
       params: {
         id: '608d5450ec00005468628b2d',
       },
@@ -392,6 +377,197 @@ describe('should  get Galleries for Photo', () => {
     await photoController.getGalleriesforPhoto(mReq, mRes);
     expect(mRes.status).toBeCalledWith(200);
     expect(mRes.json).toBeCalledWith(photoTestData.getGalleriesforPhoto);
+  });
+});
+
+// TESTING DELETE COMMENT
+describe('should delete a comment', () => {
+  test('should delete comment with ID 608d5450ec00005468629b3d', async () => {
+    const mReq = {
+      user: { id: '608d55c7e512b74ee00791dc' },
+      params: {
+        id: '608d5450ec00005468628b2d',
+        commentid: '608d5450ec00005468629b3d',
+      },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await photoController.deleteComment(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(204);
+    expect(mRes.json).toBeCalledWith(photoTestData.deleteCommentData);
+  });
+});
+
+describe('should delete a comment', () => {
+  test('should delete comment with ID 608d5450ec00005468629b3d', async () => {
+    const mReq = {
+      user: { id: '608d55c7e512b74ee00791dc' },
+      params: {
+        id: '608d5450ec00005468628b2d',
+        commentid: '608d5450ec00005468629b4d',
+      },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await photoController.deleteComment(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(204);
+    expect(mRes.json).toBeCalledWith(photoTestData.deleteCommentData);
+  });
+});
+
+// TESTING: getTagged
+describe('should retrieve tagged people in a photo', () => {
+  test('should retrieve 1 tagged user', async () => {
+    const mReq = { params: { id: '608d5450ec00005468607a0f' } };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await photoController.getTagged(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(photoTestData.getTaggedData);
+  });
+});
+
+//TESTING TAG USER
+describe('should tag a user to the photo ', () => {
+  test('should retrieve 2 tagged users', async () => {
+    const mReq = {
+      params: {
+        id: '608d5450ec00005468607a0f',
+        userid: '608d55c7e512b74ee00791dc',
+      },
+      user: { id: '608d55c7e512b74ee00791de' },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await photoController.tagUser(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(photoTestData.tagUserData);
+  });
+});
+
+//TESTING REMOVE TAGGED USER
+describe('should remove a tagged user from the photo ', () => {
+  test('should retrieve 1 tagged users', async () => {
+    const mReq = {
+      params: {
+        id: '608d5450ec00005468607a0f',
+        userid: '608d55c7e512b74ee00791dc',
+      },
+      user: { id: '608d55c7e512b74ee00791de' },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await photoController.removePerson(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(photoTestData.removePersonData);
+  });
+});
+
+// upload Photo
+describe('Should record the data of an uploaded photo', () => {
+  test('should add info about a new photo by user 60b3d74a79a1820bd89091c4', async () => {
+    const mReq = {
+      user: { id: '608d5450ec00005468607a0c' },
+      body: photoTestData.uploadReqData.body,
+      file: photoTestData.uploadReqData.file,
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await photoController.uploadPhoto(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(201);
+    expect(mRes.json).toBeCalledWith(photoTestData.uploadResData);
+  });
+});
+
+// TESTING: search
+describe('should search photos and send response correctly', () => {
+  test('should search all photos whose title, description or tags is photo1', async () => {
+    const mReq = { query: { searchText: 'photo1' } };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await photoController.search(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(photoTestData.searchData1);
+  });
+
+  test('should send page 2 of size 1 of all photos whose title, description or tags is photo1', async () => {
+    const mReq = { query: { searchText: 'photo1', page: 2, limit: 1 } };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await photoController.search(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(photoTestData.searchData2);
+  });
+
+  test('should search all photos whose title, description or tags is photo2', async () => {
+    const mReq = { query: { searchText: 'photo2' } };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await photoController.search(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(photoTestData.searchData3);
+  });
+
+  test('should search all photos whose title, description or tags is photo1 photo2', async () => {
+    const mReq = { query: { searchText: 'photo1 photo2' } };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await photoController.search(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(photoTestData.searchData4);
+  });
+
+  test('should search all photos whose title, description or tags is photo1 photo2 with sorting on dateTaken', async () => {
+    const mReq = { query: { searchText: 'photo1 photo2', sort: 'dateTaken' } };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await photoController.search(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(photoTestData.searchData5);
+  });
+
+  test('should search all photos whose title, description or tags is photo3 photo4', async () => {
+    const mReq = { query: { searchText: 'photo3 photo4' } };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await photoController.search(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(photoTestData.searchData6);
+  });
+
+  test('should search all photos whose title, description or tags is photo4', async () => {
+    const mReq = { query: { searchText: 'photo4' } };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await photoController.search(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(photoTestData.searchData7);
   });
 });
 

@@ -222,7 +222,7 @@ userRouter.patch('/', authController.protect, userController.updateUserInfo);
 userRouter.delete('/');
 
 /**
- * @api {get} /user/:id/stats [WIP] Get the User's Statistics
+ * @api {get} /user/:id/stats Get the User's Statistics
  * @apiVersion 1.0.0
  * @apiName GetUserStats
  * @apiGroup User
@@ -238,33 +238,46 @@ userRouter.delete('/');
  * @apiSuccessExample Success-Response:
  *      HTTP/1.1 200 OK
  *      {
- *          "status": "success",
- *          "data":
- *          {
- *              "views": 9200000,
- *              "tags": 159,
- *              "geotags": 0,
- *              "faves": 131,
- *              "groups": 140
- *          }
+ *        "status": "success",
+ *        "data": {
+ *          "views": 358,
+ *          "faves": 2,
+ *          "tags": 4
+ *        }
  *      }
  *
  * @apiUse UserNotFoundError
  */
 
-userRouter.get('/:id/stats');
+userRouter.get('/:id/stats', userController.getStats);
 
 /**
  *
  */
 
-userRouter.get('/:id/popular');
+userRouter.get(
+  '/popular',
+  authController.protect,
+  userController.getPopularPhotos
+);
 
 /**
  *
  */
 
-userRouter.get('/:id/recent');
+userRouter.get('/:id/recent', userController.getRequestedUserRecentPhotos);
+
+userRouter.get('/:id/popular', userController.getRequestedUserPopularPhotos);
+
+/**
+ *
+ */
+
+userRouter.get(
+  '/recent',
+  authController.protect,
+  userController.getRecentPhotos
+);
 
 /**
  *
@@ -366,7 +379,17 @@ userRouter.get('/recent-update');
  *
  */
 
-userRouter.get('/:id/galleries');
+userRouter.get('/:id/galleries', userController.getRequestedUserGalleries);
+
+/**
+ *
+ */
+
+userRouter.get(
+  '/galleries',
+  authController.protect,
+  userController.getGalleries
+);
 
 /**
  *
@@ -375,16 +398,51 @@ userRouter.get('/:id/galleries');
 userRouter.get('/:id/groups');
 
 /**
+ * @api {get} /user/:id/stream Return a user's photo stream
+ * @apiVersion 1.0.0
+ * @apiName GetStream
+ * @apiGroup User
  *
+ * @apiParam {String} id The User's ID
+ *
+ * @apiParam (Request Body) {Number} per_page Number of Galleries to return Per Page (Optinal)
+ * @apiParam (Request Body) {Number} page The Page Number to Return (Optinal)
+ *
+ * @apiSuccess {Object[]} photo stream Array of non-private photos from the user's camera roll
+ *
+ *
+ * @apiSuccessExample Success-Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *          "status": "success",
+ *          "data":
+ *          {
+ *              "photos": [
+ *
+ *              ]
+ *          }
+ *      }
+ *
+ * @apiUse UserNotFoundError
  */
 
-userRouter.get('/:id/stream');
+userRouter.get(
+  '/:id/stream',
+  authController.protect,
+  userController.getPhotoStream
+);
 
 /**
  *
  */
 
-userRouter.get('/:id/albums');
+userRouter.get('/:id/albums', userController.getRequestedUserAlbums);
+
+/**
+ *
+ */
+
+userRouter.get('/albums', authController.protect, userController.getAlbums);
 
 /**
  * @api {get} /user/:id/showcase Return User defined image showcase
@@ -1368,10 +1426,38 @@ userRouter.get('/fave-context');
 userRouter.get('/addable-pool');
 
 /**
+ * @api {get} /user/camera-roll Return a user's camera roll
+ * @apiVersion 1.0.0
+ * @apiName GetCameraRoll
+ * @apiGroup User
  *
+ * @apiHeader {String} Token Authenticaton Token
+ *
+ * @apiParam (Request Body) {Number} per_page Number of Galleries to return Per Page (Optinal)
+ * @apiParam (Request Body) {Number} page The Page Number to Return (Optinal)
+ *
+ * @apiSuccess {Object[]} photos Array of photos from the user's camera roll
+ *
+ * @apiSuccessExample Success-Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *          "status": "success",
+ *          "data":
+ *          {
+ *              "photos": [
+ *
+ *              ]
+ *          }
+ *      }
+ *
+ * @apiUse UnauthError
  */
 
-userRouter.get('/camera-roll');
+userRouter.get(
+  '/camera-roll',
+  authController.protect,
+  userController.getCameraRoll
+);
 
 /**
  * @api {get} /user/followed Gets a list of followed users
@@ -1571,6 +1657,50 @@ userRouter.get('/notif/contact');
  */
 
 userRouter.get('/notif/follow');
+
+/**
+ * @api {get} /user/search Search for a User on the Database
+ * @apiVersion 1.0.0
+ * @apiName searchUser
+ * @apiGroup User
+ *
+ * @apiParam (URL Query) {string} searchText Text used to search the database
+ * @apiParam (URL Query) {number} limit Number of results per page
+ * @apiParam (URL Query) {number} page Page Selected for Paginated request
+ *
+ * @apiExample {curl} Example usage:
+ *        /user/search?searchText=search1&limit=2&page=1
+ *
+ * @apiSuccess {Object[]} Results Results of the User Search
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *      HTTP/1.1 200 OK
+ *      {
+ *        "status": "success",
+ *        "data": [
+ *          {
+ *            "_id": "60b1619d62e64a359ccb4a63",
+ *            "firstName": "dummy3",
+ *            "lastName": "search1",
+ *            "displayName": "dummy4",
+ *            "photoCount": 0,
+ *            "followerCount": 0
+ *          },
+ *          {
+ *            "_id": "60b1619d62e64a359ccb4a64",
+ *            "firstName": "dummy5",
+ *            "lastName": "dummy6",
+ *            "displayName": "search1",
+ *            "photoCount": 0,
+ *            "followerCount": 0
+ *          }
+ *        ]
+ *      }
+ *
+ * @apiUse ServerError
+ */
+
+userRouter.get('/search', authController.protect, userController.search);
 
 /**
  * @api {get} /user/:id Get the User's Information
