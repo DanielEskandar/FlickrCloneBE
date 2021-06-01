@@ -211,7 +211,7 @@ photoRouter.post(
 /**
  * @api {patch} /photo/:id/perm Change a Photo's Privacy and Visibility
  * @apiVersion 1.0.0
- * @apiName ChangePermissions
+ * @apiName setPerm
  * @apiGroup Photo
  *
  * @apiHeader {string} Token Authenticaton Token
@@ -232,7 +232,11 @@ photoRouter.post(
  * @apiUse ForbiddenError
  *
  */
-photoRouter.patch('/:id/perm');
+photoRouter.patch(
+  '/:id/perm',
+  authController.protect,
+  photoController.setPerms
+);
 
 /**
  * @api {patch} /photo/:id/perm Edit a Photo's Properties
@@ -827,7 +831,7 @@ photoRouter.get('/:id/faves', photoController.getFavourites);
  * @apiUse PhotoNotFoundError
  *
  */
-photoRouter.get('/:id/perm');
+photoRouter.get('/:id/perm', photoController.getPerms);
 
 /**
  * @api {get} /photo/:id/sizes Get All Available Sizes for Photo

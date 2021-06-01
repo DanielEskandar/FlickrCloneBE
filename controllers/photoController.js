@@ -883,3 +883,92 @@ exports.deleteLocation = async (req, res) => {
     errorController.sendError(err, req, res);
   }
 };
+
+// GET PERMISSIONS FOR A PHOTO
+exports.getPerms = async (req, res) => {
+  try {
+    const perms = await photoModel.findById(req.params.id).select({
+      permissions: 1,
+      _id: 0,
+    });
+
+    if (!perms) {
+      throw new AppError('No Photo Found with this ID', 404);
+    }
+
+    res.status(200).json({
+      status: 'success',
+      data: JSON.parse(JSON.stringify(perms)),
+    });
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};
+
+// SET PERMISSIONS FOR A PHOTO
+exports.setPerms = async (req, res) => {
+  try {
+    const photo = await photoModel.findById(req.params.id);
+    if (!photo) {
+      throw new AppError('No Photo Found with this ID', 404);
+    }
+
+    if (photo.userId.toString() !== req.user.id.toString())
+      throw new AppError('You are not allowed to set permissions', 403);
+
+    const publicIn = req.body.public;
+    const friendIn = req.body.friend;
+    const familyIn = req.body.family;
+    const commentIn = req.body.comment;
+    const addMetaIn = req.body.addMeta;
+
+    if (
+      publicIn === undefined ||
+      friendIn === undefined ||
+      familyIn === undefined ||
+      commentIn === undefined ||
+      addMetaIn === undefined
+    ) {
+      throw new AppError('Missing property fields', 409);
+    }
+
+    if (
+      // if body input in '1' or '0'
+      (publicIn === 1 && (friendIn !== 0 || familyIn !== 0)) ||
+      ((friendIn === 1 || familyIn === 1) && publicIn !== 0)
+    ) {
+      throw new AppError('Conflict in permissions', 409);
+    }
+
+    if (
+      // if body input in 'true' or 'false'
+      (publicIn === true && (friendIn !== false || familyIn !== false)) ||
+      ((friendIn === true || familyIn === true) && publicIn !== false)
+    ) {
+      throw new AppError('Conflict in permissions', 409);
+    }
+
+    const setPerm = await photoModel
+      .findByIdAndUpdate(
+        req.params.id,
+        {
+          $set: { permissions: req.body },
+        },
+        {
+          new: true,
+          runValidators: true,
+        }
+      )
+      .select({
+        permissions: 1,
+        _id: 0,
+      });
+
+    res.status(200).json({
+      status: 'success',
+      data: JSON.parse(JSON.stringify(setPerm)),
+    });
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};

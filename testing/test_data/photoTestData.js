@@ -2386,3 +2386,29 @@ module.exports.deleteLocationData = {
     __v: 0,
   },
 };
+
+module.exports.getPermData = {
+  status: 'success',
+  data: {
+    permissions: {
+      public: false,
+      friend: true,
+      family: false,
+      comment: 2,
+      addMeta: 1,
+    },
+  },
+};
+
+module.exports.setPermData = {
+  status: 'success',
+  data: {
+    permissions: {
+      public: false,
+      friend: false,
+      family: true,
+      comment: 2,
+      addMeta: 1,
+    },
+  },
+};

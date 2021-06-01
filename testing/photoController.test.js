@@ -622,3 +622,47 @@ describe('should remove the photo from tagged location', () => {
     expect(mRes.json).toBeCalledWith(photoTestData.deleteLocationData);
   });
 });
+
+//TESTING GET PERM
+describe('should get photo permissions with id 608d5450ec00005468607a0f ', () => {
+  test('should retrieve 2 tagged users', async () => {
+    const mReq = {
+      params: {
+        id: '608d5450ec00005468607a0f',
+      },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await photoController.getPerms(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(photoTestData.getPermData);
+  });
+});
+
+//TESTING SET PERM
+describe('should set photo permissions with id 608d5450ec00005468628a0d ', () => {
+  test('should return updated permissions', async () => {
+    const mReq = {
+      params: {
+        id: '604d5450ec00005468617a0c',
+      },
+      body: {
+        public: false,
+        friend: false,
+        family: true,
+        comment: 2,
+        addMeta: 1,
+      },
+      user: { id: '608d55c7e512b74ee00791dd' },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await photoController.setPerms(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(photoTestData.setPermData);
+  });
+});

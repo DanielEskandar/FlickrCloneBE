@@ -209,7 +209,7 @@
     "permissions": {
       "public": 1,
       "friend": 0,
-      "family": 1,
+      "family": 0,
       "comment": 2,
       "addMeta": 1
     },
@@ -599,7 +599,7 @@
     "views": 337,
     "permissions": {
       "public": 0,
-      "friend": 0,
+      "friend": 1,
       "family": 1,
       "comment": 3,
       "addMeta": 3
@@ -696,7 +696,7 @@
     "favourites": 5,
     "views": 31,
     "permissions": {
-      "public": 1,
+      "public": 0,
       "friend": 0,
       "family": 1,
       "comment": 2,
@@ -794,7 +794,7 @@
     "favourites": 24,
     "views": 31,
     "permissions": {
-      "public": 1,
+      "public": 0,
       "friend": 0,
       "family": 1,
       "comment": 2,
@@ -888,7 +888,7 @@
     "permissions": {
       "public": 1,
       "friend": 0,
-      "family": 1,
+      "family": 0,
       "comment": 2,
       "addMeta": 2
     },
@@ -978,8 +978,8 @@
     "favourites": 24,
     "views": 31,
     "permissions": {
-      "public": 1,
-      "friend": 0,
+      "public": 0,
+      "friend": 1,
       "family": 1,
       "comment": 3,
       "addMeta": 2
