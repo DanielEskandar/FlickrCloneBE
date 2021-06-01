@@ -705,3 +705,179 @@ describe('should get All Photos in CameraRoll of the calling user', () => {
     expect(mRes.json).toBeCalledWith(userTestData.getCameraRoll);
   });
 });
+
+// TESTING: getRecentPhotos
+describe('should get recent Photos of the calling user', () => {
+  test('should get recent Photos of GalleryAlbumTest User', async () => {
+    const mReq = {
+      user: { id: '608d5450ec00005468607a11' },
+      body: {
+        per_page: 100,
+        page: 1,
+      },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await userController.getRecentPhotos(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(userTestData.getRecentPhotos);
+  });
+});
+
+// TESTING: getPopularPhotos
+describe('should get popular Photos of the calling user', () => {
+  test('should get popular Photos of GalleryAlbumTest User', async () => {
+    const mReq = {
+      user: { id: '608d5450ec00005468607a11' },
+      body: {
+        per_page: 100,
+        page: 1,
+      },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await userController.getPopularPhotos(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(userTestData.getPopularPhotos);
+  });
+});
+
+// TESTING: getRequestedUserRecentPhotos
+describe('should get recent Photos of the requested user', () => {
+  test('should get recent Photos of GalleryAlbumTest User', async () => {
+    const mReq = {
+      params: { id: '608d5450ec00005468607a11' },
+      body: {
+        per_page: 100,
+        page: 1,
+      },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await userController.getRequestedUserRecentPhotos(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(userTestData.getRecentPhotos);
+  });
+});
+
+// TESTING: getRequestedUserPopularPhotos
+describe('should get popular Photos of the requested user', () => {
+  test('should get popular Photos of GalleryAlbumTest User', async () => {
+    const mReq = {
+      params: { id: '608d5450ec00005468607a11' },
+      body: {
+        per_page: 100,
+        page: 1,
+      },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await userController.getRequestedUserPopularPhotos(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(userTestData.getPopularPhotos);
+  });
+});
+
+// TESTING: getRequestedUserAlbums
+describe('should get albums of the requested user', () => {
+  test('should get albums of Nadin Magdy', async () => {
+    const mReq = {
+      params: { id: '608d55c7e512b74ee00791de' },
+      body: {
+        per_page: 100,
+        page: 1,
+      },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await userController.getRequestedUserAlbums(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(userTestData.getAlbums);
+  });
+});
+
+// TESTING: getRequestedUserGalleries
+describe('should get galleries of the requested user', () => {
+  test('should get galleries of Nadin Magdy', async () => {
+    const mReq = {
+      params: { id: '608d55c7e512b74ee00791de' },
+      body: {
+        per_page: 100,
+        page: 1,
+      },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await userController.getRequestedUserGalleries(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(userTestData.getGalleries);
+  });
+});
+
+// TESTING: getGalleries
+describe('should get galleries of the calling user', () => {
+  test('should get galleries of Nadin Magdy', async () => {
+    const mReq = {
+      user: { id: '608d55c7e512b74ee00791de' },
+      body: {
+        per_page: 100,
+        page: 1,
+      },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await userController.getGalleries(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(userTestData.getGalleries);
+  });
+});
+
+// TESTING: getAlbums
+describe('should get albums of the calling user', () => {
+  test('should get albums of Nadin Magdy', async () => {
+    const mReq = {
+      user: { id: '608d55c7e512b74ee00791de' },
+      body: {
+        per_page: 100,
+        page: 1,
+      },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await userController.getAlbums(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(userTestData.getAlbums);
+  });
+});
+
+// TESTING: getStats
+describe('should get stats of the requested User', () => {
+  test('should get stats of Ahmed Abdulkader', async () => {
+    const mReq = {
+      params: { id: '60b3d0ae25109d5840208161' },
+    };
+    const mRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
+    await userController.getStats(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(200);
+    expect(mRes.json).toBeCalledWith(userTestData.getStatsData);
+  });
+});

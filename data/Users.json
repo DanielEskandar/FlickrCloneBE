@@ -15,7 +15,7 @@
     "aboutMe": "Hello! I take nice photos.. follow me \":)",
     "showcase": ["608d5450ec00005468607a0f", "608d5450ec00005468617a0c"],
     "favourites": ["608d5450ec00005468607a0f", "608d5450ec00005468617a0c"],
-    "photos": [],
+    "photos": ["608d5450ec00005468607a0f", "608d5450ec00005468617a0c"],
     "testimonials": [],
     "albums": [],
     "gallery": [],
@@ -328,8 +328,16 @@
     "favourites": [],
     "photos": [],
     "testimonials": ["60a7b24a66d38d5e20966334"],
-    "albums": [],
-    "gallery": [],
+    "albums": [
+      "812f3c70197abc18509aec61",
+      "811f3c70197abc18509aec5f",
+      "810f3c70197abc18509aec60"
+    ],
+    "gallery": [
+      "912f34a634413f11f020b127",
+      "911f34a634413f11f020b127",
+      "910f34a634413f11f020b127"
+    ],
     "following": [
       {
         "_id": "60914e1ba87d736f3c382ed6",
@@ -613,7 +621,12 @@
     "displayName": "dummy2",
     "email": "search01@gmail.com",
     "age": 21,
-    "password": "Abdcdef!1"
+    "password": "Abdcdef!1",
+    "photos": [
+      "60b3d288f257642aac48eb4e",
+      "60b3d288f257642aac48eb4d",
+      "60b3d288f257642aac48eb4c"
+    ]
   },
   {
     "_id": "60b1619d62e64a359ccb4a63",
@@ -640,7 +653,14 @@
     "displayName": "search2",
     "email": "search04@gmail.com",
     "age": 21,
-    "password": "Abdcdef!1"
+    "password": "Abdcdef!1",
+    "following": [
+      {
+        "user": "60b1619d62e64a359ccb4a62",
+        "relation": "friend",
+        "followDate": "2021-05-04T12:12:24.255+00:00"
+      }
+    ]
   },
   {
     "_id": "60b1619d62e64a359ccb4a66",
@@ -649,6 +669,57 @@
     "displayName": "dummy7",
     "email": "search05@gmail.com",
     "age": 21,
-    "password": "Abdcdef!1"
+    "password": "Abdcdef!1",
+    "following": [
+      {
+        "user": "60b1619d62e64a359ccb4a62",
+        "relation": "friend",
+        "followDate": "2021-05-04T12:12:24.255+00:00"
+      }
+    ]
+  },
+  {
+    "_id": "60b3d0ae25109d5840208164",
+    "firstName": "Photo Owner 1 First Name",
+    "lastName": "Photo Owner 1 Last Name",
+    "displayName": "photoOwner1",
+    "email": "photoowner1@gmail.com",
+    "age": 21,
+    "password": "Abdcdef!1",
+    "following": [
+      {
+        "user": "60b1619d62e64a359ccb4a62",
+        "relation": "friend",
+        "followDate": "2021-05-04T12:12:24.255+00:00"
+      }
+    ]
+  },
+  {
+    "_id": "60b3d0ae25109d5840208165",
+    "firstName": "Photo Owner 2 First Name",
+    "lastName": "Photo Owner 2 Last Name",
+    "displayName": "photoOwner2",
+    "email": "photoowner2@gmail.com",
+    "age": 21,
+    "password": "Abdcdef!1",
+    "following": [
+      {
+        "user": "60b1619d62e64a359ccb4a62",
+        "relation": "friend",
+        "followDate": "2021-05-04T12:12:24.255+00:00"
+      }
+    ]
+  },
+  {
+    "_id": "60b3d0ae25109d5840208161",
+    "firstName": "Stats Test User 1",
+    "lastName": "Stats Test User 1",
+    "displayName": "StatsTestUser",
+    "email": "StatsTestUser@gmail.com",
+    "age": 21,
+    "favourites": ["608d5450ec00005468607a0f", "608d5450ec00005468617a0c"],
+    "photos": ["60b3d288f257642aac48eb4e"],
+    "password": "Abdcdef!1",
+    "following": [{}]
   }
 ]

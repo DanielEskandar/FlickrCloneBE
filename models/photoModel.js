@@ -26,7 +26,7 @@ const photoSchema = new mongoose.Schema({
     default: Date.now,
   },
   dateTaken: Date,
-  location: mongoose.Schema.ObjectId,
+  location: { type: mongoose.Schema.ObjectId, ref: 'locationModel' },
   comments: [
     {
       type: mongoose.Schema.ObjectId,
@@ -114,6 +114,16 @@ const photoSchema = new mongoose.Schema({
         url: String,
       },
     },
+  },
+  metadata: {
+    cameraMake: String,
+    cameraModel: String,
+    lensName: String,
+    fNumber: Number,
+    focalLength: Number,
+    exposureTime: Number,
+    flash: Number,
+    iso: Number,
   },
   EXIF: String,
   safetyLevel: {

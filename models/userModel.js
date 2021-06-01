@@ -66,8 +66,8 @@ const userSchema = new mongoose.Schema({
   favourites: [mongoose.Schema.ObjectId],
   photos: [{ type: mongoose.Schema.Types.ObjectId, ref: 'photoModel' }],
   testimonials: [mongoose.Schema.ObjectId],
-  albums: [mongoose.Schema.ObjectId],
-  gallery: [mongoose.Schema.ObjectId],
+  albums: [{ type: mongoose.Schema.ObjectId, ref: 'albumModel' }],
+  gallery: [{ type: mongoose.Schema.ObjectId, ref: 'galleryModel' }],
   following: [
     {
       user: mongoose.Schema.ObjectId,

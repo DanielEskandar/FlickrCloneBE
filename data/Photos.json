@@ -7,7 +7,7 @@
     "camerid": "608d5450ec00005468607a0x",
     "dateUploaded": "2012-04-23T18:25:43.511Z",
     "dateTaken": "2013-04-23T18:25:43.511Z",
-    "location": "608d5450ec00005468604a0c",
+    "location": "60b2806c5bcb4c81a866cf9b",
     "comments": [],
     "favourites": 7,
     "views": 21,
@@ -104,7 +104,7 @@
     "camerid": "608d5450ec00005468607a0x",
     "dateUploaded": "2021-12-23T18:25:43.511Z",
     "dateTaken": "2013-07-23T18:25:43.511Z",
-    "location": "608d5450ec00005468604a0c",
+    "location": "60b2806c5bcb4c81a866cf9b",
     "comments": ["6090acefc4cc491a7cf8b47c", "6090beb07237ad1fb4458fae"],
     "favourites": 51,
     "views": 337,
@@ -202,14 +202,14 @@
     "camerid": "608d5450ec00005468607a1x",
     "dateUploaded": "2018-12-23T18:29:43.511Z",
     "dateTaken": "2017-07-12T18:25:47.511Z",
-    "location": "608d5450ec00005468604a1c",
+    "location": "60b2806c5bcb4c81a866cf9b",
     "comments": ["6001c346c555f920e111f205", "6090c346c555f920e121f205"],
     "favourites": 119,
     "views": 541,
     "permissions": {
       "public": 1,
       "friend": 0,
-      "family": 1,
+      "family": 0,
       "comment": 2,
       "addMeta": 1
     },
@@ -300,7 +300,7 @@
     "camerid": "608d5450ec00005468607a1x",
     "dateUploaded": "2021-11-23T18:29:43.511Z",
     "dateTaken": "2017-06-12T18:25:47.511Z",
-    "location": "608d5450ec00005468604a1c",
+    "location": "60b2806c5bcb4c81a866cf9b",
     "comments": ["6091c557d6c7ec6b48c51e60"],
     "favourites": 11,
     "views": 54,
@@ -398,7 +398,7 @@
     "camerid": "608d5450ec00005468607a1x",
     "dateUploaded": "2021-11-23T18:29:43.511Z",
     "dateTaken": "2017-06-12T18:25:47.511Z",
-    "location": "608d5450ec00005468604a1c",
+    "location": "60b2806c5bcb4c81a866cf9b",
     "comments": [],
     "favourites": 1100,
     "views": 67893,
@@ -496,7 +496,7 @@
     "camerid": "608d5450ec00005468607a0x",
     "dateUploaded": "2012-04-23T18:25:43.511Z",
     "dateTaken": "2013-04-23T18:25:43.511Z",
-    "location": "608d5450ec00005468604a0c",
+    "location": "60b2806c5bcb4c81a866cf9b",
     "comments": [],
     "favourites": 7,
     "views": 21,
@@ -593,13 +593,13 @@
     "camerid": "608d5450ec00005468607a0x",
     "dateUploaded": "2021-12-23T18:25:43.511Z",
     "dateTaken": "2013-07-23T18:25:43.511Z",
-    "location": "608d5450ec00005468604a0c",
+    "location": "60b2806c5bcb4c81a866cf9b",
     "comments": ["6090acefc4cc491a7cf8b47c", "6090beb07237ad1fb4458fae"],
     "favourites": 51,
     "views": 337,
     "permissions": {
       "public": 0,
-      "friend": 0,
+      "friend": 1,
       "family": 1,
       "comment": 3,
       "addMeta": 3
@@ -691,12 +691,12 @@
     "camerid": "608d5450ec00005468607a0x",
     "dateUploaded": "2021-12-23T18:25:43.511Z",
     "dateTaken": "2013-07-23T18:25:43.511Z",
-    "location": "608d5450ec00005468604a2c",
+    "location": "60b2806c5bcb4c81a866cf9b",
     "comments": [],
     "favourites": 5,
     "views": 31,
     "permissions": {
-      "public": 1,
+      "public": 0,
       "friend": 0,
       "family": 1,
       "comment": 2,
@@ -789,12 +789,12 @@
     "camerid": "608d5450ec00005468607a0x",
     "dateUploaded": "2021-11-23T18:25:43.511Z",
     "dateTaken": "2014-07-23T18:25:43.511Z",
-    "location": "608d5450ec00005468604a2c",
+    "location": "60b2806c5bcb4c81a866cf9b",
     "comments": ["608d5450ec00005468629b3d", "608d5450ec00005468629b4d"],
     "favourites": 24,
     "views": 31,
     "permissions": {
-      "public": 1,
+      "public": 0,
       "friend": 0,
       "family": 1,
       "comment": 2,
@@ -881,14 +881,14 @@
     "camerid": "608d5450ec00005468607a0x",
     "dateUploaded": "2021-11-23T18:25:43.511Z",
     "dateTaken": "2014-07-23T18:25:43.511Z",
-    "location": "608d5450ec00005468604a3c",
+    "location": "60b2806c5bcb4c81a866cf9b",
     "comments": [],
     "favourites": 2,
     "views": 3,
     "permissions": {
       "public": 1,
       "friend": 0,
-      "family": 1,
+      "family": 0,
       "comment": 2,
       "addMeta": 2
     },
@@ -973,13 +973,13 @@
     "camerid": "608d5450ec00005468607a0x",
     "dateUploaded": "2021-11-23T18:25:43.511Z",
     "dateTaken": "2012-09-23T18:25:43.511Z",
-    "location": "608d5450ec00005468604a2c",
+    "location": "60b2806c5bcb4c81a866cf9b",
     "comments": [],
     "favourites": 24,
     "views": 31,
     "permissions": {
-      "public": 1,
-      "friend": 0,
+      "public": 0,
+      "friend": 1,
       "family": 1,
       "comment": 3,
       "addMeta": 2
@@ -1065,7 +1065,7 @@
     "camerid": "608d5450ec00005468607a0x",
     "dateUploaded": "2021-01-23T18:25:43.511Z",
     "dateTaken": "2012-09-23T18:25:43.511Z",
-    "location": "608d5450ec00005468604a2c",
+    "location": "60b2806c5bcb4c81a866cf9b",
     "comments": [],
     "favourites": 20,
     "views": 51,
@@ -1157,7 +1157,7 @@
     "camerid": "608d5450ec00005468607a0x",
     "dateUploaded": "2021-01-23T18:25:43.511Z",
     "dateTaken": "2012-09-23T18:25:43.511Z",
-    "location": "608d5450ec00005468604a2c",
+    "location": "60b2806c5bcb4c81a866cf9b",
     "comments": [],
     "favourites": 20,
     "views": 51,
@@ -1249,7 +1249,7 @@
     "camerid": "608d5450ec00005468607a0x",
     "dateUploaded": "2021-01-23T18:25:43.511Z",
     "dateTaken": "2017-09-23T18:25:43.511Z",
-    "location": "608d5450ec00005468604a2c",
+    "location": "60b2806c5bcb4c81a866cf9b",
     "comments": [],
     "favourites": 20,
     "views": 51,
@@ -1332,5 +1332,458 @@
     "peopleTagged": [],
     "hidden": 0,
     "license": 3
+  },
+  {
+    "_id": "60b3d288f257642aac48eb49",
+    "dateUploaded": "2018-04-23T18:25:43.511Z",
+    "dateTaken": "2011-04-23T18:25:43.511Z",
+    "userId": "60b3d0ae25109d5840208164",
+    "title": "photo1 photo2",
+    "description": "dummy",
+    "tags": ["dummy1", "dummy2", "dummy3"],
+    "favourites": 0,
+    "comments": ["60b3d288f257642aac48eb6c"],
+    "sizes": {
+      "canDownload": 0,
+      "size": {
+        "original": {
+          "height": 120,
+          "width": 60,
+          "source": "https://www.google.com/",
+          "url": "https://www.google.com/"
+        },
+        "large": {
+          "height": 190,
+          "width": 20,
+          "source": "https://www.google.com/",
+          "url": "https://www.google.com/"
+        },
+        "medium800": {
+          "height": 200,
+          "width": 60,
+          "source": "https://www.google.com/",
+          "url": "https://www.google.com/"
+        },
+        "medium640": {
+          "height": 1200,
+          "width": 60,
+          "source": "https://www.google.com/",
+          "url": "https://www.google.com/"
+        },
+        "medium": {
+          "height": 120,
+          "width": 600,
+          "source": "https://www.google.com/",
+          "url": "https://www.google.com/"
+        },
+        "small320": {
+          "height": 12,
+          "width": 60,
+          "source": "https://www.google.com/",
+          "url": "https://www.google.com/"
+        },
+        "small": {
+          "height": 1000,
+          "width": 60,
+          "source": "https://www.google.com/",
+          "url": "https://www.google.com/"
+        },
+        "thumbnail": {
+          "height": 50,
+          "width": 50,
+          "source": "https://www.google.com/",
+          "url": "https://www.google.com/"
+        },
+        "largeSquare": {
+          "height": 120,
+          "width": 120,
+          "source": "https://www.google.com/",
+          "url": "https://www.google.com/"
+        },
+        "square": {
+          "height": 100,
+          "width": 100,
+          "source": "https://www.google.com/",
+          "url": "https://www.google.com/"
+        }
+      }
+    }
+  },
+  {
+    "_id": "60b3d288f257642aac48eb4a",
+    "dateUploaded": "2017-04-23T18:25:43.511Z",
+    "dateTaken": "2012-04-23T18:25:43.511Z",
+    "userId": "60b3d0ae25109d5840208165",
+    "title": "dummy",
+    "description": "descrption of photo1",
+    "tags": ["dummy1", "dummy2", "dummy3"],
+    "favourites": 75,
+    "comments": ["60b3d288f257642aac48eb6d", "60b3d288f257642aac48eb6e"],
+    "sizes": {
+      "canDownload": 0,
+      "size": {
+        "original": {
+          "height": 120,
+          "width": 60,
+          "source": "https://www.google.com/",
+          "url": "https://www.google.com/"
+        },
+        "large": {
+          "height": 190,
+          "width": 20,
+          "source": "https://www.google.com/",
+          "url": "https://www.google.com/"
+        },
+        "medium800": {
+          "height": 200,
+          "width": 60,
+          "source": "https://www.google.com/",
+          "url": "https://www.google.com/"
+        },
+        "medium640": {
+          "height": 1200,
+          "width": 60,
+          "source": "https://www.google.com/",
+          "url": "https://www.google.com/"
+        },
+        "medium": {
+          "height": 120,
+          "width": 600,
+          "source": "https://www.google.com/",
+          "url": "https://www.google.com/"
+        },
+        "small320": {
+          "height": 12,
+          "width": 60,
+          "source": "https://www.google.com/",
+          "url": "https://www.google.com/"
+        },
+        "small": {
+          "height": 1000,
+          "width": 60,
+          "source": "https://www.google.com/",
+          "url": "https://www.google.com/"
+        },
+        "thumbnail": {
+          "height": 50,
+          "width": 50,
+          "source": "https://www.google.com/",
+          "url": "https://www.google.com/"
+        },
+        "largeSquare": {
+          "height": 120,
+          "width": 120,
+          "source": "https://www.google.com/",
+          "url": "https://www.google.com/"
+        },
+        "square": {
+          "height": 100,
+          "width": 100,
+          "source": "https://www.google.com/",
+          "url": "https://www.google.com/"
+        }
+      }
+    }
+  },
+  {
+    "_id": "60b3d288f257642aac48eb4b",
+    "dateUploaded": "2016-04-23T18:25:43.511Z",
+    "dateTaken": "2013-04-23T18:25:43.511Z",
+    "userId": "60b3d0ae25109d5840208164",
+    "title": "dummy dummy",
+    "description": "dummy description",
+    "tags": ["dummy1", "photo1", "photo2"],
+    "favourites": 3,
+    "sizes": {
+      "canDownload": 0,
+      "size": {
+        "original": {
+          "height": 120,
+          "width": 60,
+          "source": "https://www.google.com/",
+          "url": "https://www.google.com/"
+        },
+        "large": {
+          "height": 190,
+          "width": 20,
+          "source": "https://www.google.com/",
+          "url": "https://www.google.com/"
+        },
+        "medium800": {
+          "height": 200,
+          "width": 60,
+          "source": "https://www.google.com/",
+          "url": "https://www.google.com/"
+        },
+        "medium640": {
+          "height": 1200,
+          "width": 60,
+          "source": "https://www.google.com/",
+          "url": "https://www.google.com/"
+        },
+        "medium": {
+          "height": 120,
+          "width": 600,
+          "source": "https://www.google.com/",
+          "url": "https://www.google.com/"
+        },
+        "small320": {
+          "height": 12,
+          "width": 60,
+          "source": "https://www.google.com/",
+          "url": "https://www.google.com/"
+        },
+        "small": {
+          "height": 1000,
+          "width": 60,
+          "source": "https://www.google.com/",
+          "url": "https://www.google.com/"
+        },
+        "thumbnail": {
+          "height": 50,
+          "width": 50,
+          "source": "https://www.google.com/",
+          "url": "https://www.google.com/"
+        },
+        "largeSquare": {
+          "height": 120,
+          "width": 120,
+          "source": "https://www.google.com/",
+          "url": "https://www.google.com/"
+        },
+        "square": {
+          "height": 100,
+          "width": 100,
+          "source": "https://www.google.com/",
+          "url": "https://www.google.com/"
+        }
+      }
+    }
+  },
+  {
+    "_id": "60b3d288f257642aac48eb4c",
+    "dateUploaded": "2012-04-23T18:25:43.511Z",
+    "dateTaken": "2013-04-23T18:25:43.511Z",
+    "userId": "60b3d0ae25109d5840208165",
+    "title": "photo3",
+    "description": "dummy",
+    "tags": ["dummy1", "dummy2", "dummy3"],
+    "favourites": 14,
+    "sizes": {
+      "canDownload": 0,
+      "size": {
+        "original": {
+          "height": 120,
+          "width": 60,
+          "source": "https://www.google.com/",
+          "url": "https://www.google.com/"
+        },
+        "large": {
+          "height": 190,
+          "width": 20,
+          "source": "https://www.google.com/",
+          "url": "https://www.google.com/"
+        },
+        "medium800": {
+          "height": 200,
+          "width": 60,
+          "source": "https://www.google.com/",
+          "url": "https://www.google.com/"
+        },
+        "medium640": {
+          "height": 1200,
+          "width": 60,
+          "source": "https://www.google.com/",
+          "url": "https://www.google.com/"
+        },
+        "medium": {
+          "height": 120,
+          "width": 600,
+          "source": "https://www.google.com/",
+          "url": "https://www.google.com/"
+        },
+        "small320": {
+          "height": 12,
+          "width": 60,
+          "source": "https://www.google.com/",
+          "url": "https://www.google.com/"
+        },
+        "small": {
+          "height": 1000,
+          "width": 60,
+          "source": "https://www.google.com/",
+          "url": "https://www.google.com/"
+        },
+        "thumbnail": {
+          "height": 50,
+          "width": 50,
+          "source": "https://www.google.com/",
+          "url": "https://www.google.com/"
+        },
+        "largeSquare": {
+          "height": 120,
+          "width": 120,
+          "source": "https://www.google.com/",
+          "url": "https://www.google.com/"
+        },
+        "square": {
+          "height": 100,
+          "width": 100,
+          "source": "https://www.google.com/",
+          "url": "https://www.google.com/"
+        }
+      }
+    }
+  },
+  {
+    "_id": "60b3d288f257642aac48eb4d",
+    "dateUploaded": "2012-04-23T18:25:43.511Z",
+    "dateTaken": "2013-04-23T18:25:43.511Z",
+    "userId": "60b3d0ae25109d5840208164",
+    "title": "photo4",
+    "description": "dummy",
+    "tags": ["dummy1", "dummy2", "dummy3"],
+    "favourites": 22,
+    "sizes": {
+      "canDownload": 0,
+      "size": {
+        "original": {
+          "height": 120,
+          "width": 60,
+          "source": "https://www.google.com/",
+          "url": "https://www.google.com/"
+        },
+        "large": {
+          "height": 190,
+          "width": 20,
+          "source": "https://www.google.com/",
+          "url": "https://www.google.com/"
+        },
+        "medium800": {
+          "height": 200,
+          "width": 60,
+          "source": "https://www.google.com/",
+          "url": "https://www.google.com/"
+        },
+        "medium640": {
+          "height": 1200,
+          "width": 60,
+          "source": "https://www.google.com/",
+          "url": "https://www.google.com/"
+        },
+        "medium": {
+          "height": 120,
+          "width": 600,
+          "source": "https://www.google.com/",
+          "url": "https://www.google.com/"
+        },
+        "small320": {
+          "height": 12,
+          "width": 60,
+          "source": "https://www.google.com/",
+          "url": "https://www.google.com/"
+        },
+        "small": {
+          "height": 1000,
+          "width": 60,
+          "source": "https://www.google.com/",
+          "url": "https://www.google.com/"
+        },
+        "thumbnail": {
+          "height": 50,
+          "width": 50,
+          "source": "https://www.google.com/",
+          "url": "https://www.google.com/"
+        },
+        "largeSquare": {
+          "height": 120,
+          "width": 120,
+          "source": "https://www.google.com/",
+          "url": "https://www.google.com/"
+        },
+        "square": {
+          "height": 100,
+          "width": 100,
+          "source": "https://www.google.com/",
+          "url": "https://www.google.com/"
+        }
+      }
+    }
+  },
+  {
+    "_id": "60b3d288f257642aac48eb4e",
+    "dateUploaded": "2012-04-23T18:25:43.511Z",
+    "dateTaken": "2013-04-23T18:25:43.511Z",
+    "userId": "60b3d0ae25109d5840208165",
+    "title": "dummy",
+    "description": "dummy",
+    "tags": ["dummy1", "dummy2", "photo4"],
+    "favourites": 38,
+    "views": 200,
+    "sizes": {
+      "canDownload": 0,
+      "size": {
+        "original": {
+          "height": 120,
+          "width": 60,
+          "source": "https://www.google.com/",
+          "url": "https://www.google.com/"
+        },
+        "large": {
+          "height": 190,
+          "width": 20,
+          "source": "https://www.google.com/",
+          "url": "https://www.google.com/"
+        },
+        "medium800": {
+          "height": 200,
+          "width": 60,
+          "source": "https://www.google.com/",
+          "url": "https://www.google.com/"
+        },
+        "medium640": {
+          "height": 1200,
+          "width": 60,
+          "source": "https://www.google.com/",
+          "url": "https://www.google.com/"
+        },
+        "medium": {
+          "height": 120,
+          "width": 600,
+          "source": "https://www.google.com/",
+          "url": "https://www.google.com/"
+        },
+        "small320": {
+          "height": 12,
+          "width": 60,
+          "source": "https://www.google.com/",
+          "url": "https://www.google.com/"
+        },
+        "small": {
+          "height": 1000,
+          "width": 60,
+          "source": "https://www.google.com/",
+          "url": "https://www.google.com/"
+        },
+        "thumbnail": {
+          "height": 50,
+          "width": 50,
+          "source": "https://www.google.com/",
+          "url": "https://www.google.com/"
+        },
+        "largeSquare": {
+          "height": 120,
+          "width": 120,
+          "source": "https://www.google.com/",
+          "url": "https://www.google.com/"
+        },
+        "square": {
+          "height": 100,
+          "width": 100,
+          "source": "https://www.google.com/",
+          "url": "https://www.google.com/"
+        }
+      }
+    }
   }
 ]
