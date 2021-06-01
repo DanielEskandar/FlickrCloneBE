@@ -2260,6 +2260,8 @@ module.exports.getLocationData = {
   status: 'success',
   data: {
     location: {
+      __v: 0,
+      _id: expect.any(String),
       coordinates: {
         latitude: 222,
         longitude: 20,
@@ -2272,6 +2274,8 @@ module.exports.setLocationData = {
   status: 'success',
   data: {
     location: {
+      __v: 0,
+      _id: expect.any(String),
       coordinates: {
         latitude: 50,
         longitude: 70,
@@ -2374,7 +2378,7 @@ module.exports.deleteLocationData = {
     peopleTagged: [
       {
         _id: '609093af84b808271488fafd',
-        userId: '608d5450ec00005468604a0c',
+        userId: '608d55c7e512b74ee00791de',
         tagDate: '2012-04-13T18:25:43.511Z',
       },
     ],

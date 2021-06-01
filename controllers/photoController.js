@@ -803,14 +803,7 @@ exports.getLocation = async (req, res) => {
         _id: 0,
         location: 1,
       })
-      .populate([
-        {
-          path: 'location',
-          model: 'locationModel',
-          select: 'coordinates.latitude coordinates.longitude',
-          select: { _id: 0, __v: 0 },
-        },
-      ]);
+      .populate('location');
 
     if (!photo) {
       throw new AppError('No Photo Found with this ID', 404);
@@ -850,57 +843,12 @@ exports.setLocation = async (req, res) => {
         _id: 0,
         location: 1,
       })
-      .populate([
-        {
-          path: 'location',
-          model: 'locationModel',
-          select: 'coordinates.latitude coordinates.longitude',
-          select: { _id: 0, __v: 0 },
-        },
-      ]);
+      .populate('location');
 
     res.status(200).json({
       status: 'success',
       data: JSON.parse(JSON.stringify(updated)),
     });
-  } catch (err) {
-    errorController.sendError(err, req, res);
-  }
-};
-
-// DELETE COMMENT
-exports.deleteComment = async (req, res) => {
-  try {
-    const photoWithComment = await photoModel
-      .findById(req.params.id)
-      .select({ comments: 1, _id: 0 });
-
-    if (!photoWithComment) {
-      throw new AppError('No Photo Found with this ID', 404);
-    }
-    const comment = photoWithComment.comments.find(
-      (element) => element.toString() === req.params.commentid.toString()
-    );
-
-    if (comment) {
-      await photoModel.findByIdAndUpdate(
-        req.params.id,
-        {
-          $pull: { comments: comment },
-        },
-        {
-          new: true,
-          runValidators: true,
-        }
-      );
-      await commentModel.findByIdAndDelete(req.params.commentid);
-      res.status(204).json({
-        status: 'success',
-        data: 'deleted',
-      });
-    } else {
-      throw new AppError('No Comment Found with this ID', 404);
-    }
   } catch (err) {
     errorController.sendError(err, req, res);
   }
