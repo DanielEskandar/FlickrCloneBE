@@ -222,7 +222,7 @@ userRouter.patch('/', authController.protect, userController.updateUserInfo);
 userRouter.delete('/');
 
 /**
- * @api {get} /user/:id/stats [WIP] Get the User's Statistics
+ * @api {get} /user/:id/stats Get the User's Statistics
  * @apiVersion 1.0.0
  * @apiName GetUserStats
  * @apiGroup User
@@ -238,21 +238,18 @@ userRouter.delete('/');
  * @apiSuccessExample Success-Response:
  *      HTTP/1.1 200 OK
  *      {
- *          "status": "success",
- *          "data":
- *          {
- *              "views": 9200000,
- *              "tags": 159,
- *              "geotags": 0,
- *              "faves": 131,
- *              "groups": 140
- *          }
+ *        "status": "success",
+ *        "data": {
+ *          "views": 358,
+ *          "faves": 2,
+ *          "tags": 4
+ *        }
  *      }
  *
  * @apiUse UserNotFoundError
  */
 
-userRouter.get('/:id/stats');
+userRouter.get('/:id/stats', userController.getStats);
 
 /**
  *
@@ -1685,13 +1682,17 @@ userRouter.get('/notif/follow');
  *            "_id": "60b1619d62e64a359ccb4a63",
  *            "firstName": "dummy3",
  *            "lastName": "search1",
- *            "displayName": "dummy4"
+ *            "displayName": "dummy4",
+ *            "photoCount": 0,
+ *            "followerCount": 0
  *          },
  *          {
- *            "_id": "60b1619d62e64a359ccb4a62",
- *            "firstName": "search1",
- *            "lastName": "dummy1",
- *            "displayName": "dummy2"
+ *            "_id": "60b1619d62e64a359ccb4a64",
+ *            "firstName": "dummy5",
+ *            "lastName": "dummy6",
+ *            "displayName": "search1",
+ *            "photoCount": 0,
+ *            "followerCount": 0
  *          }
  *        ]
  *      }
@@ -1699,7 +1700,7 @@ userRouter.get('/notif/follow');
  * @apiUse ServerError
  */
 
-userRouter.get('/search', userController.search);
+userRouter.get('/search', authController.protect, userController.search);
 
 /**
  * @api {get} /user/:id Get the User's Information

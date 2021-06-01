@@ -13,6 +13,7 @@ const albumModel = require('./models/albumModel');
 const commentModel = require('./models/commentModel');
 const replyModel = require('./models/replyModel');
 const testimonialModel = require('./models/testimonialModel');
+const locationModel = require('./models/locationModel');
 
 // READ JSON FILES
 const users = JSON.parse(fs.readFileSync('./data/Users.json', 'utf-8'));
@@ -28,6 +29,7 @@ const replies = JSON.parse(fs.readFileSync('./data/Replies.json', 'utf-8'));
 const testimonials = JSON.parse(
   fs.readFileSync('./data/Testimonials.json', 'utf-8')
 );
+const locations = JSON.parse(fs.readFileSync('./data/Location.json', 'utf-8'));
 
 // CONFIGURE SERVER
 dotenv.config({ path: './config.env' });
@@ -59,6 +61,7 @@ const importData = async () => {
     await commentModel.create(comments);
     await replyModel.create(replies);
     await testimonialModel.create(testimonials);
+    await locationModel.create(locations);
 
     console.log('Data successfully loaded');
     process.exit();
@@ -79,6 +82,7 @@ const deleteData = async () => {
     await commentModel.deleteMany();
     await replyModel.deleteMany();
     await testimonialModel.deleteMany();
+    await locationModel.deleteMany();
 
     console.log('Data successfully deleted');
     process.exit();

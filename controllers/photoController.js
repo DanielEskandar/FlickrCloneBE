@@ -1,12 +1,182 @@
+// INCLUDE DEPENDENCIES
+const _ = require('underscore');
+
 // INCLUDE MODELS
 const photoModel = require('../models/photoModel.js');
 const commentModel = require('../models/commentModel.js');
 const userModel = require('../models/userModel.js');
 const galleryModel = require('../models/galleryModel.js');
+const locationModel = require('../models/locationModel.js');
 
 // INCLUDE ERROR CLASS AND ERROR CONTROLLER
 const AppError = require('../utils/appError.js');
 const errorController = require('./errorController.js');
+
+// INCLUDE API FEATURES
+const APIFeatures = require('../utils/APIFeatures.js');
+
+// UPLOAD PHOTO
+exports.uploadPhoto = async (req, res) => {
+  try {
+    let ExifString = '';
+    let DateCapture = '';
+    let metadataStream;
+
+    if (req.file.Exif) {
+      metadataStream = {
+        cameraMake: '',
+        cameraModel: '',
+        lensName: '',
+        fNumber: '',
+        focalLength: '',
+        exposureTime: '',
+        flash: '',
+        iso: '',
+      };
+
+      DateCapture = new Date(req.file.Exif.exif.DateTimeOriginal);
+
+      if (req.file.Exif.image) {
+        if (req.file.Exif.image.Make)
+          metadataStream.cameraMake = req.file.Exif.image.Make;
+
+        if (req.file.Exif.image.Model)
+          metadataStream.cameraModel = req.file.Exif.image.Model;
+      }
+
+      if (req.file.Exif.exif) {
+        if (req.file.Exif.exif.MakerNote) req.file.Exif.exif.MakerNote = '';
+
+        ExifString = JSON.stringify(req.file.Exif.exif);
+
+        if (req.file.Exif.exif.ExposureTime)
+          metadataStream.exposureTime = req.file.Exif.exif.ExposureTime;
+
+        if (req.file.Exif.exif.FNumber)
+          metadataStream.fNumber = req.file.Exif.exif.FNumber;
+
+        if (req.file.Exif.exif.FocalLength)
+          metadataStream.focalLength = req.file.Exif.exif.FocalLength;
+
+        if (req.file.Exif.exif.Flash)
+          metadataStream.flash = req.file.Exif.exif.Flash;
+
+        if (req.file.Exif.exif.ISO) metadataStream.iso = req.file.Exif.exif.ISO;
+
+        if (req.file.Exif.exif.LensModel)
+          metadataStream.lensName = req.file.Exif.exif.LensModel;
+      }
+    }
+
+    const photoNew = {
+      userId: req.user.id,
+      title: req.body.title,
+      description: req.body.description,
+      metadata: metadataStream,
+      EXIF: ExifString,
+      license: req.body.license,
+      safetyLevel: req.body.safetyLevel,
+      contentType: req.body.contentType,
+      dateTaken: DateCapture,
+      sizes: {
+        canDownload: 0,
+        size: {
+          original: {
+            height: req.file.data[0].size.h,
+            width: req.file.data[0].size.w,
+            source: req.file.data[0].source,
+            url: req.file.data[0].source,
+          },
+          large: {
+            height: req.file.data[1].size.h,
+            width: req.file.data[1].size.w,
+            source: req.file.data[1].source,
+            url: req.file.data[1].source,
+          },
+          medium800: {
+            height: req.file.data[2].size.h,
+            width: req.file.data[2].size.w,
+            source: req.file.data[2].source,
+            url: req.file.data[2].source,
+          },
+          medium640: {
+            height: req.file.data[3].size.h,
+            width: req.file.data[3].size.w,
+            source: req.file.data[3].source,
+            url: req.file.data[3].source,
+          },
+          medium: {
+            height: req.file.data[4].size.h,
+            width: req.file.data[4].size.w,
+            source: req.file.data[4].source,
+            url: req.file.data[4].source,
+          },
+          small320: {
+            height: req.file.data[5].size.h,
+            width: req.file.data[5].size.w,
+            source: req.file.data[5].source,
+            url: req.file.data[5].source,
+          },
+          small: {
+            height: req.file.data[6].size.h,
+            width: req.file.data[6].size.w,
+            source: req.file.data[6].source,
+            url: req.file.data[6].source,
+          },
+          thumbnail: {
+            height: req.file.data[7].size.h,
+            width: req.file.data[7].size.w,
+            source: req.file.data[7].source,
+            url: req.file.data[7].source,
+          },
+          largeSquare: {
+            height: req.file.data[8].size.h,
+            width: req.file.data[8].size.w,
+            source: req.file.data[8].source,
+            url: req.file.data[8].source,
+          },
+          square: {
+            height: req.file.data[9].size.h,
+            width: req.file.data[9].size.w,
+            source: req.file.data[9].source,
+            url: req.file.data[9].source,
+          },
+        },
+      },
+    };
+
+    const newPhoto = await photoModel.create(photoNew);
+
+    if (!newPhoto) {
+      throw new AppError('Failed to Create New Photo.', 409);
+    }
+
+    const userPhotoList = await userModel
+      .findByIdAndUpdate(
+        req.user.id,
+        {
+          $push: { photos: newPhoto._id },
+        },
+        {
+          new: true,
+          runValidators: true,
+        }
+      )
+      .select('photos');
+
+    const createdPhoto = await photoModel.findById(newPhoto._id);
+
+    res.status(201).json({
+      status: 'success',
+      data: {
+        newPhoto: JSON.parse(JSON.stringify(createdPhoto)),
+        userPhotoList: JSON.parse(JSON.stringify(userPhotoList)),
+      },
+    });
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};
 
 // GET INFORMATION FOR A PHOTO
 exports.getInformation = async (req, res) => {
@@ -56,14 +226,19 @@ exports.getFavourites = async (req, res) => {
   }
 };
 
-// ADD COMMENT TO PHOTO
+// ADD COMMENT TO PHOTO --
 exports.addComment = async (req, res) => {
   try {
     if (!(await photoModel.findById(req.params.id))) {
       throw new AppError('No Photo Found with this ID', 404);
     }
 
-    const newComment = await commentModel.create(req.body);
+    const comment = {
+      body: req.body.body,
+      userId: req.user.id,
+    };
+
+    const newComment = await commentModel.create(comment);
 
     await photoModel.findByIdAndUpdate(
       req.params.id,
@@ -166,7 +341,14 @@ exports.getComments = async (req, res) => {
 
     const comments = await photoModel
       .findById(req.params.id)
-      .select({ comments: 1, _id: 0 });
+      .select({ comments: 1, _id: 0 })
+      .populate({
+        path: 'comments',
+        populate: {
+          path: 'userId',
+          select: ['firstName', 'lastName'],
+        },
+      });
 
     if (!comments) {
       throw new AppError('No Comments Found for this Photo', 404);
@@ -204,7 +386,6 @@ exports.getSizes = async (req, res) => {
     errorController.sendError(err, req, res);
   }
 };
-
 // SET PHOTO TAGS
 exports.setTags = async (req, res) => {
   try {
@@ -391,7 +572,7 @@ exports.getGalleriesforPhoto = async (req, res) => {
 
     const galleries = await galleryModel
       .find({ 'photos.photoId': req.params.id })
-      .sort([['date', -1]])
+      .sort('createdAt')
       .select({ _id: 1 })
       .skip(skip)
       .limit(perPage);
@@ -532,6 +713,260 @@ exports.removePerson = async (req, res) => {
     res.status(200).json({
       status: 'success',
       data: JSON.parse(JSON.stringify(taggedlist)),
+    });
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};
+
+// SEARCH
+exports.search = async (req, res) => {
+  try {
+    // Check if query exists
+    if (!req.query.searchText) {
+      throw new AppError('No query found.', 400);
+    }
+
+    // Split query on space character
+    const queries = req.query.searchText.split(' ');
+
+    // Search for photos
+    let searchResults = [];
+    await Promise.all(
+      queries.map(async (el) => {
+        const searchResult = await photoModel.aggregate([
+          {
+            $match: {
+              $or: [
+                { title: { $regex: el, $options: 'i' } },
+                { description: { $regex: el, $options: 'i' } },
+                { tags: { $in: [el] } },
+              ],
+            },
+          },
+          {
+            $project: {
+              _id: 1,
+              title: 1,
+              description: 1,
+              favourites: 1,
+              dateUploaded: 1,
+              dateTaken: 1,
+              userId: 1,
+              sizes: 1,
+              comments: { $size: '$comments' },
+            },
+          },
+        ]);
+
+        searchResults.push(searchResult);
+      })
+    );
+
+    // Populate
+    await photoModel.populate(searchResults, {
+      path: 'userId',
+      model: 'userModel',
+      select: 'firstName lastName pro',
+    });
+
+    // Merge results of all queries into one array (Union Operation)
+    searchResults = searchResults.flat();
+
+    // Remove duplicates
+    searchResults = _.uniq(JSON.parse(JSON.stringify(searchResults)), '_id');
+
+    // Sorting
+    const sort = req.query.sort || 'dateUploaded';
+    searchResults = _.sortBy(searchResults, sort).reverse();
+
+    // Pagination
+    const page = req.query.page * 1 || 1;
+    const limit = req.query.limit * 1 || 100;
+    searchResults = APIFeatures.paginate(searchResults, page, limit);
+
+    res.status(200).json({
+      status: 'success',
+      data: JSON.parse(JSON.stringify(searchResults)),
+    });
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};
+
+// GET LOCATION
+exports.getLocation = async (req, res) => {
+  try {
+    const photo = await photoModel
+      .findById(req.params.id)
+      .select({
+        _id: 0,
+        location: 1,
+      })
+      .populate('location');
+
+    if (!photo) {
+      throw new AppError('No Photo Found with this ID', 404);
+    }
+
+    res.status(200).json({
+      status: 'success',
+      data: JSON.parse(JSON.stringify(photo)),
+    });
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};
+
+// SET LOCATION
+exports.setLocation = async (req, res) => {
+  try {
+    const photo = await photoModel.findById(req.params.id);
+    if (!photo) {
+      throw new AppError('No Photo Found with This ID', 404);
+    }
+
+    const location = await locationModel.create(req.body); //create new location instance
+
+    const updated = await photoModel
+      .findByIdAndUpdate(
+        req.params.id,
+        {
+          $set: { location: location },
+        },
+        {
+          new: true,
+          runValidators: true,
+        }
+      )
+      .select({
+        _id: 0,
+        location: 1,
+      })
+      .populate('location');
+
+    res.status(200).json({
+      status: 'success',
+      data: JSON.parse(JSON.stringify(updated)),
+    });
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};
+
+// DELETE LOCATION
+exports.deleteLocation = async (req, res) => {
+  try {
+    //photo validation
+    if (!(await photoModel.findById(req.params.id))) {
+      throw new AppError('No Photo Found with this ID', 404);
+    }
+    const check = await photoModel.findById(req.params.id);
+    if (check.location == null) {
+      throw new AppError('Photo Already doesnt have a location', 404);
+    }
+    const photo = await photoModel.findByIdAndUpdate(
+      req.params.id,
+      {
+        $set: { location: null },
+      },
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
+    res.status(200).json({
+      status: 'success',
+      data: JSON.parse(JSON.stringify(photo)),
+    });
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};
+
+// GET PERMISSIONS FOR A PHOTO
+exports.getPerms = async (req, res) => {
+  try {
+    const perms = await photoModel.findById(req.params.id).select({
+      permissions: 1,
+      _id: 0,
+    });
+
+    if (!perms) {
+      throw new AppError('No Photo Found with this ID', 404);
+    }
+
+    res.status(200).json({
+      status: 'success',
+      data: JSON.parse(JSON.stringify(perms)),
+    });
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};
+
+// SET PERMISSIONS FOR A PHOTO
+exports.setPerms = async (req, res) => {
+  try {
+    const photo = await photoModel.findById(req.params.id);
+    if (!photo) {
+      throw new AppError('No Photo Found with this ID', 404);
+    }
+
+    if (photo.userId.toString() !== req.user.id.toString())
+      throw new AppError('You are not allowed to set permissions', 403);
+
+    const publicIn = req.body.public;
+    const friendIn = req.body.friend;
+    const familyIn = req.body.family;
+    const commentIn = req.body.comment;
+    const addMetaIn = req.body.addMeta;
+
+    if (
+      publicIn === undefined ||
+      friendIn === undefined ||
+      familyIn === undefined ||
+      commentIn === undefined ||
+      addMetaIn === undefined
+    ) {
+      throw new AppError('Missing property fields', 409);
+    }
+
+    if (
+      // if body input in '1' or '0'
+      (publicIn === 1 && (friendIn !== 0 || familyIn !== 0)) ||
+      ((friendIn === 1 || familyIn === 1) && publicIn !== 0)
+    ) {
+      throw new AppError('Conflict in permissions', 409);
+    }
+
+    if (
+      // if body input in 'true' or 'false'
+      (publicIn === true && (friendIn !== false || familyIn !== false)) ||
+      ((friendIn === true || familyIn === true) && publicIn !== false)
+    ) {
+      throw new AppError('Conflict in permissions', 409);
+    }
+
+    const setPerm = await photoModel
+      .findByIdAndUpdate(
+        req.params.id,
+        {
+          $set: { permissions: req.body },
+        },
+        {
+          new: true,
+          runValidators: true,
+        }
+      )
+      .select({
+        permissions: 1,
+        _id: 0,
+      });
+
+    res.status(200).json({
+      status: 'success',
+      data: JSON.parse(JSON.stringify(setPerm)),
     });
   } catch (err) {
     errorController.sendError(err, req, res);

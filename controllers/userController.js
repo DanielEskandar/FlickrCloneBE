@@ -4,10 +4,12 @@ const _ = require('underscore');
 // INCLUDE MODELS
 const userModel = require('../models/userModel.js');
 const photoModel = require('../models/photoModel.js');
+
 // eslint-disable-next-line no-unused-vars
 const albumModel = require('../models/albumModel.js');
 // eslint-disable-next-line no-unused-vars
 const galleryModel = require('../models/galleryModel.js');
+
 const testimonialModel = require('../models/testimonialModel.js');
 
 // INCLUDE ERROR CLASS AND ERROR CONTROLLER
@@ -15,7 +17,7 @@ const AppError = require('../utils/appError.js');
 const errorController = require('./errorController.js');
 
 // INCLUDE API FEATURES
-const { paginate } = require('../utils/APIFeatures.js');
+const APIFeatures = require('../utils/APIFeatures.js');
 
 // GET REAL NAME
 exports.getRealName = async (req, res) => {
@@ -662,11 +664,23 @@ exports.search = async (req, res) => {
     const searchResults = [];
     await Promise.all(
       queries.map(async (el) => {
-        const searchResult = await userModel
-          .find({
-            $or: [{ firstName: el }, { lastName: el }, { displayName: el }],
-          })
-          .select({ _id: 1, firstName: 1, lastName: 1, displayName: 1 });
+        const searchResult = await userModel.aggregate([
+          {
+            $match: {
+              $or: [{ firstName: el }, { lastName: el }, { displayName: el }],
+            },
+          },
+          {
+            $project: {
+              _id: 1,
+              firstName: 1,
+              lastName: 1,
+              displayName: 1,
+              photoCount: { $size: '$photos' },
+            },
+          },
+        ]);
+
         searchResults.push(searchResult);
       })
     );
@@ -681,13 +695,37 @@ exports.search = async (req, res) => {
         );
       });
 
+      // SORTING
+      results = _.sortBy(results, 'firstName');
+
       // Pagination
       const page = req.query.page * 1 || 1;
       const limit = req.query.limit * 1 || 100;
-      results = paginate(results, page, limit);
+      results = APIFeatures.paginate(results, page, limit);
 
-      // SORTING
-      results = _.sortBy(results, 'firstName');
+      // Get FollowerCount
+      await Promise.all(
+        results.map(async (el) => {
+          const user = await userModel.aggregate([
+            {
+              $match: {
+                'following.user': el._id,
+              },
+            },
+            {
+              $group: {
+                _id: null,
+                followerCount: { $sum: 1 },
+              },
+            },
+          ]);
+          if (user.length === 1) {
+            el.followerCount = user[0].followerCount;
+          } else {
+            el.followerCount = 0;
+          }
+        })
+      );
     }
 
     res.status(200).json({
@@ -840,7 +878,12 @@ exports.getRecentPhotos = async (req, res) => {
       .findById(req.user.id)
       .populate({
         path: 'photos',
-        select: ['dateUploaded', 'sizes'],
+        select: ['title', 'dateUploaded', 'sizes', 'favourites', 'userId'],
+        populate: {
+          path: 'userId',
+          model: 'userModel',
+          select: ['firstName', 'lastName', 'displayName'],
+        },
         options: { sort: '-dateUploaded' }, // DESCENDING SORT
       })
       .select('photos')
@@ -878,7 +921,12 @@ exports.getPopularPhotos = async (req, res) => {
       .findById(req.user.id)
       .populate({
         path: 'photos',
-        select: ['favourites', 'sizes'],
+        select: ['title', 'dateUploaded', 'sizes', 'favourites', 'userId'],
+        populate: {
+          path: 'userId',
+          model: 'userModel',
+          select: ['firstName', 'lastName', 'displayName'],
+        },
         options: { sort: '-favourites' }, // DESCENDING SORT
       })
       .select('photos')
@@ -919,7 +967,12 @@ exports.getRequestedUserRecentPhotos = async (req, res) => {
       .findById(req.params.id)
       .populate({
         path: 'photos',
-        select: ['dateUploaded', 'sizes'],
+        select: ['title', 'dateUploaded', 'sizes', 'favourites', 'userId'],
+        populate: {
+          path: 'userId',
+          model: 'userModel',
+          select: ['firstName', 'lastName', 'displayName'],
+        },
         options: { sort: '-dateUploaded' }, // DESCENDING SORT
       })
       .select('photos')
@@ -960,7 +1013,12 @@ exports.getRequestedUserPopularPhotos = async (req, res) => {
       .findById(req.params.id)
       .populate({
         path: 'photos',
-        select: ['favourites', 'sizes'],
+        select: ['title', 'dateUploaded', 'sizes', 'favourites', 'userId'],
+        populate: {
+          path: 'userId',
+          model: 'userModel',
+          select: ['firstName', 'lastName', 'displayName'],
+        },
         options: { sort: '-favourites' }, // DESCENDING SORT
       })
       .select('photos')
@@ -1194,6 +1252,45 @@ exports.getAlbums = async (req, res) => {
       data: JSON.parse(
         // eslint-disable-next-line no-unused-vars
         JSON.stringify(userAlbums)
+      ),
+    });
+  } catch (err) {
+    errorController.sendError(err, req, res);
+  }
+};
+
+// getStats
+exports.getStats = async (req, res) => {
+  try {
+    const user = await userModel
+      .findById(req.params.id)
+      .populate('photos', 'views tags')
+      .select(['photos', 'favourites']);
+
+    if (!user) {
+      throw new AppError('No User Found with This ID', 404);
+    }
+
+    const userFavesCount = user.favourites.length;
+    const userViewsCount = user.photos
+      .map((photo) => photo.views)
+      .reduce((sum, photo) => sum + photo);
+
+    const userTagCount = user.photos
+      .map((photo) => photo.tags.length)
+      .reduce((sum, photo) => sum + photo);
+
+    const stats = {
+      views: userViewsCount,
+      faves: userFavesCount,
+      tags: userTagCount,
+    };
+
+    res.status(200).json({
+      status: 'success',
+      data: JSON.parse(
+        // eslint-disable-next-line no-unused-vars
+        JSON.stringify(stats)
       ),
     });
   } catch (err) {
