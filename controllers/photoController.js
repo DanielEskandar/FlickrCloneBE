@@ -181,13 +181,24 @@ exports.uploadPhoto = async (req, res) => {
 // GET INFORMATION FOR A PHOTO
 exports.getInformation = async (req, res) => {
   try {
-    const info = await photoModel.findById(req.params.id).select({
-      permissions: 0,
-      _id: 0,
-      safetyLevel: 0,
-      hidden: 0,
-      license: 0,
-    });
+    const info = await photoModel
+      .findByIdAndUpdate(
+        req.params.id,
+        {
+          $inc: { views: 1 },
+        },
+        {
+          new: true,
+          runValidators: true,
+        }
+      )
+      .select({
+        permissions: 0,
+        _id: 0,
+        safetyLevel: 0,
+        hidden: 0,
+        license: 0,
+      });
 
     if (!info) {
       throw new AppError('No Photo Found with this ID', 404);

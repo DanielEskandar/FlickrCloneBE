@@ -1719,6 +1719,7 @@
     "description": "dummy",
     "tags": ["dummy1", "dummy2", "photo4"],
     "favourites": 38,
+    "views": 200,
     "sizes": {
       "canDownload": 0,
       "size": {
