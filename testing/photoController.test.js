@@ -646,7 +646,7 @@ describe('should set photo permissions with id 608d5450ec00005468628a0d ', () =>
   test('should return updated permissions', async () => {
     const mReq = {
       params: {
-        id: '608d5450ec00005468628a0d',
+        id: '604d5450ec00005468617a0c',
       },
       body: {
         public: false,
@@ -655,7 +655,7 @@ describe('should set photo permissions with id 608d5450ec00005468628a0d ', () =>
         comment: 2,
         addMeta: 1,
       },
-      user: { id: '608d55c7e512b74ee00791de' },
+      user: { id: '608d55c7e512b74ee00791dd' },
     };
     const mRes = {
       status: jest.fn().mockReturnThis(),

@@ -913,30 +913,37 @@ exports.setPerms = async (req, res) => {
       throw new AppError('No Photo Found with this ID', 404);
     }
 
-    const { public, friend, family, comment, addMeta } = req.body;
-    console.log(public, friend, family, comment, addMeta);
+    if (photo.userId.toString() !== req.user.id.toString())
+      throw new AppError('You are not allowed to set permissions', 403);
+
+    const publicIn = req.body.public;
+    const friendIn = req.body.friend;
+    const familyIn = req.body.family;
+    const commentIn = req.body.comment;
+    const addMetaIn = req.body.addMeta;
+
     if (
-      public === undefined ||
-      friend === undefined ||
-      family === undefined ||
-      comment === undefined ||
-      addMeta === undefined
+      publicIn === undefined ||
+      friendIn === undefined ||
+      familyIn === undefined ||
+      commentIn === undefined ||
+      addMetaIn === undefined
     ) {
       throw new AppError('Missing property fields', 409);
     }
 
     if (
       // if body input in '1' or '0'
-      (public === 1 && (friend !== 0 || family !== 0)) ||
-      ((friend === 1 || family === 1) && public !== 0)
+      (publicIn === 1 && (friendIn !== 0 || familyIn !== 0)) ||
+      ((friendIn === 1 || familyIn === 1) && publicIn !== 0)
     ) {
       throw new AppError('Conflict in permissions', 409);
     }
 
     if (
       // if body input in 'true' or 'false'
-      (public === true && (friend !== false || family !== false)) ||
-      ((friend === true || family === true) && public !== false)
+      (publicIn === true && (friendIn !== false || familyIn !== false)) ||
+      ((friendIn === true || familyIn === true) && publicIn !== false)
     ) {
       throw new AppError('Conflict in permissions', 409);
     }
@@ -956,6 +963,7 @@ exports.setPerms = async (req, res) => {
         permissions: 1,
         _id: 0,
       });
+
     res.status(200).json({
       status: 'success',
       data: JSON.parse(JSON.stringify(setPerm)),
