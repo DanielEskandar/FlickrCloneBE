@@ -40,7 +40,7 @@ describe('should retrieve photo information', () => {
   test('should retrieve sizes, comment, favourites, views, tags, date uploaded, date taken, location, title description, exif, content type and people tagged.', async () => {
     const mReq = {
       params: {
-        id: '604d5450ec00005468617a0c',
+        id: '604d5450ec01005468617a04',
       },
     };
     const mRes = {
@@ -58,7 +58,7 @@ describe('should retrieve photo information', () => {
   test('should retrieve sizes, comment, favourites, views, tags, date uploaded, date taken, location, title description, exif, content type and people tagged.', async () => {
     const mReq = {
       params: {
-        id: '608d5450ec00005468617a0c',
+        id: '60b3d288f257642aac48eb4a',
       },
     };
     const mRes = {
