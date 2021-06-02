@@ -20,101 +20,17 @@ module.exports.deleteCommentData = {
 module.exports.getInformationData1 = {
   status: 'success',
   data: {
-    sizes: {
-      size: {
-        original: {
-          height: 120,
-          width: 60,
-          source: 'https://www.google.com/',
-          url: 'https://www.google.com/',
-        },
-        large: {
-          height: 190,
-          width: 20,
-          source: 'https://www.google.com/',
-          url: 'https://www.google.com/',
-        },
-        medium800: {
-          height: 200,
-          width: 60,
-          source: 'https://www.google.com/',
-          url: 'https://www.google.com/',
-        },
-        medium640: {
-          height: 1200,
-          width: 60,
-          source: 'https://www.google.com/',
-          url: 'https://www.google.com/',
-        },
-        medium: {
-          height: 120,
-          width: 600,
-          source: 'https://www.google.com/',
-          url: 'https://www.google.com/',
-        },
-        small320: {
-          height: 12,
-          width: 60,
-          source: 'https://www.google.com/',
-          url: 'https://www.google.com/',
-        },
-        small: {
-          height: 1000,
-          width: 60,
-          source: 'https://www.google.com/',
-          url: 'https://www.google.com/',
-        },
-        thumbnail: {
-          height: 50,
-          width: 50,
-          source: 'https://www.google.com/',
-          url: 'https://www.google.com/',
-        },
-        largeSquare: {
-          height: 120,
-          width: 120,
-          source: 'https://www.google.com/',
-          url: 'https://www.google.com/',
-        },
-        square: {
-          height: 60,
-          width: 60,
-          source: 'https://www.google.com/',
-          url: 'https://www.google.com/',
-        },
-      },
-      canDownload: false,
+    permissions: {
+      public: true,
+      friend: false,
+      family: false,
+      comment: 2,
+      addMeta: 1,
     },
-    comments: ['6001c346c555f920e111f205', '6090c346c555f920e121f205'],
-    favourites: 119,
-    views: 542,
-    tags: ['#Amesterdam', '#Colorful', '#SunnyDay'],
-    dateUploaded: '2018-12-23T18:29:43.511Z',
-    dateTaken: '2017-07-12T18:25:47.511Z',
-    location: '60b2806c5bcb4c81a866cf9b',
-    title: 'Wijdesteeg in Amsterdam',
-    userId: '608d55c7e512b74ee00791dd',
-    description: 'So vibrant!',
-    EXIF: '12222f',
-    contentType: 'Photo',
-    peopleTagged: [
-      {
-        _id: '60907e13495ac0316c2b19cb',
-        userId: '608d55c7e512b74ee00791de',
-        tagDate: '2021-01-13T18:25:43.511Z',
-      },
-    ],
-    __v: 0,
-  },
-};
-
-module.exports.getInformationData2 = {
-  status: 'success',
-  data: {
     sizes: {
       size: {
         original: {
-          height: 120,
+          height: 100,
           width: 60,
           source: 'https://www.google.com/',
           url: 'https://www.google.com/',
@@ -176,26 +92,154 @@ module.exports.getInformationData2 = {
       },
       canDownload: true,
     },
-    comments: ['6090acefc4cc491a7cf8b47c', '6090beb07237ad1fb4458fae'],
-    favourites: 51,
-    views: 338,
-    tags: ['#Sakure', '#Flowers', '#Nihon'],
-    dateUploaded: '2021-12-23T18:25:43.511Z',
-    dateTaken: '2013-07-23T18:25:43.511Z',
+    comments: [],
+    favourites: 11,
+    views: 54,
+    tags: ['#Fam', '#OldisGold', '#SunnyDay'],
+    userId: {
+      _id: '608d5450ec00005468607a0c',
+      displayName: 'AhmedAbdulkader99',
+      firstName: 'Ahmed',
+      lastName: 'Abdulkader',
+    },
+    title: 'Family pic',
+    description: 'Taken in 1985',
+    dateUploaded: '2021-11-23T18:29:43.511Z',
+    dateTaken: '2017-06-12T18:25:47.511Z',
     location: '60b2806c5bcb4c81a866cf9b',
-    title: 'Sakura Season in Nihon',
-    userId: '608d55c7e512b74ee00791dc',
-    description: 'Kawaii',
-    EXIF: '12trewf',
-    contentType: 'Other',
+    EXIF: '12222f',
+    safetyLevel: 2,
+    contentType: 'Photo',
     peopleTagged: [
       {
-        _id: '609083a8a127743ad03ff9ec',
-        userId: '608d55c7e512b74ee00791de',
-        tagDate: '2021-12-13T18:25:43.511Z',
+        _id: '60907e13495ac0316c2b19cb',
+        userId: {
+          _id: '608d55c7e512b74ee00791de',
+          displayName: 'NadineMagdy',
+          firstName: 'Nadine',
+          lastName: 'Magdi',
+        },
+        tagDate: '2021-01-13T18:25:43.511Z',
       },
     ],
-    __v: 0,
+  },
+};
+
+module.exports.getInformationData2 = {
+  status: 'success',
+  data: {
+    permissions: {
+      public: false,
+      friend: false,
+      family: false,
+      comment: 3,
+      addMeta: 0,
+    },
+    sizes: {
+      size: {
+        original: {
+          height: 120,
+          width: 60,
+          source: 'https://www.google.com/',
+          url: 'https://www.google.com/',
+        },
+        large: {
+          height: 190,
+          width: 20,
+          source: 'https://www.google.com/',
+          url: 'https://www.google.com/',
+        },
+        medium800: {
+          height: 200,
+          width: 60,
+          source: 'https://www.google.com/',
+          url: 'https://www.google.com/',
+        },
+        medium640: {
+          height: 1200,
+          width: 60,
+          source: 'https://www.google.com/',
+          url: 'https://www.google.com/',
+        },
+        medium: {
+          height: 120,
+          width: 600,
+          source: 'https://www.google.com/',
+          url: 'https://www.google.com/',
+        },
+        small320: {
+          height: 12,
+          width: 60,
+          source: 'https://www.google.com/',
+          url: 'https://www.google.com/',
+        },
+        small: {
+          height: 1000,
+          width: 60,
+          source: 'https://www.google.com/',
+          url: 'https://www.google.com/',
+        },
+        thumbnail: {
+          height: 50,
+          width: 50,
+          source: 'https://www.google.com/',
+          url: 'https://www.google.com/',
+        },
+        largeSquare: {
+          height: 120,
+          width: 120,
+          source: 'https://www.google.com/',
+          url: 'https://www.google.com/',
+        },
+        square: {
+          height: 100,
+          width: 100,
+          source: 'https://www.google.com/',
+          url: 'https://www.google.com/',
+        },
+      },
+      canDownload: false,
+    },
+    comments: [
+      {
+        _id: '60b3d288f257642aac48eb6d',
+        body: 'Photo Search Comment 2',
+        userId: {
+          _id: '608d55c7e512b74ee00791db',
+          displayName: 'DanielEskandar',
+          firstName: 'Daniel',
+          lastName: 'Eskandar',
+        },
+        date: '2019-01-04T14:07:48.071Z',
+        __v: 0,
+      },
+      {
+        _id: '60b3d288f257642aac48eb6e',
+        body: 'Photo Search Comment 3',
+        userId: {
+          _id: '608d55c7e512b74ee00791dc',
+          displayName: 'AliaaKhalifa',
+          firstName: 'Aliaa',
+          lastName: 'Khalifa',
+        },
+        date: '2020-01-04T14:07:48.071Z',
+        __v: 0,
+      },
+    ],
+    favourites: 75,
+    views: 0,
+    tags: ['dummy1', 'dummy2', 'dummy3'],
+    dateUploaded: '2017-04-23T18:25:43.511Z',
+    dateTaken: '2012-06-23T18:25:43.511Z',
+    userId: {
+      _id: '60b3d0ae25109d5840208165',
+      firstName: 'Photo Owner 2 First Name',
+      lastName: 'Photo Owner 2 Last Name',
+      displayName: 'photoOwner2',
+    },
+    title: 'dummy',
+    description: 'descrption of photo1',
+    peopleTagged: [],
   },
 };
 
@@ -494,7 +538,7 @@ module.exports.editPhotoInfo = {
 module.exports.getGalleriesforPhoto = {
   status: 'success',
   data: {
-    galleries: ['608f34a634413f11f020b121', '608f34a634413f11f020b124'],
+    galleries: expect.anything(),
   },
 };
 
