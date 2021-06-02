@@ -311,7 +311,11 @@ photoRouter.patch(
  * @apiUse PhotoNotFoundError
  *
  */
-photoRouter.patch('/:id/');
+photoRouter.patch(
+  '/:id/',
+  authController.protect,
+  photoController.editPhotoInformation
+);
 
 /**
  * @api {delete} /photo/:id Delete a User's Photo
@@ -685,7 +689,7 @@ photoRouter.delete(
  * @apiUse PhotoNotFoundError
  * 
  */
-photoRouter.get('/:id/galleries');
+photoRouter.get('/:id/galleries', photoController.getGalleriesforPhoto);
 
 /**
  * @api {get} /photo/:id/contexts/all Gets all Visible Sets and Pools Photo Belongs to
