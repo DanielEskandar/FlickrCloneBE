@@ -182,7 +182,9 @@ exports.uploadPhoto = async (req, res) => {
 exports.getInformation = async (req, res) => {
   try {
     const info = await photoModel
-      .findById(req.params.id)
+      .findByIdAndUpdate(req.params.id, {
+        $inc: { views: 1 },
+      })
       .select({
         _id: 0,
         hidden: 0,
