@@ -337,7 +337,7 @@ albumRouter.delete(
  * @apiUse UnauthError
  */
 
-albumRouter.post('/', albumController.createAlbum);
+albumRouter.post('/', authController.protect, albumController.createAlbum);
 
 /**
  * @api {post} /photoset/:id/photos Add a photo
